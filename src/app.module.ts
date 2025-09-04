@@ -1,7 +1,9 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { DatabaseModule } from './database/database.module';
+import { DatabaseModule } from './core/database/database.module';
+import { UserModule } from './user/user.module';
+import { TripModule } from './trip/trip.module';
 import { AdminAlertsModule } from './admin-alerts/admin-alerts.module';
 import { AdminGroupPermissionModule } from './admin-group-permission/admin-group-permission.module';
 import { AdminGroupsModule } from './admin-groups/admin-groups.module';
@@ -51,21 +53,8 @@ import { DocumentMasterModule } from './document-master/document-master.module';
 import { DriverBiddingRequestModule } from './driver-bidding-request/driver-bidding-request.module';
 import { DriverDestinationsModule } from './driver-destinations/driver-destinations.module';
 import { DriverDestinationsRouteModule } from './driver-destinations-route/driver-destinations-route.module';
-import { DriverDocModule } from './driver-doc/driver-doc.module';
-import { DriverFavoritesModule } from './driver-favorites/driver-favorites.module';
-import { DriverInsuranceReportModule } from './driver-insurance-report/driver-insurance-report.module';
 import { DriverLocationAirportModule } from './driver-location-airport/driver-location-airport.module';
-import { DriverLogReportModule } from './driver-log-report/driver-log-report.module';
-import { DriverManageTimingModule } from './driver-manage-timing/driver-manage-timing.module';
-import { DriverPreferencesModule } from './driver-preferences/driver-preferences.module';
-import { DriverRequestModule } from './driver-request/driver-request.module';
-import { DriverRewardModule } from './driver-reward/driver-reward.module';
 import { DriverServicesVideoConsultChargesModule } from './driver-services-video-consult-charges/driver-services-video-consult-charges.module';
-import { DriverSubscriptionDetailsModule } from './driver-subscription-details/driver-subscription-details.module';
-import { DriverSubscriptionPlanModule } from './driver-subscription-plan/driver-subscription-plan.module';
-import { DriverUserMessagesModule } from './driver-user-messages/driver-user-messages.module';
-import { DriverVehicleModule } from './driver-vehicle/driver-vehicle.module';
-import { DriverVehicleServiceRequestModule } from './driver-vehicle-service-request/driver-vehicle-service-request.module';
 import { EmailTemplatesModule } from './email-templates/email-templates.module';
 import { EmergencyCantactDataModule } from './emergency-cantact-data/emergency-cantact-data.module';
 import { FaqCategoriesModule } from './faq-categories/faq-categories.module';
@@ -149,8 +138,6 @@ import { PlanPurchaseMasterModule } from './plan-purchase-master/plan-purchase-m
 import { PrescriptionImagesModule } from './prescription-images/prescription-images.module';
 import { PushnotificationLogModule } from './pushnotification-log/pushnotification-log.module';
 import { RatingsUserDriverModule } from './ratings-user-driver/ratings-user-driver.module';
-import { RegisterDriverModule } from './register-driver/register-driver.module';
-import { RegisterUserModule } from './register-user/register-user.module';
 import { RelatedCommunesModule } from './related-communes/related-communes.module';
 import { RentalPackageModule } from './rental-package/rental-package.module';
 import { RequestDataDebugModule } from './request-data-debug/request-data-debug.module';
@@ -169,30 +156,6 @@ import { StoreCategoryTagsModule } from './store-category-tags/store-category-ta
 import { StoreFavoritesModule } from './store-favorites/store-favorites.module';
 import { StoreWiseBannersModule } from './store-wise-banners/store-wise-banners.module';
 import { TempTripOrderDetailsModule } from './temp-trip-order-details/temp-trip-order-details.module';
-import { TripCallMaskingModule } from './trip-call-masking/trip-call-masking.module';
-import { TripDeliveryFieldsModule } from './trip-delivery-fields/trip-delivery-fields.module';
-import { TripDestinationsModule } from './trip-destinations/trip-destinations.module';
-import { TripHelpDetailModule } from './trip-help-detail/trip-help-detail.module';
-import { TripMessagesModule } from './trip-messages/trip-messages.module';
-import { TripOderDetailsModule } from './trip-order-details/trip-oder-details.module';
-import { TripOutStandingAmountModule } from './trip-out-standing-amount/trip-out-standing-amount.module';
-import { TripReasonModule } from './trip-reason/trip-reason.module';
-import { TripsModule } from './trips/trips.module';
-import { TripsDeliveryLocationsModule } from './trips-delivery-locations/trips-delivery-locations.module';
-import { TripsLocationsModule } from './trips-locations/trips-locations.module';
-import { TripsRouteLocationsModule } from './trips-route-locations/trips-route-locations.module';
-import { TripsStopoverpointLocationModule } from './trips-stopoverpoint-location/trips-stopoverpoint-location.module';
-import { TripsStatusMessagesModule } from './trips-status-messages/trips-status-messages.module';
-import { TripTimesModule } from './trip-times/trip-times.module';
-import { UserAddressModule } from './user-address/user-address.module';
-import { UserEmergencyContactModule } from './user-emergency-contact/user-emergency-contact.module';
-import { UserFaveAddressModule } from './user-fave-address/user-fave-address.module';
-import { UserPaymentInfoModule } from './user-payment-info/user-payment-info.module';
-import { UserProfileModule } from './user-profile/user-profile.module';
-import { UserProfileMasterModule } from './user-profile-master/user-profile-master.module';
-import { UserReferrerTransactionModule } from './user-referrer-transaction/user-referrer-transaction.module';
-import { UserStatusLogsModule } from './user-status-logs/user-status-logs.module';
-import { UserWalletModule } from './user-wallet/user-wallet.module';
 import { VehicleCategoryModule } from './vehicle-category/vehicle-category.module';
 import { VehicleCategoryStatusLogModule } from './vehicle-category-status-log/vehicle-category-status-log.module';
 import { VehicleTypeModule } from './vehicle-type/vehicle-type.module';
@@ -203,7 +166,7 @@ import { WithdrawRequestsModule } from './withdraw-requests/withdraw-requests.mo
 import { OdaSousItemsTypesLocationModule } from './oda-sous-items-types-location/oda-sous-items-types-location.module';
 
 @Module({
-  imports: [DatabaseModule, AdminAlertsModule, AdminGroupPermissionModule, AdminGroupsModule, AdministratorsModule, AdminLocationsModule, AdminPermissionsDisplayGroupsModule, AdminPermissionsModule, AdvertiseBannersModule, AirportLocationMastersModule, AirportsurchargeFareModule, AllDatabaseDetailsModule, AppLaunchinfoModule, AppScreenMasterModule, BackupDatabaseModule, BannerImpressionModule, BannersModule, BiddingDriverRequestModule, BiddingDriverServiceModule, BiddingOfferrModule, BiddingPostModule, BiddingPostMediaModule, BiddingServiceModule, BiddingServiceRatingsModule, CabBookingModule, CabRequestNowModule, CancelReasonModule, CityModule, CompanyModule, CompanyCuisineModule, CompanyRequestModule, ConfigurationsModule, ConfigurationsPaymentsModule, ConfigurationsPaymentLogModule, ContactusModule, ContentCubexDetailsModule, CountryModule, CouponModule, CuisineModule, CurrencyModule, CustomDeliveryChargesOrderModule, DataStorageEngineModule, DeliveryChargesModule, DeliveryFildsModule, DeliveryPreferencesModule, DocumentListModule, DocumentMasterModule, DriverBiddingRequestModule, DriverDestinationsModule, DriverDestinationsRouteModule, DriverDocModule, DriverFavoritesModule, DriverInsuranceReportModule, DriverLocationAirportModule, DriverLogReportModule, DriverManageTimingModule, DriverPreferencesModule, DriverRequestModule, DriverRewardModule, DriverServicesVideoConsultChargesModule, DriverSubscriptionDetailsModule, DriverSubscriptionPlanModule, DriverUserMessagesModule, DriverVehicleModule, DriverVehicleServiceRequestModule, EmailTemplatesModule, EmergencyCantactDataModule, FaqCategoriesModule, FaqsModule, FavoriteStoreModule, FlyLocationWiseFareModule, FoodMenuModule, FoodMenuImagesModule, GopayOtpLogsModule, FoodMenuModule, HelpDetailCategoriesModule, HelpDetailModule, HelpsModule, HelpsCategoriesModule, HistoriqueCxoGrothModule, HomeContentFoodModule, HomeContentModule, HomeDriverModule, HomeScreensModule, HotelModule, HotelBannersModule, IdproofImagesModule, IntentionsModule, IntentionsCriteresModule, LangConversionProcessModule, LanguageLabel1Module, LanguageLabel2Module, LanguageLabel5Module, LanguageLabelModule, LanguageLabelOtherModule, LanguageMasterModule, LanguagePageDetailsModule, LocationMasterModule, LocationWiseFareModule, LogFileModule, MakeModule, MaskingNumbersModule, MasterCurrencyModule, MasterLngPagesModule, MasterServiceCategoryModule, MasterServiceMenuModule, MasterVehicleCategoryModule, MemberLogsModule, MemberLoginSessionLogModule, MenuItemMediaModule, MenuItemOptionsModule, MenuItemOptionsCategoryModule, MenuItemsModule, ModelModule, MultiLevelReferralMasterModule, NewsfeedModule, NewsLetterModule, NotificationSoundModule, ObjectCategoriesModule, ObjectObjectifsModule, ObjectProspectionsModule, ObjectRealisationModule, OdaAreasLocationModule, OdaCommoditiesLocationModule, OdaCommunesModule, OdaItemsTypesLocationModule, OdaLocationsStatusModule, OdaLocationsOrdersUnavailabilitiesModule, OdaSousServicesLocationModule, OrderDeliveryChargeDetailsModule, OrderDetailsModule, OrderDriverLogModule, OrderRequestModule, OrdersModule, OrderStatusModule, OrderStatusLogsModule, OrganizationModule, PackageTypeModule, PagesModule, PassengerRequestsModule, PaymentCustomerInfoModule, PaymentModelUserLogModule, PaymentRequestsModule, PaymentsModule, PaymentTransactionsModule, PlanPurchaseMasterModule, PrescriptionImagesModule, PushnotificationLogModule, RatingsUserDriverModule, RegisterDriverModule, RegisterUserModule, RelatedCommunesModule, RentalPackageModule, RequestDataDebugModule, RequestPostDataModule, RestrictedNegativeAreaModule, RewardCompaignModule, RewardSettingsModule, SendMessageTemplatesModule, SeoSectionModule, ServiceCategoriesModule, SetupInfoModule, SmsTemplatesModule, StateModule, StoreCategoriesModule, StoreCategoryTagsModule, StoreFavoritesModule, StoreWiseBannersModule, TempTripOrderDetailsModule, TripCallMaskingModule, TripDeliveryFieldsModule, TripDestinationsModule, TripHelpDetailModule, TripMessagesModule, TripOderDetailsModule, TripOutStandingAmountModule, TripReasonModule, TripsModule, TripsDeliveryLocationsModule, TripsLocationsModule, TripsRouteLocationsModule, TripsStopoverpointLocationModule, TripsStatusMessagesModule, TripTimesModule, UserAddressModule, UserEmergencyContactModule, UserFaveAddressModule, UserPaymentInfoModule, UserProfileModule, UserProfileMasterModule, UserReferrerTransactionModule, UserStatusLogsModule, UserWalletModule, VehicleCategoryModule, VehicleCategoryStatusLogModule, VehicleTypeModule, VisitAdressModule, VoiceDirectionFilesModule, WalletMoneyReferrerEmailModule, WithdrawRequestsModule, OdaSousItemsTypesLocationModule],
+  imports: [DatabaseModule, UserModule, TripModule, AdminAlertsModule, AdminGroupPermissionModule, AdminGroupsModule, AdministratorsModule, AdminLocationsModule, AdminPermissionsDisplayGroupsModule, AdminPermissionsModule, AdvertiseBannersModule, AirportLocationMastersModule, AirportsurchargeFareModule, AllDatabaseDetailsModule, AppLaunchinfoModule, AppScreenMasterModule, BackupDatabaseModule, BannerImpressionModule, BannersModule, BiddingDriverRequestModule, BiddingDriverServiceModule, BiddingOfferrModule, BiddingPostModule, BiddingPostMediaModule, BiddingServiceModule, BiddingServiceRatingsModule, CabBookingModule, CabRequestNowModule, CancelReasonModule, CityModule, CompanyModule, CompanyCuisineModule, CompanyRequestModule, ConfigurationsModule, ConfigurationsPaymentsModule, ConfigurationsPaymentLogModule, ContactusModule, ContentCubexDetailsModule, CountryModule, CouponModule, CuisineModule, CurrencyModule, CustomDeliveryChargesOrderModule, DataStorageEngineModule, DeliveryChargesModule, DeliveryFildsModule, DeliveryPreferencesModule, DocumentListModule, DocumentMasterModule, DriverBiddingRequestModule, DriverDestinationsModule, DriverDestinationsRouteModule, DriverLocationAirportModule, DriverServicesVideoConsultChargesModule, EmailTemplatesModule, EmergencyCantactDataModule, FaqCategoriesModule, FaqsModule, FavoriteStoreModule, FlyLocationWiseFareModule, FoodMenuModule, FoodMenuImagesModule, GopayOtpLogsModule, FoodMenuModule, HelpDetailCategoriesModule, HelpDetailModule, HelpsModule, HelpsCategoriesModule, HistoriqueCxoGrothModule, HomeContentFoodModule, HomeContentModule, HomeDriverModule, HomeScreensModule, HotelModule, HotelBannersModule, IdproofImagesModule, IntentionsModule, IntentionsCriteresModule, LangConversionProcessModule, LanguageLabel1Module, LanguageLabel2Module, LanguageLabel5Module, LanguageLabelModule, LanguageLabelOtherModule, LanguageMasterModule, LanguagePageDetailsModule, LocationMasterModule, LocationWiseFareModule, LogFileModule, MakeModule, MaskingNumbersModule, MasterCurrencyModule, MasterLngPagesModule, MasterServiceCategoryModule, MasterServiceMenuModule, MasterVehicleCategoryModule, MemberLogsModule, MemberLoginSessionLogModule, MenuItemMediaModule, MenuItemOptionsModule, MenuItemOptionsCategoryModule, MenuItemsModule, ModelModule, MultiLevelReferralMasterModule, NewsfeedModule, NewsLetterModule, NotificationSoundModule, ObjectCategoriesModule, ObjectObjectifsModule, ObjectProspectionsModule, ObjectRealisationModule, OdaAreasLocationModule, OdaCommoditiesLocationModule, OdaCommunesModule, OdaItemsTypesLocationModule, OdaLocationsStatusModule, OdaLocationsOrdersUnavailabilitiesModule, OdaSousServicesLocationModule, OrderDeliveryChargeDetailsModule, OrderDetailsModule, OrderDriverLogModule, OrderRequestModule, OrdersModule, OrderStatusModule, OrderStatusLogsModule, OrganizationModule, PackageTypeModule, PagesModule, PassengerRequestsModule, PaymentCustomerInfoModule, PaymentModelUserLogModule, PaymentRequestsModule, PaymentsModule, PaymentTransactionsModule, PlanPurchaseMasterModule, PrescriptionImagesModule, PushnotificationLogModule, RatingsUserDriverModule, RelatedCommunesModule, RentalPackageModule, RequestDataDebugModule, RequestPostDataModule, RestrictedNegativeAreaModule, RewardCompaignModule, RewardSettingsModule, SendMessageTemplatesModule, SeoSectionModule, ServiceCategoriesModule, SetupInfoModule, SmsTemplatesModule, StateModule, StoreCategoriesModule, StoreCategoryTagsModule, StoreFavoritesModule, StoreWiseBannersModule, TempTripOrderDetailsModule, VehicleCategoryModule, VehicleCategoryStatusLogModule, VehicleTypeModule, VisitAdressModule, VoiceDirectionFilesModule, WalletMoneyReferrerEmailModule, WithdrawRequestsModule, OdaSousItemsTypesLocationModule],
   controllers: [AppController],
   providers: [AppService],
 })
