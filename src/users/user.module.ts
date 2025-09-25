@@ -23,6 +23,19 @@ import { DriverSubscriptionPlanModule } from './driver-subscription-plan/driver-
 import { DriverUserMessagesModule } from './driver-user-messages/driver-user-messages.module';
 import { DriverVehicleModule } from './driver-vehicle/driver-vehicle.module';
 import { DriverVehicleServiceRequestModule } from './driver-vehicle-service-request/driver-vehicle-service-request.module';
+import { CompanyFeatureModule } from '../company/company-feature.module';
+import { DocumentListModule } from '../document-list/document-list.module';
+import { DocumentMasterModule } from '../document-master/document-master.module';
+import { DriverServicesVideoConsultChargesModule } from '../driver-services-video-consult-charges/driver-services-video-consult-charges.module';
+import { EmergencyCantactDataModule } from '../emergency-cantact-data/emergency-cantact-data.module';
+import { HomeDriverModule } from '../home-driver/home-driver.module';
+import { IdproofImagesModule } from '../idproof-images/idproof-images.module';
+import { MaskingNumbersModule } from '../masking-numbers/masking-numbers.module';
+import { MemberLoginSessionLogModule } from '../member-login-session-log/member-login-session-log.module';
+import { MemberLogsModule } from '../member-logs/member-logs.module';
+import { MultiLevelReferralMasterModule } from '../multi-level-referral-master/multi-level-referral-master.module';
+import { SendMessageTemplatesModule } from '../send-message-templates/send-message-templates.module';
+import { RatingsUserDriverModule } from './ratings-user-driver/ratings-user-driver.module';
 
 @Module({
   imports: [
@@ -50,6 +63,19 @@ import { DriverVehicleServiceRequestModule } from './driver-vehicle-service-requ
     DriverUserMessagesModule,
     DriverVehicleModule,
     DriverVehicleServiceRequestModule,
+    CompanyFeatureModule,
+    DocumentListModule,
+    DocumentMasterModule,
+    DriverServicesVideoConsultChargesModule,
+    EmergencyCantactDataModule,
+    HomeDriverModule,
+    IdproofImagesModule,
+    MaskingNumbersModule,
+    MemberLoginSessionLogModule,
+    MemberLogsModule,
+    MultiLevelReferralMasterModule,
+    SendMessageTemplatesModule,
+    RatingsUserDriverModule,
   ],
   exports: [
     RegisterUserModule,
@@ -76,6 +102,19 @@ import { DriverVehicleServiceRequestModule } from './driver-vehicle-service-requ
     DriverUserMessagesModule,
     DriverVehicleModule,
     DriverVehicleServiceRequestModule,
+    CompanyFeatureModule,
+    DocumentListModule,
+    DocumentMasterModule,
+    DriverServicesVideoConsultChargesModule,
+    EmergencyCantactDataModule,
+    HomeDriverModule,
+    IdproofImagesModule,
+    MaskingNumbersModule,
+    MemberLoginSessionLogModule,
+    MemberLogsModule,
+    MultiLevelReferralMasterModule,
+    SendMessageTemplatesModule,
+    RatingsUserDriverModule,
   ],
 })
-export class UserModule {}
+export class UsersModule {}
