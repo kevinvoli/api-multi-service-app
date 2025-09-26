@@ -1,5 +1,5 @@
-import { Trips } from "src/trips/entities/trip.entity";
-import { UserWallet } from "src/user-wallet/entities/user-wallet.entity";
+import { Trips } from "../../../transport/trips/entities/trip.entity";
+import { UserWallet } from "../../../payments/user-wallet/entities/user-wallet.entity";
 import {
   Column,
   Entity,

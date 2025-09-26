@@ -1,4 +1,4 @@
-import { RegisterUser } from "src/register-user/entities/register-user.entity";
+import { RegisterUser } from "../../../users/register-user/entities/register-user.entity";
 import {
   Column,
   Entity,

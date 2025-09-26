@@ -9,7 +9,6 @@ import { UserFaveAddressModule } from './user-fave-address/user-fave-address.mod
 import { UserPaymentInfoModule } from './user-payment-info/user-payment-info.module';
 import { UserReferrerTransactionModule } from './user-referrer-transaction/user-referrer-transaction.module';
 import { UserStatusLogsModule } from './user-status-logs/user-status-logs.module';
-import { UserWalletModule } from './user-wallet/user-wallet.module';
 import { DriverDocModule } from './driver-doc/driver-doc.module';
 import { DriverFavoritesModule } from './driver-favorites/driver-favorites.module';
 import { DriverInsuranceReportModule } from './driver-insurance-report/driver-insurance-report.module';
@@ -23,18 +22,18 @@ import { DriverSubscriptionPlanModule } from './driver-subscription-plan/driver-
 import { DriverUserMessagesModule } from './driver-user-messages/driver-user-messages.module';
 import { DriverVehicleModule } from './driver-vehicle/driver-vehicle.module';
 import { DriverVehicleServiceRequestModule } from './driver-vehicle-service-request/driver-vehicle-service-request.module';
-import { CompanyFeatureModule } from '../company/company-feature.module';
-import { DocumentListModule } from '../document-list/document-list.module';
-import { DocumentMasterModule } from '../document-master/document-master.module';
-import { DriverServicesVideoConsultChargesModule } from '../driver-services-video-consult-charges/driver-services-video-consult-charges.module';
-import { EmergencyCantactDataModule } from '../emergency-cantact-data/emergency-cantact-data.module';
-import { HomeDriverModule } from '../home-driver/home-driver.module';
-import { IdproofImagesModule } from '../idproof-images/idproof-images.module';
-import { MaskingNumbersModule } from '../masking-numbers/masking-numbers.module';
-import { MemberLoginSessionLogModule } from '../member-login-session-log/member-login-session-log.module';
-import { MemberLogsModule } from '../member-logs/member-logs.module';
-import { MultiLevelReferralMasterModule } from '../multi-level-referral-master/multi-level-referral-master.module';
-import { SendMessageTemplatesModule } from '../send-message-templates/send-message-templates.module';
+import { CompanyFeatureModule } from './company/company-feature.module';
+import { DocumentListModule } from './document-list/document-list.module';
+import { DocumentMasterModule } from './document-master/document-master.module';
+import { DriverServicesVideoConsultChargesModule } from './driver-services-video-consult-charges/driver-services-video-consult-charges.module';
+import { EmergencyCantactDataModule } from './emergency-cantact-data/emergency-cantact-data.module';
+import { HomeDriverModule } from './home-driver/home-driver.module';
+import { IdproofImagesModule } from './idproof-images/idproof-images.module';
+import { MaskingNumbersModule } from './masking-numbers/masking-numbers.module';
+import { MemberLoginSessionLogModule } from './member-login-session-log/member-login-session-log.module';
+import { MemberLogsModule } from './member-logs/member-logs.module';
+import { MultiLevelReferralMasterModule } from './multi-level-referral-master/multi-level-referral-master.module';
+import { SendMessageTemplatesModule } from './send-message-templates/send-message-templates.module';
 import { RatingsUserDriverModule } from './ratings-user-driver/ratings-user-driver.module';
 
 @Module({
@@ -49,7 +48,6 @@ import { RatingsUserDriverModule } from './ratings-user-driver/ratings-user-driv
     UserPaymentInfoModule,
     UserReferrerTransactionModule,
     UserStatusLogsModule,
-    UserWalletModule,
     DriverDocModule,
     DriverFavoritesModule,
     DriverInsuranceReportModule,
@@ -88,7 +86,6 @@ import { RatingsUserDriverModule } from './ratings-user-driver/ratings-user-driv
     UserPaymentInfoModule,
     UserReferrerTransactionModule,
     UserStatusLogsModule,
-    UserWalletModule,
     DriverDocModule,
     DriverFavoritesModule,
     DriverInsuranceReportModule,

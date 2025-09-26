@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { CompanyModule } from './company/company.module';
+import { CompanyModule } from './company.module';
 import { CompanyCuisineModule } from './company-cuisine/company-cuisine.module';
 import { CompanyRequestModule } from './company-request/company-request.module';
 import { OrganizationModule } from './organization/organization.module';

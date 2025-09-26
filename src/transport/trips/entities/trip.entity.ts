@@ -1,5 +1,5 @@
-import { RegisterDriver } from "src/register-driver/entities/register-driver.entity";
-import { RegisterUser } from "src/register-user/entities/register-user.entity";
+import { RegisterDriver } from "../../../users/register-driver/entities/register-driver.entity";
+import { RegisterUser } from "../../../users/register-user/entities/register-user.entity";
 import {
   Column,
   Entity,

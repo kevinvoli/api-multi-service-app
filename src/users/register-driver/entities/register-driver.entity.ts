@@ -1,5 +1,5 @@
-import { Company } from "src/company/entities/company.entity";
-import { Trips } from "src/trips/entities/trip.entity";
+import { Company } from "../../company/entities/company.entity";
+import { Trips } from "../../../transport/trips/entities/trip.entity";
 import {
   Column,
   Entity,

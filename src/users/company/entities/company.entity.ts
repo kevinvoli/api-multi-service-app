@@ -1,4 +1,4 @@
-import { RegisterDriver } from "src/register-driver/entities/register-driver.entity";
+import { RegisterDriver } from "../../register-driver/entities/register-driver.entity";
 import {
   Column,
   Entity,
