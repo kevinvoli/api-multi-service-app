@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
 import { LocationMasterService } from './location-master.service';
 import { CreateLocationMasterDto } from './dto/create-location-master.dto';
 import { UpdateLocationMasterDto } from './dto/update-location-master.dto';
@@ -18,17 +18,17 @@ export class LocationMasterController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.locationMasterService.findOne(+id);
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.locationMasterService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateLocationMasterDto: UpdateLocationMasterDto) {
-    return this.locationMasterService.update(+id, updateLocationMasterDto);
+  update(@Param('id', ParseIntPipe) id: number, @Body() updateLocationMasterDto: UpdateLocationMasterDto) {
+    return this.locationMasterService.update(id, updateLocationMasterDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.locationMasterService.remove(+id);
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.locationMasterService.remove(id);
   }
 }
