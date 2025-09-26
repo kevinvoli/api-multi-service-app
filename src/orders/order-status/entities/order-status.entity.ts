@@ -1,4 +1,11 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
+import { Orders } from "../../entities/order.entity";
+import {
+  Column,
+  Entity,
+  Index,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 
 @Index("vStatus", ["vStatusTrack"], { unique: true })
 @Entity("order_status", { schema: "amygo1" })
@@ -44,4 +51,7 @@ export class OrderStatus {
     default: () => "'No'",
   })
   eBuyAnyService: "Yes" | "No";
+
+  @OneToMany(() => Orders, (orders) => orders.orderStatus)
+  orders: Orders[];
 }

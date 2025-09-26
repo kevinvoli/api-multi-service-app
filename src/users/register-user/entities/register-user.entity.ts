@@ -1,3 +1,4 @@
+import { Orders } from "../../../orders/entities/order.entity";
 import { Trips } from "../../../transport/trips/entities/trip.entity";
 import { UserWallet } from "../../../payments/user-wallet/entities/user-wallet.entity";
 import {
@@ -449,4 +450,7 @@ export class RegisterUser {
 
   @OneToMany(() => UserWallet, (userWallet) => userWallet.iUser)
   userWallets: UserWallet[];
+
+  @OneToMany(() => Orders, (orders) => orders.user)
+  orders: Orders[];
 }

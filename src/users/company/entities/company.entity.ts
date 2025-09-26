@@ -1,3 +1,4 @@
+import { Orders } from "../../../orders/entities/order.entity";
 import { RegisterDriver } from "../../register-driver/entities/register-driver.entity";
 import {
   Column,
@@ -562,4 +563,7 @@ export class Company {
 
   @OneToMany(() => RegisterDriver, (registerDriver) => registerDriver.iCompany)
   registerDrivers: RegisterDriver[];
+
+  @OneToMany(() => Orders, (orders) => orders.company)
+  orders: Orders[];
 }

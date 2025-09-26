@@ -1,4 +1,11 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
+import { Orders } from "../../../orders/entities/order.entity";
+import {
+  Column,
+  Entity,
+  Index,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 
 @Index("SERVICE_NAME", ["vService"], { unique: true })
 @Entity("service_categories", { schema: "amygo1" })
@@ -85,4 +92,7 @@ export class ServiceCategories {
 
   @Column("enum", { name: "eOTPCodeEnable", enum: ["No", "Yes"] })
   eOtpCodeEnable: "No" | "Yes";
+
+  @OneToMany(() => Orders, (orders) => orders.serviceCategory)
+  orders: Orders[];
 }

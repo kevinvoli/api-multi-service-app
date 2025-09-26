@@ -1,10 +1,22 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
+import { Company } from "../../users/company/entities/company.entity";
+import { RegisterDriver } from "../../users/register-driver/entities/register-driver.entity";
+import { RegisterUser } from "../../users/register-user/entities/register-user.entity";
+import { ServiceCategories } from "../../core_app/service-categories/entities/service-category.entity";
+import { OrderStatus } from "../order-status/entities/order-status.entity";
+import {
+  Column,
+  Entity,
+  Index,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 
 @Index("iCustomerId", ["iUserId"], {})
 @Index("vOrderNo", ["vOrderNo"], {})
 @Index("dDate", ["dDate"], {})
 @Index("iOrderId", ["iOrderId"], {})
-@Entity("__orders", { schema: "amygo1" })
+@Entity("orders", { schema: "amygo1" })
 export class Orders {
   @PrimaryGeneratedColumn({ type: "int", name: "iOrderId" })
   iOrderId: number;
@@ -481,4 +493,40 @@ export class Orders {
     default: () => "'0000-00-00 00:00:00'",
   })
   dateEndOrder: Date | null;
+
+  @ManyToOne(
+    () => ServiceCategories,
+    (serviceCategories) => serviceCategories.orders,
+    { onDelete: "NO ACTION", onUpdate: "NO ACTION" }
+  )
+  @JoinColumn([{ name: "iServiceId", referencedColumnName: "iServiceId" }])
+  serviceCategory: ServiceCategories;
+
+  @ManyToOne(() => RegisterUser, (registerUser) => registerUser.orders, {
+    onDelete: "NO ACTION",
+    onUpdate: "NO ACTION",
+  })
+  @JoinColumn([{ name: "iUserId", referencedColumnName: "iUserId" }])
+  user: RegisterUser;
+
+  @ManyToOne(() => RegisterDriver, (registerDriver) => registerDriver.orders, {
+    onDelete: "NO ACTION",
+    onUpdate: "NO ACTION",
+  })
+  @JoinColumn([{ name: "iDriverId", referencedColumnName: "iDriverId" }])
+  driver: RegisterDriver;
+
+  @ManyToOne(() => Company, (company) => company.orders, {
+    onDelete: "NO ACTION",
+    onUpdate: "NO ACTION",
+  })
+  @JoinColumn([{ name: "iCompanyId", referencedColumnName: "iCompanyId" }])
+  company: Company;
+
+  @ManyToOne(() => OrderStatus, (orderStatus) => orderStatus.orders, {
+    onDelete: "NO ACTION",
+    onUpdate: "NO ACTION",
+  })
+  @JoinColumn([{ name: "iStatusCode", referencedColumnName: "iStatusCode" }])
+  orderStatus: OrderStatus;
 }
