@@ -1,26 +1,44 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateLanguageMasterDto } from './dto/create-language-master.dto';
 import { UpdateLanguageMasterDto } from './dto/update-language-master.dto';
+import { LanguageMaster } from './entities/language-master.entity';
 
 @Injectable()
 export class LanguageMasterService {
-  create(createLanguageMasterDto: CreateLanguageMasterDto) {
-    return 'This action adds a new languageMaster';
+  constructor(
+    @InjectRepository(LanguageMaster)
+    private readonly languageMasterRepository: Repository<LanguageMaster>,
+  ) {}
+
+  create(createLanguageMasterDto: CreateLanguageMasterDto): Promise<LanguageMaster> {
+    const languageMaster = this.languageMasterRepository.create(createLanguageMasterDto);
+    return this.languageMasterRepository.save(languageMaster);
   }
 
-  findAll() {
-    return `This action returns all languageMaster`;
+  findAll(): Promise<LanguageMaster[]> {
+    return this.languageMasterRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} languageMaster`;
+  async findOne(id: number): Promise<LanguageMaster> {
+    const languageMaster = await this.languageMasterRepository.findOne({ where: { iLanguageMasId: id } });
+    if (!languageMaster) {
+      throw new NotFoundException(`LanguageMaster with ID #${id} not found`);
+    }
+    return languageMaster;
   }
 
-  update(id: number, updateLanguageMasterDto: UpdateLanguageMasterDto) {
-    return `This action updates a #${id} languageMaster`;
+  async update(id: number, updateLanguageMasterDto: UpdateLanguageMasterDto): Promise<LanguageMaster> {
+    await this.findOne(id); // will throw error if not found
+    await this.languageMasterRepository.update(id, updateLanguageMasterDto);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} languageMaster`;
+  async remove(id: number): Promise<void> {
+    const result = await this.languageMasterRepository.delete(id);
+    if (result.affected === 0) {
+      throw new NotFoundException(`LanguageMaster with ID #${id} not found`);
+    }
   }
 }
