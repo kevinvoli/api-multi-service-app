@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
 import { StateService } from './state.service';
 import { CreateStateDto } from './dto/create-state.dto';
 import { UpdateStateDto } from './dto/update-state.dto';
@@ -18,17 +18,17 @@ export class StateController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.stateService.findOne(+id);
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.stateService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateStateDto: UpdateStateDto) {
-    return this.stateService.update(+id, updateStateDto);
+  update(@Param('id', ParseIntPipe) id: number, @Body() updateStateDto: UpdateStateDto) {
+    return this.stateService.update(id, updateStateDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.stateService.remove(+id);
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.stateService.remove(id);
   }
 }
