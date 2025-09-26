@@ -1,26 +1,48 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateRestrictedNegativeAreaDto } from './dto/create-restricted-negative-area.dto';
 import { UpdateRestrictedNegativeAreaDto } from './dto/update-restricted-negative-area.dto';
+import { RestrictedNegativeArea } from './entities/restricted-negative-area.entity';
 
 @Injectable()
 export class RestrictedNegativeAreaService {
-  create(createRestrictedNegativeAreaDto: CreateRestrictedNegativeAreaDto) {
-    return 'This action adds a new restrictedNegativeArea';
+  constructor(
+    @InjectRepository(RestrictedNegativeArea)
+    private readonly repository: Repository<RestrictedNegativeArea>,
+  ) {}
+
+  async create(createDto: CreateRestrictedNegativeAreaDto): Promise<RestrictedNegativeArea> {
+    const area = this.repository.create(createDto);
+    return await this.repository.save(area);
   }
 
-  findAll() {
-    return `This action returns all restrictedNegativeArea`;
+  async findAll(): Promise<RestrictedNegativeArea[]> {
+    return await this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} restrictedNegativeArea`;
+  async findOne(id: number): Promise<RestrictedNegativeArea> {
+    const area = await this.repository.findOneBy({ iRestrictedNegativeId: id });
+    if (!area) {
+      throw new NotFoundException(`RestrictedNegativeArea with ID #${id} not found`);
+    }
+    return area;
   }
 
-  update(id: number, updateRestrictedNegativeAreaDto: UpdateRestrictedNegativeAreaDto) {
-    return `This action updates a #${id} restrictedNegativeArea`;
+  async update(id: number, updateDto: UpdateRestrictedNegativeAreaDto): Promise<RestrictedNegativeArea> {
+    const area = await this.repository.preload({
+      iRestrictedNegativeId: id,
+      ...updateDto,
+    });
+    if (!area) {
+      throw new NotFoundException(`RestrictedNegativeArea with ID #${id} not found`);
+    }
+    return await this.repository.save(area);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} restrictedNegativeArea`;
+  async remove(id: number): Promise<RestrictedNegativeArea> {
+    const area = await this.findOne(id);
+    await this.repository.remove(area);
+    return area;
   }
 }
