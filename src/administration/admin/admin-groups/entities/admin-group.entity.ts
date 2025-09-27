@@ -1,6 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity("admin_groups", { schema: "amygo1" })
+@Entity("admin_groups")
 export class AdminGroups {
   @PrimaryGeneratedColumn({ type: "int", name: "iGroupId" })
   iGroupId: number;
@@ -11,7 +11,7 @@ export class AdminGroups {
   @Column("enum", {
     name: "eStatus",
     enum: ["Active", "Inactive", "Deleted"],
-    default: () => "'Active'",
+    default: "Active",
   })
   eStatus: "Active" | "Inactive" | "Deleted";
 }

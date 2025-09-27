@@ -14,9 +14,21 @@ import { StoresModule } from './stores/stores.module';
 import { TransportModule } from './transport/transport.module';
 import { UsersModule } from './users/users.module';
 import { VehiclesModule } from './vehicles/vehicles.module';
-
+import * as Joi from '@hapi/joi';
+import { ConfigModule } from '@nestjs/config';
 @Module({
   imports: [
+  
+    ConfigModule.forRoot({
+      validationSchema: Joi.object({
+        DB_HOST:Joi.string().required(),
+        DB_PORT:Joi.number().required(),
+        DB_USERNAME:Joi.string().required(),
+        DB_PASSWORD: Joi.string().required(),
+        DB_DATABASE:Joi.string().required(),
+        SERVER_PORT:Joi.number().required()
+      })
+    }),
     AdministrationModule,
     BiddingModule,
     BusinessLogicModule,

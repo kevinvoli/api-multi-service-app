@@ -5,7 +5,7 @@ export class Administrators {
   @PrimaryGeneratedColumn({ type: "int", name: "iAdminId" })
   iAdminId: number;
 
-  @Column("int", { name: "iGroupId", default: () => "'1'" })
+  @Column("int", { name: "iGroupId", default:"1" })
   iGroupId: number;
 
   @Column("varchar", { name: "vFirstName", length: 255 })
@@ -68,14 +68,14 @@ export class Administrators {
   @Column("enum", {
     name: "eStatus",
     enum: ["Active", "Inactive", "Deleted"],
-    default: () => "'Active'",
+    default: "Active",
   })
   eStatus: "Active" | "Inactive" | "Deleted";
 
   @Column("enum", {
     name: "eDefault",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eDefault: "Yes" | "No";
 }

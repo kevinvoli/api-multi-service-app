@@ -11,7 +11,7 @@ export class AdminPermissions {
   @Column("enum", {
     name: "status",
     enum: ["Active", "Inactive", "Deleted"],
-    default: () => "'Active'",
+    default: "Active",
   })
   status: "Active" | "Inactive" | "Deleted";
 
@@ -24,7 +24,7 @@ export class AdminPermissions {
   @Column("varchar", {
     name: "vDispalyAppType",
     length: 255,
-    default: () => "'All'",
+    default: "All",
   })
   vDispalyAppType: string;
 
@@ -53,7 +53,7 @@ export class AdminPermissions {
       "RideShare",
       "NearBy",
     ],
-    default: () => "''",
+    default: "",
   })
   eFor:
     | ""

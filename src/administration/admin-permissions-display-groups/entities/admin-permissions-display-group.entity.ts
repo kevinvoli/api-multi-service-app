@@ -11,14 +11,14 @@ export class AdminPermissionDisplayGroups {
   @Column("enum", {
     name: "eStatus",
     enum: ["Active", "Inactive", "Deleted"],
-    default: () => "'Active'",
+    default:"Active",
   })
   eStatus: "Active" | "Inactive" | "Deleted";
 
   @Column("varchar", {
     name: "vDispalyAppType",
     length: 255,
-    default: () => "'All'",
+    default:  "All",
   })
   vDispalyAppType: string;
 
@@ -41,7 +41,7 @@ export class AdminPermissionDisplayGroups {
       "Kiosk",
       "Fly",
     ],
-    default: () => "''",
+    default: "",
   })
   eFor:
     | ""

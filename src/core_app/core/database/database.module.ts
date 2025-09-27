@@ -1,20 +1,28 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({
-      useFactory: () => ({
-        type: 'mysql',
-        host: process.env.DB_HOST,
-        port: parseInt(process.env.DB_PORT || '', 10) || 3306,
-        username: process.env.DB_USERNAME,
-        password: process.env.DB_PASSWORD,
-        database: process.env.DB_DATABASE,
-        entities: [__dirname + '/../**/*.entity{.ts,.js}'],
-        synchronize: false, // Ne pas utiliser en production
-      }),
-    }),
+      imports:[ConfigModule],
+      inject: [ConfigService],
+      
+      useFactory: (configService :
+        ConfigService)=> ({
+          type: 'mysql',
+          host:configService.get('DB_HOST'),
+          port: configService.get('DB_PORT'),
+          username: configService.get('DB_USERNAME'),
+          password: configService.get(''),
+          database: configService.get('DB_DATABASE'),
+          entities: [__dirname+ '/**/*.entity{.ts,.js}'],
+          keepConnectionAlive:true,
+          connectTimeout:10000,
+          autoLoadEntities: true,
+          synchronize:true,
+        })
+    })
   ],
 })
 export class DatabaseModule {}
