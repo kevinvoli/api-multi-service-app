@@ -11,35 +11,35 @@ export class NotificationSound {
   @Column("enum", {
     name: "eSoundFor",
     enum: ["User", "Provider", "Dial", "Store", "Voip"],
-    default: () => "'User'",
+    default: "User",
   })
   eSoundFor: "User" | "Provider" | "Dial" | "Store" | "Voip";
 
   @Column("enum", {
     name: "eAdminDisplay",
     enum: ["Yes", "No"],
-    default: () => "'Yes'",
+    default: "Yes",
   })
   eAdminDisplay: "Yes" | "No";
 
   @Column("enum", {
     name: "eStatus",
     enum: ["Active", "Inactive"],
-    default: () => "'Active'",
+    default: "Active",
   })
   eStatus: "Active" | "Inactive";
 
   @Column("enum", {
     name: "eIsSelected",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eIsSelected: "Yes" | "No";
 
   @Column("enum", {
     name: "eDefault",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eDefault: "Yes" | "No";
 }

@@ -23,7 +23,7 @@ export class RestrictedNegativeArea {
   @Column("enum", {
     name: "eRestrictType",
     enum: ["All", "Pick Up", "Drop Off"],
-    default: () => "'All'",
+    default: "All",
   })
   eRestrictType: "All" | "Pick Up" | "Drop Off";
 
@@ -33,7 +33,7 @@ export class RestrictedNegativeArea {
   @Column("enum", {
     name: "eStatus",
     enum: ["Active", "Inactive", "Deleted"],
-    default: () => "'Active'",
+    default: "Active",
   })
   eStatus: "Active" | "Inactive" | "Deleted";
 }

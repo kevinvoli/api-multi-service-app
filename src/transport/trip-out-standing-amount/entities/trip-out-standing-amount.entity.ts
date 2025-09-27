@@ -8,7 +8,7 @@ export class TripOutstandingAmount {
   @Column("enum", {
     name: "ePaidByWallet",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   ePaidByWallet: "Yes" | "No";
 
@@ -33,7 +33,7 @@ export class TripOutstandingAmount {
   @Column("float", {
     name: "fWalletDebit",
     precision: 12,
-    default: () => "'0'",
+    default: "0",
   })
   fWalletDebit: number;
 
@@ -43,17 +43,17 @@ export class TripOutstandingAmount {
   @Column("float", {
     name: "fPendingAmount",
     precision: 12,
-    default: () => "'0'",
+    default: "0",
   })
   fPendingAmount: number;
 
-  @Column("float", { name: "fCommision", precision: 12, default: () => "'0'" })
+  @Column("float", { name: "fCommision", precision: 12, default: "0" })
   fCommision: number;
 
   @Column("float", {
     name: "fDriverPendingAmount",
     precision: 12,
-    default: () => "'0'",
+    default: "0",
   })
   fDriverPendingAmount: number;
 
@@ -84,21 +84,21 @@ export class TripOutstandingAmount {
   @Column("enum", {
     name: "ePaidByPassenger",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   ePaidByPassenger: "Yes" | "No";
 
   @Column("enum", {
     name: "ePaidByOrganization",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   ePaidByOrganization: "Yes" | "No";
 
   @Column("enum", {
     name: "ePaidToDriver",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   ePaidToDriver: "Yes" | "No";
 
@@ -117,31 +117,31 @@ export class TripOutstandingAmount {
   @Column("enum", {
     name: "ePaymentBy",
     enum: ["Passenger", "Organization"],
-    default: () => "'Passenger'",
+    default: "Passenger",
   })
   ePaymentBy: "Passenger" | "Organization";
 
   @Column("enum", {
     name: "eBillGenerated",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eBillGenerated: "Yes" | "No";
 
   @Column("enum", {
     name: "eAuthoriseIdName",
     enum: ["iCabBookingId", "iCabRequestId", "iTripId", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eAuthoriseIdName: "iCabBookingId" | "iCabRequestId" | "iTripId" | "No";
 
-  @Column("int", { name: "iAuthoriseId", default: () => "'0'" })
+  @Column("int", { name: "iAuthoriseId", default: "0" })
   iAuthoriseId: number;
 
   @Column("enum", {
     name: "ePaidByAdmin",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   ePaidByAdmin: "Yes" | "No";
 

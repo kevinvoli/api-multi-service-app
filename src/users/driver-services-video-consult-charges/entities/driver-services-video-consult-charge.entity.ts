@@ -27,14 +27,14 @@ export class DriverServicesVideoConsultCharges {
   @Column("enum", {
     name: "eStatus",
     enum: ["Pending", "Active", "Inactive"],
-    default: () => "'Pending'",
+    default: "Pending",
   })
   eStatus: "Pending" | "Active" | "Inactive";
 
   @Column("enum", {
     name: "eApproved",
     enum: ["No", "Yes"],
-    default: () => "'No'",
+    default: "No",
   })
   eApproved: "No" | "Yes";
 }

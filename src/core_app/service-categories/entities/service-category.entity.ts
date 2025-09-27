@@ -1,4 +1,11 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
+import { Orders } from "../../../orders/entities/order.entity";
+import {
+  Column,
+  Entity,
+  Index,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 
 @Index("SERVICE_NAME", ["vService"], { unique: true })
 @Entity("service_categories", { schema: "amygo1" })
@@ -17,14 +24,14 @@ export class ServiceCategories {
   @Column("enum", {
     name: "eShowTerms",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eShowTerms: "Yes" | "No";
 
   @Column("enum", {
     name: "eProofUpload",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eProofUpload: "Yes" | "No";
 
@@ -47,21 +54,21 @@ export class ServiceCategories {
   @Column("enum", {
     name: "eStatus",
     enum: ["Active", "Inactive"],
-    default: () => "'Active'",
+    default: "Active",
   })
   eStatus: "Active" | "Inactive";
 
   @Column("enum", {
     name: "eType",
     enum: ["separate", "combine"],
-    default: () => "'separate'",
+    default: "separate",
   })
   eType: "separate" | "combine";
 
   @Column("enum", {
     name: "prescription_required",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   prescriptionRequired: "Yes" | "No";
 
@@ -85,4 +92,7 @@ export class ServiceCategories {
 
   @Column("enum", { name: "eOTPCodeEnable", enum: ["No", "Yes"] })
   eOtpCodeEnable: "No" | "Yes";
+
+  @OneToMany(() => Orders, (orders) => orders.serviceCategory)
+  orders: Orders[];
 }

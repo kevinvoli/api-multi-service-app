@@ -1,26 +1,44 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateMasterServiceMenuDto } from './dto/create-master-service-menu.dto';
 import { UpdateMasterServiceMenuDto } from './dto/update-master-service-menu.dto';
+import { MasterServiceMenu } from './entities/master-service-menu.entity';
 
 @Injectable()
 export class MasterServiceMenuService {
-  create(createMasterServiceMenuDto: CreateMasterServiceMenuDto) {
-    return 'This action adds a new masterServiceMenu';
+  constructor(
+    @InjectRepository(MasterServiceMenu)
+    private readonly masterServiceMenuRepository: Repository<MasterServiceMenu>,
+  ) {}
+
+  create(createMasterServiceMenuDto: CreateMasterServiceMenuDto): Promise<MasterServiceMenu> {
+    const masterServiceMenu = this.masterServiceMenuRepository.create(createMasterServiceMenuDto);
+    return this.masterServiceMenuRepository.save(masterServiceMenu);
   }
 
-  findAll() {
-    return `This action returns all masterServiceMenu`;
+  findAll(): Promise<MasterServiceMenu[]> {
+    return this.masterServiceMenuRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} masterServiceMenu`;
+  async findOne(id: number): Promise<MasterServiceMenu> {
+    const masterServiceMenu = await this.masterServiceMenuRepository.findOne({ where: { iServiceMenuId: id } });
+    if (!masterServiceMenu) {
+      throw new NotFoundException(`MasterServiceMenu with ID #${id} not found`);
+    }
+    return masterServiceMenu;
   }
 
-  update(id: number, updateMasterServiceMenuDto: UpdateMasterServiceMenuDto) {
-    return `This action updates a #${id} masterServiceMenu`;
+  async update(id: number, updateMasterServiceMenuDto: UpdateMasterServiceMenuDto): Promise<MasterServiceMenu> {
+    await this.findOne(id); // will throw error if not found
+    await this.masterServiceMenuRepository.update(id, updateMasterServiceMenuDto);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} masterServiceMenu`;
+  async remove(id: number): Promise<void> {
+    const result = await this.masterServiceMenuRepository.delete(id);
+    if (result.affected === 0) {
+      throw new NotFoundException(`MasterServiceMenu with ID #${id} not found`);
+    }
   }
 }

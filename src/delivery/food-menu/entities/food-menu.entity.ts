@@ -33,14 +33,14 @@ export class FoodMenu {
   @Column("enum", {
     name: "eStatus",
     enum: ["Active", "Inactive", "Deleted"],
-    default: () => "'Active'",
+    default: "Active",
   })
   eStatus: "Active" | "Inactive" | "Deleted";
 
   @Column("enum", {
     name: "eBuyAnyService",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eBuyAnyService: "Yes" | "No";
 

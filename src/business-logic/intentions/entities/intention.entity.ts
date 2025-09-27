@@ -14,7 +14,7 @@ export class Intentions {
   @Column("int", { name: "userID", nullable: true })
   userId: number | null;
 
-  @Column("int", { name: "service_id", default: () => "'0'" })
+  @Column("int", { name: "service_id", default: "0" })
   serviceId: number;
 
   @Column("int", { name: "store_id", nullable: true })

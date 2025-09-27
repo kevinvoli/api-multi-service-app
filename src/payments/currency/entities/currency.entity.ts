@@ -17,7 +17,7 @@ export class Currency {
   @Column("enum", {
     name: "eDefault",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eDefault: "Yes" | "No";
 
@@ -25,7 +25,7 @@ export class Currency {
     name: "Ratio",
     precision: 10,
     scale: 4,
-    default: () => "'0.0000'",
+    default: 0.0,
   })
   ratio: number;
 
@@ -34,35 +34,35 @@ export class Currency {
     comment: "Admin will enter min currency value for driver to be request",
     precision: 10,
     scale: 4,
-    default: () => "'0.0000'",
+    default:  0.0000,
   })
   fThresholdAmount: number;
 
   @Column("enum", {
     name: "eStatus",
     enum: ["Active", "Inactive"],
-    default: () => "'Active'",
+    default: "Active",
   })
   eStatus: "Active" | "Inactive";
 
   @Column("enum", {
     name: "eReverseformattingEnable",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eReverseformattingEnable: "Yes" | "No";
 
   @Column("enum", {
     name: "eReverseSymbolEnable",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eReverseSymbolEnable: "Yes" | "No";
 
   @Column("enum", {
     name: "eRoundingOffEnable",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eRoundingOffEnable: "Yes" | "No";
 

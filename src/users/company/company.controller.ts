@@ -8,27 +8,27 @@ export class CompanyController {
   constructor(private readonly companyService: CompanyService) {}
 
   @Post()
-  create(@Body() createCompanyDto: CreateCompanyDto) {
-    return this.companyService.create(createCompanyDto);
+  async create(@Body() createCompanyDto: CreateCompanyDto) {
+    return await this.companyService.create(createCompanyDto);
   }
 
   @Get()
-  findAll() {
-    return this.companyService.findAll();
+  async findAll() {
+    return await this.companyService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.companyService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.companyService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCompanyDto: UpdateCompanyDto) {
-    return this.companyService.update(+id, updateCompanyDto);
+  async update(@Param('id') id: string, @Body() updateCompanyDto: UpdateCompanyDto) {
+    return await this.companyService.update(+id, updateCompanyDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.companyService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.companyService.remove(+id);
   }
 }

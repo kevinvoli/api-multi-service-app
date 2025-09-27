@@ -8,7 +8,7 @@ export class TripDeliveryFields {
   @Column("int", {
     name: "iTripId",
     comment: "link with trips table",
-    default: () => "'0'",
+    default: "0",
   })
   iTripId: number;
 
@@ -24,7 +24,7 @@ export class TripDeliveryFields {
   @Column("text", { name: "iCabRequestId" })
   iCabRequestId: string;
 
-  @Column("int", { name: "iTripDeliveryLocationId", default: () => "'0'" })
+  @Column("int", { name: "iTripDeliveryLocationId", default: "0" })
   iTripDeliveryLocationId: number;
 
   @Column("text", { name: "vValue", comment: "value enter by user" })

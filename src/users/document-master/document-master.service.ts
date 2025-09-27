@@ -1,26 +1,47 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateDocumentMasterDto } from './dto/create-document-master.dto';
 import { UpdateDocumentMasterDto } from './dto/update-document-master.dto';
+import { DocumentMaster } from './entities/document-master.entity';
 
 @Injectable()
 export class DocumentMasterService {
-  create(createDocumentMasterDto: CreateDocumentMasterDto) {
-    return 'This action adds a new documentMaster';
+  constructor(
+    @InjectRepository(DocumentMaster)
+    private readonly documentMasterRepository: Repository<DocumentMaster>,
+  ) {}
+  async create(createDocumentMasterDto: CreateDocumentMasterDto): Promise<DocumentMaster> {
+    const newDocMaster = this.documentMasterRepository.create(createDocumentMasterDto);
+    return await this.documentMasterRepository.save(newDocMaster);
   }
 
-  findAll() {
-    return `This action returns all documentMaster`;
+  async findAll(): Promise<DocumentMaster[]> {
+    return await this.documentMasterRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} documentMaster`;
+  async findOne(id: number): Promise<DocumentMaster> {
+    const docMaster = await this.documentMasterRepository.findOne({ where: { docMasterid: id } });
+    if (!docMaster) {
+      throw new NotFoundException(`Document master with ID "${id}" not found`);
+    }
+    return docMaster;
   }
 
-  update(id: number, updateDocumentMasterDto: UpdateDocumentMasterDto) {
-    return `This action updates a #${id} documentMaster`;
+  async update(id: number, updateDocumentMasterDto: UpdateDocumentMasterDto): Promise<DocumentMaster> {
+    const docMaster = await this.documentMasterRepository.preload({
+      docMasterid: id,
+      ...updateDocumentMasterDto,
+    });
+    if (!docMaster) {
+      throw new NotFoundException(`Document master with ID "${id}" not found`);
+    }
+    return this.documentMasterRepository.save(docMaster);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} documentMaster`;
+  async remove(id: number): Promise<DocumentMaster> {
+    const docMaster = await this.findOne(id);
+    docMaster.status = 'Deleted';
+    return await this.documentMasterRepository.save(docMaster);
   }
 }

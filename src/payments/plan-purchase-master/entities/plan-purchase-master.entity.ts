@@ -18,7 +18,7 @@ export class PlanPurchaseMaster {
     name: "ePlanType",
     comment: "Order,Ride",
     enum: ["Order", "Ride"],
-    default: () => "'Order'",
+    default: "Order",
   })
   ePlanType: "Order" | "Ride";
 
@@ -29,7 +29,7 @@ export class PlanPurchaseMaster {
     name: "eDurationType",
     comment: "Day,Month,Year",
     enum: ["Day", "Month", "Year"],
-    default: () => "'Month'",
+    default: "Month",
   })
   eDurationType: "Day" | "Month" | "Year";
 
@@ -54,7 +54,7 @@ export class PlanPurchaseMaster {
     name: "eSubscriptionStatus",
     comment: "Yes,No",
     enum: ["Yes", "No"],
-    default: () => "'Yes'",
+    default: "Yes",
   })
   eSubscriptionStatus: "Yes" | "No";
 
@@ -68,7 +68,7 @@ export class PlanPurchaseMaster {
     name: "ePaidStatus",
     comment: "Pending,Paid",
     enum: ["Pending", "Paid"],
-    default: () => "'Pending'",
+    default: "Pending",
   })
   ePaidStatus: "Pending" | "Paid";
 
@@ -82,13 +82,13 @@ export class PlanPurchaseMaster {
     name: "eIsExpire",
     comment: "Yes,No",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eIsExpire: "Yes" | "No";
 
   @Column("timestamp", {
     name: "dExpiredDate",
-    default: () => "'0000-00-00 00:00:00'",
+    nullable: true,
   })
   dExpiredDate: Date;
 

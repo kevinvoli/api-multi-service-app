@@ -16,7 +16,7 @@ export class MenuItems {
   @Column("int", { name: "store", nullable: true })
   store: number | null;
 
-  @Column("int", { name: "iFoodMenuId", default: () => "'0'" })
+  @Column("int", { name: "iFoodMenuId", default: "0" })
   iFoodMenuId: number;
 
   @Column("varchar", { name: "vItemType_EN", length: 255 })
@@ -54,28 +54,28 @@ export class MenuItems {
   @Column("enum", {
     name: "eStatus",
     enum: ["Active", "Inactive", "Deleted"],
-    default: () => "'Active'",
+    default: "Active",
   })
   eStatus: "Active" | "Inactive" | "Deleted";
 
   @Column("enum", {
     name: "eAvailable",
     enum: ["Yes", "No"],
-    default: () => "'Yes'",
+    default: "Yes",
   })
   eAvailable: "Yes" | "No";
 
   @Column("enum", {
     name: "eBestSeller",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eBestSeller: "Yes" | "No";
 
   @Column("enum", {
     name: "eRecommended",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eRecommended: "Yes" | "No";
 
@@ -85,21 +85,21 @@ export class MenuItems {
   @Column("enum", {
     name: "prescription_required",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   prescriptionRequired: "Yes" | "No";
 
   @Column("enum", {
     name: "eImgDownload",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eImgDownload: "Yes" | "No";
 
   @Column("enum", {
     name: "eBuyAnyService",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eBuyAnyService: "Yes" | "No";
 

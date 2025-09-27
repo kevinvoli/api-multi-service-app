@@ -1,26 +1,44 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateLanguageLabelOtherDto } from './dto/create-language-label-other.dto';
 import { UpdateLanguageLabelOtherDto } from './dto/update-language-label-other.dto';
+import { LanguageLabelOther } from './entities/language-label-other.entity';
 
 @Injectable()
 export class LanguageLabelOtherService {
-  create(createLanguageLabelOtherDto: CreateLanguageLabelOtherDto) {
-    return 'This action adds a new languageLabelOther';
+  constructor(
+    @InjectRepository(LanguageLabelOther)
+    private readonly languageLabelOtherRepository: Repository<LanguageLabelOther>,
+  ) {}
+
+  create(createLanguageLabelOtherDto: CreateLanguageLabelOtherDto): Promise<LanguageLabelOther> {
+    const languageLabelOther = this.languageLabelOtherRepository.create(createLanguageLabelOtherDto);
+    return this.languageLabelOtherRepository.save(languageLabelOther);
   }
 
-  findAll() {
-    return `This action returns all languageLabelOther`;
+  findAll(): Promise<LanguageLabelOther[]> {
+    return this.languageLabelOtherRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} languageLabelOther`;
+  async findOne(id: number): Promise<LanguageLabelOther> {
+    const languageLabelOther = await this.languageLabelOtherRepository.findOne({ where: { languageLabelId: id } });
+    if (!languageLabelOther) {
+      throw new NotFoundException(`LanguageLabelOther with ID #${id} not found`);
+    }
+    return languageLabelOther;
   }
 
-  update(id: number, updateLanguageLabelOtherDto: UpdateLanguageLabelOtherDto) {
-    return `This action updates a #${id} languageLabelOther`;
+  async update(id: number, updateLanguageLabelOtherDto: UpdateLanguageLabelOtherDto): Promise<LanguageLabelOther> {
+    await this.findOne(id); // will throw error if not found
+    await this.languageLabelOtherRepository.update(id, updateLanguageLabelOtherDto);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} languageLabelOther`;
+  async remove(id: number): Promise<void> {
+    const result = await this.languageLabelOtherRepository.delete(id);
+    if (result.affected === 0) {
+      throw new NotFoundException(`LanguageLabelOther with ID #${id} not found`);
+    }
   }
 }

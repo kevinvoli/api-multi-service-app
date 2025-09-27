@@ -17,7 +17,7 @@ export class DriverVehicleServiceRequest {
   @Column("enum", {
     name: "cRequestStatus",
     enum: ["Pending", "Approve", "Cancel"],
-    default: () => "'Pending'",
+    default: "Pending",
   })
   cRequestStatus: "Pending" | "Approve" | "Cancel";
 

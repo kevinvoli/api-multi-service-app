@@ -32,7 +32,7 @@ export class LocationMaster {
       "Banner",
       "PromoCode",
     ],
-    default: () => "'Restrict'",
+    default: "Restrict",
   })
   eFor:
     | "Restrict"
@@ -47,7 +47,7 @@ export class LocationMaster {
   @Column("enum", {
     name: "eSiteDemo",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eSiteDemo: "Yes" | "No";
 

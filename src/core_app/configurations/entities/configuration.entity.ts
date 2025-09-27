@@ -38,7 +38,7 @@ export class Configurations {
       "Fly",
       "Bidding",
     ],
-    default: () => "''",
+    default: "",
   })
   eFor:
     | ""
@@ -72,7 +72,7 @@ export class Configurations {
       "Blocked",
       "Ride Share Settings",
     ],
-    default: () => "'General'",
+    default: "General",
   })
   eType:
     | "General"
@@ -99,7 +99,7 @@ export class Configurations {
   @Column("enum", {
     name: "eInputType",
     enum: ["Text", "Textarea", "Select", "Number", "NumericRange", "Time"],
-    default: () => "'Text'",
+    default: "Text",
   })
   eInputType:
     | "Text"
@@ -113,21 +113,21 @@ export class Configurations {
     name: "eZeroAllowed",
     comment: "This will take effect when eInputType is 'Number'",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eZeroAllowed: "Yes" | "No";
 
   @Column("enum", {
     name: "eSpaceAllowed",
     enum: ["Yes", "No"],
-    default: () => "'Yes'",
+    default: "Yes",
   })
   eSpaceAllowed: "Yes" | "No";
 
   @Column("enum", {
     name: "eDoubleValueAllowed",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eDoubleValueAllowed: "Yes" | "No";
 
@@ -137,7 +137,7 @@ export class Configurations {
   @Column("enum", {
     name: "eAdminDisplay",
     enum: ["Yes", "No"],
-    default: () => "'Yes'",
+    default: "Yes",
   })
   eAdminDisplay: "Yes" | "No";
 
@@ -145,21 +145,21 @@ export class Configurations {
     name: "eRequireField",
     comment: "Use For Setup Interface Only",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eRequireField: "Yes" | "No";
 
   @Column("enum", {
     name: "eConfigRequired",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eConfigRequired: "Yes" | "No";
 
   @Column("enum", {
     name: "eSensitive",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eSensitive: "Yes" | "No";
 

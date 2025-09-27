@@ -1,34 +1,35 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
 import { PaymentCustomerInfoService } from './payment-customer-info.service';
 import { CreatePaymentCustomerInfoDto } from './dto/create-payment-customer-info.dto';
 import { UpdatePaymentCustomerInfoDto } from './dto/update-payment-customer-info.dto';
+import { PaymentCustomerInfo } from './entities/payment-customer-info.entity';
 
 @Controller('payment-customer-info')
 export class PaymentCustomerInfoController {
   constructor(private readonly paymentCustomerInfoService: PaymentCustomerInfoService) {}
 
   @Post()
-  create(@Body() createPaymentCustomerInfoDto: CreatePaymentCustomerInfoDto) {
+  async create(@Body() createPaymentCustomerInfoDto: CreatePaymentCustomerInfoDto): Promise<PaymentCustomerInfo> {
     return this.paymentCustomerInfoService.create(createPaymentCustomerInfoDto);
   }
 
   @Get()
-  findAll() {
+  async findAll(): Promise<PaymentCustomerInfo[]> {
     return this.paymentCustomerInfoService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.paymentCustomerInfoService.findOne(+id);
+  async findOne(@Param('id', ParseIntPipe) id: number): Promise<PaymentCustomerInfo> {
+    return this.paymentCustomerInfoService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePaymentCustomerInfoDto: UpdatePaymentCustomerInfoDto) {
-    return this.paymentCustomerInfoService.update(+id, updatePaymentCustomerInfoDto);
+  async update(@Param('id', ParseIntPipe) id: number, @Body() updatePaymentCustomerInfoDto: UpdatePaymentCustomerInfoDto): Promise<PaymentCustomerInfo> {
+    return this.paymentCustomerInfoService.update(id, updatePaymentCustomerInfoDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.paymentCustomerInfoService.remove(+id);
+  async remove(@Param('id', ParseIntPipe) id: number): Promise<void> {
+    return this.paymentCustomerInfoService.remove(id);
   }
 }

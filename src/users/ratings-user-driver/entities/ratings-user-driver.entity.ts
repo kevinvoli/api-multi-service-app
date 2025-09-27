@@ -21,7 +21,7 @@ export class RatingsUserDriver {
     name: "eUserType",
     nullable: true,
     enum: ["Driver", "Passenger"],
-    default: () => "'Passenger'",
+    default: "Passenger",
   })
   eUserType: "Driver" | "Passenger" | null;
 
@@ -31,7 +31,7 @@ export class RatingsUserDriver {
   @Column("enum", {
     name: "eFromUserType",
     enum: ["Driver", "Passenger", "Company"],
-    default: () => "'Passenger'",
+    default: "Passenger",
   })
   eFromUserType: "Driver" | "Passenger" | "Company";
 
@@ -51,7 +51,7 @@ export class RatingsUserDriver {
   @Column("enum", {
     name: "eStatus",
     enum: ["Active", "Deleted"],
-    default: () => "'Active'",
+    default: "Active",
   })
   eStatus: "Active" | "Deleted";
 }

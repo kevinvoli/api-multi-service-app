@@ -23,7 +23,7 @@ export class SetupInfo {
       "Foodonly",
       "Deliverall",
     ],
-    default: () => "'Ride'",
+    default:"Ride",
   })
   eProductType:
     | "Ride"
@@ -38,7 +38,7 @@ export class SetupInfo {
   @Column("enum", {
     name: "eDeliveryType",
     enum: ["Single", "Multi", "NONE"],
-    default: () => "'NONE'",
+    default: "NONE",
   })
   eDeliveryType: "Single" | "Multi" | "NONE";
 
@@ -57,18 +57,18 @@ export class SetupInfo {
   @Column("enum", {
     name: "eSetupInfo",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eSetupInfo: "Yes" | "No";
 
-  @Column("enum", { name: "eLang", enum: ["Yes", "No"], default: () => "'No'" })
+  @Column("enum", { name: "eLang", enum: ["Yes", "No"], default: "No" })
   eLang: "Yes" | "No";
 
   @Column("enum", {
     name: "eLablesConverted",
     comment: "if labels are converted or not",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eLablesConverted: "Yes" | "No";
 
@@ -76,66 +76,66 @@ export class SetupInfo {
     name: "eAppTypeLabelChanged",
     comment: "like if delivery then replace rider to sender",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eAppTypeLabelChanged: "Yes" | "No";
 
   @Column("enum", {
     name: "eCurrency",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eCurrency: "Yes" | "No";
 
-  @Column("int", { name: "iCountryId", default: () => "'0'" })
+  @Column("int", { name: "iCountryId", default: "0" })
   iCountryId: number;
 
   @Column("enum", {
     name: "eConfiguration",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eConfiguration: "Yes" | "No";
 
   @Column("enum", {
     name: "eTableTruncate",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eTableTruncate: "Yes" | "No";
 
   @Column("enum", {
     name: "eExtraImagesRemoved",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+   default: "No",
   })
   eExtraImagesRemoved: "Yes" | "No";
 
   @Column("enum", {
     name: "eLablesAdded",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+   default: "No",
   })
   eLablesAdded: "Yes" | "No";
 
   @Column("enum", {
     name: "ePackageType",
     enum: ["", "standard", "enterprise", "shark"],
-    default: () => "'standard'",
+    default: "standard",
   })
   ePackageType: "" | "standard" | "enterprise" | "shark";
 
   @Column("enum", {
     name: "eEnableKiosk",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+   default: "No",
   })
   eEnableKiosk: "Yes" | "No";
 
   @Column("enum", {
     name: "eEnableHotel",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eEnableHotel: "Yes" | "No";
 
@@ -145,88 +145,88 @@ export class SetupInfo {
   @Column("enum", {
     name: "eCubeX",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default:"No",
   })
   eCubeX: "Yes" | "No";
 
   @Column("enum", {
     name: "eCubejekX",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eCubejekX: "Yes" | "No";
 
   @Column("enum", {
     name: "eRideX",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eRideX: "Yes" | "No";
 
   @Column("enum", {
     name: "eDeliverallX",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eDeliverallX: "Yes" | "No";
 
   @Column("enum", {
     name: "eFoodX",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eFoodX: "Yes" | "No";
 
   @Column("enum", {
     name: "eKingX",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eKingX: "Yes" | "No";
 
   @Column("varchar", {
     name: "vDeliverallIds",
     length: 50,
-    default: () => "'No'",
+    default: "No",
   })
   vDeliverallIds: string;
 
-  @Column("varchar", { name: "vServiceId", length: 5, default: () => "'No'" })
+  @Column("varchar", { name: "vServiceId", length: 5, default: "No",})
   vServiceId: string;
 
   @Column("enum", {
     name: "eConfigurationApplied",
     comment: "Yes,No",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eConfigurationApplied: "Yes" | "No";
 
   @Column("enum", {
     name: "eLanguageFieldsSetup",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eLanguageFieldsSetup: "Yes" | "No";
 
   @Column("enum", {
     name: "eCurrencyFieldsSetup",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eCurrencyFieldsSetup: "Yes" | "No";
 
   @Column("enum", {
     name: "eLanguageLabelConversion",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+     default: "No",
   })
   eLanguageLabelConversion: "Yes" | "No";
 
   @Column("enum", {
     name: "eOtherTableValueConversion",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+     default: "No",
   })
   eOtherTableValueConversion: "Yes" | "No";
 

@@ -1,34 +1,35 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
 import { MasterCurrencyService } from './master-currency.service';
 import { CreateMasterCurrencyDto } from './dto/create-master-currency.dto';
 import { UpdateMasterCurrencyDto } from './dto/update-master-currency.dto';
+import { MasterCurrency } from './entities/master-currency.entity';
 
 @Controller('master-currency')
 export class MasterCurrencyController {
   constructor(private readonly masterCurrencyService: MasterCurrencyService) {}
 
   @Post()
-  create(@Body() createMasterCurrencyDto: CreateMasterCurrencyDto) {
+  async create(@Body() createMasterCurrencyDto: CreateMasterCurrencyDto): Promise<MasterCurrency> {
     return this.masterCurrencyService.create(createMasterCurrencyDto);
   }
 
   @Get()
-  findAll() {
+  async findAll(): Promise<MasterCurrency[]> {
     return this.masterCurrencyService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.masterCurrencyService.findOne(+id);
+  async findOne(@Param('id', ParseIntPipe) id: number): Promise<MasterCurrency> {
+    return this.masterCurrencyService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMasterCurrencyDto: UpdateMasterCurrencyDto) {
-    return this.masterCurrencyService.update(+id, updateMasterCurrencyDto);
+  async update(@Param('id', ParseIntPipe) id: number, @Body() updateMasterCurrencyDto: UpdateMasterCurrencyDto): Promise<MasterCurrency> {
+    return this.masterCurrencyService.update(id, updateMasterCurrencyDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.masterCurrencyService.remove(+id);
+  async remove(@Param('id', ParseIntPipe) id: number): Promise<void> {
+    return this.masterCurrencyService.remove(id);
   }
 }

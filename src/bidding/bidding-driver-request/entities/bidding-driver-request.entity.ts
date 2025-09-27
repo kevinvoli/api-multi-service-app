@@ -11,7 +11,7 @@ export class BiddingDriverRequest {
   @Column("enum", {
     name: "eRequestStatus",
     enum: ["Pending", "Approve", "Cancel"],
-    default: () => "'Pending'",
+    default: "Pending",
   })
   eRequestStatus: "Pending" | "Approve" | "Cancel";
 

@@ -16,7 +16,7 @@ export class DriverLogReport {
 
   @Column("timestamp", {
     name: "dLogoutDateTime",
-    default: () => "'0000-00-00 00:00:00'",
+    nullable:true,
   })
   dLogoutDateTime: Date;
 

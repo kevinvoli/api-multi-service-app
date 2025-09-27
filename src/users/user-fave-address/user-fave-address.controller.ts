@@ -8,27 +8,27 @@ export class UserFaveAddressController {
   constructor(private readonly userFaveAddressService: UserFaveAddressService) {}
 
   @Post()
-  create(@Body() createUserFaveAddressDto: CreateUserFaveAddressDto) {
-    return this.userFaveAddressService.create(createUserFaveAddressDto);
+  async create(@Body() createUserFaveAddressDto: CreateUserFaveAddressDto) {
+    return await this.userFaveAddressService.create(createUserFaveAddressDto);
   }
 
   @Get()
-  findAll() {
-    return this.userFaveAddressService.findAll();
+  async findAll() {
+    return await this.userFaveAddressService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userFaveAddressService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.userFaveAddressService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserFaveAddressDto: UpdateUserFaveAddressDto) {
-    return this.userFaveAddressService.update(+id, updateUserFaveAddressDto);
+  async update(@Param('id') id: string, @Body() updateUserFaveAddressDto: UpdateUserFaveAddressDto) {
+    return await this.userFaveAddressService.update(+id, updateUserFaveAddressDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userFaveAddressService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.userFaveAddressService.remove(+id);
   }
 }

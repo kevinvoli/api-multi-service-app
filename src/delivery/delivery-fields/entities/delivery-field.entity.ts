@@ -30,28 +30,28 @@ export class DeliveryFields {
   @Column("enum", {
     name: "eAllowFloat",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eAllowFloat: "Yes" | "No";
 
   @Column("enum", {
     name: "eStatus",
     enum: ["Active", "Inactive"],
-    default: () => "'Active'",
+    default: "Active",
   })
   eStatus: "Active" | "Inactive";
 
   @Column("enum", {
     name: "eRequired",
     enum: ["Yes", "No"],
-    default: () => "'Yes'",
+    default: "Yes",
   })
   eRequired: "Yes" | "No";
 
   @Column("enum", {
     name: "eEditable",
     enum: ["Yes", "No"],
-    default: () => "'Yes'",
+    default: "Yes",
   })
   eEditable: "Yes" | "No";
 }

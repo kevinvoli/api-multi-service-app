@@ -22,7 +22,7 @@ export class PrescriptionImages {
 
   @Column("timestamp", {
     name: "tModifiedDate",
-    default: () => "'0000-00-00 00:00:00'",
+    nullable:true,
   })
   tModifiedDate: Date;
 
@@ -30,7 +30,7 @@ export class PrescriptionImages {
     name: "eStatus",
     comment: "Active,Inactive",
     enum: ["Active", "Inactive"],
-    default: () => "'Active'",
+    default: "Active",
   })
   eStatus: "Active" | "Inactive";
 

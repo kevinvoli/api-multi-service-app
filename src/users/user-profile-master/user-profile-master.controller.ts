@@ -8,27 +8,27 @@ export class UserProfileMasterController {
   constructor(private readonly userProfileMasterService: UserProfileMasterService) {}
 
   @Post()
-  create(@Body() createUserProfileMasterDto: CreateUserProfileMasterDto) {
-    return this.userProfileMasterService.create(createUserProfileMasterDto);
+  async create(@Body() createUserProfileMasterDto: CreateUserProfileMasterDto) {
+    return await this.userProfileMasterService.create(createUserProfileMasterDto);
   }
 
   @Get()
-  findAll() {
-    return this.userProfileMasterService.findAll();
+  async findAll() {
+    return await this.userProfileMasterService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userProfileMasterService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.userProfileMasterService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserProfileMasterDto: UpdateUserProfileMasterDto) {
-    return this.userProfileMasterService.update(+id, updateUserProfileMasterDto);
+  async update(@Param('id') id: string, @Body() updateUserProfileMasterDto: UpdateUserProfileMasterDto) {
+    return await this.userProfileMasterService.update(+id, updateUserProfileMasterDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userProfileMasterService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.userProfileMasterService.remove(+id);
   }
 }

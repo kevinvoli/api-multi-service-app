@@ -11,14 +11,14 @@ export class DataStorageEngine {
   @Column("enum", {
     name: "eStorageEngine",
     enum: ["MyISAM", "InnoDB"],
-    default: () => "'MyISAM'",
+    default: "MyISAM",
   })
   eStorageEngine: "MyISAM" | "InnoDB";
 
   @Column("enum", {
     name: "eConvertedStorageEngine",
     enum: ["MyISAM", "InnoDB"],
-    default: () => "'MyISAM'",
+    default: "MyISAM",
   })
   eConvertedStorageEngine: "MyISAM" | "InnoDB";
 }

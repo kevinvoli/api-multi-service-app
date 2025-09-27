@@ -1,26 +1,49 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreatePaymentModelUserLogDto } from './dto/create-payment-model-user-log.dto';
 import { UpdatePaymentModelUserLogDto } from './dto/update-payment-model-user-log.dto';
+import { PaymentModeUserLog } from './entities/payment-model-user-log.entity';
 
 @Injectable()
 export class PaymentModelUserLogService {
-  create(createPaymentModelUserLogDto: CreatePaymentModelUserLogDto) {
-    return 'This action adds a new paymentModelUserLog';
+  constructor(
+    @InjectRepository(PaymentModeUserLog)
+    private readonly paymentModelUserLogRepository: Repository<PaymentModeUserLog>,
+  ) {}
+
+  async create(createPaymentModelUserLogDto: CreatePaymentModelUserLogDto): Promise<PaymentModeUserLog> {
+    const paymentModelUserLog = this.paymentModelUserLogRepository.create(createPaymentModelUserLogDto);
+    return this.paymentModelUserLogRepository.save(paymentModelUserLog);
   }
 
-  findAll() {
-    return `This action returns all paymentModelUserLog`;
+  async findAll(): Promise<PaymentModeUserLog[]> {
+    return this.paymentModelUserLogRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} paymentModelUserLog`;
+  async findOne(id: number): Promise<PaymentModeUserLog> {
+    const paymentModelUserLog = await this.paymentModelUserLogRepository.findOne({ where: { iLogId: id } });
+    if (!paymentModelUserLog) {
+      throw new NotFoundException(`PaymentModelUserLog with ID #${id} not found`);
+    }
+    return paymentModelUserLog;
   }
 
-  update(id: number, updatePaymentModelUserLogDto: UpdatePaymentModelUserLogDto) {
-    return `This action updates a #${id} paymentModelUserLog`;
+  async update(id: number, updatePaymentModelUserLogDto: UpdatePaymentModelUserLogDto): Promise<PaymentModeUserLog> {
+    const paymentModelUserLog = await this.paymentModelUserLogRepository.preload({
+      iLogId: id,
+      ...updatePaymentModelUserLogDto,
+    });
+    if (!paymentModelUserLog) {
+      throw new NotFoundException(`PaymentModelUserLog with ID #${id} not found`);
+    }
+    return this.paymentModelUserLogRepository.save(paymentModelUserLog);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} paymentModelUserLog`;
+  async remove(id: number): Promise<void> {
+    const result = await this.paymentModelUserLogRepository.delete(id);
+    if (result.affected === 0) {
+      throw new NotFoundException(`PaymentModelUserLog with ID #${id} not found`);
+    }
   }
 }

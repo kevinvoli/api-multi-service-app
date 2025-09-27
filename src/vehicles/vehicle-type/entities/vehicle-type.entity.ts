@@ -5,7 +5,7 @@ export class VehicleType {
   @PrimaryGeneratedColumn({ type: "int", name: "iVehicleTypeId" })
   iVehicleTypeId: number;
 
-  @Column("int", { name: "iVehicleCategoryId", default: () => "'0'" })
+  @Column("int", { name: "iVehicleCategoryId", default: "0" })
   iVehicleCategoryId: number;
 
   @Column("int", { name: "iLocationid", default: () => "'-1'" })
@@ -44,7 +44,7 @@ export class VehicleType {
   @Column("enum", {
     name: "eFareType",
     enum: ["Regular", "Fixed", "Hourly"],
-    default: () => "'Fixed'",
+    default: "Fixed",
   })
   eFareType: "Regular" | "Fixed" | "Hourly";
 
@@ -107,14 +107,14 @@ export class VehicleType {
   @Column("enum", {
     name: "ePickStatus",
     enum: ["Active", "Inactive"],
-    default: () => "'Inactive'",
+    default: "Inactive",
   })
   ePickStatus: "Active" | "Inactive";
 
   @Column("enum", {
     name: "eNightStatus",
     enum: ["Active", "Inactive"],
-    default: () => "'Inactive'",
+    default: "Inactive",
   })
   eNightStatus: "Active" | "Inactive";
 
@@ -142,14 +142,14 @@ export class VehicleType {
   @Column("enum", {
     name: "eType",
     enum: ["Ride", "Deliver", "UberX", "DeliverAll"],
-    default: () => "'UberX'",
+    default: "UberX",
   })
   eType: "Ride" | "Deliver" | "UberX" | "DeliverAll";
 
   @Column("enum", {
     name: "eIconType",
     enum: ["Car", "Bike", "Cycle", "Truck", "Fly"],
-    default: () => "'Car'",
+    default: "Car",
   })
   eIconType: "Car" | "Bike" | "Cycle" | "Truck" | "Fly";
 
@@ -261,7 +261,7 @@ export class VehicleType {
   @Column("enum", {
     name: "eAllowQty",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eAllowQty: "Yes" | "No";
 
@@ -285,7 +285,7 @@ export class VehicleType {
   @Column("enum", {
     name: "eStatus",
     enum: ["Active", "Inactive", "Deleted"],
-    default: () => "'Active'",
+    default: "Active",
   })
   eStatus: "Active" | "Inactive" | "Deleted";
 
@@ -333,7 +333,7 @@ export class VehicleType {
   @Column("enum", {
     name: "ePoolStatus",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   ePoolStatus: "Yes" | "No";
 
@@ -353,7 +353,7 @@ export class VehicleType {
     comment:
       "This field is only for delivery vehicle types. This is just for identification between single delivery vehicle types and multi delivery vehicle types.",
     enum: ["", "Single", "Multi"],
-    default: () => "''",
+    default: "",
   })
   eDeliveryType: "" | "Single" | "Multi";
 
@@ -367,7 +367,7 @@ export class VehicleType {
   })
   fBufferAmount: number;
 
-  @Column("enum", { name: "eFly", enum: ["1", "0"], default: () => "'0'" })
+  @Column("enum", { name: "eFly", enum: ["1", "0"], default: "0" })
   eFly: "1" | "0";
 
   @Column("text", { name: "tInfoText" })
@@ -376,14 +376,14 @@ export class VehicleType {
   @Column("enum", {
     name: "eFareCalcModel",
     enum: ["Fixed", "Incremental"],
-    default: () => "'Incremental'",
+    default: "Incremental",
   })
   eFareCalcModel: "Fixed" | "Incremental";
 
   @Column("enum", {
     name: "eDeliveryHelper",
     enum: ["No", "Yes"],
-    default: () => "'No'",
+    default: "No",
   })
   eDeliveryHelper: "No" | "Yes";
 

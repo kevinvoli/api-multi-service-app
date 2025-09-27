@@ -10,7 +10,7 @@ export class OrderStatus {
     name: "vStatus_Track",
     unique: true,
     length: 255,
-    default: () => "''",
+    default: "",
   })
   vStatusTrack: string;
 
@@ -41,7 +41,7 @@ export class OrderStatus {
   @Column("enum", {
     name: "eBuyAnyService",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eBuyAnyService: "Yes" | "No";
 }

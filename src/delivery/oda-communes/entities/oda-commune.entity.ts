@@ -20,7 +20,7 @@ export class OdaCommunes {
     name: "eStatus",
     nullable: true,
     enum: ["Active", "Inactive"],
-    default: () => "'Active'",
+    default: "Active",
   })
   eStatus: "Active" | "Inactive" | null;
 }

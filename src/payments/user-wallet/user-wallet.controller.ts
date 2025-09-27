@@ -1,34 +1,35 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
 import { UserWalletService } from './user-wallet.service';
 import { CreateUserWalletDto } from './dto/create-user-wallet.dto';
 import { UpdateUserWalletDto } from './dto/update-user-wallet.dto';
+import { UserWallet } from './entities/user-wallet.entity';
 
 @Controller('user-wallet')
 export class UserWalletController {
   constructor(private readonly userWalletService: UserWalletService) {}
 
   @Post()
-  create(@Body() createUserWalletDto: CreateUserWalletDto) {
+  async create(@Body() createUserWalletDto: CreateUserWalletDto): Promise<UserWallet> {
     return this.userWalletService.create(createUserWalletDto);
   }
 
   @Get()
-  findAll() {
+  async findAll(): Promise<UserWallet[]> {
     return this.userWalletService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userWalletService.findOne(+id);
+  async findOne(@Param('id', ParseIntPipe) id: number): Promise<UserWallet> {
+    return this.userWalletService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserWalletDto: UpdateUserWalletDto) {
-    return this.userWalletService.update(+id, updateUserWalletDto);
+  async update(@Param('id', ParseIntPipe) id: number, @Body() updateUserWalletDto: UpdateUserWalletDto): Promise<UserWallet> {
+    return this.userWalletService.update(id, updateUserWalletDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userWalletService.remove(+id);
+  async remove(@Param('id', ParseIntPipe) id: number): Promise<void> {
+    return this.userWalletService.remove(id);
   }
 }

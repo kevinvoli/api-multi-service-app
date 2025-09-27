@@ -17,7 +17,7 @@ export class LanguageMaster {
   @Column("varchar", {
     name: "vGMapLangCode",
     length: 5,
-    default: () => "'en'",
+    default: "en",
   })
   vGMapLangCode: string;
 
@@ -36,21 +36,21 @@ export class LanguageMaster {
   @Column("enum", {
     name: "eStatus",
     enum: ["Active", "Inactive"],
-    default: () => "'Active'",
+    default: "Active",
   })
   eStatus: "Active" | "Inactive";
 
   @Column("enum", {
     name: "eDefault",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eDefault: "Yes" | "No";
 
   @Column("enum", {
     name: "eDirectionCode",
     enum: ["rtl", "ltr"],
-    default: () => "'ltr'",
+    default: "ltr",
   })
   eDirectionCode: "rtl" | "ltr";
 }

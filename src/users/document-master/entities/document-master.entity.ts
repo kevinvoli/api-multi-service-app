@@ -23,7 +23,7 @@ export class DocumentMaster {
   @Column("enum", {
     name: "status",
     enum: ["Active", "Inactive", "Deleted"],
-    default: () => "'Active'",
+    default: "Active",
   })
   status: "Active" | "Inactive" | "Deleted";
 
@@ -42,18 +42,18 @@ export class DocumentMaster {
   @Column("enum", {
     name: "eType",
     enum: ["Ride", "Delivery", "UberX"],
-    default: () => "'Ride'",
+    default: "Ride",
   })
   eType: "Ride" | "Delivery" | "UberX";
 
   @Column("enum", {
     name: "eDocServiceType",
     enum: ["General", "ServiceSpecific", "BiddingSpecific"],
-    default: () => "'General'",
+    default: "General",
   })
   eDocServiceType: "General" | "ServiceSpecific" | "BiddingSpecific";
 
-  @Column("int", { name: "iVehicleCategoryId", default: () => "'0'" })
+  @Column("int", { name: "iVehicleCategoryId", default: "0" })
   iVehicleCategoryId: number;
 
   @Column("int", { name: "iDisplayOrder", default: () => "'1'" })

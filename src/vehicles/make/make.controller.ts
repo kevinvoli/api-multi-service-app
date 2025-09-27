@@ -8,27 +8,27 @@ export class MakeController {
   constructor(private readonly makeService: MakeService) {}
 
   @Post()
-  create(@Body() createMakeDto: CreateMakeDto) {
-    return this.makeService.create(createMakeDto);
+  async create(@Body() createMakeDto: CreateMakeDto) {
+    return await this.makeService.create(createMakeDto);
   }
 
   @Get()
-  findAll() {
-    return this.makeService.findAll();
+  async findAll() {
+    return await this.makeService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.makeService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.makeService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMakeDto: UpdateMakeDto) {
-    return this.makeService.update(+id, updateMakeDto);
+  async update(@Param('id') id: string, @Body() updateMakeDto: UpdateMakeDto) {
+    return await this.makeService.update(+id, updateMakeDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.makeService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.makeService.remove(+id);
   }
 }

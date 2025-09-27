@@ -1,4 +1,3 @@
-export class PaymentTransaction {}
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("payment_transactions", { schema: "amygo1" })
@@ -18,7 +17,7 @@ export class PaymentTransactions {
   @Column("enum", {
     name: "eResponseReceived",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eResponseReceived: "Yes" | "No";
 
@@ -28,7 +27,7 @@ export class PaymentTransactions {
   @Column("enum", {
     name: "eStatus",
     enum: ["INITIATED", "PENDING", "EXPIRED", "SUCCESS", "FAILED"],
-    default: () => "'INITIATED'",
+    default: "INITIATED",
   })
   eStatus: "INITIATED" | "PENDING" | "EXPIRED" | "SUCCESS" | "FAILED";
 }

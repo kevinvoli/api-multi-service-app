@@ -8,27 +8,27 @@ export class RegisterUserController {
   constructor(private readonly registerUserService: RegisterUserService) {}
 
   @Post()
-  create(@Body() createRegisterUserDto: CreateRegisterUserDto) {
-    return this.registerUserService.create(createRegisterUserDto);
+  async create(@Body() createRegisterUserDto: CreateRegisterUserDto) {
+    return await this.registerUserService.create(createRegisterUserDto);
   }
 
   @Get()
-  findAll() {
-    return this.registerUserService.findAll();
+  async findAll() {
+    return await this.registerUserService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.registerUserService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.registerUserService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateRegisterUserDto: UpdateRegisterUserDto) {
-    return this.registerUserService.update(+id, updateRegisterUserDto);
+  async update(@Param('id') id: string, @Body() updateRegisterUserDto: UpdateRegisterUserDto) {
+    return await this.registerUserService.update(+id, updateRegisterUserDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.registerUserService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.registerUserService.remove(+id);
   }
 }

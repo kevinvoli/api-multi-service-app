@@ -8,27 +8,27 @@ export class DriverPreferencesController {
   constructor(private readonly driverPreferencesService: DriverPreferencesService) {}
 
   @Post()
-  create(@Body() createDriverPreferenceDto: CreateDriverPreferenceDto) {
-    return this.driverPreferencesService.create(createDriverPreferenceDto);
+  async create(@Body() createDriverPreferenceDto: CreateDriverPreferenceDto) {
+    return await this.driverPreferencesService.create(createDriverPreferenceDto);
   }
 
   @Get()
-  findAll() {
-    return this.driverPreferencesService.findAll();
+  async findAll() {
+    return await this.driverPreferencesService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.driverPreferencesService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.driverPreferencesService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDriverPreferenceDto: UpdateDriverPreferenceDto) {
-    return this.driverPreferencesService.update(+id, updateDriverPreferenceDto);
+  async update(@Param('id') id: string, @Body() updateDriverPreferenceDto: UpdateDriverPreferenceDto) {
+    return await this.driverPreferencesService.update(+id, updateDriverPreferenceDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.driverPreferencesService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.driverPreferencesService.remove(+id);
   }
 }

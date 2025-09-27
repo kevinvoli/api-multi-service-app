@@ -11,7 +11,7 @@ export class BackupDatabase {
   @Column("enum", {
     name: "eType",
     enum: ["Manual", "Auto"],
-    default: () => "'Auto'",
+    default: "Auto",
   })
   eType: "Manual" | "Auto";
 

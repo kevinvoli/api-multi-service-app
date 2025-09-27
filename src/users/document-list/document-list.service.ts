@@ -1,26 +1,47 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateDocumentListDto } from './dto/create-document-list.dto';
 import { UpdateDocumentListDto } from './dto/update-document-list.dto';
+import { DocumentList } from './entities/document-list.entity';
 
 @Injectable()
 export class DocumentListService {
-  create(createDocumentListDto: CreateDocumentListDto) {
-    return 'This action adds a new documentList';
+  constructor(
+    @InjectRepository(DocumentList)
+    private readonly documentListRepository: Repository<DocumentList>,
+  ) {}
+  async create(createDocumentListDto: CreateDocumentListDto): Promise<DocumentList> {
+    const newDoc = this.documentListRepository.create(createDocumentListDto);
+    return await this.documentListRepository.save(newDoc);
   }
 
-  findAll() {
-    return `This action returns all documentList`;
+  async findAll(): Promise<DocumentList[]> {
+    return await this.documentListRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} documentList`;
+  async findOne(id: number): Promise<DocumentList> {
+    const doc = await this.documentListRepository.findOne({ where: { docId: id } });
+    if (!doc) {
+      throw new NotFoundException(`Document with ID "${id}" not found`);
+    }
+    return doc;
   }
 
-  update(id: number, updateDocumentListDto: UpdateDocumentListDto) {
-    return `This action updates a #${id} documentList`;
+  async update(id: number, updateDocumentListDto: UpdateDocumentListDto): Promise<DocumentList> {
+    const doc = await this.documentListRepository.preload({
+      docId: id,
+      ...updateDocumentListDto,
+    });
+    if (!doc) {
+      throw new NotFoundException(`Document with ID "${id}" not found`);
+    }
+    return this.documentListRepository.save(doc);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} documentList`;
+  async remove(id: number): Promise<DocumentList> {
+    const doc = await this.findOne(id);
+    doc.status = 'Deleted';
+    return await this.documentListRepository.save(doc);
   }
 }

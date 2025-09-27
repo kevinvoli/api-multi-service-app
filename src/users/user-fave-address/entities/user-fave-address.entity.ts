@@ -33,14 +33,14 @@ export class UserFaveAddress {
   @Column("enum", {
     name: "eType",
     enum: ["Home", "Work"],
-    default: () => "'Home'",
+    default: "Home",
   })
   eType: "Home" | "Work";
 
   @Column("enum", {
     name: "eStatus",
     enum: ["Active", "Inactive", "Deleted"],
-    default: () => "'Active'",
+    default: "Active",
   })
   eStatus: "Active" | "Inactive" | "Deleted";
 }

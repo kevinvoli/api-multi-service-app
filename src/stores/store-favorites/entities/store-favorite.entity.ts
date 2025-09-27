@@ -17,7 +17,7 @@ export class StoreFavorites {
   @Column("enum", {
     name: "eFavStore",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eFavStore: "Yes" | "No";
 }

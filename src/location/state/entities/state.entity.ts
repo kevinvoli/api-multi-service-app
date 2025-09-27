@@ -5,7 +5,7 @@ export class State {
   @PrimaryGeneratedColumn({ type: "int", name: "iStateId" })
   iStateId: number;
 
-  @Column("int", { name: "iCountryId", default: () => "'0'" })
+  @Column("int", { name: "iCountryId", default: "0" })
   iCountryId: number;
 
   @Column("varchar", { name: "vStateCode", length: 32, default: () => "''" })
@@ -17,7 +17,7 @@ export class State {
   @Column("enum", {
     name: "eStatus",
     enum: ["Active", "Inactive", "Deleted"],
-    default: () => "'Active'",
+    default: "Active",
   })
   eStatus: "Active" | "Inactive" | "Deleted";
 }

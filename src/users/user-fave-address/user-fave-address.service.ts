@@ -1,26 +1,49 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateUserFaveAddressDto } from './dto/create-user-fave-address.dto';
 import { UpdateUserFaveAddressDto } from './dto/update-user-fave-address.dto';
+import { UserFaveAddress } from './entities/user-fave-address.entity';
 
 @Injectable()
 export class UserFaveAddressService {
-  create(createUserFaveAddressDto: CreateUserFaveAddressDto) {
-    return 'This action adds a new userFaveAddress';
+  constructor(
+    @InjectRepository(UserFaveAddress)
+    private readonly userFaveAddressRepository: Repository<UserFaveAddress>,
+  ) {}
+  async create(createUserFaveAddressDto: CreateUserFaveAddressDto): Promise<UserFaveAddress> {
+    const newFaveAddress = this.userFaveAddressRepository.create({
+      ...createUserFaveAddressDto,
+      dAddedDate: new Date(),
+    });
+    return await this.userFaveAddressRepository.save(newFaveAddress);
   }
 
-  findAll() {
-    return `This action returns all userFaveAddress`;
+  async findAll(): Promise<UserFaveAddress[]> {
+    return await this.userFaveAddressRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} userFaveAddress`;
+  async findOne(id: number): Promise<UserFaveAddress> {
+    const faveAddress = await this.userFaveAddressRepository.findOne({ where: { iUserFavAddressId: id } });
+    if (!faveAddress) {
+      throw new NotFoundException(`Favorite address with ID "${id}" not found`);
+    }
+    return faveAddress;
   }
 
-  update(id: number, updateUserFaveAddressDto: UpdateUserFaveAddressDto) {
-    return `This action updates a #${id} userFaveAddress`;
+  async update(id: number, updateUserFaveAddressDto: UpdateUserFaveAddressDto): Promise<UserFaveAddress> {
+    const faveAddress = await this.userFaveAddressRepository.preload({
+      iUserFavAddressId: id,
+      ...updateUserFaveAddressDto,
+    });
+    if (!faveAddress) {
+      throw new NotFoundException(`Favorite address with ID "${id}" not found`);
+    }
+    return await this.userFaveAddressRepository.save(faveAddress);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} userFaveAddress`;
+  async remove(id: number): Promise<UserFaveAddress> {
+    const faveAddress = await this.findOne(id);
+    return await this.userFaveAddressRepository.remove(faveAddress);
   }
 }

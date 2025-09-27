@@ -14,7 +14,7 @@ export class Payments {
   @Column("enum", {
     name: "ePaymentDriverStatus",
     enum: ["Paid", "UnPaid"],
-    default: () => "'UnPaid'",
+    default: "UnPaid",
   })
   ePaymentDriverStatus: "Paid" | "UnPaid";
 
@@ -27,16 +27,16 @@ export class Payments {
   @Column("int", { name: "iOrderId" })
   iOrderId: number;
 
-  @Column("float", { name: "fCommision", precision: 12, default: () => "'0'" })
+  @Column("float", { name: "fCommision", precision: 12, default: "0" })
   fCommision: number;
 
-  @Column("float", { name: "iAmountUser", precision: 12, default: () => "'0'" })
+  @Column("float", { name: "iAmountUser", precision: 12, default: "0" })
   iAmountUser: number;
 
   @Column("float", {
     name: "iAmountDriver",
     precision: 12,
-    default: () => "'0'",
+    default: "0",
   })
   iAmountDriver: number;
 

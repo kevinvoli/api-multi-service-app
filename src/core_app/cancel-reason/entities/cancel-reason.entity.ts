@@ -14,7 +14,7 @@ export class CancelReason {
   @Column("enum", {
     name: "eStatus",
     enum: ["Active", "Inactive", "Deleted"],
-    default: () => "'Active'",
+    default: "Active",
   })
   eStatus: "Active" | "Inactive" | "Deleted";
 
@@ -22,7 +22,7 @@ export class CancelReason {
     name: "eAllowedCharge",
     comment: "allow passenger to charge extra money as per vehicle_type",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default:  "No",
   })
   eAllowedCharge: "Yes" | "No";
 
@@ -35,17 +35,17 @@ export class CancelReason {
   @Column("enum", {
     name: "eType",
     enum: ["Ride", "Deliver", "UberX", "DeliverAll", "Bidding"],
-    default: () => "'DeliverAll'",
+    default: "DeliverAll",
   })
   eType: "Ride" | "Deliver" | "UberX" | "DeliverAll" | "Bidding";
 
   @Column("enum", {
     name: "eFor",
     enum: ["General", "Passenger", "Driver", "Company"],
-    default: () => "'General'",
+    default: "General",
   })
   eFor: "General" | "Passenger" | "Driver" | "Company";
 
-  @Column("enum", { name: "eFly", enum: ["1", "0"], default: () => "'0'" })
+  @Column("enum", { name: "eFly", enum: ["1", "0"], default:"0" })
   eFly: "1" | "0";
 }

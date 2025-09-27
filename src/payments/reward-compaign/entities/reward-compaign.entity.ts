@@ -17,14 +17,14 @@ export class RewardCampaign {
   @Column("enum", {
     name: "eStatus",
     enum: ["Active", "Inactive", "Cancelled", "Expired", "Deleted"],
-    default: () => "'Inactive'",
+    default: "Inactive",
   })
   eStatus: "Active" | "Inactive" | "Cancelled" | "Expired" | "Deleted";
 
   @Column("enum", {
     name: "eCurrentActive",
     enum: ["No", "Yes"],
-    default: () => "'No'",
+    default: "No",
   })
   eCurrentActive: "No" | "Yes";
 }

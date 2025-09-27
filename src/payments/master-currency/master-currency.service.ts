@@ -1,26 +1,49 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateMasterCurrencyDto } from './dto/create-master-currency.dto';
 import { UpdateMasterCurrencyDto } from './dto/update-master-currency.dto';
+import { MasterCurrency } from './entities/master-currency.entity';
 
 @Injectable()
 export class MasterCurrencyService {
-  create(createMasterCurrencyDto: CreateMasterCurrencyDto) {
-    return 'This action adds a new masterCurrency';
+  constructor(
+    @InjectRepository(MasterCurrency)
+    private readonly masterCurrencyRepository: Repository<MasterCurrency>,
+  ) {}
+
+  async create(createMasterCurrencyDto: CreateMasterCurrencyDto): Promise<MasterCurrency> {
+    const masterCurrency = this.masterCurrencyRepository.create(createMasterCurrencyDto);
+    return this.masterCurrencyRepository.save(masterCurrency);
   }
 
-  findAll() {
-    return `This action returns all masterCurrency`;
+  async findAll(): Promise<MasterCurrency[]> {
+    return this.masterCurrencyRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} masterCurrency`;
+  async findOne(id: number): Promise<MasterCurrency> {
+    const masterCurrency = await this.masterCurrencyRepository.findOne({ where: { iCurrencyId: id } });
+    if (!masterCurrency) {
+      throw new NotFoundException(`MasterCurrency with ID #${id} not found`);
+    }
+    return masterCurrency;
   }
 
-  update(id: number, updateMasterCurrencyDto: UpdateMasterCurrencyDto) {
-    return `This action updates a #${id} masterCurrency`;
+  async update(id: number, updateMasterCurrencyDto: UpdateMasterCurrencyDto): Promise<MasterCurrency> {
+    const masterCurrency = await this.masterCurrencyRepository.preload({
+      iCurrencyId: id,
+      ...updateMasterCurrencyDto,
+    });
+    if (!masterCurrency) {
+      throw new NotFoundException(`MasterCurrency with ID #${id} not found`);
+    }
+    return this.masterCurrencyRepository.save(masterCurrency);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} masterCurrency`;
+  async remove(id: number): Promise<void> {
+    const result = await this.masterCurrencyRepository.delete(id);
+    if (result.affected === 0) {
+      throw new NotFoundException(`MasterCurrency with ID #${id} not found`);
+    }
   }
 }

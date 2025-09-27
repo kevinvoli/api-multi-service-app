@@ -24,14 +24,14 @@ export class MenuitemOptions {
   @Column("enum", {
     name: "eDefault",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eDefault: "Yes" | "No";
 
   @Column("enum", {
     name: "eStatus",
     enum: ["Active", "Inactive"],
-    default: () => "'Active'",
+    default: "Active",
   })
   eStatus: "Active" | "Inactive";
 

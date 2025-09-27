@@ -8,27 +8,27 @@ export class DriverFavoritesController {
   constructor(private readonly driverFavoritesService: DriverFavoritesService) {}
 
   @Post()
-  create(@Body() createDriverFavoriteDto: CreateDriverFavoriteDto) {
-    return this.driverFavoritesService.create(createDriverFavoriteDto);
+  async create(@Body() createDriverFavoriteDto: CreateDriverFavoriteDto) {
+    return await this.driverFavoritesService.create(createDriverFavoriteDto);
   }
 
   @Get()
-  findAll() {
-    return this.driverFavoritesService.findAll();
+  async findAll() {
+    return await this.driverFavoritesService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.driverFavoritesService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.driverFavoritesService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDriverFavoriteDto: UpdateDriverFavoriteDto) {
-    return this.driverFavoritesService.update(+id, updateDriverFavoriteDto);
+  async update(@Param('id') id: string, @Body() updateDriverFavoriteDto: UpdateDriverFavoriteDto) {
+    return await this.driverFavoritesService.update(+id, updateDriverFavoriteDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.driverFavoritesService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.driverFavoritesService.remove(+id);
   }
 }

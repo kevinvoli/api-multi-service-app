@@ -1,26 +1,49 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { DriverBiddingRequest } from './entities/driver-bidding-request.entity';
 import { CreateDriverBiddingRequestDto } from './dto/create-driver-bidding-request.dto';
 import { UpdateDriverBiddingRequestDto } from './dto/update-driver-bidding-request.dto';
 
 @Injectable()
 export class DriverBiddingRequestService {
-  create(createDriverBiddingRequestDto: CreateDriverBiddingRequestDto) {
-    return 'This action adds a new driverBiddingRequest';
+  constructor(
+    @InjectRepository(DriverBiddingRequest)
+    private readonly requestRepository: Repository<DriverBiddingRequest>,
+  ) {}
+
+  create(createDriverBiddingRequestDto: CreateDriverBiddingRequestDto): Promise<DriverBiddingRequest> {
+    const newRequest = this.requestRepository.create(createDriverBiddingRequestDto);
+    return this.requestRepository.save(newRequest);
   }
 
-  findAll() {
-    return `This action returns all driverBiddingRequest`;
+  findAll(): Promise<DriverBiddingRequest[]> {
+    return this.requestRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} driverBiddingRequest`;
+  async findOne(id: number): Promise<DriverBiddingRequest> {
+    const request = await this.requestRepository.findOne({ where: { iRequestId: id } });
+    if (!request) {
+      throw new NotFoundException(`DriverBiddingRequest with ID #${id} not found`);
+    }
+    return request;
   }
 
-  update(id: number, updateDriverBiddingRequestDto: UpdateDriverBiddingRequestDto) {
-    return `This action updates a #${id} driverBiddingRequest`;
+  async update(id: number, updateDriverBiddingRequestDto: UpdateDriverBiddingRequestDto): Promise<DriverBiddingRequest> {
+    const request = await this.requestRepository.preload({
+      iRequestId: id,
+      ...updateDriverBiddingRequestDto,
+    });
+    if (!request) {
+      throw new NotFoundException(`DriverBiddingRequest with ID #${id} not found`);
+    }
+    return this.requestRepository.save(request);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} driverBiddingRequest`;
+  async remove(id: number): Promise<void> {
+    const result = await this.requestRepository.delete(id);
+    if (result.affected === 0) {
+      throw new NotFoundException(`DriverBiddingRequest with ID #${id} not found`);
+    }
   }
 }

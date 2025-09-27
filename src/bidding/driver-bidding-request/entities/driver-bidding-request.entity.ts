@@ -14,7 +14,7 @@ export class DriverBiddingRequest {
   @Column("enum", {
     name: "eStatus",
     enum: ["Pending", "Accepted", "Reoffer", "Decline", "Closed"],
-    default: () => "'Pending'",
+    default: "Pending",
   })
   eStatus: "Pending" | "Accepted" | "Reoffer" | "Decline" | "Closed";
 
@@ -30,7 +30,7 @@ export class DriverBiddingRequest {
   @Column("enum", {
     name: "DeclineByUser",
     enum: ["Passenger", "Driver"],
-    default: () => "'Passenger'",
+    default: "Passenger",
   })
   declineByUser: "Passenger" | "Driver";
 

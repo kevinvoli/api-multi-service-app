@@ -23,21 +23,21 @@ export class TripStatusMessages {
   @Column("enum", {
     name: "eFromUserType",
     enum: ["Driver", "Passenger", ""],
-    default: () => "''",
+    default: "",
   })
   eFromUserType: "Driver" | "Passenger" | "";
 
   @Column("enum", {
     name: "eToUserType",
     enum: ["Driver", "Passenger", ""],
-    default: () => "''",
+    default: "",
   })
   eToUserType: "Driver" | "Passenger" | "";
 
   @Column("enum", {
     name: "eReceived",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eReceived: "Yes" | "No";
 

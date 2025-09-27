@@ -47,7 +47,7 @@ export class IntentionsCriteres {
   @Column("datetime", { name: "date_fin", nullable: true })
   dateFin: Date | null;
 
-  @Column("int", { name: "resultats", default: () => "'0'" })
+  @Column("int", { name: "resultats", default: "0" })
   resultats: number;
 
   @Column("timestamp", {

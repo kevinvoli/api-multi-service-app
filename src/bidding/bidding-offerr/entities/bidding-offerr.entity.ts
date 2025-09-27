@@ -33,7 +33,7 @@ export class BiddingOffer {
     name: "fRatio_XOF",
     precision: 10,
     scale: 4,
-    default: () => "'0.0000'",
+    default: "0.0000",
   })
   fRatioXof: number;
 
@@ -43,7 +43,7 @@ export class BiddingOffer {
   @Column("enum", {
     name: "eStatus",
     enum: ["Accepted", "Reoffer", "Decline"],
-    default: () => "'Reoffer'",
+    default: "Reoffer",
   })
   eStatus: "Accepted" | "Reoffer" | "Decline";
 

@@ -1,26 +1,49 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateUserAddressDto } from './dto/create-user-address.dto';
 import { UpdateUserAddressDto } from './dto/update-user-address.dto';
+import { UserAddress } from './entities/user-address.entity';
 
 @Injectable()
 export class UserAddressService {
-  create(createUserAddressDto: CreateUserAddressDto) {
-    return 'This action adds a new userAddress';
+  constructor(
+    @InjectRepository(UserAddress)
+    private readonly userAddressRepository: Repository<UserAddress>,
+  ) {}
+  async create(createUserAddressDto: CreateUserAddressDto): Promise<UserAddress> {
+    const newUserAddress = this.userAddressRepository.create({
+      ...createUserAddressDto,
+      dAddedDate: new Date(),
+    });
+    return await this.userAddressRepository.save(newUserAddress);
   }
 
-  findAll() {
-    return `This action returns all userAddress`;
+  async findAll(): Promise<UserAddress[]> {
+    return await this.userAddressRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} userAddress`;
+  async findOne(id: number): Promise<UserAddress> {
+    const userAddress = await this.userAddressRepository.findOne({ where: { iUserAddressId: id } });
+    if (!userAddress) {
+      throw new NotFoundException(`User address with ID "${id}" not found`);
+    }
+    return userAddress;
   }
 
-  update(id: number, updateUserAddressDto: UpdateUserAddressDto) {
-    return `This action updates a #${id} userAddress`;
+  async update(id: number, updateUserAddressDto: UpdateUserAddressDto): Promise<UserAddress> {
+    const userAddress = await this.userAddressRepository.preload({
+      iUserAddressId: id,
+      ...updateUserAddressDto,
+    });
+    if (!userAddress) {
+      throw new NotFoundException(`User address with ID "${id}" not found`);
+    }
+    return await this.userAddressRepository.save(userAddress);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} userAddress`;
+  async remove(id: number): Promise<UserAddress> {
+    const userAddress = await this.findOne(id);
+    return await this.userAddressRepository.remove(userAddress);
   }
 }

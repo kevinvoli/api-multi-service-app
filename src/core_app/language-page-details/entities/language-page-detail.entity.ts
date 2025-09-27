@@ -17,7 +17,7 @@ export class LanguagePageDetails {
   @Column("enum", {
     name: "lp_type",
     enum: ["web", "driver", "rider"],
-    default: () => "'web'",
+    default: "web",
   })
   lpType: "web" | "driver" | "rider";
 }

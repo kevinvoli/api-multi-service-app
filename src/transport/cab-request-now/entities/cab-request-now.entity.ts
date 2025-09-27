@@ -27,7 +27,7 @@ export class CabRequestNow {
   @Column("int", { name: "iUserId", comment: "link with register_user table" })
   iUserId: number;
 
-  @Column("int", { name: "iDriverId", default: () => "'0'" })
+  @Column("int", { name: "iDriverId", default: "0" })
   iDriverId: number;
 
   @Column("int", { name: "iOrganizationId" })
@@ -42,7 +42,7 @@ export class CabRequestNow {
   @Column("int", {
     name: "iTripId",
     comment: "If status is 'Assign'  trip table have entry of this ride",
-    default: () => "'0'",
+    default: "0",
   })
   iTripId: number;
 
@@ -173,21 +173,21 @@ export class CabRequestNow {
   @Column("enum", {
     name: "eTollSkipped",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eTollSkipped: "Yes" | "No";
 
   @Column("enum", {
     name: "eFemaleDriverRequest",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eFemaleDriverRequest: "Yes" | "No";
 
   @Column("enum", {
     name: "eHandiCapAccessibility",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eHandiCapAccessibility: "Yes" | "No";
 
@@ -204,11 +204,11 @@ export class CabRequestNow {
   @Column("enum", {
     name: "eFromCronJob",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eFromCronJob: "Yes" | "No";
 
-  @Column("int", { name: "iUserAddressId", default: () => "'0'" })
+  @Column("int", { name: "iUserAddressId", default: "0" })
   iUserAddressId: number;
 
   @Column("text", { name: "tUserComment" })
@@ -225,7 +225,7 @@ export class CabRequestNow {
     name: "ePaymentByReceiver",
     comment: "multi-delivery",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   ePaymentByReceiver: "Yes" | "No";
 
@@ -259,7 +259,7 @@ export class CabRequestNow {
   @Column("enum", {
     name: "eFlatTrip",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eFlatTrip: "Yes" | "No";
 
@@ -271,13 +271,13 @@ export class CabRequestNow {
   })
   fFlatTripPrice: number;
 
-  @Column("int", { name: "iAirportLocationId", default: () => "'0'" })
+  @Column("int", { name: "iAirportLocationId", default: "0" })
   iAirportLocationId: number;
 
   @Column("enum", {
     name: "eAirportLocation",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eAirportLocation: "Yes" | "No";
 
@@ -400,7 +400,7 @@ export class CabRequestNow {
     name: "eBookingFrom",
     comment: "For Hotel Panel Web",
     enum: ["Admin", "Hotel", "Kiosk", "Company", "User", ""],
-    default: () => "''",
+    default: "",
   })
   eBookingFrom: "Admin" | "Hotel" | "Kiosk" | "Company" | "User" | "";
 
@@ -410,21 +410,21 @@ export class CabRequestNow {
   @Column("enum", {
     name: "eWalletDebitAllow",
     enum: ["Yes", "No"],
-    default: () => "'Yes'",
+    default: "Yes",
   })
   eWalletDebitAllow: "Yes" | "No";
 
   @Column("enum", {
     name: "eSystem",
     enum: ["General", "DeliverAll"],
-    default: () => "'General'",
+    default: "General",
   })
   eSystem: "General" | "DeliverAll";
 
   @Column("enum", {
     name: "ePaymentBy",
     enum: ["Passenger", "Organization"],
-    default: () => "'Passenger'",
+    default: "Passenger",
   })
   ePaymentBy: "Passenger" | "Organization";
 
@@ -443,7 +443,7 @@ export class CabRequestNow {
   @Column("enum", {
     name: "eTripReason",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eTripReason: "Yes" | "No";
 
@@ -451,7 +451,7 @@ export class CabRequestNow {
     name: "ePoolRide",
     comment: "Only for Pool Rides ",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   ePoolRide: "Yes" | "No";
 
@@ -461,7 +461,7 @@ export class CabRequestNow {
   @Column("enum", {
     name: "eBookForSomeOneElse",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eBookForSomeOneElse: "Yes" | "No";
 
@@ -474,14 +474,14 @@ export class CabRequestNow {
   @Column("enum", {
     name: "ePayWallet",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   ePayWallet: "Yes" | "No";
 
   @Column("enum", {
     name: "eServiceLocation",
     enum: ["Passanger", "Driver"],
-    default: () => "'Passanger'",
+    default: "Passanger",
   })
   eServiceLocation: "Passanger" | "Driver";
 
@@ -532,7 +532,7 @@ export class CabRequestNow {
   @Column("enum", {
     name: "eRoundingType",
     enum: ["", "Addition", "Substraction"],
-    default: () => "''",
+    default: "",
   })
   eRoundingType: "" | "Addition" | "Substraction";
 
@@ -542,7 +542,7 @@ export class CabRequestNow {
   @Column("enum", {
     name: "isVideoCall",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   isVideoCall: "Yes" | "No";
 }

@@ -20,7 +20,7 @@ export class UserProfile {
   @Column("enum", {
     name: "eStatus",
     enum: ["Pending", "Active", "Inactive", "Deleted", "Terminate", "Reject"],
-    default: () => "'Pending'",
+    default: "Pending",
   })
   eStatus:
     | "Pending"

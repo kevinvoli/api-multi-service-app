@@ -17,7 +17,7 @@ export class BiddingServiceRatings {
   @Column("enum", {
     name: "eUserType",
     enum: ["Driver", "Passenger"],
-    default: () => "'Passenger'",
+    default: "Passenger",
   })
   eUserType: "Driver" | "Passenger";
 
@@ -33,7 +33,7 @@ export class BiddingServiceRatings {
   @Column("enum", {
     name: "eStatus",
     enum: ["Active", "Deleted"],
-    default: () => "'Active'",
+    default: "Active",
   })
   eStatus: "Active" | "Deleted";
 }

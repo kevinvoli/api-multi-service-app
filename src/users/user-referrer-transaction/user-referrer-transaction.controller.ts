@@ -8,27 +8,27 @@ export class UserReferrerTransactionController {
   constructor(private readonly userReferrerTransactionService: UserReferrerTransactionService) {}
 
   @Post()
-  create(@Body() createUserReferrerTransactionDto: CreateUserReferrerTransactionDto) {
-    return this.userReferrerTransactionService.create(createUserReferrerTransactionDto);
+  async create(@Body() createUserReferrerTransactionDto: CreateUserReferrerTransactionDto) {
+    return await this.userReferrerTransactionService.create(createUserReferrerTransactionDto);
   }
 
   @Get()
-  findAll() {
-    return this.userReferrerTransactionService.findAll();
+  async findAll() {
+    return await this.userReferrerTransactionService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userReferrerTransactionService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.userReferrerTransactionService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserReferrerTransactionDto: UpdateUserReferrerTransactionDto) {
-    return this.userReferrerTransactionService.update(+id, updateUserReferrerTransactionDto);
+  async update(@Param('id') id: string, @Body() updateUserReferrerTransactionDto: UpdateUserReferrerTransactionDto) {
+    return await this.userReferrerTransactionService.update(+id, updateUserReferrerTransactionDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userReferrerTransactionService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.userReferrerTransactionService.remove(+id);
   }
 }

@@ -11,10 +11,10 @@ export class LogFile {
   @Column("datetime", { name: "tDate" })
   tDate: Date;
 
-  @Column("int", { name: "iCompanyId", default: () => "'0'" })
+  @Column("int", { name: "iCompanyId", default: "0" })
   iCompanyId: number;
 
-  @Column("int", { name: "iDriverId", default: () => "'0'" })
+  @Column("int", { name: "iDriverId", default: "0" })
   iDriverId: number;
 
   @Column("enum", { name: "eUserType", enum: ["driver", "company"] })

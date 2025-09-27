@@ -1,5 +1,26 @@
 import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
 
+export enum VehicleCategoryType {
+  Ride = "Ride",
+  MotoRide = "MotoRide",
+  Delivery = "Delivery",
+  MultipleDelivery = "MultipleDelivery",
+  MotoDelivery = "MotoDelivery",
+  Rental = "Rental",
+  MotoRental = "MotoRental",
+  MoreDelivery = "MoreDelivery",
+  DeliverAll = "DeliverAll",
+  ServiceProvider = "ServiceProvider",
+  Donation = "Donation",
+  Fly = "Fly",
+  Genie = "Genie",
+  Runner = "Runner",
+  Anywhere = "Anywhere",
+  ServiceBid = "ServiceBid",
+  RidePool = "RidePool",
+  VideoConsult = "VideoConsult",
+}
+
 @Index("eStatus", ["eStatus"], {})
 @Index("eShowType", ["eShowType"], {})
 @Index("iParentId", ["iParentId"], {})
@@ -27,7 +48,7 @@ export class VehicleCategory {
   @Column("longtext", { name: "tCategoryDesc_FR" })
   tCategoryDescFr: string;
 
-  @Column("int", { name: "iParentId", default: () => "'0'" })
+  @Column("int", { name: "iParentId", default: "0" })
   iParentId: number;
 
   @Column("mediumtext", { name: "vLogo" })
@@ -42,21 +63,21 @@ export class VehicleCategory {
   @Column("enum", {
     name: "ePriceType",
     enum: ["Service", "Provider"],
-    default: () => "'Service'",
+    default: "Service",
   })
   ePriceType: "Service" | "Provider";
 
   @Column("enum", {
     name: "eBeforeUpload",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eBeforeUpload: "Yes" | "No";
 
   @Column("enum", {
     name: "eAfterUpload",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eAfterUpload: "Yes" | "No";
 
@@ -66,82 +87,46 @@ export class VehicleCategory {
   @Column("enum", {
     name: "eStatus",
     enum: ["Active", "Inactive", "Deleted"],
-    default: () => "'Active'",
+    default: "Active",
   })
   eStatus: "Active" | "Inactive" | "Deleted";
 
   @Column("enum", {
     name: "eShowType",
     enum: ["Icon", "Banner", "Icon-Banner"],
-    default: () => "'Icon'",
+    default: "Icon",
   })
   eShowType: "Icon" | "Banner" | "Icon-Banner";
 
   @Column("enum", {
     name: "eMaterialCommision",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eMaterialCommision: "Yes" | "No";
 
   @Column("mediumtext", { name: "vBannerImage" })
   vBannerImage: string;
 
+
   @Column("enum", {
     name: "eCatType",
-    enum: [
-      "Ride",
-      "MotoRide",
-      "Delivery",
-      "MultipleDelivery",
-      "MotoDelivery",
-      "Rental",
-      "MotoRental",
-      "MoreDelivery",
-      "DeliverAll",
-      "ServiceProvider",
-      "Donation",
-      "Fly",
-      "Genie",
-      "Runner",
-      "Anywhere",
-      "ServiceBid",
-      "RidePool",
-      "VideoConsult",
-    ],
-    default: () => "'ServiceProvider'",
+    enum: VehicleCategoryType,
+    default: VehicleCategoryType.ServiceProvider,
   })
-  eCatType:
-    | "Ride"
-    | "MotoRide"
-    | "Delivery"
-    | "MultipleDelivery"
-    | "MotoDelivery"
-    | "Rental"
-    | "MotoRental"
-    | "MoreDelivery"
-    | "DeliverAll"
-    | "ServiceProvider"
-    | "Donation"
-    | "Fly"
-    | "Genie"
-    | "Runner"
-    | "Anywhere"
-    | "ServiceBid"
-    | "RidePool"
-    | "VideoConsult";
+  eCatType: VehicleCategoryType;
 
   @Column("enum", {
     name: "eSubCatType",
     enum: ["", "Ambulance"],
-    default: () => "''",
+    default: "",
   })
   eSubCatType: "" | "Ambulance";
 
   @Column("enum", {
     name: "eFor",
     enum: ["", "RideCategory", "DeliveryCategory", "DeliverAllCategory"],
-    default: () => "''",
+    default: "",
   })
   eFor: "" | "RideCategory" | "DeliveryCategory" | "DeliverAllCategory";
 
@@ -182,7 +167,7 @@ export class VehicleCategory {
   })
   fWaitingFees: number;
 
-  @Column("int", { name: "iWaitingFeeTimeLimit", default: () => "'0'" })
+  @Column("int", { name: "iWaitingFeeTimeLimit", default: "0" })
   iWaitingFeeTimeLimit: number;
 
   @Column("float", {
@@ -250,7 +235,7 @@ export class VehicleCategory {
   @Column("enum", {
     name: "ePromoteBanner",
     enum: ["No", "Yes"],
-    default: () => "'No'",
+    default: "No",
   })
   ePromoteBanner: "No" | "Yes";
 
@@ -266,7 +251,7 @@ export class VehicleCategory {
   @Column("enum", {
     name: "eVideoConsultEnable",
     enum: ["No", "Yes"],
-    default: () => "'No'",
+    default: "No",
   })
   eVideoConsultEnable: "No" | "Yes";
 
@@ -275,7 +260,7 @@ export class VehicleCategory {
     precision: 10,
     scale: 2,
   })
-  eVideoConsultServiceCharge: string;
+  eVideoConsultServiceCharge: number;
 
   @Column("text", { name: "eVideoServiceDescription" })
   eVideoServiceDescription: string;
@@ -285,7 +270,7 @@ export class VehicleCategory {
     precision: 10,
     scale: 2,
   })
-  fCommissionVideoConsult: string;
+  fCommissionVideoConsult: number;
 
   @Column("text", { name: "vIconDetails" })
   vIconDetails: string;

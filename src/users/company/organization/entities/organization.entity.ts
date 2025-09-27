@@ -54,7 +54,7 @@ export class Organization {
     name: "eStatus",
     comment: "Deleted will comes when admin want to delete company",
     enum: ["Active", "Inactive", "Deleted"],
-    default: () => "'Active'",
+    default: "Active",
   })
   eStatus: "Active" | "Inactive" | "Deleted";
 
@@ -82,7 +82,7 @@ export class Organization {
   @Column("enum", {
     name: "eAccess",
     enum: ["Deaf", "None"],
-    default: () => "'None'",
+    default: "None",
   })
   eAccess: "Deaf" | "None";
 
@@ -106,21 +106,21 @@ export class Organization {
 
   @Column("timestamp", {
     name: "tLastOnline",
-    default: () => "'0000-00-00 00:00:00'",
+    nullable:true,
   })
   tLastOnline: Date;
 
   @Column("enum", {
     name: "eEmailVerified",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eEmailVerified: "Yes" | "No";
 
   @Column("enum", {
     name: "ePhoneVerified",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   ePhoneVerified: "Yes" | "No";
 
@@ -154,14 +154,14 @@ export class Organization {
   @Column("enum", {
     name: "eDeviceType",
     enum: ["Android", "Ios"],
-    default: () => "'Android'",
+    default: "Android",
   })
   eDeviceType: "Android" | "Ios";
 
   @Column("enum", {
     name: "eSignUpType",
     enum: ["Normal", "Facebook", "Twitter", "Google"],
-    default: () => "'Normal'",
+    default: "Normal",
   })
   eSignUpType: "Normal" | "Facebook" | "Twitter" | "Google";
 
@@ -183,28 +183,28 @@ export class Organization {
   @Column("enum", {
     name: "eLogout",
     enum: ["Yes", "No"],
-    default: () => "'Yes'",
+    default: "Yes",
   })
   eLogout: "Yes" | "No";
 
   @Column("enum", {
     name: "eChangeLang",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eChangeLang: "Yes" | "No";
 
   @Column("enum", {
     name: "eDemoDisplay",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eDemoDisplay: "Yes" | "No";
 
-  @Column("enum", { name: "eLock", enum: ["Yes", "No"], default: () => "'No'" })
+  @Column("enum", { name: "eLock", enum: ["Yes", "No"], default: "No" })
   eLock: "Yes" | "No";
 
-  @Column("int", { name: "vVerificationCount", default: () => "'0'" })
+  @Column("int", { name: "vVerificationCount", default: "0" })
   vVerificationCount: number;
 
   @Column("datetime", { name: "dSendverificationDate" })
@@ -216,7 +216,7 @@ export class Organization {
   @Column("enum", {
     name: "ePaymentBy",
     enum: ["Passenger", "Organization"],
-    default: () => "'Passenger'",
+    default: "Passenger",
   })
   ePaymentBy: "Passenger" | "Organization";
 }

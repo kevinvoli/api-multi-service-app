@@ -14,7 +14,7 @@ export class MasterCurrency {
   @Column("enum", {
     name: "eDefault",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eDefault: "Yes" | "No";
 

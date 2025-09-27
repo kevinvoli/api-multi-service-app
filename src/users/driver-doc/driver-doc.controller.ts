@@ -8,27 +8,27 @@ export class DriverDocController {
   constructor(private readonly driverDocService: DriverDocService) {}
 
   @Post()
-  create(@Body() createDriverDocDto: CreateDriverDocDto) {
-    return this.driverDocService.create(createDriverDocDto);
+  async create(@Body() createDriverDocDto: CreateDriverDocDto) {
+    return await this.driverDocService.create(createDriverDocDto);
   }
 
   @Get()
-  findAll() {
-    return this.driverDocService.findAll();
+  async findAll() {
+    return await this.driverDocService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.driverDocService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.driverDocService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDriverDocDto: UpdateDriverDocDto) {
-    return this.driverDocService.update(+id, updateDriverDocDto);
+  async update(@Param('id') id: string, @Body() updateDriverDocDto: UpdateDriverDocDto) {
+    return await this.driverDocService.update(+id, updateDriverDocDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.driverDocService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.driverDocService.remove(+id);
   }
 }

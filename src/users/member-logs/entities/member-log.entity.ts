@@ -55,7 +55,7 @@ export class MemberLog {
   @Column("enum", {
     name: "eAutoLogin",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eAutoLogin: "Yes" | "No";
 

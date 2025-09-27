@@ -5,7 +5,7 @@ export class Banners {
   @PrimaryGeneratedColumn({ type: "int", name: "iBannerId" })
   iBannerId: number;
 
-  @Column("int", { name: "iServiceId", default: () => "'0'" })
+  @Column("int", { name: "iServiceId", default: "0" })
   iServiceId: number;
 
   @Column("enum", {

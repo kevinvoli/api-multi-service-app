@@ -20,7 +20,7 @@ export class DriverDestinations {
   @Column("enum", {
     name: "eStatus",
     enum: ["Inactive", "Active"],
-    default: () => "'Inactive'",
+    default: "Inactive",
   })
   eStatus: "Inactive" | "Active";
 }

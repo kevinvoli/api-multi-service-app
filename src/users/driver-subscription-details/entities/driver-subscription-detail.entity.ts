@@ -28,19 +28,19 @@ export class DriverSubscriptionDetails {
 
   @Column("timestamp", {
     name: "tSubscribeDate",
-    default: () => "'0000-00-00 00:00:00'",
+    nullable:true,
   })
   tSubscribeDate: Date;
 
   @Column("timestamp", {
     name: "tExpiryDate",
-    default: () => "'0000-00-00 00:00:00'",
+    nullable:true,
   })
   tExpiryDate: Date;
 
   @Column("timestamp", {
     name: "tClosedDate",
-    default: () => "'0000-00-00 00:00:00'",
+    nullable:true,
   })
   tClosedDate: Date;
 

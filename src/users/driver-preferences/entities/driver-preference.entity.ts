@@ -11,6 +11,6 @@ export class DriverPreferences {
   @Column("int", { name: "iDriverId" })
   iDriverId: number;
 
-  @Column("enum", { name: "eType", enum: ["Yes", "No"], default: () => "'No'" })
+  @Column("enum", { name: "eType", enum: ["Yes", "No"], default: "No" })
   eType: "Yes" | "No";
 }

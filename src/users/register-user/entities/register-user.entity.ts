@@ -24,7 +24,7 @@ export class RegisterUser {
   @Column("enum", { name: "eRefType", enum: ["Driver", "Rider"] })
   eRefType: "Driver" | "Rider";
 
-  @Column("varchar", { name: "vFbId", length: 255, default: () => "'0'" })
+  @Column("varchar", { name: "vFbId", length: 255, default: "0" })
   vFbId: string;
 
   @Column("int", { name: "iHotelId" })
@@ -66,7 +66,7 @@ export class RegisterUser {
   @Column("enum", {
     name: "vLogoutDev",
     enum: ["true", "false"],
-    default: () => "'false'",
+    default: "false",
   })
   vLogoutDev: "true" | "false";
 
@@ -79,7 +79,7 @@ export class RegisterUser {
   @Column("int", {
     name: "iTripId",
     comment: "Link with trips",
-    default: () => "'0'",
+    default: "0",
   })
   iTripId: number;
 
@@ -87,14 +87,14 @@ export class RegisterUser {
     name: "vTripStatus",
     comment: "Link with trips 'iActive'",
     length: 100,
-    default: () => "'NONE'",
+    default: "None",
   })
   vTripStatus: string;
 
   @Column("enum", {
     name: "vTripPaymentMode",
     enum: ["Cash", "Paypal", "NONE", "Card"],
-    default: () => "'NONE'",
+    default: "None",
   })
   vTripPaymentMode: "Cash" | "Paypal" | "NONE" | "Card";
 
@@ -132,7 +132,7 @@ export class RegisterUser {
   @Column("enum", {
     name: "eStatus",
     enum: ["Active", "Inactive", "Deleted"],
-    default: () => "'Active'",
+    default: "Active",
   })
   eStatus: "Active" | "Inactive" | "Deleted";
 
@@ -148,7 +148,7 @@ export class RegisterUser {
   @Column("enum", {
     name: "eDeviceType",
     enum: ["Android", "Ios"],
-    default: () => "'Android'",
+    default: "Android",
   })
   eDeviceType: "Android" | "Ios";
 
@@ -156,7 +156,7 @@ export class RegisterUser {
     name: "eDebugMode",
     comment: "This applies to IOS devices only",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eDebugMode: "Yes" | "No";
 
@@ -175,7 +175,7 @@ export class RegisterUser {
   @Column("enum", {
     name: "eType",
     enum: ["Ride", "Deliver", "UberX"],
-    default: () => "'Ride'",
+    default: "Ride",
   })
   eType: "Ride" | "Deliver" | "UberX";
 
@@ -200,11 +200,11 @@ export class RegisterUser {
   @Column("enum", {
     name: "eDeliverModule",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eDeliverModule: "Yes" | "No";
 
-  @Column("int", { name: "iUserPetId", default: () => "'0'" })
+  @Column("int", { name: "iUserPetId", default: "0" })
   iUserPetId: number;
 
   @Column("int", { name: "iAppVersion", default: () => "'1'" })
@@ -224,21 +224,21 @@ export class RegisterUser {
 
   @Column("timestamp", {
     name: "tLastOnline",
-    default: () => "'0000-00-00 00:00:00'",
+    nullable:true,
   })
   tLastOnline: Date;
 
   @Column("enum", {
     name: "eEmailVerified",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eEmailVerified: "Yes" | "No";
 
   @Column("enum", {
     name: "ePhoneVerified",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   ePhoneVerified: "Yes" | "No";
 
@@ -254,7 +254,7 @@ export class RegisterUser {
   @Column("enum", {
     name: "eSignUpType",
     enum: ["Normal", "Facebook", "Twitter", "Google", "Apple"],
-    default: () => "'Normal'",
+    default: "Normal",
   })
   eSignUpType: "Normal" | "Facebook" | "Twitter" | "Google" | "Apple";
 
@@ -270,13 +270,13 @@ export class RegisterUser {
   @Column("text", { name: "tDeviceSessionId" })
   tDeviceSessionId: string;
 
-  @Column("enum", { name: "eHail", enum: ["Yes", "No"], default: () => "'No'" })
+  @Column("enum", { name: "eHail", enum: ["Yes", "No"], default: "No" })
   eHail: "Yes" | "No";
 
   @Column("mediumtext", { name: "vFirebaseDeviceToken" })
   vFirebaseDeviceToken: string;
 
-  @Column("float", { name: "fTollPrice", precision: 12, default: () => "'0'" })
+  @Column("float", { name: "fTollPrice", precision: 12, default: "0" })
   fTollPrice: number;
 
   @Column("mediumtext", { name: "vTollPriceCurrencyCode" })
@@ -285,7 +285,7 @@ export class RegisterUser {
   @Column("enum", {
     name: "eTollSkipped",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eTollSkipped: "Yes" | "No";
 
@@ -295,20 +295,20 @@ export class RegisterUser {
   @Column("enum", {
     name: "eLogout",
     enum: ["Yes", "No"],
-    default: () => "'Yes'",
+    default: "Yes",
   })
   eLogout: "Yes" | "No";
 
   @Column("enum", {
     name: "eIsBlocked",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eIsBlocked: "Yes" | "No";
 
   @Column("timestamp", {
     name: "tBlockeddate",
-    default: () => "'0000-00-00 00:00:00'",
+    nullable:true,
   })
   tBlockeddate: Date;
 
@@ -318,18 +318,18 @@ export class RegisterUser {
   @Column("enum", {
     name: "eIs_Kiosk",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eIsKiosk: "Yes" | "No";
 
   @Column("enum", {
     name: "eChangeLang",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eChangeLang: "Yes" | "No";
 
-  @Column("int", { name: "vVerificationCount", default: () => "'0'" })
+  @Column("int", { name: "vVerificationCount", default: "0" })
   vVerificationCount: number;
 
   @Column("datetime", { name: "dSendverificationDate" })
@@ -338,11 +338,11 @@ export class RegisterUser {
   @Column("float", {
     name: "fTripsOutStandingAmount",
     precision: 12,
-    default: () => "'0'",
+    default: "0",
   })
   fTripsOutStandingAmount: number;
 
-  @Column("int", { name: "vVerificationCountEmergency", default: () => "'0'" })
+  @Column("int", { name: "vVerificationCountEmergency", default: "0" })
   vVerificationCountEmergency: number;
 
   @Column("datetime", { name: "dSendverificationDateEmergency" })
@@ -351,7 +351,7 @@ export class RegisterUser {
   @Column("enum", {
     name: "eOutstandingAdjustment",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eOutstandingAdjustment: "Yes" | "No";
 
@@ -359,7 +359,7 @@ export class RegisterUser {
     name: "eTestUser",
     comment: "This is not used",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eTestUser: "Yes" | "No";
 
@@ -370,11 +370,11 @@ export class RegisterUser {
     name: "eReviewModeLogin",
     comment: "This apply to IOS app only",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eReviewModeLogin: "Yes" | "No";
 
-  @Column("int", { name: "iAdvertBannerId", default: () => "'0'" })
+  @Column("int", { name: "iAdvertBannerId", default: "0" })
   iAdvertBannerId: number;
 
   @Column("timestamp", {
@@ -409,18 +409,18 @@ export class RegisterUser {
     comment:
       "This is just for development purpose. In reality, this field's value must be set to 'No'. If you want to allow fake GPS for particular user then set this field's value to 'Yes'.",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eAllowFakeGps: "Yes" | "No";
 
   @Column("enum", {
     name: "eAppTerminate",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eAppTerminate: "Yes" | "No";
 
-  @Column("varchar", { name: "vAppleId", length: 255, default: () => "'0'" })
+  @Column("varchar", { name: "vAppleId", length: 255, default: "0" })
   vAppleId: string;
 
   @Column("varchar", { name: "vTaskStatus", length: 50 })
@@ -440,7 +440,7 @@ export class RegisterUser {
     nullable: true,
     comment: "Champ Ajout",
     width: 1,
-    default: () => "'0'",
+    default: "0",
   })
   isCommando: boolean | null;
 

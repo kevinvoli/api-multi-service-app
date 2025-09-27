@@ -5,24 +5,24 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({
-      imports:[ConfigModule],
+      imports: [ConfigModule],
       inject: [ConfigService],
-      
-      useFactory: (configService :
-        ConfigService)=> ({
+
+      useFactory: (configService:
+        ConfigService) => ({
           type: 'mysql',
-          host:configService.get('DB_HOST'),
+          host: configService.get('DB_HOST'),
           port: configService.get('DB_PORT'),
           username: configService.get('DB_USERNAME'),
           password: configService.get(''),
           database: configService.get('DB_DATABASE'),
-          entities: [__dirname+ '/**/*.entity{.ts,.js}'],
-          keepConnectionAlive:true,
-          connectTimeout:10000,
+          entities: [__dirname + '/**/*.entity{.ts,.js}'],
+          keepConnectionAlive: true,
+          connectTimeout: 10000,
           autoLoadEntities: true,
-          synchronize:true,
+          synchronize: true,
         })
     })
   ],
 })
-export class DatabaseModule {}
+export class DatabaseModule {  }

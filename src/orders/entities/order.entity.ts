@@ -1,10 +1,22 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
+import { Company } from "../../users/company/entities/company.entity";
+import { RegisterDriver } from "../../users/register-driver/entities/register-driver.entity";
+import { RegisterUser } from "../../users/register-user/entities/register-user.entity";
+import { ServiceCategories } from "../../core_app/service-categories/entities/service-category.entity";
+import { OrderStatus } from "../order-status/entities/order-status.entity";
+import {
+  Column,
+  Entity,
+  Index,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 
 @Index("iCustomerId", ["iUserId"], {})
 @Index("vOrderNo", ["vOrderNo"], {})
 @Index("dDate", ["dDate"], {})
 @Index("iOrderId", ["iOrderId"], {})
-@Entity("__orders", { schema: "amygo1" })
+@Entity("orders", { schema: "amygo1" })
 export class Orders {
   @PrimaryGeneratedColumn({ type: "int", name: "iOrderId" })
   iOrderId: number;
@@ -15,7 +27,7 @@ export class Orders {
   })
   iServiceId: number;
 
-  @Column("int", { name: "iUserId", default: () => "'0'" })
+  @Column("int", { name: "iUserId", default: "0" })
   iUserId: number;
 
   @Column("int", { name: "iDriverId" })
@@ -30,7 +42,7 @@ export class Orders {
   @Column("varchar", { name: "vTimeZone", length: 255 })
   vTimeZone: string;
 
-  @Column("varchar", { name: "vOrderNo", length: 50, default: () => "''" })
+  @Column("varchar", { name: "vOrderNo", length: 50, default: "" })
   vOrderNo: string;
 
   @Column("datetime", { name: "tOrderRequestDate" })
@@ -79,7 +91,7 @@ export class Orders {
   })
   fTax: number;
 
-  @Column("varchar", { name: "vDiscount", length: 50, default: () => "'0'" })
+  @Column("varchar", { name: "vDiscount", length: 50, default: "0" })
   vDiscount: string;
 
   @Column("float", {
@@ -130,10 +142,10 @@ export class Orders {
   })
   fTotalGenerateFare: number;
 
-  @Column("varchar", { name: "vName", length: 50, default: () => "''" })
+  @Column("varchar", { name: "vName", length: 50, default: "" })
   vName: string;
 
-  @Column("varchar", { name: "vLastName", length: 50, default: () => "''" })
+  @Column("varchar", { name: "vLastName", length: 50, default: "" })
   vLastName: string;
 
   @Column("text", { name: "vIdProofImg" })
@@ -172,17 +184,17 @@ export class Orders {
   @Column("enum", {
     name: "fOfferType",
     enum: ["", "Flat", "Percentage"],
-    default: () => "''",
+    default: "",
   })
   fOfferType: "" | "Flat" | "Percentage";
 
-  @Column("enum", { name: "ePaid", enum: ["Yes", "No"], default: () => "'No'" })
+  @Column("enum", { name: "ePaid", enum: ["Yes", "No"],  default: "No", })
   ePaid: "Yes" | "No";
 
   @Column("varchar", {
     name: "iTransactionId",
     length: 100,
-    default: () => "'0'",
+    default: "0",
   })
   iTransactionId: string;
 
@@ -195,26 +207,26 @@ export class Orders {
   @Column("text", { name: "vInstruction" })
   vInstruction: string;
 
-  @Column("varchar", { name: "vFromIP", length: 20, default: () => "''" })
+  @Column("varchar", { name: "vFromIP", length: 20, default: "" })
   vFromIp: string;
 
-  @Column("varchar", { name: "vCouponCode", length: 20, default: () => "''" })
+  @Column("varchar", { name: "vCouponCode", length: 20, default: "" })
   vCouponCode: string;
 
-  @Column("datetime", { name: "dDate", default: () => "'0000-00-00 00:00:00'" })
+  @Column("datetime", { name: "dDate", default: () => "CURRENT_TIMESTAMP" })
   dDate: Date;
 
   @Column("enum", {
     name: "ePaymentOption",
     enum: ["Cash", "Card", "Wallet"],
-    default: () => "'Cash'",
+    default: "Cash",
   })
   ePaymentOption: "Cash" | "Card" | "Wallet";
 
   @Column("int", {
     name: "iStatusCode",
     comment: "linked with order_status table",
-    default: () => "'1'",
+    default:  "1",
   })
   iStatusCode: number;
 
@@ -279,14 +291,14 @@ export class Orders {
   @Column("enum", {
     name: "eRestaurantPaymentStatus",
     enum: ["Settled", "Unsettled"],
-    default: () => "'Unsettled'",
+    default: "Unsettled",
   })
   eRestaurantPaymentStatus: "Settled" | "Unsettled";
 
   @Column("enum", {
     name: "eAdminPaymentStatus",
     enum: ["Settled", "Unsettled"],
-    default: () => "'Unsettled'",
+    default:"Unsettled",
   })
   eAdminPaymentStatus: "Settled" | "Unsettled";
 
@@ -317,14 +329,14 @@ export class Orders {
   @Column("enum", {
     name: "eCheckUserWallet",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+     default: "No",
   })
   eCheckUserWallet: "Yes" | "No";
 
   @Column("enum", {
     name: "ePayWallet",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+     default: "No",
   })
   ePayWallet: "Yes" | "No";
 
@@ -337,11 +349,11 @@ export class Orders {
   @Column("enum", {
     name: "eOrderplaced_by",
     enum: ["User", "Admin", "Store", "Kiosk"],
-    default: () => "'User'",
+    default: "User",
   })
   eOrderplacedBy: "User" | "Admin" | "Store" | "Kiosk";
 
-  @Column("int", { name: "iAdminUserId_placedorder", default: () => "'0'" })
+  @Column("int", { name: "iAdminUserId_placedorder", default: "0" })
   iAdminUserIdPlacedorder: number;
 
   @Column("date", { name: "dCronExpiredDate" })
@@ -350,7 +362,7 @@ export class Orders {
   @Column("enum", {
     name: "eSentMailAdmin",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+     default: "No",
   })
   eSentMailAdmin: "Yes" | "No";
 
@@ -391,42 +403,42 @@ export class Orders {
   @Column("enum", {
     name: "eTipIncludedAtOrderRequest",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+     default: "No",
   })
   eTipIncludedAtOrderRequest: "Yes" | "No";
 
   @Column("enum", {
     name: "eBuyAnyService",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+     default: "No",
   })
   eBuyAnyService: "Yes" | "No";
 
   @Column("enum", {
     name: "genieWaitingForUserApproval",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+     default: "No",
   })
   genieWaitingForUserApproval: "Yes" | "No";
 
   @Column("enum", {
     name: "genieUserApproved",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+     default: "No",
   })
   genieUserApproved: "Yes" | "No";
 
   @Column("float", {
     name: "fDeliveryChargeCancelled",
     precision: 12,
-    default: () => "'0'",
+    default: "0",
   })
   fDeliveryChargeCancelled: number;
 
   @Column("enum", {
     name: "eForPickDropGenie",
     enum: ["No", "Yes"],
-    default: () => "'No'",
+     default: "No",
   })
   eForPickDropGenie: "No" | "Yes";
 
@@ -436,7 +448,7 @@ export class Orders {
   @Column("enum", {
     name: "eCancelledbyDriver",
     enum: ["No", "Yes"],
-    default: () => "'No'",
+     default: "No",
   })
   eCancelledbyDriver: "No" | "Yes";
 
@@ -458,7 +470,7 @@ export class Orders {
   @Column("enum", {
     name: "eProcessed",
     enum: ["No", "Yes"],
-    default: () => "'No'",
+     default: "No",
   })
   eProcessed: "No" | "Yes";
 
@@ -471,14 +483,50 @@ export class Orders {
   @Column("datetime", {
     name: "date_start_order",
     nullable: true,
-    default: () => "'0000-00-00 00:00:00'",
+    default: () => "CURRENT_TIMESTAMP",
   })
   dateStartOrder: Date | null;
 
   @Column("datetime", {
     name: "date_end_order",
     nullable: true,
-    default: () => "'0000-00-00 00:00:00'",
+    default: () => "CURRENT_TIMESTAMP",
   })
   dateEndOrder: Date | null;
+
+  @ManyToOne(
+    () => ServiceCategories,
+    (serviceCategories) => serviceCategories.orders,
+    { onDelete: "NO ACTION", onUpdate: "NO ACTION" }
+  )
+  @JoinColumn([{ name: "iServiceId", referencedColumnName: "iServiceId" }])
+  serviceCategory: ServiceCategories;
+
+  // @ManyToOne(() => RegisterUser, (registerUser) => registerUser.orders, {
+  //   onDelete: "NO ACTION",
+  //   onUpdate: "NO ACTION",
+  // })
+  // @JoinColumn([{ name: "iUserId", referencedColumnName: "iUserId" }])
+  // user: RegisterUser;
+
+  // @ManyToOne(() => RegisterDriver, (registerDriver) => registerDriver.orders, {
+  //   onDelete: "NO ACTION",
+  //   onUpdate: "NO ACTION",
+  // })
+  // @JoinColumn([{ name: "iDriverId", referencedColumnName: "iDriverId" }])
+  // driver: RegisterDriver;
+
+  // @ManyToOne(() => Company, (company) => company.orders, {
+  //   onDelete: "NO ACTION",
+  //   onUpdate: "NO ACTION",
+  // })
+  // @JoinColumn([{ name: "iCompanyId", referencedColumnName: "iCompanyId" }])
+  // company: Company;
+
+  // @ManyToOne(() => OrderStatus, (orderStatus) => orderStatus.orders, {
+  //   onDelete: "NO ACTION",
+  //   onUpdate: "NO ACTION",
+  // })
+  // @JoinColumn([{ name: "iStatusCode", referencedColumnName: "iStatusCode" }])
+  // orderStatus: OrderStatus;
 }

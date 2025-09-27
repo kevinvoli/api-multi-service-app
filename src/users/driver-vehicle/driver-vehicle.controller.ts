@@ -8,27 +8,27 @@ export class DriverVehicleController {
   constructor(private readonly driverVehicleService: DriverVehicleService) {}
 
   @Post()
-  create(@Body() createDriverVehicleDto: CreateDriverVehicleDto) {
-    return this.driverVehicleService.create(createDriverVehicleDto);
+  async create(@Body() createDriverVehicleDto: CreateDriverVehicleDto) {
+    return await this.driverVehicleService.create(createDriverVehicleDto);
   }
 
   @Get()
-  findAll() {
-    return this.driverVehicleService.findAll();
+  async findAll() {
+    return await this.driverVehicleService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.driverVehicleService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.driverVehicleService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDriverVehicleDto: UpdateDriverVehicleDto) {
-    return this.driverVehicleService.update(+id, updateDriverVehicleDto);
+  async update(@Param('id') id: string, @Body() updateDriverVehicleDto: UpdateDriverVehicleDto) {
+    return await this.driverVehicleService.update(+id, updateDriverVehicleDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.driverVehicleService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.driverVehicleService.remove(+id);
   }
 }

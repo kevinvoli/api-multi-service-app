@@ -104,7 +104,7 @@ export class CabBooking {
       "Cancel",
       "Completed",
     ],
-    default: () => "'Pending'",
+    default: "Pending",
   })
   eStatus:
     | "Pending"
@@ -159,7 +159,7 @@ export class CabBooking {
   @Column("datetime", { name: "dCancelDate" })
   dCancelDate: Date;
 
-  @Column("int", { name: "iCancelReasonId", default: () => "'0'" })
+  @Column("int", { name: "iCancelReasonId", default: "0" })
   iCancelReasonId: number;
 
   @Column("varchar", { name: "vFailReason", length: 200 })
@@ -195,34 +195,34 @@ export class CabBooking {
   @Column("varchar", { name: "vCouponCode", length: 255 })
   vCouponCode: string;
 
-  @Column("int", { name: "iUserPetId", default: () => "'0'" })
+  @Column("int", { name: "iUserPetId", default: "0" })
   iUserPetId: number;
 
   @Column("enum", {
     name: "eMessageSend",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eMessageSend: "Yes" | "No";
 
   @Column("enum", {
     name: "eMessageAdminOne",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eMessageAdminOne: "Yes" | "No";
 
   @Column("enum", {
     name: "eMessageAdminTwo",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eMessageAdminTwo: "Yes" | "No";
 
   @Column("enum", {
     name: "eAutoAssign",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eAutoAssign: "Yes" | "No";
 
@@ -232,7 +232,7 @@ export class CabBooking {
   @Column("enum", {
     name: "eAssigned",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eAssigned: "Yes" | "No";
 
@@ -288,21 +288,21 @@ export class CabBooking {
   @Column("enum", {
     name: "eTollSkipped",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eTollSkipped: "Yes" | "No";
 
   @Column("enum", {
     name: "eFemaleDriverRequest",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eFemaleDriverRequest: "Yes" | "No";
 
   @Column("enum", {
     name: "eHandiCapAccessibility",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eHandiCapAccessibility: "Yes" | "No";
 
@@ -331,11 +331,11 @@ export class CabBooking {
     name: "eCommisionDeductEnable",
     comment: "for report purpose only,not in use till now",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eCommisionDeductEnable: "Yes" | "No";
 
-  @Column("int", { name: "iUserAddressId", default: () => "'0'" })
+  @Column("int", { name: "iUserAddressId", default: "0" })
   iUserAddressId: number;
 
   @Column("text", { name: "tUserComment" })
@@ -352,7 +352,7 @@ export class CabBooking {
     name: "ePaymentByReceiver",
     comment: "multi-delivery",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   ePaymentByReceiver: "Yes" | "No";
 
@@ -368,14 +368,14 @@ export class CabBooking {
   @Column("enum", {
     name: "eCancelBySystem",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eCancelBySystem: "Yes" | "No";
 
   @Column("enum", {
     name: "eFlatTrip",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eFlatTrip: "Yes" | "No";
 
@@ -387,13 +387,13 @@ export class CabBooking {
   })
   fFlatTripPrice: number;
 
-  @Column("int", { name: "iAirportLocationId", default: () => "'0'" })
+  @Column("int", { name: "iAirportLocationId", default: "0" })
   iAirportLocationId: number;
 
   @Column("enum", {
     name: "eAirportLocation",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eAirportLocation: "Yes" | "No";
 
@@ -524,21 +524,21 @@ export class CabBooking {
   @Column("enum", {
     name: "eBookingFrom",
     enum: ["Admin", "Hotel", "Company", "User", ""],
-    default: () => "''",
+    default: "",
   })
   eBookingFrom: "Admin" | "Hotel" | "Company" | "User" | "";
 
   @Column("enum", {
     name: "eWalletDebitAllow",
     enum: ["Yes", "No"],
-    default: () => "'Yes'",
+    default: "Yes",
   })
   eWalletDebitAllow: "Yes" | "No";
 
   @Column("enum", {
     name: "ePaymentBy",
     enum: ["Passenger", "Organization"],
-    default: () => "'Passenger'",
+    default: "Passenger",
   })
   ePaymentBy: "Passenger" | "Organization";
 
@@ -557,7 +557,7 @@ export class CabBooking {
   @Column("enum", {
     name: "eTripReason",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eTripReason: "Yes" | "No";
 
@@ -581,7 +581,7 @@ export class CabBooking {
     name: "eBookForSomeOneElse",
     comment: "Field is used for book for someone else",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eBookForSomeOneElse: "Yes" | "No";
 
@@ -602,14 +602,14 @@ export class CabBooking {
   @Column("enum", {
     name: "ePayWallet",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   ePayWallet: "Yes" | "No";
 
   @Column("enum", {
     name: "eServiceLocation",
     enum: ["Passanger", "Driver"],
-    default: () => "'Passanger'",
+    default: "Passanger",
   })
   eServiceLocation: "Passanger" | "Driver";
 
@@ -697,7 +697,7 @@ export class CabBooking {
   @Column("enum", {
     name: "isVideoCall",
     enum: ["No", "Yes"],
-    default: () => "'No'",
+    default: "No",
   })
   isVideoCall: "No" | "Yes";
 }

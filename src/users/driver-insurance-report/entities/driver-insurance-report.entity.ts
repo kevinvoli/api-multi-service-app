@@ -8,7 +8,7 @@ export class DriverInsuranceReport {
   @Column("int", { name: "iDriverId" })
   iDriverId: number;
 
-  @Column("int", { name: "iTripId", default: () => "'0'" })
+  @Column("int", { name: "iTripId", default: "0" })
   iTripId: number;
 
   @Column("datetime", { name: "dStartDate" })

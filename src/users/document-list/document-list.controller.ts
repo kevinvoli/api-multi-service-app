@@ -8,27 +8,27 @@ export class DocumentListController {
   constructor(private readonly documentListService: DocumentListService) {}
 
   @Post()
-  create(@Body() createDocumentListDto: CreateDocumentListDto) {
-    return this.documentListService.create(createDocumentListDto);
+  async create(@Body() createDocumentListDto: CreateDocumentListDto) {
+    return await this.documentListService.create(createDocumentListDto);
   }
 
   @Get()
-  findAll() {
-    return this.documentListService.findAll();
+  async findAll() {
+    return await this.documentListService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.documentListService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.documentListService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDocumentListDto: UpdateDocumentListDto) {
-    return this.documentListService.update(+id, updateDocumentListDto);
+  async update(@Param('id') id: string, @Body() updateDocumentListDto: UpdateDocumentListDto) {
+    return await this.documentListService.update(+id, updateDocumentListDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.documentListService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.documentListService.remove(+id);
   }
 }

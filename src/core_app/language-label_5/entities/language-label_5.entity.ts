@@ -24,14 +24,14 @@ export class LanguageLabel_5 {
   @Column("enum", {
     name: "eScript",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eScript: "Yes" | "No";
 
   @Column("enum", {
     name: "eStatus",
     enum: ["Active", "Inactive"],
-    default: () => "'Active'",
+    default:"Active",
   })
   eStatus: "Active" | "Inactive";
 
@@ -47,7 +47,7 @@ export class LanguageLabel_5 {
       "DeliverAll",
       "Kiosk",
     ],
-    default: () => "'General'",
+    default:"General",
   })
   eAppType:
     | "General"
@@ -62,21 +62,21 @@ export class LanguageLabel_5 {
   @Column("enum", {
     name: "eProcessed",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eProcessed: "Yes" | "No";
 
   @Column("enum", {
     name: "eInProcess",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eInProcess: "Yes" | "No";
 
   @Column("enum", {
     name: "eDeviceType",
     enum: ["APP", "WEB"],
-    default: () => "'APP'",
+    default:"APP",
   })
   eDeviceType: "APP" | "WEB";
 

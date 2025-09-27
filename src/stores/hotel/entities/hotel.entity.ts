@@ -8,7 +8,7 @@ export class Hotel {
   @Column("int", { name: "iAdminId" })
   iAdminId: number;
 
-  @Column("varchar", { name: "vFbId", length: 100, default: () => "'0'" })
+  @Column("varchar", { name: "vFbId", length: 100, default: "0" })
   vFbId: string;
 
   @Column("varchar", { name: "vCreditCard", length: 255 })
@@ -33,7 +33,7 @@ export class Hotel {
   @Column("enum", {
     name: "vLogoutDev",
     enum: ["true", "false"],
-    default: () => "'false'",
+    default: "false",
   })
   vLogoutDev: "true" | "false";
 
@@ -43,7 +43,7 @@ export class Hotel {
   @Column("int", {
     name: "iTripId",
     comment: "Link with trips",
-    default: () => "'0'",
+    default: "0",
   })
   iTripId: number;
 
@@ -51,14 +51,14 @@ export class Hotel {
     name: "vTripStatus",
     comment: "Link with trips 'iActive'",
     length: 25,
-    default: () => "'NONE'",
+    default: "None",
   })
   vTripStatus: string;
 
   @Column("enum", {
     name: "vTripPaymentMode",
     enum: ["Cash", "Paypal", "NONE", "Card"],
-    default: () => "'NONE'",
+    default: "None",
   })
   vTripPaymentMode: "Cash" | "Paypal" | "NONE" | "Card";
 
@@ -81,7 +81,7 @@ export class Hotel {
   @Column("enum", {
     name: "eStatus",
     enum: ["Active", "Inactive", "Deleted"],
-    default: () => "'Active'",
+    default: "Active",
   })
   eStatus: "Active" | "Inactive" | "Deleted";
 
@@ -94,7 +94,7 @@ export class Hotel {
   @Column("enum", {
     name: "eDeviceType",
     enum: ["Android", "Ios"],
-    default: () => "'Android'",
+    default: "Android",
   })
   eDeviceType: "Android" | "Ios";
 
@@ -102,7 +102,7 @@ export class Hotel {
     name: "eDebugMode",
     comment: "This applies to IOS devices only",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eDebugMode: "Yes" | "No";
 
@@ -120,21 +120,21 @@ export class Hotel {
 
   @Column("timestamp", {
     name: "tLastOnline",
-    default: () => "'0000-00-00 00:00:00'",
+    nullable:true,
   })
   tLastOnline: Date;
 
   @Column("enum", {
     name: "eEmailVerified",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eEmailVerified: "Yes" | "No";
 
   @Column("enum", {
     name: "ePhoneVerified",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   ePhoneVerified: "Yes" | "No";
 
@@ -144,7 +144,7 @@ export class Hotel {
   @Column("enum", {
     name: "eSignUpType",
     enum: ["Normal", "Facebook", "Twitter", "Google"],
-    default: () => "'Normal'",
+    default: "Normal",
   })
   eSignUpType: "Normal" | "Facebook" | "Twitter" | "Google";
 
@@ -166,7 +166,7 @@ export class Hotel {
   @Column("enum", {
     name: "eLogout",
     enum: ["Yes", "No"],
-    default: () => "'Yes'",
+    default: "Yes",
   })
   eLogout: "Yes" | "No";
 
@@ -176,18 +176,18 @@ export class Hotel {
   @Column("enum", {
     name: "eIs_Kiosk",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eIsKiosk: "Yes" | "No";
 
   @Column("enum", {
     name: "eChangeLang",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eChangeLang: "Yes" | "No";
 
-  @Column("int", { name: "vVerificationCount", default: () => "'0'" })
+  @Column("int", { name: "vVerificationCount", default: "0" })
   vVerificationCount: number;
 
   @Column("datetime", { name: "dSendverificationDate" })
@@ -200,14 +200,14 @@ export class Hotel {
     name: "eReviewModeLogin",
     comment: "This apply to IOS app only",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eReviewModeLogin: "Yes" | "No";
 
   @Column("enum", {
     name: "eAppTerminate",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eAppTerminate: "Yes" | "No";
 }

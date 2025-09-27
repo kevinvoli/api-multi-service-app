@@ -26,7 +26,7 @@ export class DocumentList {
   @Column("enum", {
     name: "status",
     enum: ["Active", "Inactive", "Deleted"],
-    default: () => "'Active'",
+    default: "Active",
   })
   status: "Active" | "Inactive" | "Deleted";
 

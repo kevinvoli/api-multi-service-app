@@ -21,7 +21,7 @@ export class DeliveryPreferences {
   @Column("enum", {
     name: "eImageUpload",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eImageUpload: "Yes" | "No";
 
@@ -31,17 +31,17 @@ export class DeliveryPreferences {
   @Column("enum", {
     name: "eContactLess",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eContactLess: "Yes" | "No";
 
   @Column("enum", {
     name: "eStatus",
     enum: ["Active", "Inactive"],
-    default: () => "'Active'",
+    default: "Active",
   })
   eStatus: "Active" | "Inactive";
 
-  @Column("int", { name: "is_deleted", default: () => "'0'" })
+  @Column("int", { name: "is_deleted", default: "0" })
   isDeleted: number;
 }

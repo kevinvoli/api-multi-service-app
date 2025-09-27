@@ -1,26 +1,49 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateWithdrawRequestDto } from './dto/create-withdraw-request.dto';
 import { UpdateWithdrawRequestDto } from './dto/update-withdraw-request.dto';
+import { WithdrawRequests } from './entities/withdraw-request.entity';
 
 @Injectable()
 export class WithdrawRequestsService {
-  create(createWithdrawRequestDto: CreateWithdrawRequestDto) {
-    return 'This action adds a new withdrawRequest';
+  constructor(
+    @InjectRepository(WithdrawRequests)
+    private readonly withdrawRequestRepository: Repository<WithdrawRequests>,
+  ) {}
+
+  async create(createWithdrawRequestDto: CreateWithdrawRequestDto): Promise<WithdrawRequests> {
+    const withdrawRequest = this.withdrawRequestRepository.create(createWithdrawRequestDto);
+    return this.withdrawRequestRepository.save(withdrawRequest);
   }
 
-  findAll() {
-    return `This action returns all withdrawRequests`;
+  async findAll(): Promise<WithdrawRequests[]> {
+    return this.withdrawRequestRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} withdrawRequest`;
+  async findOne(id: number): Promise<WithdrawRequests> {
+    const withdrawRequest = await this.withdrawRequestRepository.findOne({ where: { iWithdrawRequestsId: id } });
+    if (!withdrawRequest) {
+      throw new NotFoundException(`WithdrawRequest with ID #${id} not found`);
+    }
+    return withdrawRequest;
   }
 
-  update(id: number, updateWithdrawRequestDto: UpdateWithdrawRequestDto) {
-    return `This action updates a #${id} withdrawRequest`;
+  async update(id: number, updateWithdrawRequestDto: UpdateWithdrawRequestDto): Promise<WithdrawRequests> {
+    const withdrawRequest = await this.withdrawRequestRepository.preload({
+      iWithdrawRequestsId: id,
+      ...updateWithdrawRequestDto,
+    });
+    if (!withdrawRequest) {
+      throw new NotFoundException(`WithdrawRequest with ID #${id} not found`);
+    }
+    return this.withdrawRequestRepository.save(withdrawRequest);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} withdrawRequest`;
+  async remove(id: number): Promise<void> {
+    const result = await this.withdrawRequestRepository.delete(id);
+    if (result.affected === 0) {
+      throw new NotFoundException(`WithdrawRequest with ID #${id} not found`);
+    }
   }
 }

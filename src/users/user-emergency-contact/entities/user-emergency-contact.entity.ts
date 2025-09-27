@@ -21,7 +21,7 @@ export class UserEmergencyContact {
   @Column("enum", {
     name: "eUserType",
     enum: ["Passenger", "Driver"],
-    default: () => "'Passenger'",
+    default: "Passenger",
   })
   eUserType: "Passenger" | "Driver";
 }

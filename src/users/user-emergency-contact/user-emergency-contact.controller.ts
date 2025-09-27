@@ -8,27 +8,27 @@ export class UserEmergencyContactController {
   constructor(private readonly userEmergencyContactService: UserEmergencyContactService) {}
 
   @Post()
-  create(@Body() createUserEmergencyContactDto: CreateUserEmergencyContactDto) {
-    return this.userEmergencyContactService.create(createUserEmergencyContactDto);
+  async create(@Body() createUserEmergencyContactDto: CreateUserEmergencyContactDto) {
+    return await this.userEmergencyContactService.create(createUserEmergencyContactDto);
   }
 
   @Get()
-  findAll() {
-    return this.userEmergencyContactService.findAll();
+  async findAll() {
+    return await this.userEmergencyContactService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userEmergencyContactService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.userEmergencyContactService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserEmergencyContactDto: UpdateUserEmergencyContactDto) {
-    return this.userEmergencyContactService.update(+id, updateUserEmergencyContactDto);
+  async update(@Param('id') id: string, @Body() updateUserEmergencyContactDto: UpdateUserEmergencyContactDto) {
+    return await this.userEmergencyContactService.update(+id, updateUserEmergencyContactDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userEmergencyContactService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.userEmergencyContactService.remove(+id);
   }
 }

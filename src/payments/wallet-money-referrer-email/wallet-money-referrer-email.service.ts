@@ -1,26 +1,49 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateWalletMoneyReferrerEmailDto } from './dto/create-wallet-money-referrer-email.dto';
 import { UpdateWalletMoneyReferrerEmailDto } from './dto/update-wallet-money-referrer-email.dto';
+import { WalletMoneyReferrerEmail } from './entities/wallet-money-referrer-email.entity';
 
 @Injectable()
 export class WalletMoneyReferrerEmailService {
-  create(createWalletMoneyReferrerEmailDto: CreateWalletMoneyReferrerEmailDto) {
-    return 'This action adds a new walletMoneyReferrerEmail';
+  constructor(
+    @InjectRepository(WalletMoneyReferrerEmail)
+    private readonly walletMoneyReferrerEmailRepository: Repository<WalletMoneyReferrerEmail>,
+  ) {}
+
+  async create(createWalletMoneyReferrerEmailDto: CreateWalletMoneyReferrerEmailDto): Promise<WalletMoneyReferrerEmail> {
+    const walletMoneyReferrerEmail = this.walletMoneyReferrerEmailRepository.create(createWalletMoneyReferrerEmailDto);
+    return this.walletMoneyReferrerEmailRepository.save(walletMoneyReferrerEmail);
   }
 
-  findAll() {
-    return `This action returns all walletMoneyReferrerEmail`;
+  async findAll(): Promise<WalletMoneyReferrerEmail[]> {
+    return this.walletMoneyReferrerEmailRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} walletMoneyReferrerEmail`;
+  async findOne(id: number): Promise<WalletMoneyReferrerEmail> {
+    const walletMoneyReferrerEmail = await this.walletMoneyReferrerEmailRepository.findOne({ where: { iEmailId: id } });
+    if (!walletMoneyReferrerEmail) {
+      throw new NotFoundException(`WalletMoneyReferrerEmail with ID #${id} not found`);
+    }
+    return walletMoneyReferrerEmail;
   }
 
-  update(id: number, updateWalletMoneyReferrerEmailDto: UpdateWalletMoneyReferrerEmailDto) {
-    return `This action updates a #${id} walletMoneyReferrerEmail`;
+  async update(id: number, updateWalletMoneyReferrerEmailDto: UpdateWalletMoneyReferrerEmailDto): Promise<WalletMoneyReferrerEmail> {
+    const walletMoneyReferrerEmail = await this.walletMoneyReferrerEmailRepository.preload({
+      iEmailId: id,
+      ...updateWalletMoneyReferrerEmailDto,
+    });
+    if (!walletMoneyReferrerEmail) {
+      throw new NotFoundException(`WalletMoneyReferrerEmail with ID #${id} not found`);
+    }
+    return this.walletMoneyReferrerEmailRepository.save(walletMoneyReferrerEmail);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} walletMoneyReferrerEmail`;
+  async remove(id: number): Promise<void> {
+    const result = await this.walletMoneyReferrerEmailRepository.delete(id);
+    if (result.affected === 0) {
+      throw new NotFoundException(`WalletMoneyReferrerEmail with ID #${id} not found`);
+    }
   }
 }

@@ -13,13 +13,13 @@ export class BiddingPostMedia {
 
   @Column("timestamp", {
     name: "tAddedDate",
-    default: () => "'0000-00-00 00:00:00'",
+    default: () => "0000-00-00 00:00:00",
   })
   tAddedDate: Date;
 
   @Column("timestamp", {
     name: "tModifiedDate",
-    default: () => "'0000-00-00 00:00:00'",
+    default: () => "0000-00-00 00:00:00",
   })
   tModifiedDate: Date;
 
@@ -27,7 +27,7 @@ export class BiddingPostMedia {
     name: "eStatus",
     nullable: true,
     enum: ["Active", "Inactive"],
-    default: () => "'Active'",
+    default: "Active",
   })
   eStatus: "Active" | "Inactive" | null;
 

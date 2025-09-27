@@ -8,27 +8,27 @@ export class RegisterDriverController {
   constructor(private readonly registerDriverService: RegisterDriverService) {}
 
   @Post()
-  create(@Body() createRegisterDriverDto: CreateRegisterDriverDto) {
-    return this.registerDriverService.create(createRegisterDriverDto);
+  async create(@Body() createRegisterDriverDto: CreateRegisterDriverDto) {
+    return await this.registerDriverService.create(createRegisterDriverDto);
   }
 
   @Get()
-  findAll() {
-    return this.registerDriverService.findAll();
+  async findAll() {
+    return await this.registerDriverService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.registerDriverService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.registerDriverService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateRegisterDriverDto: UpdateRegisterDriverDto) {
-    return this.registerDriverService.update(+id, updateRegisterDriverDto);
+  async update(@Param('id') id: string, @Body() updateRegisterDriverDto: UpdateRegisterDriverDto) {
+    return await this.registerDriverService.update(+id, updateRegisterDriverDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.registerDriverService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.registerDriverService.remove(+id);
   }
 }

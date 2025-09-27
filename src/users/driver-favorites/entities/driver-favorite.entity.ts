@@ -14,7 +14,7 @@ export class DriverFavorites {
   @Column("enum", {
     name: "eType",
     enum: ["Ride", "Deliver", "UberX", "Multi-Delivery"],
-    default: () => "'Ride'",
+    default: "Ride",
   })
   eType: "Ride" | "Deliver" | "UberX" | "Multi-Delivery";
 
@@ -22,7 +22,7 @@ export class DriverFavorites {
     name: "eFavDriver",
     comment: "0=> 'Not Favorite', '1'=> 'Favorite'",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eFavDriver: "Yes" | "No";
 }

@@ -8,27 +8,27 @@ export class UserPaymentInfoController {
   constructor(private readonly userPaymentInfoService: UserPaymentInfoService) {}
 
   @Post()
-  create(@Body() createUserPaymentInfoDto: CreateUserPaymentInfoDto) {
-    return this.userPaymentInfoService.create(createUserPaymentInfoDto);
+  async create(@Body() createUserPaymentInfoDto: CreateUserPaymentInfoDto) {
+    return await this.userPaymentInfoService.create(createUserPaymentInfoDto);
   }
 
   @Get()
-  findAll() {
-    return this.userPaymentInfoService.findAll();
+  async findAll() {
+    return await this.userPaymentInfoService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userPaymentInfoService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.userPaymentInfoService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserPaymentInfoDto: UpdateUserPaymentInfoDto) {
-    return this.userPaymentInfoService.update(+id, updateUserPaymentInfoDto);
+  async update(@Param('id') id: string, @Body() updateUserPaymentInfoDto: UpdateUserPaymentInfoDto) {
+    return await this.userPaymentInfoService.update(+id, updateUserPaymentInfoDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userPaymentInfoService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.userPaymentInfoService.remove(+id);
   }
 }

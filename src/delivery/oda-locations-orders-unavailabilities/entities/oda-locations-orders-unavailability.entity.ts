@@ -12,7 +12,7 @@ export class OdaLocationsOrdersUnavailabilities {
     name: "status",
     comment: "Relation with location item status",
     enum: ["active", "inactive", "", ""],
-    default: () => "'active'",
+    default: "active",
   })
   status: "active" | "inactive" | "" | "";
 

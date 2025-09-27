@@ -61,21 +61,21 @@ export class Country {
   @Column("enum", {
     name: "eStatus",
     enum: ["Active", "Inactive", "Deleted"],
-    default: () => "'Active'",
+    default: "Active",
   })
   eStatus: "Active" | "Inactive" | "Deleted";
 
   @Column("enum", {
     name: "eUnit",
     enum: ["KMs", "Miles"],
-    default: () => "'KMs'",
+    default: "KMs",
   })
   eUnit: "KMs" | "Miles";
 
-  @Column("float", { name: "fTax1", precision: 12, default: () => "'0'" })
+  @Column("float", { name: "fTax1", precision: 12, default: "0" })
   fTax1: number;
 
-  @Column("float", { name: "fTax2", precision: 12, default: () => "'0'" })
+  @Column("float", { name: "fTax2", precision: 12, default: "0" })
   fTax2: number;
 
   @Column("varchar", { name: "vCurrency", length: 50 })
@@ -84,7 +84,7 @@ export class Country {
   @Column("enum", {
     name: "eEnableToll",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eEnableToll: "Yes" | "No";
 
@@ -92,14 +92,14 @@ export class Country {
     name: "eZeroAllowed",
     comment: "This field only for prfix in mobile number in string.",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eZeroAllowed: "Yes" | "No";
 
   @Column("enum", {
     name: "eRoundingOffEnable",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eRoundingOffEnable: "Yes" | "No";
 
@@ -124,7 +124,7 @@ export class Country {
   @Column("enum", {
     name: "eEnableSinch",
     enum: ["Yes", "No"],
-    default: () => "'Yes'",
+    default: "Yes",
   })
   eEnableSinch: "Yes" | "No";
 }

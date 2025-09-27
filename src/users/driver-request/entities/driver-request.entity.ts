@@ -30,7 +30,7 @@ export class DriverRequest {
   @Column("enum", {
     name: "eAcceptAttempted",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eAcceptAttempted: "Yes" | "No";
 
@@ -58,39 +58,39 @@ export class DriverRequest {
   @Column("enum", {
     name: "eReceivedByPubSub",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eReceivedByPubSub: "Yes" | "No";
 
   @Column("timestamp", {
     name: "dPunSubDate",
-    default: () => "'0000-00-00 00:00:00'",
+    nullable:true,
   })
   dPunSubDate: Date;
 
   @Column("enum", {
     name: "eReceivedByPush",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eReceivedByPush: "Yes" | "No";
 
   @Column("timestamp", {
     name: "dPushDate",
-    default: () => "'0000-00-00 00:00:00'",
+    nullable:true,
   })
   dPushDate: Date;
 
   @Column("enum", {
     name: "eReceivedByScript",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eReceivedByScript: "Yes" | "No";
 
   @Column("timestamp", {
     name: "dScriptDate",
-    default: () => "'0000-00-00 00:00:00'",
+    nullable:true,
   })
   dScriptDate: Date;
 
@@ -112,14 +112,14 @@ export class DriverRequest {
     name: "eSent",
     comment: "This will be yes when passenger sent a request.",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eSent: "Yes" | "No";
 
   @Column("timestamp", {
     name: "dSentDate",
     comment: "Date when passenger sent a request",
-    default: () => "'0000-00-00 00:00:00'",
+    nullable:true,
   })
   dSentDate: Date;
 
@@ -127,7 +127,7 @@ export class DriverRequest {
     name: "eTimeOut",
     comment: "This will be yes if driver received request is timeout.",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eTimeOut: "Yes" | "No";
 
@@ -135,7 +135,7 @@ export class DriverRequest {
     name: "dTimeOutDate",
     comment:
       "Date when driver received request is timeout. This field must be in server's time zone not user's device time zone.",
-    default: () => "'0000-00-00 00:00:00'",
+    nullable:true,
   })
   dTimeOutDate: Date;
 
@@ -144,7 +144,7 @@ export class DriverRequest {
     comment:
       "This field must be ignored in every case. Should not use for report. This is for internal use only",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eReceived: "Yes" | "No";
 
@@ -152,7 +152,7 @@ export class DriverRequest {
     name: "eOpened",
     comment: "This will be yes if driver opens request.",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eOpened: "Yes" | "No";
 
@@ -160,7 +160,7 @@ export class DriverRequest {
     name: "dOpenedDate",
     comment:
       "Date when driver opens request. This field must be in server's timezone not in user's device timezone.",
-    default: () => "'0000-00-00 00:00:00'",
+    nullable:true,
   })
   dOpenedDate: Date;
 
@@ -168,7 +168,7 @@ export class DriverRequest {
     name: "eAccept",
     comment: "This will be yes if driver accepts request.",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eAccept: "Yes" | "No";
 
@@ -176,7 +176,7 @@ export class DriverRequest {
     name: "dAcceptDate",
     comment:
       "Date when driver declines request. This must be in server's timezone not user's device time zone.",
-    default: () => "'0000-00-00 00:00:00'",
+    nullable:true,
   })
   dAcceptDate: Date;
 
@@ -185,7 +185,7 @@ export class DriverRequest {
     comment:
       "This will be yes if driver accepts request. This field must be in server's time zone not user's device time zone",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eDecline: "Yes" | "No";
 
@@ -193,7 +193,7 @@ export class DriverRequest {
     name: "dDeclineDate",
     comment:
       "Date when driver declines request. This must be in server's timezone not user's device time zone.",
-    default: () => "'0000-00-00 00:00:00'",
+    nullable:true,
   })
   dDeclineDate: Date;
 
@@ -201,7 +201,7 @@ export class DriverRequest {
     name: "eDiscardByApp",
     comment: "This will be yes if app discards request.",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eDiscardByApp: "Yes" | "No";
 
@@ -209,7 +209,7 @@ export class DriverRequest {
     name: "dDiscardByApp",
     comment:
       "Date when server discards request. This field must be in server time zone not user's device time zone. ",
-    default: () => "'0000-00-00 00:00:00'",
+    nullable:true,
   })
   dDiscardByApp: Date;
 
@@ -217,14 +217,14 @@ export class DriverRequest {
     name: "eDiscard",
     comment: "This will be yes if server discards request.",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eDiscard: "Yes" | "No";
 
   @Column("timestamp", {
     name: "dDiscardDate",
     comment: "Date when server discards request.",
-    default: () => "'0000-00-00 00:00:00'",
+    nullable:true,
   })
   dDiscardDate: Date;
 }

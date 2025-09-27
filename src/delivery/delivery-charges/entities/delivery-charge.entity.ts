@@ -6,7 +6,7 @@ export class DeliveryCharges {
   @PrimaryGeneratedColumn({ type: "int", name: "iDeliveyChargeId" })
   iDeliveyChargeId: number;
 
-  @Column("int", { name: "iLocationId", default: () => "'0'" })
+  @Column("int", { name: "iLocationId", default: "0" })
   iLocationId: number;
 
   @Column("float", { name: "fOrderPriceValue", precision: 12 })
@@ -21,13 +21,13 @@ export class DeliveryCharges {
   @Column("float", { name: "fFreeOrderPriceSubtotal", precision: 12 })
   fFreeOrderPriceSubtotal: number;
 
-  @Column("int", { name: "iFreeDeliveryRadius", default: () => "'0'" })
+  @Column("int", { name: "iFreeDeliveryRadius", default: "0" })
   iFreeDeliveryRadius: number;
 
   @Column("enum", {
     name: "eStatus",
     enum: ["Active", "Inactive", "Deleted"],
-    default: () => "'Active'",
+    default: "Active",
   })
   eStatus: "Active" | "Inactive" | "Deleted";
 

@@ -20,7 +20,7 @@ export class FavoriteStore {
   @Column("enum", {
     name: "eIsFavourite",
     enum: ["Yes", "No"],
-    default: () => "'Yes'",
+    default: "Yes",
   })
   eIsFavourite: "Yes" | "No";
 

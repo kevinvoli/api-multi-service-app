@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, HttpCode } from '@nestjs/common';
 import { DriverBiddingRequestService } from './driver-bidding-request.service';
 import { CreateDriverBiddingRequestDto } from './dto/create-driver-bidding-request.dto';
 import { UpdateDriverBiddingRequestDto } from './dto/update-driver-bidding-request.dto';
@@ -18,17 +18,18 @@ export class DriverBiddingRequestController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.driverBiddingRequestService.findOne(+id);
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.driverBiddingRequestService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDriverBiddingRequestDto: UpdateDriverBiddingRequestDto) {
-    return this.driverBiddingRequestService.update(+id, updateDriverBiddingRequestDto);
+  update(@Param('id', ParseIntPipe) id: number, @Body() updateDriverBiddingRequestDto: UpdateDriverBiddingRequestDto) {
+    return this.driverBiddingRequestService.update(id, updateDriverBiddingRequestDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.driverBiddingRequestService.remove(+id);
+  @HttpCode(204)
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.driverBiddingRequestService.remove(id);
   }
 }

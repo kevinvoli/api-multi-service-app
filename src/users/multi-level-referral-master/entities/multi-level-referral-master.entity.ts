@@ -14,7 +14,7 @@ export class MultiLevelReferralMaster {
   @Column("enum", {
     name: "eStatus",
     enum: ["Active", "Deleted"],
-    default: () => "'Active'",
+    default: "Active",
   })
   eStatus: "Active" | "Deleted";
 

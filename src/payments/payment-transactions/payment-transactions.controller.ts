@@ -1,34 +1,35 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
 import { PaymentTransactionsService } from './payment-transactions.service';
 import { CreatePaymentTransactionDto } from './dto/create-payment-transaction.dto';
 import { UpdatePaymentTransactionDto } from './dto/update-payment-transaction.dto';
+import { PaymentTransactions } from './entities/payment-transaction.entity';
 
 @Controller('payment-transactions')
 export class PaymentTransactionsController {
   constructor(private readonly paymentTransactionsService: PaymentTransactionsService) {}
 
   @Post()
-  create(@Body() createPaymentTransactionDto: CreatePaymentTransactionDto) {
+  async create(@Body() createPaymentTransactionDto: CreatePaymentTransactionDto): Promise<PaymentTransactions> {
     return this.paymentTransactionsService.create(createPaymentTransactionDto);
   }
 
   @Get()
-  findAll() {
+  async findAll(): Promise<PaymentTransactions[]> {
     return this.paymentTransactionsService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.paymentTransactionsService.findOne(+id);
+  async findOne(@Param('id', ParseIntPipe) id: number): Promise<PaymentTransactions> {
+    return this.paymentTransactionsService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePaymentTransactionDto: UpdatePaymentTransactionDto) {
-    return this.paymentTransactionsService.update(+id, updatePaymentTransactionDto);
+  async update(@Param('id', ParseIntPipe) id: number, @Body() updatePaymentTransactionDto: UpdatePaymentTransactionDto): Promise<PaymentTransactions> {
+    return this.paymentTransactionsService.update(id, updatePaymentTransactionDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.paymentTransactionsService.remove(+id);
+  async remove(@Param('id', ParseIntPipe) id: number): Promise<void> {
+    return this.paymentTransactionsService.remove(id);
   }
 }

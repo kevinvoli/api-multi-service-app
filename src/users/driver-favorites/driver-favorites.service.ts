@@ -1,26 +1,46 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateDriverFavoriteDto } from './dto/create-driver-favorite.dto';
 import { UpdateDriverFavoriteDto } from './dto/update-driver-favorite.dto';
+import { DriverFavorites } from './entities/driver-favorite.entity';
 
 @Injectable()
 export class DriverFavoritesService {
-  create(createDriverFavoriteDto: CreateDriverFavoriteDto) {
-    return 'This action adds a new driverFavorite';
+  constructor(
+    @InjectRepository(DriverFavorites)
+    private readonly driverFavoritesRepository: Repository<DriverFavorites>,
+  ) {}
+  async create(createDriverFavoriteDto: CreateDriverFavoriteDto): Promise<DriverFavorites> {
+    const newFavorite = this.driverFavoritesRepository.create(createDriverFavoriteDto);
+    return await this.driverFavoritesRepository.save(newFavorite);
   }
 
-  findAll() {
-    return `This action returns all driverFavorites`;
+  async findAll(): Promise<DriverFavorites[]> {
+    return await this.driverFavoritesRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} driverFavorite`;
+  async findOne(id: number): Promise<DriverFavorites> {
+    const favorite = await this.driverFavoritesRepository.findOne({ where: { iDriverFavorite: id } });
+    if (!favorite) {
+      throw new NotFoundException(`Favorite with ID "${id}" not found`);
+    }
+    return favorite;
   }
 
-  update(id: number, updateDriverFavoriteDto: UpdateDriverFavoriteDto) {
-    return `This action updates a #${id} driverFavorite`;
+  async update(id: number, updateDriverFavoriteDto: UpdateDriverFavoriteDto): Promise<DriverFavorites> {
+    const favorite = await this.driverFavoritesRepository.preload({
+      iDriverFavorite: id,
+      ...updateDriverFavoriteDto,
+    });
+    if (!favorite) {
+      throw new NotFoundException(`Favorite with ID "${id}" not found`);
+    }
+    return await this.driverFavoritesRepository.save(favorite);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} driverFavorite`;
+  async remove(id: number): Promise<DriverFavorites> {
+    const favorite = await this.findOne(id);
+    return await this.driverFavoritesRepository.remove(favorite);
   }
 }

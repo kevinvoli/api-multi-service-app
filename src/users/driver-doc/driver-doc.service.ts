@@ -1,26 +1,46 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateDriverDocDto } from './dto/create-driver-doc.dto';
 import { UpdateDriverDocDto } from './dto/update-driver-doc.dto';
+import { DriverDoc } from './entities/driver-doc.entity';
 
 @Injectable()
 export class DriverDocService {
-  create(createDriverDocDto: CreateDriverDocDto) {
-    return 'This action adds a new driverDoc';
+  constructor(
+    @InjectRepository(DriverDoc)
+    private readonly driverDocRepository: Repository<DriverDoc>,
+  ) {}
+  async create(createDriverDocDto: CreateDriverDocDto): Promise<DriverDoc> {
+    const newDoc = this.driverDocRepository.create(createDriverDocDto);
+    return await this.driverDocRepository.save(newDoc);
   }
 
-  findAll() {
-    return `This action returns all driverDoc`;
+  async findAll(): Promise<DriverDoc[]> {
+    return await this.driverDocRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} driverDoc`;
+  async findOne(id: number): Promise<DriverDoc> {
+    const doc = await this.driverDocRepository.findOne({ where: { iDriverDocId: id } });
+    if (!doc) {
+      throw new NotFoundException(`Driver document with ID "${id}" not found`);
+    }
+    return doc;
   }
 
-  update(id: number, updateDriverDocDto: UpdateDriverDocDto) {
-    return `This action updates a #${id} driverDoc`;
+  async update(id: number, updateDriverDocDto: UpdateDriverDocDto): Promise<DriverDoc> {
+    const doc = await this.driverDocRepository.preload({
+      iDriverDocId: id,
+      ...updateDriverDocDto,
+    });
+    if (!doc) {
+      throw new NotFoundException(`Driver document with ID "${id}" not found`);
+    }
+    return this.driverDocRepository.save(doc);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} driverDoc`;
+  async remove(id: number): Promise<DriverDoc> {
+    const doc = await this.findOne(id);
+    return await this.driverDocRepository.remove(doc);
   }
 }

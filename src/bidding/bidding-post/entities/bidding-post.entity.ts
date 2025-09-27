@@ -41,7 +41,7 @@ export class BiddingPost {
   @Column("enum", {
     name: "eStatus",
     enum: ["Pending", "Accepted", "Completed", "Cancelled"],
-    default: () => "'Pending'",
+    default: "Pending",
   })
   eStatus: "Pending" | "Accepted" | "Completed" | "Cancelled";
 
@@ -55,7 +55,7 @@ export class BiddingPost {
     name: "fRatio_XOF",
     precision: 10,
     scale: 4,
-    default: () => "'0.0000'",
+    default: "0.0000",
   })
   fRatioXof: number;
 
@@ -77,7 +77,7 @@ export class BiddingPost {
   @Column("enum", {
     name: "eCancelBy",
     enum: ["Driver", "User"],
-    default: () => "'User'",
+    default: "User",
   })
   eCancelBy: "Driver" | "User";
 
@@ -96,7 +96,7 @@ export class BiddingPost {
   @Column("enum", {
     name: "vTaskStatus",
     enum: ["Pending", "Active", "Arrived", "Ongoing", "Finished", "Cancelled"],
-    default: () => "'Pending'",
+    default:  "Pending",
   })
   vTaskStatus:
     | "Pending"
@@ -139,7 +139,7 @@ export class BiddingPost {
   @Column("enum", {
     name: "eDriverPaymentStatus",
     enum: ["Settelled", "Unsettelled"],
-    default: () => "'Unsettelled'",
+    default: "Unsettelled",
   })
   eDriverPaymentStatus: "Settelled" | "Unsettelled";
 
@@ -155,7 +155,7 @@ export class BiddingPost {
   @Column("enum", {
     name: "isSkipRating",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   isSkipRating: "Yes" | "No";
 }

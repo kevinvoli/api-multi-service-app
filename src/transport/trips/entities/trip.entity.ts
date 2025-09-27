@@ -70,13 +70,13 @@ export class Trips {
 
   @Column("timestamp", {
     name: "tStartDate",
-    default: () => "'0000-00-00 00:00:00'",
+    nullable:true,
   })
   tStartDate: Date;
 
   @Column("timestamp", {
     name: "tEndDate",
-    default: () => "'0000-00-00 00:00:00'",
+    nullable:true,
   })
   tEndDate: Date;
 
@@ -197,7 +197,7 @@ export class Trips {
   @Column("enum", {
     name: "eVerified",
     enum: ["Verified", "Not Verified"],
-    default: () => "'Not Verified'",
+    default: "Not Verified",
   })
   eVerified: "Verified" | "Not Verified";
 
@@ -260,11 +260,11 @@ export class Trips {
   @Column("enum", {
     name: "ePayment_request",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   ePaymentRequest: "Yes" | "No";
 
-  @Column("int", { name: "iCancelReasonId", default: () => "'0'" })
+  @Column("int", { name: "iCancelReasonId", default: "0" })
   iCancelReasonId: number;
 
   @Column("varchar", { name: "vCancelReason", length: 255 })
@@ -276,7 +276,7 @@ export class Trips {
   @Column("enum", {
     name: "eCancelled",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eCancelled: "Yes" | "No";
 
@@ -297,35 +297,35 @@ export class Trips {
   @Column("enum", {
     name: "eDriverPaymentStatus",
     enum: ["Settelled", "Unsettelled"],
-    default: () => "'Unsettelled'",
+    default: "Unsettelled",
   })
   eDriverPaymentStatus: "Settelled" | "Unsettelled";
 
   @Column("enum", {
     name: "eHotelPaymentStatus",
     enum: ["Settelled", "Unsettelled"],
-    default: () => "'Unsettelled'",
+    default: "Unsettelled",
   })
   eHotelPaymentStatus: "Settelled" | "Unsettelled";
 
   @Column("enum", {
     name: "ePaymentCollect",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   ePaymentCollect: "Yes" | "No";
 
   @Column("enum", {
     name: "ePaymentCollect_Delivery",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   ePaymentCollectDelivery: "Yes" | "No";
 
   @Column("enum", {
     name: "eType",
     enum: ["Ride", "Deliver", "UberX", "Multi-Delivery"],
-    default: () => "'Ride'",
+    default: "Ride",
   })
   eType: "Ride" | "Deliver" | "UberX" | "Multi-Delivery";
 
@@ -335,7 +335,7 @@ export class Trips {
   @Column("enum", {
     name: "eImgSkip",
     enum: ["None", "Yes", "No"],
-    default: () => "'None'",
+    default: "None",
   })
   eImgSkip: "None" | "Yes" | "No";
 
@@ -357,7 +357,7 @@ export class Trips {
   @Column("text", { name: "tPackageDetails" })
   tPackageDetails: string;
 
-  @Column("int", { name: "iUserPetId", default: () => "'0'" })
+  @Column("int", { name: "iUserPetId", default: "0" })
   iUserPetId: number;
 
   @Column("varchar", { name: "vDeliveryConfirmCode", length: 55 })
@@ -494,14 +494,14 @@ export class Trips {
   @Column("enum", {
     name: "eCancelChargeFailed",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eCancelChargeFailed: "Yes" | "No";
 
   @Column("enum", {
     name: "eCancelledBy",
     enum: ["", "Passenger", "Driver"],
-    default: () => "''",
+    default: "",
   })
   eCancelledBy: "" | "Passenger" | "Driver";
 
@@ -536,7 +536,7 @@ export class Trips {
   @Column("enum", {
     name: "eHailTrip",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eHailTrip: "Yes" | "No";
 
@@ -549,7 +549,7 @@ export class Trips {
   @Column("varchar", { name: "vTimeZone", length: 255 })
   vTimeZone: string;
 
-  @Column("int", { name: "iUserAddressId", default: () => "'0'" })
+  @Column("int", { name: "iUserAddressId", default: "0" })
   iUserAddressId: number;
 
   @Column("text", { name: "tUserComment" })
@@ -558,14 +558,14 @@ export class Trips {
   @Column("enum", {
     name: "eBeforeUpload",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eBeforeUpload: "Yes" | "No";
 
   @Column("enum", {
     name: "eAfterUpload",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eAfterUpload: "Yes" | "No";
 
@@ -573,7 +573,7 @@ export class Trips {
     name: "ePaymentByReceiver",
     comment: "multi-delivery",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   ePaymentByReceiver: "Yes" | "No";
 
@@ -581,14 +581,14 @@ export class Trips {
     name: "eFareGenerated",
     comment: "multi-delivery",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eFareGenerated: "Yes" | "No";
 
   @Column("int", {
     name: "iRunningTripDeliveryNo",
     comment: "multi-delivery",
-    default: () => "'0'",
+    default: "0",
   })
   iRunningTripDeliveryNo: number;
 
@@ -596,7 +596,7 @@ export class Trips {
     name: "eSignVerification",
     comment: "multi-delivery",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eSignVerification: "Yes" | "No";
 
@@ -648,7 +648,7 @@ export class Trips {
   @Column("enum", {
     name: "eFlatTrip",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eFlatTrip: "Yes" | "No";
 
@@ -668,13 +668,13 @@ export class Trips {
   })
   fWaitingFees: number;
 
-  @Column("int", { name: "iAirportLocationId", default: () => "'0'" })
+  @Column("int", { name: "iAirportLocationId", default: "0" })
   iAirportLocationId: number;
 
   @Column("enum", {
     name: "eAirportLocation",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eAirportLocation: "Yes" | "No";
 
@@ -696,7 +696,7 @@ export class Trips {
     name: "eServiceEnd",
     comment: "This is related to UberX service.",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eServiceEnd: "Yes" | "No";
 
@@ -704,7 +704,7 @@ export class Trips {
     name: "eBookingFrom",
     comment: "For Hotel Panel Web",
     enum: ["Admin", "Hotel", "Kiosk", "Company", ""],
-    default: () => "''",
+    default: "",
   })
   eBookingFrom: "Admin" | "Hotel" | "Kiosk" | "Company" | "";
 
@@ -732,21 +732,21 @@ export class Trips {
   @Column("enum", {
     name: "eWalletDebitAllow",
     enum: ["Yes", "No"],
-    default: () => "'Yes'",
+    default: "Yes",
   })
   eWalletDebitAllow: "Yes" | "No";
 
   @Column("enum", {
     name: "eSystem",
     enum: ["General", "DeliverAll"],
-    default: () => "'General'",
+    default: "General",
   })
   eSystem: "General" | "DeliverAll";
 
   @Column("enum", {
     name: "ePaymentBy",
     enum: ["Passenger", "Organization"],
-    default: () => "'Passenger'",
+    default: "Passenger",
   })
   ePaymentBy: "Passenger" | "Organization";
 
@@ -756,7 +756,7 @@ export class Trips {
   @Column("enum", {
     name: "eOrganizationPaymentStatus",
     enum: ["Settelled", "Unsettelled"],
-    default: () => "'Unsettelled'",
+    default: "Unsettelled",
   })
   eOrganizationPaymentStatus: "Settelled" | "Unsettelled";
 
@@ -772,7 +772,7 @@ export class Trips {
   @Column("enum", {
     name: "eTripReason",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eTripReason: "Yes" | "No";
 
@@ -780,14 +780,14 @@ export class Trips {
     name: "ePoolRide",
     comment: "Only for Pool Rides ",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   ePoolRide: "Yes" | "No";
 
   @Column("int", { name: "iPersonSize", comment: "Only for Pool Rides " })
   iPersonSize: number;
 
-  @Column("int", { name: "iPoolParentId", default: () => "'0'" })
+  @Column("int", { name: "iPoolParentId", default: "0" })
   iPoolParentId: number;
 
   @Column("float", {
@@ -817,7 +817,7 @@ export class Trips {
   @Column("enum", {
     name: "eBookForSomeOneElse",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eBookForSomeOneElse: "Yes" | "No";
 
@@ -870,14 +870,14 @@ export class Trips {
   @Column("enum", {
     name: "ePayWallet",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   ePayWallet: "Yes" | "No";
 
   @Column("enum", {
     name: "eServiceLocation",
     enum: ["Passanger", "Driver"],
-    default: () => "'Passanger'",
+    default: "Passanger",
   })
   eServiceLocation: "Passanger" | "Driver";
 
@@ -939,7 +939,7 @@ export class Trips {
   @Column("enum", {
     name: "eCardFailed",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eCardFailed: "Yes" | "No";
 
@@ -958,7 +958,7 @@ export class Trips {
   @Column("int", { name: "iToStationId" })
   iToStationId: number;
 
-  @Column("int", { name: "iTollOTP", default: () => "'0'" })
+  @Column("int", { name: "iTollOTP", default: "0" })
   iTollOtp: number;
 
   @Column("int", { name: "iPaymentInfoId" })
@@ -985,7 +985,7 @@ export class Trips {
   @Column("enum", {
     name: "eApproveRequestSentByDriver",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eApproveRequestSentByDriver: "Yes" | "No";
 
@@ -995,7 +995,7 @@ export class Trips {
   @Column("enum", {
     name: "eVerifyTollCharges",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eVerifyTollCharges: "Yes" | "No";
 
@@ -1019,7 +1019,7 @@ export class Trips {
   @Column("enum", {
     name: "eDriverArrived",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eDriverArrived: "Yes" | "No";
 
@@ -1032,14 +1032,14 @@ export class Trips {
   @Column("enum", {
     name: "isVideoCall",
     enum: ["No", "Yes"],
-    default: () => "'No'",
+    default: "No",
   })
   isVideoCall: "No" | "Yes";
 
   @Column("enum", {
     name: "isSkipRating",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   isSkipRating: "Yes" | "No";
 

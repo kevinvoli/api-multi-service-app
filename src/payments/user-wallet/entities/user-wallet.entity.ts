@@ -33,7 +33,7 @@ export class UserWallet {
   @Column("enum", {
     name: "eType",
     enum: ["Credit", "Debit"],
-    default: () => "'Credit'",
+    default: "Credit",
   })
   eType: "Credit" | "Debit";
 
@@ -53,7 +53,7 @@ export class UserWallet {
       "Subscription",
       "Outstanding",
     ],
-    default: () => "'Deposit'",
+    default: "Deposit",
   })
   eFor:
     | "Deposit"
@@ -72,7 +72,7 @@ export class UserWallet {
   @Column("enum", {
     name: "ePaymentStatus",
     enum: ["Settelled", "Unsettelled"],
-    default: () => "'Unsettelled'",
+    default: "Unsettelled",
   })
   ePaymentStatus: "Settelled" | "Unsettelled";
 
@@ -109,7 +109,7 @@ export class UserWallet {
   @Column("mediumtext", { name: "iTransactionId" })
   iTransactionId: string;
 
-  @Column("int", { name: "fromUserId", default: () => "'0'" })
+  @Column("int", { name: "fromUserId", default: "0" })
   fromUserId: number;
 
   @Column("enum", { name: "fromUserType", enum: ["Driver", "Rider"] })

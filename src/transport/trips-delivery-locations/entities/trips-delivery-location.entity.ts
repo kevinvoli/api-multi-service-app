@@ -75,19 +75,19 @@ export class TripsDeliveryLocations {
 
   @Column("timestamp", {
     name: "tStartTime",
-    default: () => "'0000-00-00 00:00:00'",
+    nullable:true,
   })
   tStartTime: Date;
 
   @Column("timestamp", {
     name: "tEndTime",
-    default: () => "'0000-00-00 00:00:00'",
+    nullable:true,
   })
   tEndTime: Date;
 
   @Column("timestamp", {
     name: "tDeliveredTime",
-    default: () => "'0000-00-00 00:00:00'",
+    nullable:true,
   })
   tDeliveredTime: Date;
 
@@ -100,7 +100,7 @@ export class TripsDeliveryLocations {
   @Column("enum", {
     name: "eCancelled",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eCancelled: "Yes" | "No";
 
@@ -143,14 +143,14 @@ export class TripsDeliveryLocations {
   @Column("enum", {
     name: "iActive",
     enum: ["Active", "Finished", "Canceled", "On Going Trip"],
-    default: () => "'Active'",
+    default: "Active",
   })
   iActive: "Active" | "Finished" | "Canceled" | "On Going Trip";
 
   @Column("enum", {
     name: "ePaymentCollect",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   ePaymentCollect: "Yes" | "No";
 
@@ -172,14 +172,14 @@ export class TripsDeliveryLocations {
   @Column("enum", {
     name: "ePaymentByReceiver",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   ePaymentByReceiver: "Yes" | "No";
 
   @Column("enum", {
     name: "eSignVerification",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eSignVerification: "Yes" | "No";
 

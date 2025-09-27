@@ -27,7 +27,7 @@ export class RegisterDriver {
   @Column("enum", { name: "eRefType", enum: ["Driver", "Rider"] })
   eRefType: "Driver" | "Rider";
 
-  @Column("varchar", { name: "vFbId", length: 255, default: () => "'0'" })
+  @Column("varchar", { name: "vFbId", length: 255, default: "0" })
   vFbId: string;
 
   @Column("int", { name: "iCompanyId" })
@@ -123,14 +123,14 @@ export class RegisterDriver {
   @Column("varchar", {
     name: "vTripStatus",
     length: 100,
-    default: () => "'NONE'",
+    default: "None",
   })
   vTripStatus: string;
 
   @Column("enum", {
     name: "eStatus",
     enum: ["active", "inactive", "Deleted", "Suspend"],
-    default: () => "'inactive'",
+    default: "inactive",
   })
   eStatus: "active" | "inactive" | "Deleted" | "Suspend";
 
@@ -140,7 +140,7 @@ export class RegisterDriver {
   @Column("enum", {
     name: "eAccess",
     enum: ["Deaf", "None"],
-    default: () => "'None'",
+    default: "None",
   })
   eAccess: "Deaf" | "None";
 
@@ -149,13 +149,13 @@ export class RegisterDriver {
 
   @Column("timestamp", {
     name: "tLastOnline",
-    default: () => "'0000-00-00 00:00:00'",
+    nullable:true,
   })
   tLastOnline: Date;
 
   @Column("timestamp", {
     name: "tOnline",
-    default: () => "'0000-00-00 00:00:00'",
+    nullable:true,
   })
   tOnline: Date;
 
@@ -180,7 +180,7 @@ export class RegisterDriver {
   @Column("enum", {
     name: "eDeviceType",
     enum: ["Android", "Ios"],
-    default: () => "'Android'",
+    default: "Android",
   })
   eDeviceType: "Android" | "Ios";
 
@@ -188,7 +188,7 @@ export class RegisterDriver {
     name: "eDebugMode",
     comment: "This applies to IOS devices only",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eDebugMode: "Yes" | "No";
 
@@ -204,7 +204,7 @@ export class RegisterDriver {
   @Column("enum", {
     name: "eSentNotification",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eSentNotification: "Yes" | "No";
 
@@ -214,7 +214,7 @@ export class RegisterDriver {
   @Column("enum", {
     name: "eDeliverModule",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eDeliverModule: "Yes" | "No";
 
@@ -248,27 +248,27 @@ export class RegisterDriver {
   @Column("enum", {
     name: "eEmailVerified",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eEmailVerified: "Yes" | "No";
 
   @Column("enum", {
     name: "ePhoneVerified",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   ePhoneVerified: "Yes" | "No";
 
   @Column("text", { name: "tProfileDescription" })
   tProfileDescription: string;
 
-  // @Column("mediumtext", { name: "vPasswordToken" })
-  // vPasswordToken: string;
+  @Column("mediumtext", { name: "vPasswordToken" })
+  vPasswordToken: string;
 
   @Column("enum", {
     name: "eSignUpType",
     enum: ["Normal", "Facebook", "Twitter", "Google", "LinkedIn", "Apple"],
-    default: () => "'Normal'",
+    default: "Normal",
   })
   eSignUpType:
     | "Normal"
@@ -281,8 +281,6 @@ export class RegisterDriver {
   @Column("text", { name: "tSessionId" })
   tSessionId: string;
 
-  @Column("mediumtext", { name: "vPassword_token" })
-  vPasswordToken: string;
 
   @Column("mediumtext", { name: "vRideCountry" })
   vRideCountry: string;
@@ -293,7 +291,7 @@ export class RegisterDriver {
   @Column("enum", {
     name: "eFemaleOnlyReqAccept",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eFemaleOnlyReqAccept: "Yes" | "No";
 
@@ -303,7 +301,7 @@ export class RegisterDriver {
   @Column("enum", {
     name: "eLogout",
     enum: ["Yes", "No"],
-    default: () => "'Yes'",
+    default: "Yes",
   })
   eLogout: "Yes" | "No";
 
@@ -328,11 +326,11 @@ export class RegisterDriver {
   @Column("enum", {
     name: "eChangeLang",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eChangeLang: "Yes" | "No";
 
-  @Column("int", { name: "vVerificationCount", default: () => "'0'" })
+  @Column("int", { name: "vVerificationCount", default: "0" })
   vVerificationCount: number;
 
   @Column("datetime", { name: "dSendverificationDate" })
@@ -341,11 +339,11 @@ export class RegisterDriver {
   @Column("enum", {
     name: "eSelectWorkLocation",
     enum: ["Dynamic", "Fixed"],
-    default: () => "'Dynamic'",
+    default: "Dynamic",
   })
   eSelectWorkLocation: "Dynamic" | "Fixed";
 
-  @Column("int", { name: "vVerificationCountEmergency", default: () => "'0'" })
+  @Column("int", { name: "vVerificationCountEmergency", default: "0" })
   vVerificationCountEmergency: number;
 
   @Column("datetime", { name: "dSendverificationDateEmergency" })
@@ -354,20 +352,20 @@ export class RegisterDriver {
   @Column("enum", {
     name: "eIsFeatured",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eIsFeatured: "Yes" | "No";
 
   @Column("enum", {
     name: "eIsBlocked",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eIsBlocked: "Yes" | "No";
 
   @Column("timestamp", {
     name: "tBlockeddate",
-    default: () => "'0000-00-00 00:00:00'",
+    nullable:true,
   })
   tBlockeddate: Date;
 
@@ -375,7 +373,7 @@ export class RegisterDriver {
     name: "eTestUser",
     comment: "This is not used",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eTestUser: "Yes" | "No";
 
@@ -385,7 +383,7 @@ export class RegisterDriver {
   @Column("enum", {
     name: "eEnableDemoLocDispatch",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eEnableDemoLocDispatch: "Yes" | "No";
 
@@ -394,11 +392,11 @@ export class RegisterDriver {
     comment:
       "This is just for development purpose. In reality, this field's value must be set to 'No'. If you want to allow fake GPS for particular user then set this field's value to 'Yes'.",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eAllowFakeGps: "Yes" | "No";
 
-  @Column("int", { name: "iAdvertBannerId", default: () => "'0'" })
+  @Column("int", { name: "iAdvertBannerId", default: "0" })
   iAdvertBannerId: number;
 
   @Column("timestamp", {
@@ -416,7 +414,7 @@ export class RegisterDriver {
   @Column("enum", {
     name: "eEnableServiceAtLocation",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eEnableServiceAtLocation: "Yes" | "No";
 
@@ -438,7 +436,7 @@ export class RegisterDriver {
   @Column("enum", {
     name: "eDestinationMode",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eDestinationMode: "Yes" | "No";
 
@@ -463,11 +461,11 @@ export class RegisterDriver {
   @Column("enum", {
     name: "eAppTerminate",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eAppTerminate: "Yes" | "No";
 
-  @Column("varchar", { name: "vAppleId", length: 255, default: () => "'0'" })
+  @Column("varchar", { name: "vAppleId", length: 255, default: "0" })
   vAppleId: string;
 
   @Column("varchar", { name: "vTaskStatus", length: 50 })

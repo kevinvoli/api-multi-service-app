@@ -44,7 +44,7 @@ export class Cuisine {
   @Column("enum", {
     name: "eDefault",
     enum: ["No", "Yes"],
-    default: () => "'No'",
+    default: "No",
   })
   eDefault: "No" | "Yes";
 }

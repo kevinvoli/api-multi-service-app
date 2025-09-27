@@ -8,27 +8,27 @@ export class ModelController {
   constructor(private readonly modelService: ModelService) {}
 
   @Post()
-  create(@Body() createModelDto: CreateModelDto) {
-    return this.modelService.create(createModelDto);
+  async create(@Body() createModelDto: CreateModelDto) {
+    return await this.modelService.create(createModelDto);
   }
 
   @Get()
-  findAll() {
-    return this.modelService.findAll();
+  async findAll() {
+    return await this.modelService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.modelService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.modelService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateModelDto: UpdateModelDto) {
-    return this.modelService.update(+id, updateModelDto);
+  async update(@Param('id') id: string, @Body() updateModelDto: UpdateModelDto) {
+    return await this.modelService.update(+id, updateModelDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.modelService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.modelService.remove(+id);
   }
 }

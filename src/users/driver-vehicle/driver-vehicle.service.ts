@@ -1,26 +1,47 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateDriverVehicleDto } from './dto/create-driver-vehicle.dto';
 import { UpdateDriverVehicleDto } from './dto/update-driver-vehicle.dto';
+import { DriverVehicle } from './entities/driver-vehicle.entity';
 
 @Injectable()
 export class DriverVehicleService {
-  create(createDriverVehicleDto: CreateDriverVehicleDto) {
-    return 'This action adds a new driverVehicle';
+  constructor(
+    @InjectRepository(DriverVehicle)
+    private readonly driverVehicleRepository: Repository<DriverVehicle>,
+  ) {}
+  async create(createDriverVehicleDto: CreateDriverVehicleDto): Promise<DriverVehicle> {
+    const newVehicle = this.driverVehicleRepository.create(createDriverVehicleDto);
+    return await this.driverVehicleRepository.save(newVehicle);
   }
 
-  findAll() {
-    return `This action returns all driverVehicle`;
+  async findAll(): Promise<DriverVehicle[]> {
+    return await this.driverVehicleRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} driverVehicle`;
+  async findOne(id: number): Promise<DriverVehicle> {
+    const vehicle = await this.driverVehicleRepository.findOne({ where: { iDriverVehicleId: id } });
+    if (!vehicle) {
+      throw new NotFoundException(`Driver vehicle with ID "${id}" not found`);
+    }
+    return vehicle;
   }
 
-  update(id: number, updateDriverVehicleDto: UpdateDriverVehicleDto) {
-    return `This action updates a #${id} driverVehicle`;
+  async update(id: number, updateDriverVehicleDto: UpdateDriverVehicleDto): Promise<DriverVehicle> {
+    const vehicle = await this.driverVehicleRepository.preload({
+      iDriverVehicleId: id,
+      ...updateDriverVehicleDto,
+    });
+    if (!vehicle) {
+      throw new NotFoundException(`Driver vehicle with ID "${id}" not found`);
+    }
+    return await this.driverVehicleRepository.save(vehicle);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} driverVehicle`;
+  async remove(id: number): Promise<DriverVehicle> {
+    const vehicle = await this.findOne(id);
+    vehicle.eStatus = 'Deleted';
+    return await this.driverVehicleRepository.save(vehicle);
   }
 }

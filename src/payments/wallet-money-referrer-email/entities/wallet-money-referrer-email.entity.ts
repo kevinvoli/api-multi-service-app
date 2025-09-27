@@ -11,7 +11,7 @@ export class WalletMoneyReferrerEmail {
   @Column("text", { name: "tMailInfo" })
   tMailInfo: string;
 
-  @Column("enum", { name: "eSent", enum: ["Yes", "No"], default: () => "'No'" })
+  @Column("enum", { name: "eSent", enum: ["Yes", "No"], default: "No" })
   eSent: "Yes" | "No";
 
   @Column("datetime", { name: "dDate" })

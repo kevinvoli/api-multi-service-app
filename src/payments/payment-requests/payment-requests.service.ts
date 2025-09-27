@@ -1,26 +1,49 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreatePaymentRequestDto } from './dto/create-payment-request.dto';
 import { UpdatePaymentRequestDto } from './dto/update-payment-request.dto';
+import { PaymentRequests } from './entities/payment-request.entity';
 
 @Injectable()
 export class PaymentRequestsService {
-  create(createPaymentRequestDto: CreatePaymentRequestDto) {
-    return 'This action adds a new paymentRequest';
+  constructor(
+    @InjectRepository(PaymentRequests)
+    private readonly paymentRequestRepository: Repository<PaymentRequests>,
+  ) {}
+
+  async create(createPaymentRequestDto: CreatePaymentRequestDto): Promise<PaymentRequests> {
+    const paymentRequest = this.paymentRequestRepository.create(createPaymentRequestDto);
+    return this.paymentRequestRepository.save(paymentRequest);
   }
 
-  findAll() {
-    return `This action returns all paymentRequests`;
+  async findAll(): Promise<PaymentRequests[]> {
+    return this.paymentRequestRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} paymentRequest`;
+  async findOne(id: number): Promise<PaymentRequests> {
+    const paymentRequest = await this.paymentRequestRepository.findOne({ where: { iPaymentRequestsId: id } });
+    if (!paymentRequest) {
+      throw new NotFoundException(`PaymentRequest with ID #${id} not found`);
+    }
+    return paymentRequest;
   }
 
-  update(id: number, updatePaymentRequestDto: UpdatePaymentRequestDto) {
-    return `This action updates a #${id} paymentRequest`;
+  async update(id: number, updatePaymentRequestDto: UpdatePaymentRequestDto): Promise<PaymentRequests> {
+    const paymentRequest = await this.paymentRequestRepository.preload({
+      iPaymentRequestsId: id,
+      ...updatePaymentRequestDto,
+    });
+    if (!paymentRequest) {
+      throw new NotFoundException(`PaymentRequest with ID #${id} not found`);
+    }
+    return this.paymentRequestRepository.save(paymentRequest);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} paymentRequest`;
+  async remove(id: number): Promise<void> {
+    const result = await this.paymentRequestRepository.delete(id);
+    if (result.affected === 0) {
+      throw new NotFoundException(`PaymentRequest with ID #${id} not found`);
+    }
   }
 }

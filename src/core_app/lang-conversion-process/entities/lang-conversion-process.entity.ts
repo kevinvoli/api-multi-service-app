@@ -15,7 +15,7 @@ export class LangConversionProcess {
   @Column("enum", {
     name: "eStatus",
     enum: ["Pending", "In Progress", "Done"],
-    default: () => "'Pending'",
+    default: "Pending",
   })
   eStatus: "Pending" | "In Progress" | "Done";
 
@@ -27,7 +27,7 @@ export class LangConversionProcess {
 
   @Column("timestamp", {
     name: "tEndDateTime",
-    default: () => "'0000-00-00 00:00:00'",
+    nullable:true,
   })
   tEndDateTime: Date;
 }

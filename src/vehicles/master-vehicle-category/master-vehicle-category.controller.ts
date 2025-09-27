@@ -8,27 +8,27 @@ export class MasterVehicleCategoryController {
   constructor(private readonly masterVehicleCategoryService: MasterVehicleCategoryService) {}
 
   @Post()
-  create(@Body() createMasterVehicleCategoryDto: CreateMasterVehicleCategoryDto) {
-    return this.masterVehicleCategoryService.create(createMasterVehicleCategoryDto);
+  async create(@Body() createMasterVehicleCategoryDto: CreateMasterVehicleCategoryDto) {
+    return await this.masterVehicleCategoryService.create(createMasterVehicleCategoryDto);
   }
 
   @Get()
-  findAll() {
-    return this.masterVehicleCategoryService.findAll();
+  async findAll() {
+    return await this.masterVehicleCategoryService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.masterVehicleCategoryService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.masterVehicleCategoryService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMasterVehicleCategoryDto: UpdateMasterVehicleCategoryDto) {
-    return this.masterVehicleCategoryService.update(+id, updateMasterVehicleCategoryDto);
+  async update(@Param('id') id: string, @Body() updateMasterVehicleCategoryDto: UpdateMasterVehicleCategoryDto) {
+    return await this.masterVehicleCategoryService.update(+id, updateMasterVehicleCategoryDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.masterVehicleCategoryService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.masterVehicleCategoryService.remove(+id);
   }
 }

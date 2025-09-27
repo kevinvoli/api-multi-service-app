@@ -8,27 +8,27 @@ export class VehicleCategoryController {
   constructor(private readonly vehicleCategoryService: VehicleCategoryService) {}
 
   @Post()
-  create(@Body() createVehicleCategoryDto: CreateVehicleCategoryDto) {
-    return this.vehicleCategoryService.create(createVehicleCategoryDto);
+  async create(@Body() createVehicleCategoryDto: CreateVehicleCategoryDto) {
+    return await this.vehicleCategoryService.create(createVehicleCategoryDto);
   }
 
   @Get()
-  findAll() {
-    return this.vehicleCategoryService.findAll();
+  async findAll() {
+    return await this.vehicleCategoryService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.vehicleCategoryService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.vehicleCategoryService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateVehicleCategoryDto: UpdateVehicleCategoryDto) {
-    return this.vehicleCategoryService.update(+id, updateVehicleCategoryDto);
+  async update(@Param('id') id: string, @Body() updateVehicleCategoryDto: UpdateVehicleCategoryDto) {
+    return await this.vehicleCategoryService.update(+id, updateVehicleCategoryDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.vehicleCategoryService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.vehicleCategoryService.remove(+id);
   }
 }

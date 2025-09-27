@@ -37,7 +37,7 @@ export class ConfigurationsPayment {
       "Kiosk",
       "Fly",
     ],
-    default: () => "''",
+    default: "",
   })
   eFor:
     | ""
@@ -69,7 +69,7 @@ export class ConfigurationsPayment {
       "Installation Settings",
       "Store Settings",
     ],
-    default: () => "'General'",
+    default: "General",
   })
   eType:
     | "General"
@@ -98,7 +98,7 @@ export class ConfigurationsPayment {
   @Column("enum", {
     name: "eInputType",
     enum: ["Text", "Textarea", "Select", "Number", "NumericRange", "Checkbox"],
-    default: () => "'Text'",
+    default: "Text",
   })
   eInputType:
     | "Text"
@@ -112,21 +112,21 @@ export class ConfigurationsPayment {
     name: "eZeroAllowed",
     comment: "This will take effect when eInputType is 'Number'",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eZeroAllowed: "Yes" | "No";
 
   @Column("enum", {
     name: "eSpaceAllowed",
     enum: ["Yes", "No"],
-    default: () => "'Yes'",
+    default: "Yes",
   })
   eSpaceAllowed: "Yes" | "No";
 
   @Column("enum", {
     name: "eDoubleValueAllowed",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eDoubleValueAllowed: "Yes" | "No";
 
@@ -136,7 +136,7 @@ export class ConfigurationsPayment {
   @Column("enum", {
     name: "eAdminDisplay",
     enum: ["Yes", "No"],
-    default: () => "'Yes'",
+    default: "Yes",
   })
   eAdminDisplay: "Yes" | "No";
 
@@ -144,28 +144,28 @@ export class ConfigurationsPayment {
     name: "eRequireField",
     comment: "Use For Setup Interface Only",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eRequireField: "Yes" | "No";
 
   @Column("enum", {
     name: "eConfigRequired",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eConfigRequired: "Yes" | "No";
 
   @Column("enum", {
     name: "eSensitive",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eSensitive: "Yes" | "No";
 
   @Column("enum", {
     name: "ePaymentMethodConfig",
     enum: ["No", "Yes"],
-    default: () => "'No'",
+    default: "No",
   })
   ePaymentMethodConfig: "No" | "Yes";
 }

@@ -1,26 +1,48 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateAirportLocationMasterDto } from './dto/create-airport-location-master.dto';
 import { UpdateAirportLocationMasterDto } from './dto/update-airport-location-master.dto';
+import { AirportLocationMaster } from './entities/airport-location-master.entity';
 
 @Injectable()
 export class AirportLocationMastersService {
-  create(createAirportLocationMasterDto: CreateAirportLocationMasterDto) {
-    return 'This action adds a new airportLocationMaster';
+  constructor(
+    @InjectRepository(AirportLocationMaster)
+    private readonly airportLocationMasterRepository: Repository<AirportLocationMaster>,
+  ) {}
+
+  async create(createDto: CreateAirportLocationMasterDto): Promise<AirportLocationMaster> {
+    const location = this.airportLocationMasterRepository.create(createDto);
+    return await this.airportLocationMasterRepository.save(location);
   }
 
-  findAll() {
-    return `This action returns all airportLocationMasters`;
+  async findAll(): Promise<AirportLocationMaster[]> {
+    return await this.airportLocationMasterRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} airportLocationMaster`;
+  async findOne(id: number): Promise<AirportLocationMaster> {
+    const location = await this.airportLocationMasterRepository.findOneBy({ iAirportLocationId: id });
+    if (!location) {
+      throw new NotFoundException(`AirportLocationMaster with ID #${id} not found`);
+    }
+    return location;
   }
 
-  update(id: number, updateAirportLocationMasterDto: UpdateAirportLocationMasterDto) {
-    return `This action updates a #${id} airportLocationMaster`;
+  async update(id: number, updateDto: UpdateAirportLocationMasterDto): Promise<AirportLocationMaster> {
+    const location = await this.airportLocationMasterRepository.preload({
+      iAirportLocationId: id,
+      ...updateDto,
+    });
+    if (!location) {
+      throw new NotFoundException(`AirportLocationMaster with ID #${id} not found`);
+    }
+    return await this.airportLocationMasterRepository.save(location);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} airportLocationMaster`;
+  async remove(id: number): Promise<AirportLocationMaster> {
+    const location = await this.findOne(id);
+    await this.airportLocationMasterRepository.remove(location);
+    return location;
   }
 }

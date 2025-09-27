@@ -82,7 +82,7 @@ export class Company {
     name: "eStatus",
     comment: "Deleted will comes when admin want to delete company",
     enum: ["Active", "Inactive", "Deleted"],
-    default: () => "'Inactive'",
+    default: "Inactive",
   })
   eStatus: "Active" | "Inactive" | "Deleted";
 
@@ -113,7 +113,7 @@ export class Company {
   @Column("enum", {
     name: "eAccess",
     enum: ["Deaf", "None"],
-    default: () => "'None'",
+    default: "None",
   })
   eAccess: "Deaf" | "None";
 
@@ -137,21 +137,21 @@ export class Company {
 
   @Column("timestamp", {
     name: "tLastOnline",
-    default: () => "'0000-00-00 00:00:00'",
+    nullable:true,
   })
   tLastOnline: Date;
 
   @Column("enum", {
     name: "eEmailVerified",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eEmailVerified: "Yes" | "No";
 
   @Column("enum", {
     name: "ePhoneVerified",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   ePhoneVerified: "Yes" | "No";
 
@@ -274,14 +274,14 @@ export class Company {
   @Column("enum", {
     name: "eDeviceType",
     enum: ["Android", "Ios"],
-    default: () => "'Android'",
+    default: "Android",
   })
   eDeviceType: "Android" | "Ios";
 
   @Column("enum", {
     name: "eAvailable",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eAvailable: "Yes" | "No";
 
@@ -291,7 +291,7 @@ export class Company {
   @Column("enum", {
     name: "eSignUpType",
     enum: ["Normal", "Facebook", "Twitter", "Google"],
-    default: () => "'Normal'",
+    default: "Normal",
   })
   eSignUpType: "Normal" | "Facebook" | "Twitter" | "Google";
 
@@ -313,28 +313,28 @@ export class Company {
   @Column("enum", {
     name: "eLogout",
     enum: ["Yes", "No"],
-    default: () => "'Yes'",
+    default: "Yes",
   })
   eLogout: "Yes" | "No";
 
   @Column("enum", {
     name: "eChangeLang",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eChangeLang: "Yes" | "No";
 
   @Column("enum", {
     name: "eDemoDisplay",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eDemoDisplay: "Yes" | "No";
 
-  @Column("enum", { name: "eLock", enum: ["Yes", "No"], default: () => "'No'" })
+  @Column("enum", { name: "eLock", enum: ["Yes", "No"], default: "No" })
   eLock: "Yes" | "No";
 
-  @Column("int", { name: "vVerificationCount", default: () => "'0'" })
+  @Column("int", { name: "vVerificationCount", default: "0" })
   vVerificationCount: number;
 
   @Column("datetime", { name: "dSendverificationDate" })
@@ -346,11 +346,11 @@ export class Company {
   @Column("enum", {
     name: "eSystem",
     enum: ["General", "DeliverAll", "Organization"],
-    default: () => "'General'",
+    default: "General",
   })
   eSystem: "General" | "DeliverAll" | "Organization";
 
-  @Column("int", { name: "iAdvertBannerId", default: () => "'0'" })
+  @Column("int", { name: "iAdvertBannerId", default: "0" })
   iAdvertBannerId: number;
 
   @Column("timestamp", {
@@ -362,7 +362,7 @@ export class Company {
   @Column("enum", {
     name: "eDebugMode",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eDebugMode: "Yes" | "No";
 
@@ -384,14 +384,14 @@ export class Company {
   @Column("enum", {
     name: "eThermalPrintEnable",
     enum: ["Yes", "No"],
-    default: () => "'Yes'",
+    default: "Yes",
   })
   eThermalPrintEnable: "Yes" | "No";
 
   @Column("enum", {
     name: "eThermalAutoPrint",
     enum: ["Yes", "No"],
-    default: () => "'Yes'",
+    default: "Yes",
   })
   eThermalAutoPrint: "Yes" | "No";
 
@@ -403,21 +403,21 @@ export class Company {
     comment:
       "This is just for development purpose. In reality, this field's value must be set to 'No'. If you want to allow fake GPS for particular user then set this field's value to 'Yes'.",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eAllowFakeGps: "Yes" | "No";
 
   @Column("enum", {
     name: "eAutoaccept",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eAutoaccept: "Yes" | "No";
 
   @Column("enum", {
     name: "eStoreLocationUpdate",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eStoreLocationUpdate: "Yes" | "No";
 
@@ -427,14 +427,14 @@ export class Company {
   @Column("enum", {
     name: "eTakeaway",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eTakeaway: "Yes" | "No";
 
   @Column("enum", {
     name: "eDriverOption",
     enum: ["Site", "Personal", "All"],
-    default: () => "'Site'",
+    default: "Site",
   })
   eDriverOption: "Site" | "Personal" | "All";
 
@@ -444,7 +444,7 @@ export class Company {
   @Column("enum", {
     name: "eBuyAnyService",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eBuyAnyService: "Yes" | "No";
 
@@ -538,7 +538,7 @@ export class Company {
   @Column("enum", {
     name: "eAppTerminate",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eAppTerminate: "Yes" | "No";
 

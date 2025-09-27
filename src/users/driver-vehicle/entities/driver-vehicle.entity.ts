@@ -41,7 +41,7 @@ export class DriverVehicle {
   @Column("enum", {
     name: "eStatus",
     enum: ["Active", "Inactive", "Deleted"],
-    default: () => "'Inactive'",
+    default: "Inactive",
   })
   eStatus: "Active" | "Inactive" | "Deleted";
 
@@ -72,35 +72,35 @@ export class DriverVehicle {
   @Column("enum", {
     name: "eHandiCapAccessibility",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eHandiCapAccessibility: "Yes" | "No";
 
   @Column("enum", {
     name: "eType",
     enum: ["Ride", "Delivery", "UberX", "TrackService"],
-    default: () => "'Ride'",
+    default: "Ride",
   })
   eType: "Ride" | "Delivery" | "UberX" | "TrackService";
 
   @Column("enum", {
     name: "eAddedDeliverVehicle",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eAddedDeliverVehicle: "Yes" | "No";
 
   @Column("enum", {
     name: "eChildSeatAvailable",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eChildSeatAvailable: "Yes" | "No";
 
   @Column("enum", {
     name: "eWheelChairAvailable",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eWheelChairAvailable: "Yes" | "No";
 
