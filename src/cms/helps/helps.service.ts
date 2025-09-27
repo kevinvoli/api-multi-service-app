@@ -1,26 +1,44 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateHelpDto } from './dto/create-help.dto';
 import { UpdateHelpDto } from './dto/update-help.dto';
+import { Helps } from './entities/help.entity';
 
 @Injectable()
 export class HelpsService {
-  create(createHelpDto: CreateHelpDto) {
-    return 'This action adds a new help';
+  constructor(
+    @InjectRepository(Helps)
+    private readonly helpsRepository: Repository<Helps>,
+  ) {}
+
+  async create(createHelpDto: CreateHelpDto): Promise<Helps> {
+    const newHelp = this.helpsRepository.create(createHelpDto);
+    return this.helpsRepository.save(newHelp);
   }
 
-  findAll() {
-    return `This action returns all helps`;
+  async findAll(): Promise<Helps[]> {
+    return this.helpsRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} help`;
+  async findOne(id: number): Promise<Helps> {
+    const help = await this.helpsRepository.findOne({ where: { iHelpsId: id } });
+    if (!help) {
+      throw new NotFoundException(`Help with ID #${id} not found`);
+    }
+    return help;
   }
 
-  update(id: number, updateHelpDto: UpdateHelpDto) {
-    return `This action updates a #${id} help`;
+  async update(id: number, updateHelpDto: UpdateHelpDto): Promise<Helps> {
+    const help = await this.findOne(id);
+    this.helpsRepository.merge(help, updateHelpDto);
+    return this.helpsRepository.save(help);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} help`;
+  async remove(id: number): Promise<void> {
+    const result = await this.helpsRepository.delete(id);
+    if (result.affected === 0) {
+      throw new NotFoundException(`Help with ID #${id} not found`);
+    }
   }
 }

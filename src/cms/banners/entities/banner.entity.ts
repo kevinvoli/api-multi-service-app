@@ -2,8 +2,8 @@ import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("banners", { schema: "amygo1" })
 export class Banners {
-  @PrimaryGeneratedColumn({ type: "int", name: "iFaqcategoryId" })
-  iFaqcategoryId: number;
+  @PrimaryGeneratedColumn({ type: "int", name: "iBannerId" })
+  iBannerId: number;
 
   @Column("int", { name: "iServiceId", default: () => "'0'" })
   iServiceId: number;
@@ -12,7 +12,7 @@ export class Banners {
     name: "eStatus",
     nullable: true,
     enum: ["Active", "Inactive"],
-    default: () => "'Active'",
+    default: "Active",
   })
   eStatus: "Active" | "Inactive" | null;
 
@@ -37,7 +37,7 @@ export class Banners {
   @Column("varchar", {
     name: "iLocationid",
     length: 255,
-    default: () => "'-1'",
+    default: "-1",
   })
   iLocationid: string;
 
@@ -53,7 +53,7 @@ export class Banners {
   @Column("enum", {
     name: "eFor",
     enum: ["General", "AppHomeScreen", "Promotion"],
-    default: () => "'General'",
+    default: "General",
   })
   eFor: "General" | "AppHomeScreen" | "Promotion";
 

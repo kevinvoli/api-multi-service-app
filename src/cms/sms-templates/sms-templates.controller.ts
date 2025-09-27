@@ -8,27 +8,27 @@ export class SmsTemplatesController {
   constructor(private readonly smsTemplatesService: SmsTemplatesService) {}
 
   @Post()
-  create(@Body() createSmsTemplateDto: CreateSmsTemplateDto) {
-    return this.smsTemplatesService.create(createSmsTemplateDto);
+  async create(@Body() createSmsTemplateDto: CreateSmsTemplateDto) {
+    return await this.smsTemplatesService.create(createSmsTemplateDto);
   }
 
   @Get()
-  findAll() {
-    return this.smsTemplatesService.findAll();
+  async findAll() {
+    return await this.smsTemplatesService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.smsTemplatesService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.smsTemplatesService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateSmsTemplateDto: UpdateSmsTemplateDto) {
-    return this.smsTemplatesService.update(+id, updateSmsTemplateDto);
+  async update(@Param('id') id: string, @Body() updateSmsTemplateDto: UpdateSmsTemplateDto) {
+    return await this.smsTemplatesService.update(+id, updateSmsTemplateDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.smsTemplatesService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.smsTemplatesService.remove(+id);
   }
 }

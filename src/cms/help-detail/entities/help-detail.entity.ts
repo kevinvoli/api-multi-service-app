@@ -12,7 +12,7 @@ export class HelpDetail {
     name: "eStatus",
     nullable: true,
     enum: ["Active", "Inactive"],
-    default: () => "'Active'",
+    default: "Active",
   })
   eStatus: "Active" | "Inactive" | null;
 
@@ -40,14 +40,14 @@ export class HelpDetail {
   @Column("enum", {
     name: "eShowDetail",
     enum: ["Yes", "No"],
-    default: () => "'No'",
+    default: "No",
   })
   eShowDetail: "Yes" | "No";
 
   @Column("enum", {
     name: "eSystem",
     enum: ["General", "DeliverAll"],
-    default: () => "'General'",
+    default: "General",
   })
   eSystem: "General" | "DeliverAll";
 }

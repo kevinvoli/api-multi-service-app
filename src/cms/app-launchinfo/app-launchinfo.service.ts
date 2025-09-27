@@ -1,26 +1,44 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateAppLaunchinfoDto } from './dto/create-app-launchinfo.dto';
 import { UpdateAppLaunchinfoDto } from './dto/update-app-launchinfo.dto';
+import { AppLaunchInfo } from './entities/app-launchinfo.entity';
 
 @Injectable()
 export class AppLaunchinfoService {
-  create(createAppLaunchinfoDto: CreateAppLaunchinfoDto) {
-    return 'This action adds a new appLaunchinfo';
+  constructor(
+    @InjectRepository(AppLaunchInfo)
+    private readonly appLaunchinfoRepository: Repository<AppLaunchInfo>,
+  ) {}
+
+  async create(createAppLaunchinfoDto: CreateAppLaunchinfoDto): Promise<AppLaunchInfo> {
+    const newAppLaunchinfo = this.appLaunchinfoRepository.create(createAppLaunchinfoDto);
+    return this.appLaunchinfoRepository.save(newAppLaunchinfo);
   }
 
-  findAll() {
-    return `This action returns all appLaunchinfo`;
+  async findAll(): Promise<AppLaunchInfo[]> {
+    return this.appLaunchinfoRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} appLaunchinfo`;
+  async findOne(id: number): Promise<AppLaunchInfo> {
+    const appLaunchinfo = await this.appLaunchinfoRepository.findOne({ where: { iImageId: id } });
+    if (!appLaunchinfo) {
+      throw new NotFoundException(`App launch info with ID #${id} not found`);
+    }
+    return appLaunchinfo;
   }
 
-  update(id: number, updateAppLaunchinfoDto: UpdateAppLaunchinfoDto) {
-    return `This action updates a #${id} appLaunchinfo`;
+  async update(id: number, updateAppLaunchinfoDto: UpdateAppLaunchinfoDto): Promise<AppLaunchInfo> {
+    const appLaunchinfo = await this.findOne(id);
+    this.appLaunchinfoRepository.merge(appLaunchinfo, updateAppLaunchinfoDto);
+    return this.appLaunchinfoRepository.save(appLaunchinfo);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} appLaunchinfo`;
+  async remove(id: number): Promise<void> {
+    const result = await this.appLaunchinfoRepository.delete(id);
+    if (result.affected === 0) {
+      throw new NotFoundException(`App launch info with ID #${id} not found`);
+    }
   }
 }

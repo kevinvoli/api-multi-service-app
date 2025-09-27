@@ -1,26 +1,44 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateHelpDetailDto } from './dto/create-help-detail.dto';
 import { UpdateHelpDetailDto } from './dto/update-help-detail.dto';
+import { HelpDetail } from './entities/help-detail.entity';
 
 @Injectable()
 export class HelpDetailService {
-  create(createHelpDetailDto: CreateHelpDetailDto) {
-    return 'This action adds a new helpDetail';
+  constructor(
+    @InjectRepository(HelpDetail)
+    private readonly helpDetailRepository: Repository<HelpDetail>,
+  ) {}
+
+  async create(createHelpDetailDto: CreateHelpDetailDto): Promise<HelpDetail> {
+    const newHelpDetail = this.helpDetailRepository.create(createHelpDetailDto);
+    return this.helpDetailRepository.save(newHelpDetail);
   }
 
-  findAll() {
-    return `This action returns all helpDetail`;
+  async findAll(): Promise<HelpDetail[]> {
+    return this.helpDetailRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} helpDetail`;
+  async findOne(id: number): Promise<HelpDetail> {
+    const helpDetail = await this.helpDetailRepository.findOne({ where: { iHelpDetailId: id } });
+    if (!helpDetail) {
+      throw new NotFoundException(`Help Detail with ID #${id} not found`);
+    }
+    return helpDetail;
   }
 
-  update(id: number, updateHelpDetailDto: UpdateHelpDetailDto) {
-    return `This action updates a #${id} helpDetail`;
+  async update(id: number, updateHelpDetailDto: UpdateHelpDetailDto): Promise<HelpDetail> {
+    const helpDetail = await this.findOne(id);
+    this.helpDetailRepository.merge(helpDetail, updateHelpDetailDto);
+    return this.helpDetailRepository.save(helpDetail);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} helpDetail`;
+  async remove(id: number): Promise<void> {
+    const result = await this.helpDetailRepository.delete(id);
+    if (result.affected === 0) {
+      throw new NotFoundException(`Help Detail with ID #${id} not found`);
+    }
   }
 }

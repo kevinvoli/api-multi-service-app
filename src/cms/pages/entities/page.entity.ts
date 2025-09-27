@@ -35,7 +35,7 @@ export class Pages {
   @Column("enum", {
     name: "eStatus",
     enum: ["Active", "Inactive"],
-    default: () => "'Active'",
+    default: "Active",
   })
   eStatus: "Active" | "Inactive";
 
@@ -69,7 +69,7 @@ export class Pages {
       "Delivery",
       "UberX",
     ],
-    default: () => "'General'",
+    default: "General",
   })
   eFor:
     | "General"

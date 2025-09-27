@@ -8,27 +8,27 @@ export class HomeScreensController {
   constructor(private readonly homeScreensService: HomeScreensService) {}
 
   @Post()
-  create(@Body() createHomeScreenDto: CreateHomeScreenDto) {
-    return this.homeScreensService.create(createHomeScreenDto);
+  async create(@Body() createHomeScreenDto: CreateHomeScreenDto) {
+    return await this.homeScreensService.create(createHomeScreenDto);
   }
 
   @Get()
-  findAll() {
-    return this.homeScreensService.findAll();
+  async findAll() {
+    return await this.homeScreensService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.homeScreensService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.homeScreensService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateHomeScreenDto: UpdateHomeScreenDto) {
-    return this.homeScreensService.update(+id, updateHomeScreenDto);
+  async update(@Param('id') id: string, @Body() updateHomeScreenDto: UpdateHomeScreenDto) {
+    return await this.homeScreensService.update(+id, updateHomeScreenDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.homeScreensService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.homeScreensService.remove(+id);
   }
 }

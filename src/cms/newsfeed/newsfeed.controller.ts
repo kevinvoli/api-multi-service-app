@@ -8,27 +8,27 @@ export class NewsfeedController {
   constructor(private readonly newsfeedService: NewsfeedService) {}
 
   @Post()
-  create(@Body() createNewsfeedDto: CreateNewsfeedDto) {
-    return this.newsfeedService.create(createNewsfeedDto);
+  async create(@Body() createNewsfeedDto: CreateNewsfeedDto) {
+    return await this.newsfeedService.create(createNewsfeedDto);
   }
 
   @Get()
-  findAll() {
-    return this.newsfeedService.findAll();
+  async findAll() {
+    return await this.newsfeedService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.newsfeedService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.newsfeedService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateNewsfeedDto: UpdateNewsfeedDto) {
-    return this.newsfeedService.update(+id, updateNewsfeedDto);
+  async update(@Param('id') id: string, @Body() updateNewsfeedDto: UpdateNewsfeedDto) {
+    return await this.newsfeedService.update(+id, updateNewsfeedDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.newsfeedService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.newsfeedService.remove(+id);
   }
 }

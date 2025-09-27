@@ -8,27 +8,27 @@ export class FaqCategoriesController {
   constructor(private readonly faqCategoriesService: FaqCategoriesService) {}
 
   @Post()
-  create(@Body() createFaqCategoryDto: CreateFaqCategoryDto) {
-    return this.faqCategoriesService.create(createFaqCategoryDto);
+  async create(@Body() createFaqCategoryDto: CreateFaqCategoryDto) {
+    return await this.faqCategoriesService.create(createFaqCategoryDto);
   }
 
   @Get()
-  findAll() {
-    return this.faqCategoriesService.findAll();
+  async findAll() {
+    return await this.faqCategoriesService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.faqCategoriesService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.faqCategoriesService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateFaqCategoryDto: UpdateFaqCategoryDto) {
-    return this.faqCategoriesService.update(+id, updateFaqCategoryDto);
+  async update(@Param('id') id: string, @Body() updateFaqCategoryDto: UpdateFaqCategoryDto) {
+    return await this.faqCategoriesService.update(+id, updateFaqCategoryDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.faqCategoriesService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.faqCategoriesService.remove(+id);
   }
 }

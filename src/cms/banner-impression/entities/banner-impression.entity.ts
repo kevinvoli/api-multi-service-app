@@ -10,7 +10,7 @@ export class BannerImpression {
 
   @Column("timestamp", {
     name: "dDateTime",
-    default: () => "CURRENT_TIMESTAMP",
+    default: "CURRENT_TIMESTAMP",
   })
   dDateTime: Date;
 
@@ -21,7 +21,7 @@ export class BannerImpression {
     name: "eUserType",
     comment: "'Passenger','Driver','Store'",
     enum: ["Passenger", "Driver", "Store"],
-    default: () => "'Passenger'",
+    default: "Passenger",
   })
   eUserType: "Passenger" | "Driver" | "Store";
 

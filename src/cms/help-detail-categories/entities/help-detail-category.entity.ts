@@ -9,7 +9,7 @@ export class HelpDetailCategories {
     name: "eStatus",
     nullable: true,
     enum: ["Active", "Inactive"],
-    default: () => "'Active'",
+    default: "Active",
   })
   eStatus: "Active" | "Inactive" | null;
 
@@ -31,7 +31,7 @@ export class HelpDetailCategories {
   @Column("enum", {
     name: "eSystem",
     enum: ["General", "DeliverAll"],
-    default: () => "'General'",
+    default: "General",
   })
   eSystem: "General" | "DeliverAll";
 }

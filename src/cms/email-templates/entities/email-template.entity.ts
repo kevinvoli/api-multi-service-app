@@ -24,7 +24,7 @@ export class EmailTemplates {
   @Column("enum", {
     name: "eStatus",
     enum: ["Active", "Inactive"],
-    default: () => "'Active'",
+    default: "Active",
   })
   eStatus: "Active" | "Inactive";
 
@@ -43,7 +43,7 @@ export class EmailTemplates {
   @Column("enum", {
     name: "eSystem",
     enum: ["General", "DeliverAll"],
-    default: () => "'General'",
+    default: "General",
   })
   eSystem: "General" | "DeliverAll";
 
@@ -62,7 +62,7 @@ export class EmailTemplates {
       "Delivery",
       "UberX",
     ],
-    default: () => "'General'",
+    default: "General",
   })
   eFor:
     | "General"

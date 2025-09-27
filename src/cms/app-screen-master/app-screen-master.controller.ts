@@ -8,27 +8,27 @@ export class AppScreenMasterController {
   constructor(private readonly appScreenMasterService: AppScreenMasterService) {}
 
   @Post()
-  create(@Body() createAppScreenMasterDto: CreateAppScreenMasterDto) {
-    return this.appScreenMasterService.create(createAppScreenMasterDto);
+  async create(@Body() createAppScreenMasterDto: CreateAppScreenMasterDto) {
+    return await this.appScreenMasterService.create(createAppScreenMasterDto);
   }
 
   @Get()
-  findAll() {
-    return this.appScreenMasterService.findAll();
+  async findAll() {
+    return await this.appScreenMasterService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.appScreenMasterService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.appScreenMasterService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAppScreenMasterDto: UpdateAppScreenMasterDto) {
-    return this.appScreenMasterService.update(+id, updateAppScreenMasterDto);
+  async update(@Param('id') id: string, @Body() updateAppScreenMasterDto: UpdateAppScreenMasterDto) {
+    return await this.appScreenMasterService.update(+id, updateAppScreenMasterDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.appScreenMasterService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.appScreenMasterService.remove(+id);
   }
 }

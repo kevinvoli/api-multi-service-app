@@ -17,7 +17,7 @@ export class Contactus {
   @Column("enum", {
     name: "eUserType",
     enum: ["Passenger", "Driver", "Company", "Guest"],
-    default: () => "'Guest'",
+    default: "Guest",
   })
   eUserType: "Passenger" | "Driver" | "Company" | "Guest";
 

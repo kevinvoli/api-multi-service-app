@@ -8,27 +8,27 @@ export class EmailTemplatesController {
   constructor(private readonly emailTemplatesService: EmailTemplatesService) {}
 
   @Post()
-  create(@Body() createEmailTemplateDto: CreateEmailTemplateDto) {
-    return this.emailTemplatesService.create(createEmailTemplateDto);
+  async create(@Body() createEmailTemplateDto: CreateEmailTemplateDto) {
+    return await this.emailTemplatesService.create(createEmailTemplateDto);
   }
 
   @Get()
-  findAll() {
-    return this.emailTemplatesService.findAll();
+  async findAll() {
+    return await this.emailTemplatesService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.emailTemplatesService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.emailTemplatesService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateEmailTemplateDto: UpdateEmailTemplateDto) {
-    return this.emailTemplatesService.update(+id, updateEmailTemplateDto);
+  async update(@Param('id') id: string, @Body() updateEmailTemplateDto: UpdateEmailTemplateDto) {
+    return await this.emailTemplatesService.update(+id, updateEmailTemplateDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.emailTemplatesService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.emailTemplatesService.remove(+id);
   }
 }

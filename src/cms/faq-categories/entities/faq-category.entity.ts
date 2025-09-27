@@ -9,7 +9,7 @@ export class FaqCategories {
     name: "eStatus",
     nullable: true,
     enum: ["Active", "Inactive"],
-    default: () => "'Active'",
+    default: "Active",
   })
   eStatus: "Active" | "Inactive" | null;
 
@@ -31,7 +31,7 @@ export class FaqCategories {
   @Column("enum", {
     name: "eCategoryType",
     enum: ["General", "Passenger", "Driver"],
-    default: () => "'General'",
+    default: "General",
   })
   eCategoryType: "General" | "Passenger" | "Driver";
 }

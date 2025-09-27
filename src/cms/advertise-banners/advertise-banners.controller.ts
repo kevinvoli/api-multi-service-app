@@ -8,27 +8,27 @@ export class AdvertiseBannersController {
   constructor(private readonly advertiseBannersService: AdvertiseBannersService) {}
 
   @Post()
-  create(@Body() createAdvertiseBannerDto: CreateAdvertiseBannerDto) {
-    return this.advertiseBannersService.create(createAdvertiseBannerDto);
+  async create(@Body() createAdvertiseBannerDto: CreateAdvertiseBannerDto) {
+    return await this.advertiseBannersService.create(createAdvertiseBannerDto);
   }
 
   @Get()
-  findAll() {
-    return this.advertiseBannersService.findAll();
+  async findAll() {
+    return await this.advertiseBannersService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.advertiseBannersService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.advertiseBannersService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAdvertiseBannerDto: UpdateAdvertiseBannerDto) {
-    return this.advertiseBannersService.update(+id, updateAdvertiseBannerDto);
+  async update(@Param('id') id: string, @Body() updateAdvertiseBannerDto: UpdateAdvertiseBannerDto) {
+    return await this.advertiseBannersService.update(+id, updateAdvertiseBannerDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.advertiseBannersService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.advertiseBannersService.remove(+id);
   }
 }

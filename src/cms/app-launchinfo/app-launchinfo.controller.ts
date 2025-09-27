@@ -8,27 +8,27 @@ export class AppLaunchinfoController {
   constructor(private readonly appLaunchinfoService: AppLaunchinfoService) {}
 
   @Post()
-  create(@Body() createAppLaunchinfoDto: CreateAppLaunchinfoDto) {
-    return this.appLaunchinfoService.create(createAppLaunchinfoDto);
+  async create(@Body() createAppLaunchinfoDto: CreateAppLaunchinfoDto) {
+    return await this.appLaunchinfoService.create(createAppLaunchinfoDto);
   }
 
   @Get()
-  findAll() {
-    return this.appLaunchinfoService.findAll();
+  async findAll() {
+    return await this.appLaunchinfoService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.appLaunchinfoService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.appLaunchinfoService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAppLaunchinfoDto: UpdateAppLaunchinfoDto) {
-    return this.appLaunchinfoService.update(+id, updateAppLaunchinfoDto);
+  async update(@Param('id') id: string, @Body() updateAppLaunchinfoDto: UpdateAppLaunchinfoDto) {
+    return await this.appLaunchinfoService.update(+id, updateAppLaunchinfoDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.appLaunchinfoService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.appLaunchinfoService.remove(+id);
   }
 }

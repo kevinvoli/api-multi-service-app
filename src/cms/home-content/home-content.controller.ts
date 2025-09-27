@@ -8,27 +8,27 @@ export class HomeContentController {
   constructor(private readonly homeContentService: HomeContentService) {}
 
   @Post()
-  create(@Body() createHomeContentDto: CreateHomeContentDto) {
-    return this.homeContentService.create(createHomeContentDto);
+  async create(@Body() createHomeContentDto: CreateHomeContentDto) {
+    return await this.homeContentService.create(createHomeContentDto);
   }
 
   @Get()
-  findAll() {
-    return this.homeContentService.findAll();
+  async findAll() {
+    return await this.homeContentService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.homeContentService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.homeContentService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateHomeContentDto: UpdateHomeContentDto) {
-    return this.homeContentService.update(+id, updateHomeContentDto);
+  async update(@Param('id') id: string, @Body() updateHomeContentDto: UpdateHomeContentDto) {
+    return await this.homeContentService.update(+id, updateHomeContentDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.homeContentService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.homeContentService.remove(+id);
   }
 }

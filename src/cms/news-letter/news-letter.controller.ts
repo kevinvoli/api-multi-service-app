@@ -8,27 +8,27 @@ export class NewsLetterController {
   constructor(private readonly newsLetterService: NewsLetterService) {}
 
   @Post()
-  create(@Body() createNewsLetterDto: CreateNewsLetterDto) {
-    return this.newsLetterService.create(createNewsLetterDto);
+  async create(@Body() createNewsLetterDto: CreateNewsLetterDto) {
+    return await this.newsLetterService.create(createNewsLetterDto);
   }
 
   @Get()
-  findAll() {
-    return this.newsLetterService.findAll();
+  async findAll() {
+    return await this.newsLetterService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.newsLetterService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.newsLetterService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateNewsLetterDto: UpdateNewsLetterDto) {
-    return this.newsLetterService.update(+id, updateNewsLetterDto);
+  async update(@Param('id') id: string, @Body() updateNewsLetterDto: UpdateNewsLetterDto) {
+    return await this.newsLetterService.update(+id, updateNewsLetterDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.newsLetterService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.newsLetterService.remove(+id);
   }
 }

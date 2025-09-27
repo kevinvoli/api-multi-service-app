@@ -8,27 +8,27 @@ export class FaqsController {
   constructor(private readonly faqsService: FaqsService) {}
 
   @Post()
-  create(@Body() createFaqDto: CreateFaqDto) {
-    return this.faqsService.create(createFaqDto);
+  async create(@Body() createFaqDto: CreateFaqDto) {
+    return await this.faqsService.create(createFaqDto);
   }
 
   @Get()
-  findAll() {
-    return this.faqsService.findAll();
+  async findAll() {
+    return await this.faqsService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.faqsService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.faqsService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateFaqDto: UpdateFaqDto) {
-    return this.faqsService.update(+id, updateFaqDto);
+  async update(@Param('id') id: string, @Body() updateFaqDto: UpdateFaqDto) {
+    return await this.faqsService.update(+id, updateFaqDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.faqsService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.faqsService.remove(+id);
   }
 }

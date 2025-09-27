@@ -18,7 +18,7 @@ export class AdvertiseBanners {
     name: "ePosition",
     comment: "MainScreen",
     enum: ["MainScreen"],
-    default: () => "'MainScreen'",
+    default: "MainScreen",
   })
   ePosition: "MainScreen";
 
@@ -41,7 +41,7 @@ export class AdvertiseBanners {
     name: "eStatus",
     comment: "'Active','Inactive'",
     enum: ["Active", "Inactive"],
-    default: () => "'Active'",
+    default: "Active",
   })
   eStatus: "Active" | "Inactive";
 
@@ -49,7 +49,7 @@ export class AdvertiseBanners {
     name: "eImpression",
     comment: "Unlimited,Limited",
     enum: ["Unlimited", "Limited"],
-    default: () => "'Limited'",
+    default: "Limited",
   })
   eImpression: "Unlimited" | "Limited";
 
@@ -57,7 +57,7 @@ export class AdvertiseBanners {
     name: "eValidityType",
     comment: "Permanent,Custom",
     enum: ["Permanent", "Custom"],
-    default: () => "'Custom'",
+    default: "Custom",
   })
   eValidityType: "Permanent" | "Custom";
 }

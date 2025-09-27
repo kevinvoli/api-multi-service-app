@@ -8,27 +8,27 @@ export class BannersController {
   constructor(private readonly bannersService: BannersService) {}
 
   @Post()
-  create(@Body() createBannerDto: CreateBannerDto) {
-    return this.bannersService.create(createBannerDto);
+  async create(@Body() createBannerDto: CreateBannerDto) {
+    return await this.bannersService.create(createBannerDto);
   }
 
   @Get()
-  findAll() {
-    return this.bannersService.findAll();
+  async findAll() {
+    return await this.bannersService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.bannersService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.bannersService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateBannerDto: UpdateBannerDto) {
-    return this.bannersService.update(+id, updateBannerDto);
+  async update(@Param('id') id: string, @Body() updateBannerDto: UpdateBannerDto) {
+    return await this.bannersService.update(+id, updateBannerDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.bannersService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.bannersService.remove(+id);
   }
 }

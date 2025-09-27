@@ -8,27 +8,27 @@ export class HelpsController {
   constructor(private readonly helpsService: HelpsService) {}
 
   @Post()
-  create(@Body() createHelpDto: CreateHelpDto) {
-    return this.helpsService.create(createHelpDto);
+  async create(@Body() createHelpDto: CreateHelpDto) {
+    return await this.helpsService.create(createHelpDto);
   }
 
   @Get()
-  findAll() {
-    return this.helpsService.findAll();
+  async findAll() {
+    return await this.helpsService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.helpsService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.helpsService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateHelpDto: UpdateHelpDto) {
-    return this.helpsService.update(+id, updateHelpDto);
+  async update(@Param('id') id: string, @Body() updateHelpDto: UpdateHelpDto) {
+    return await this.helpsService.update(+id, updateHelpDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.helpsService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.helpsService.remove(+id);
   }
 }

@@ -8,27 +8,27 @@ export class ContactusController {
   constructor(private readonly contactusService: ContactusService) {}
 
   @Post()
-  create(@Body() createContactusDto: CreateContactusDto) {
-    return this.contactusService.create(createContactusDto);
+  async create(@Body() createContactusDto: CreateContactusDto) {
+    return await this.contactusService.create(createContactusDto);
   }
 
   @Get()
-  findAll() {
-    return this.contactusService.findAll();
+  async findAll() {
+    return await this.contactusService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.contactusService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.contactusService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateContactusDto: UpdateContactusDto) {
-    return this.contactusService.update(+id, updateContactusDto);
+  async update(@Param('id') id: string, @Body() updateContactusDto: UpdateContactusDto) {
+    return await this.contactusService.update(+id, updateContactusDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.contactusService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.contactusService.remove(+id);
   }
 }

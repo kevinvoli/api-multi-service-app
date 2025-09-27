@@ -5,14 +5,14 @@ export class HotelBanners {
   @PrimaryGeneratedColumn({ type: "int", name: "iHotelBannerId" })
   iHotelBannerId: number;
 
-  @Column("int", { name: "iHotelId", default: () => "'0'" })
+  @Column("int", { name: "iHotelId", default: "0" })
   iHotelId: number;
 
   @Column("enum", {
     name: "eStatus",
     nullable: true,
     enum: ["Active", "Inactive"],
-    default: () => "'Active'",
+    default: "Active",
   })
   eStatus: "Active" | "Inactive" | null;
 

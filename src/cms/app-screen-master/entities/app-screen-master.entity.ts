@@ -17,14 +17,14 @@ export class AppScreenMaster {
   @Column("enum", {
     name: "eStatus",
     enum: ["Active", "Inactive"],
-    default: () => "'Active'",
+    default: "Active",
   })
   eStatus: "Active" | "Inactive";
 
   @Column("enum", {
     name: "eAppType",
     enum: ["Ride", "Delivery", "UberX", "Deliverall", "General"],
-    default: () => "'General'",
+    default: "General",
   })
   eAppType: "Ride" | "Delivery" | "UberX" | "Deliverall" | "General";
 }

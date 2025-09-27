@@ -1,26 +1,44 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateContactusDto } from './dto/create-contactus.dto';
 import { UpdateContactusDto } from './dto/update-contactus.dto';
+import { Contactus } from './entities/contactus.entity';
 
 @Injectable()
 export class ContactusService {
-  create(createContactusDto: CreateContactusDto) {
-    return 'This action adds a new contactus';
+  constructor(
+    @InjectRepository(Contactus)
+    private readonly contactusRepository: Repository<Contactus>,
+  ) {}
+
+  async create(createContactusDto: CreateContactusDto): Promise<Contactus> {
+    const newContactus = this.contactusRepository.create(createContactusDto);
+    return this.contactusRepository.save(newContactus);
   }
 
-  findAll() {
-    return `This action returns all contactus`;
+  async findAll(): Promise<Contactus[]> {
+    return this.contactusRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} contactus`;
+  async findOne(id: number): Promise<Contactus> {
+    const contactus = await this.contactusRepository.findOne({ where: { iContactusId: id } });
+    if (!contactus) {
+      throw new NotFoundException(`Contact us entry with ID #${id} not found`);
+    }
+    return contactus;
   }
 
-  update(id: number, updateContactusDto: UpdateContactusDto) {
-    return `This action updates a #${id} contactus`;
+  async update(id: number, updateContactusDto: UpdateContactusDto): Promise<Contactus> {
+    const contactus = await this.findOne(id);
+    this.contactusRepository.merge(contactus, updateContactusDto);
+    return this.contactusRepository.save(contactus);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} contactus`;
+  async remove(id: number): Promise<void> {
+    const result = await this.contactusRepository.delete(id);
+    if (result.affected === 0) {
+      throw new NotFoundException(`Contact us entry with ID #${id} not found`);
+    }
   }
 }

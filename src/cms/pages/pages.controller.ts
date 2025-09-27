@@ -8,27 +8,27 @@ export class PagesController {
   constructor(private readonly pagesService: PagesService) {}
 
   @Post()
-  create(@Body() createPageDto: CreatePageDto) {
-    return this.pagesService.create(createPageDto);
+  async create(@Body() createPageDto: CreatePageDto) {
+    return await this.pagesService.create(createPageDto);
   }
 
   @Get()
-  findAll() {
-    return this.pagesService.findAll();
+  async findAll() {
+    return await this.pagesService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.pagesService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.pagesService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePageDto: UpdatePageDto) {
-    return this.pagesService.update(+id, updatePageDto);
+  async update(@Param('id') id: string, @Body() updatePageDto: UpdatePageDto) {
+    return await this.pagesService.update(+id, updatePageDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.pagesService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.pagesService.remove(+id);
   }
 }

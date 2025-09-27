@@ -8,27 +8,27 @@ export class HelpsCategoriesController {
   constructor(private readonly helpsCategoriesService: HelpsCategoriesService) {}
 
   @Post()
-  create(@Body() createHelpsCategoryDto: CreateHelpsCategoryDto) {
-    return this.helpsCategoriesService.create(createHelpsCategoryDto);
+  async create(@Body() createHelpsCategoryDto: CreateHelpsCategoryDto) {
+    return await this.helpsCategoriesService.create(createHelpsCategoryDto);
   }
 
   @Get()
-  findAll() {
-    return this.helpsCategoriesService.findAll();
+  async findAll() {
+    return await this.helpsCategoriesService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.helpsCategoriesService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.helpsCategoriesService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateHelpsCategoryDto: UpdateHelpsCategoryDto) {
-    return this.helpsCategoriesService.update(+id, updateHelpsCategoryDto);
+  async update(@Param('id') id: string, @Body() updateHelpsCategoryDto: UpdateHelpsCategoryDto) {
+    return await this.helpsCategoriesService.update(+id, updateHelpsCategoryDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.helpsCategoriesService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.helpsCategoriesService.remove(+id);
   }
 }

@@ -8,27 +8,27 @@ export class HelpDetailController {
   constructor(private readonly helpDetailService: HelpDetailService) {}
 
   @Post()
-  create(@Body() createHelpDetailDto: CreateHelpDetailDto) {
-    return this.helpDetailService.create(createHelpDetailDto);
+  async create(@Body() createHelpDetailDto: CreateHelpDetailDto) {
+    return await this.helpDetailService.create(createHelpDetailDto);
   }
 
   @Get()
-  findAll() {
-    return this.helpDetailService.findAll();
+  async findAll() {
+    return await this.helpDetailService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.helpDetailService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.helpDetailService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateHelpDetailDto: UpdateHelpDetailDto) {
-    return this.helpDetailService.update(+id, updateHelpDetailDto);
+  async update(@Param('id') id: string, @Body() updateHelpDetailDto: UpdateHelpDetailDto) {
+    return await this.helpDetailService.update(+id, updateHelpDetailDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.helpDetailService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.helpDetailService.remove(+id);
   }
 }

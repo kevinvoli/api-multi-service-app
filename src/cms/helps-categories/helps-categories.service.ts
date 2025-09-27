@@ -1,26 +1,44 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateHelpsCategoryDto } from './dto/create-helps-category.dto';
 import { UpdateHelpsCategoryDto } from './dto/update-helps-category.dto';
+import { HelpsCategories } from './entities/helps-category.entity';
 
 @Injectable()
 export class HelpsCategoriesService {
-  create(createHelpsCategoryDto: CreateHelpsCategoryDto) {
-    return 'This action adds a new helpsCategory';
+  constructor(
+    @InjectRepository(HelpsCategories)
+    private readonly helpsCategoriesRepository: Repository<HelpsCategories>,
+  ) {}
+
+  async create(createHelpsCategoryDto: CreateHelpsCategoryDto): Promise<HelpsCategories> {
+    const newCategory = this.helpsCategoriesRepository.create(createHelpsCategoryDto);
+    return this.helpsCategoriesRepository.save(newCategory);
   }
 
-  findAll() {
-    return `This action returns all helpsCategories`;
+  async findAll(): Promise<HelpsCategories[]> {
+    return this.helpsCategoriesRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} helpsCategory`;
+  async findOne(id: number): Promise<HelpsCategories> {
+    const category = await this.helpsCategoriesRepository.findOne({ where: { iHelpscategoryId: id } });
+    if (!category) {
+      throw new NotFoundException(`Help Category with ID #${id} not found`);
+    }
+    return category;
   }
 
-  update(id: number, updateHelpsCategoryDto: UpdateHelpsCategoryDto) {
-    return `This action updates a #${id} helpsCategory`;
+  async update(id: number, updateHelpsCategoryDto: UpdateHelpsCategoryDto): Promise<HelpsCategories> {
+    const category = await this.findOne(id);
+    this.helpsCategoriesRepository.merge(category, updateHelpsCategoryDto);
+    return this.helpsCategoriesRepository.save(category);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} helpsCategory`;
+  async remove(id: number): Promise<void> {
+    const result = await this.helpsCategoriesRepository.delete(id);
+    if (result.affected === 0) {
+      throw new NotFoundException(`Help Category with ID #${id} not found`);
+    }
   }
 }

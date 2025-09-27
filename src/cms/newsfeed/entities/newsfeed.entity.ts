@@ -1,26 +1,42 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity("newsletter", { schema: "amygo1" })
-export class Newsletter {
-  @PrimaryGeneratedColumn({ type: "int", name: "iNewsLetterId" })
-  iNewsLetterId: number;
+@Entity("newsfeed", { schema: "amygo1" })
+export class Newsfeed {
+  @PrimaryGeneratedColumn({ type: "int", name: "iNewsfeedId" })
+  iNewsfeedId: number;
+
+  @Column("longtext", { name: "vTitle" })
+  vTitle: string;
+
+  @Column("varchar", { name: "vNewfeedImage", length: 250 })
+  vNewfeedImage: string;
+
+  @Column("longtext", { name: "tDescription" })
+  tDescription: string;
+
+  @Column("timestamp", {
+    name: "tPublishdate",
+    default: () => "CURRENT_TIMESTAMP",
+  })
+  tPublishdate: Date;
 
   @Column("enum", {
     name: "eStatus",
-    enum: ["Subscribe", "Unsubscribe"],
-    default: () => "'Subscribe'",
+    enum: ["Active", "Inactive", "Deleted"],
+    default: "Active",
   })
-  eStatus: "Subscribe" | "Unsubscribe";
+  eStatus: "Active" | "Inactive" | "Deleted";
 
-  @Column("varchar", { name: "vName", length: 255 })
-  vName: string;
+  @Column("enum", {
+    name: "eType",
+    enum: ["News", "Notification"],
+    default: "News",
+  })
+  eType: "News" | "Notification";
 
-  @Column("varchar", { name: "vEmail", length: 255 })
-  vEmail: string;
-
-  @Column("timestamp", { name: "tDate", default: () => "CURRENT_TIMESTAMP" })
-  tDate: Date;
-
-  @Column("varchar", { name: "vIP", length: 30 })
-  vIp: string;
+  @Column("enum", {
+    name: "eUserType",
+    enum: ["driver", "rider", "company", "all"],
+  })
+  eUserType: "driver" | "rider" | "company" | "all";
 }

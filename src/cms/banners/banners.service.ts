@@ -1,26 +1,44 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateBannerDto } from './dto/create-banner.dto';
 import { UpdateBannerDto } from './dto/update-banner.dto';
+import { Banners } from './entities/banner.entity';
 
 @Injectable()
 export class BannersService {
-  create(createBannerDto: CreateBannerDto) {
-    return 'This action adds a new banner';
+  constructor(
+    @InjectRepository(Banners)
+    private readonly bannersRepository: Repository<Banners>,
+  ) {}
+
+  async create(createBannerDto: CreateBannerDto): Promise<Banners> {
+    const newBanner = this.bannersRepository.create(createBannerDto);
+    return this.bannersRepository.save(newBanner);
   }
 
-  findAll() {
-    return `This action returns all banners`;
+  async findAll(): Promise<Banners[]> {
+    return this.bannersRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} banner`;
+  async findOne(id: number): Promise<Banners> {
+    const banner = await this.bannersRepository.findOne({ where: { iBannerId: id } });
+    if (!banner) {
+      throw new NotFoundException(`Banner with ID #${id} not found`);
+    }
+    return banner;
   }
 
-  update(id: number, updateBannerDto: UpdateBannerDto) {
-    return `This action updates a #${id} banner`;
+  async update(id: number, updateBannerDto: UpdateBannerDto): Promise<Banners> {
+    const banner = await this.findOne(id);
+    this.bannersRepository.merge(banner, updateBannerDto);
+    return this.bannersRepository.save(banner);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} banner`;
+  async remove(id: number): Promise<void> {
+    const result = await this.bannersRepository.delete(id);
+    if (result.affected === 0) {
+      throw new NotFoundException(`Banner with ID #${id} not found`);
+    }
   }
 }
