@@ -502,31 +502,31 @@ export class Orders {
   @JoinColumn([{ name: "iServiceId", referencedColumnName: "iServiceId" }])
   serviceCategory: ServiceCategories;
 
-  // @ManyToOne(() => RegisterUser, (registerUser) => registerUser.orders, {
-  //   onDelete: "NO ACTION",
-  //   onUpdate: "NO ACTION",
-  // })
-  // @JoinColumn([{ name: "iUserId", referencedColumnName: "iUserId" }])
-  // user: RegisterUser;
+  @ManyToOne(() => RegisterUser, (registerUser) => registerUser.orders, {
+    onDelete: "NO ACTION",
+    onUpdate: "NO ACTION",
+  })
+  @JoinColumn([{ name: "iUserId", referencedColumnName: "iUserId" }])
+  user: RegisterUser;
 
-  // @ManyToOne(() => RegisterDriver, (registerDriver) => registerDriver.orders, {
-  //   onDelete: "NO ACTION",
-  //   onUpdate: "NO ACTION",
-  // })
-  // @JoinColumn([{ name: "iDriverId", referencedColumnName: "iDriverId" }])
-  // driver: RegisterDriver;
+  @ManyToOne(() => RegisterDriver, (registerDriver) => registerDriver.orders, {
+    onDelete: "NO ACTION",
+    onUpdate: "NO ACTION",
+  })
+  @JoinColumn([{ name: "iDriverId", referencedColumnName: "iDriverId" }])
+  driver: RegisterDriver;
 
-  // @ManyToOne(() => Company, (company) => company.orders, {
-  //   onDelete: "NO ACTION",
-  //   onUpdate: "NO ACTION",
-  // })
-  // @JoinColumn([{ name: "iCompanyId", referencedColumnName: "iCompanyId" }])
-  // company: Company;
+  @ManyToOne(() => Company, (company) => company.orders, {
+    onDelete: "NO ACTION",
+    onUpdate: "NO ACTION",
+  })
+  @JoinColumn([{ name: "iCompanyId", referencedColumnName: "iCompanyId" }])
+  company: Company;
 
-  // @ManyToOne(() => OrderStatus, (orderStatus) => orderStatus.orders, {
-  //   onDelete: "NO ACTION",
-  //   onUpdate: "NO ACTION",
-  // })
-  // @JoinColumn([{ name: "iStatusCode", referencedColumnName: "iStatusCode" }])
-  // orderStatus: OrderStatus;
+  @ManyToOne(() => OrderStatus, (orderStatus) => orderStatus.orders, {
+    onDelete: "NO ACTION",
+    onUpdate: "NO ACTION",
+  })
+  @JoinColumn([{ name: "iStatusCode", referencedColumnName: "iStatusCode" }])
+  orderStatus: OrderStatus;
 }

@@ -1,9 +1,13 @@
+import { Orders } from "../../../orders/entities/order.entity";
+import { Company } from "../../company/entities/company.entity";
 import { Trips } from "../../../transport/trips/entities/trip.entity";
 import { UserWallet } from "../../../payments/user-wallet/entities/user-wallet.entity";
 import {
   Column,
   Entity,
   Index,
+  JoinColumn,
+  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
@@ -15,8 +19,12 @@ export class RegisterUser {
   @PrimaryGeneratedColumn({ type: "int", name: "iUserId" })
   iUserId: number;
 
-  @Column("int", { name: "iCompanyId" })
+  @Column("int", { name: "iCompanyId", nullable: true })
   iCompanyId: number;
+
+  @ManyToOne(() => Company, (company) => company.registerUsers)
+  @JoinColumn([{ name: "iCompanyId", referencedColumnName: "iCompanyId" }])
+  company: Company;
 
   @Column("int", { name: "iRefUserId" })
   iRefUserId: number;
@@ -449,4 +457,7 @@ export class RegisterUser {
 
   @OneToMany(() => UserWallet, (userWallet) => userWallet.iUser)
   userWallets: UserWallet[];
+
+  @OneToMany(() => Orders, (orders) => orders.user)
+  orders: Orders[];
 }

@@ -21,8 +21,10 @@ Cette table contient les informations sur les utilisateurs de l'application.
 
 **Relations :**
 
+- **Plusieurs à un** avec `company`: Un utilisateur est associé à une entreprise. (Explicite via `@ManyToOne`)
 - **Un à plusieurs** avec `trips` : Un utilisateur peut avoir plusieurs voyages. (Explicite via `@OneToMany`)
 - **Un à plusieurs** avec `user_wallet` : Un utilisateur peut avoir plusieurs transactions dans son portefeuille. (Explicite via `@OneToMany`)
+- **Un à plusieurs** avec `orders` : Un utilisateur peut avoir plusieurs commandes. (Explicite via `@OneToMany`)
 
 ### `register_driver`
 
@@ -43,6 +45,7 @@ Cette table contient les informations sur les conducteurs.
 
 - **Plusieurs à un** avec `company` : Un conducteur appartient à une entreprise. (Explicite via `@ManyToOne`)
 - **Un à plusieurs** avec `trips` : Un conducteur peut avoir plusieurs voyages. (Explicite via `@OneToMany`)
+- **Un à plusieurs** avec `orders` : Un conducteur peut avoir plusieurs commandes. (Explicite via `@OneToMany`)
 
 ### `trips`
 
@@ -54,14 +57,6 @@ Cette table contient les informations sur les voyages.
 - `iUserId`
 - `iDriverId`
 - `iCompanyId`
-- `tStartLat`
-- `tStartLong`
-- `tEndLat`
-- `tEndLong`
-- `tSaddress`
-- `tDaddress`
-- `iFare`
-- `iActive`
 - ... (et de nombreuses autres colonnes)
 
 **Relations :**
@@ -77,11 +72,6 @@ Cette table contient les informations sur le portefeuille des utilisateurs.
 
 - `iUserWalletId` (Primaire)
 - `iUserId`
-- `eUserType`
-- `iBalance`
-- `eType`
-- `eFor`
-- `tDescription`
 - ... (et de nombreuses autres colonnes)
 
 **Relations :**
@@ -97,13 +87,13 @@ Cette table contient les informations sur les entreprises.
 - `iCompanyId` (Primaire)
 - `vCompany`
 - `vEmail`
-- `vPassword`
-- `vPhone`
 - ... (et de nombreuses autres colonnes)
 
 **Relations :**
 
+- **Un à plusieurs** avec `register_user`: Une entreprise peut avoir plusieurs utilisateurs. (Explicite via `@OneToMany`)
 - **Un à plusieurs** avec `register_driver` : Une entreprise peut avoir plusieurs conducteurs. (Explicite via `@OneToMany`)
+- **Un à plusieurs** avec `orders` : Une entreprise peut avoir plusieurs commandes. (Explicite via `@OneToMany`)
 - **Relation implicite** avec `service` via `iServiceId`.
 
 ### `orders`
@@ -117,16 +107,16 @@ Cette table contient les informations sur les commandes.
 - `iUserId`
 - `iDriverId`
 - `iCompanyId`
-- `fNetTotal`
+- `iStatusCode`
 - ... (et de nombreuses autres colonnes)
 
 **Relations :**
 
-- **Relation implicite** avec `service_categories` via `iServiceId`.
-- **Relation implicite** avec `order_status` via `iStatusCode`.
-- **Relation implicite** avec `register_user` via `iUserId`.
-- **Relation implicite** avec `register_driver` via `iDriverId`.
-- **Relation implicite** avec `company` via `iCompanyId`.
+- **Plusieurs à un** avec `service_categories` : Une commande est associée à une catégorie de service. (Explicite via `@ManyToOne`)
+- **Plusieurs à un** avec `order_status` : Une commande a un statut. (Explicite via `@ManyToOne`)
+- **Plusieurs à un** avec `register_user` : Une commande est passée par un utilisateur. (Explicite via `@ManyToOne`)
+- **Plusieurs à un** avec `register_driver` : Une commande est assignée à un conducteur. (Explicite via `@ManyToOne`)
+- **Plusieurs à un** avec `company` : Une commande est associée à une entreprise. (Explicite via `@ManyToOne`)
 
 ### `driver_vehicle`
 
