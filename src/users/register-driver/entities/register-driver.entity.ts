@@ -1,3 +1,4 @@
+import { DriverVehicle } from "../../driver-vehicle/entities/driver-vehicle.entity";
 import { Orders } from "../../../orders/entities/order.entity";
 import { Company } from "../../company/entities/company.entity";
 import { Trips } from "../../../transport/trips/entities/trip.entity";
@@ -499,4 +500,7 @@ export class RegisterDriver {
 
   @OneToMany(() => Orders, (orders) => orders.driver)
   orders: Orders[];
+
+  @OneToMany(() => DriverVehicle, (driverVehicle) => driverVehicle.driver)
+  driverVehicles: DriverVehicle[];
 }

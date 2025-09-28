@@ -12,11 +12,6 @@ Cette table contient les informations sur les utilisateurs de l'application.
 
 - `iUserId` (Primaire)
 - `iCompanyId`
-- `vName`
-- `vLastName`
-- `vEmail`
-- `vPassword`
-- `vPhone`
 - ... (et de nombreuses autres colonnes)
 
 **Relations :**
@@ -34,11 +29,6 @@ Cette table contient les informations sur les conducteurs.
 
 - `iDriverId` (Primaire)
 - `iCompanyId`
-- `vName`
-- `vLastName`
-- `vEmail`
-- `vPassword`
-- `vPhone`
 - ... (et de nombreuses autres colonnes)
 
 **Relations :**
@@ -46,6 +36,7 @@ Cette table contient les informations sur les conducteurs.
 - **Plusieurs à un** avec `company` : Un conducteur appartient à une entreprise. (Explicite via `@ManyToOne`)
 - **Un à plusieurs** avec `trips` : Un conducteur peut avoir plusieurs voyages. (Explicite via `@OneToMany`)
 - **Un à plusieurs** avec `orders` : Un conducteur peut avoir plusieurs commandes. (Explicite via `@OneToMany`)
+- **Un à plusieurs** avec `driver_vehicle` : Un conducteur peut avoir plusieurs véhicules. (Explicite via `@OneToMany`)
 
 ### `trips`
 
@@ -86,7 +77,6 @@ Cette table contient les informations sur les entreprises.
 
 - `iCompanyId` (Primaire)
 - `vCompany`
-- `vEmail`
 - ... (et de nombreuses autres colonnes)
 
 **Relations :**
@@ -94,6 +84,7 @@ Cette table contient les informations sur les entreprises.
 - **Un à plusieurs** avec `register_user`: Une entreprise peut avoir plusieurs utilisateurs. (Explicite via `@OneToMany`)
 - **Un à plusieurs** avec `register_driver` : Une entreprise peut avoir plusieurs conducteurs. (Explicite via `@OneToMany`)
 - **Un à plusieurs** avec `orders` : Une entreprise peut avoir plusieurs commandes. (Explicite via `@OneToMany`)
+- **Un à plusieurs** avec `driver_vehicle` : Une entreprise peut avoir plusieurs véhicules de conducteurs. (Explicite via `@OneToMany`)
 - **Relation implicite** avec `service` via `iServiceId`.
 
 ### `orders`
@@ -134,12 +125,12 @@ Cette table contient les informations sur les véhicules des conducteurs.
 
 **Relations :**
 
-- **Relation implicite** avec `register_driver` via `iDriverId`.
-- **Relation implicite** avec `vehicle_type` via `vCarType`.
-- **Relation implicite** avec `rental_package` via `vRentalCarType`.
-- **Relation implicite** avec `company` via `iCompanyId`.
-- **Relation implicite** avec `make` via `iMakeId`.
-- **Relation implicite** avec `model` via `iModelId`.
+- **Plusieurs à un** avec `register_driver` : Un véhicule appartient à un conducteur. (Explicite via `@ManyToOne`)
+- **Plusieurs à un** avec `company` : Un véhicule est associé à une entreprise. (Explicite via `@ManyToOne`)
+- **Plusieurs à un** avec `make` : Un véhicule a une marque. (Explicite via `@ManyToOne`)
+- **Plusieurs à un** avec `model` : Un véhicule a un modèle. (Explicite via `@ManyToOne`)
+- **Relation implicite (many-to-many non standard)** avec `vehicle_type` via `vCarType`.
+- **Relation implicite (many-to-many non standard)** avec `rental_package` via `vRentalCarType`.
 
 ## Autres entités
 

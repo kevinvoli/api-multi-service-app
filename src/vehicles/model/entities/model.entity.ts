@@ -1,9 +1,13 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { DriverVehicle } from "../../../users/driver-vehicle/entities/driver-vehicle.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("model", { schema: "amygo1" })
 export class Model {
   @PrimaryGeneratedColumn({ type: "int", name: "iModelId" })
   iModelId: number;
+
+  @OneToMany(() => DriverVehicle, (driverVehicle) => driverVehicle.model)
+  driverVehicles: DriverVehicle[];
 
   @Column("int", { name: "iMakeId" })
   iMakeId: number;
