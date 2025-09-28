@@ -21,6 +21,7 @@ Cette table contient les informations sur les utilisateurs de l'application.
 
 **Relations :**
 
+- **Plusieurs à un** avec `company`: Un utilisateur est associé à une entreprise. (Explicite via `@ManyToOne`)
 - **Un à plusieurs** avec `trips` : Un utilisateur peut avoir plusieurs voyages. (Explicite via `@OneToMany`)
 - **Un à plusieurs** avec `user_wallet` : Un utilisateur peut avoir plusieurs transactions dans son portefeuille. (Explicite via `@OneToMany`)
 
@@ -103,6 +104,7 @@ Cette table contient les informations sur les entreprises.
 
 **Relations :**
 
+- **Un à plusieurs** avec `register_user`: Une entreprise peut avoir plusieurs utilisateurs. (Explicite via `@OneToMany`)
 - **Un à plusieurs** avec `register_driver` : Une entreprise peut avoir plusieurs conducteurs. (Explicite via `@OneToMany`)
 - **Relation implicite** avec `service` via `iServiceId`.
 

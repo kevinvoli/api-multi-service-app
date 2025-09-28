@@ -1,3 +1,4 @@
+import { RegisterUser } from "../../register-user/entities/register-user.entity";
 import { RegisterDriver } from "../../register-driver/entities/register-driver.entity";
 import {
   Column,
@@ -12,6 +13,8 @@ import {
 @Index("iCompanyId", ["iCompanyId"], {})
 @Entity("company", { schema: "amygo1" })
 export class Company {
+  @OneToMany(() => RegisterUser, (registerUser) => registerUser.company)
+  registerUsers: RegisterUser[];
   @PrimaryGeneratedColumn({ type: "int", name: "iCompanyId" })
   iCompanyId: number;
 
