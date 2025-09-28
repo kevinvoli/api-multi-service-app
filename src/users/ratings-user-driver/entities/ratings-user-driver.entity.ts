@@ -38,7 +38,7 @@ export class RatingsUserDriver {
   @Column("enum", {
     name: "eToUserType",
     enum: ["Driver", "Passenger", "Company"],
-    default: () => "'Company'",
+    default: "Company",
   })
   eToUserType: "Driver" | "Passenger" | "Company";
 

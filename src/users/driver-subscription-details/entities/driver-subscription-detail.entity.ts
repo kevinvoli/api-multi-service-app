@@ -47,7 +47,7 @@ export class DriverSubscriptionDetails {
   @Column("enum", {
     name: "eSubscriptionStatus",
     enum: ["Subscribed", "UnSubscribed", "Expired", "Cancelled", "Inactive"],
-    default: () => "'UnSubscribed'",
+    default: "UnSubscribed",
   })
   eSubscriptionStatus:
     | "Subscribed"

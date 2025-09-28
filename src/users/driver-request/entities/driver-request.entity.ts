@@ -23,7 +23,7 @@ export class DriverRequest {
   @Column("enum", {
     name: "eStatus",
     enum: ["Decline", "Accept", "Timeout", "Received", "Sent"],
-    default: () => "'Timeout'",
+    default: "Timeout",
   })
   eStatus: "Decline" | "Accept" | "Timeout" | "Received" | "Sent";
 

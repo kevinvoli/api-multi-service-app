@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity("bidding_post_media", { schema: "amygo1" })
 export class BiddingPostMedia {
@@ -11,16 +11,10 @@ export class BiddingPostMedia {
   @Column("varchar", { name: "vImage", length: 255 })
   vImage: string;
 
-  @Column("timestamp", {
-    name: "tAddedDate",
-    default: () => "0000-00-00 00:00:00",
-  })
+  @CreateDateColumn({ type: 'timestamp', name: 'tAddedDate' })
   tAddedDate: Date;
-
-  @Column("timestamp", {
-    name: "tModifiedDate",
-    default: () => "0000-00-00 00:00:00",
-  })
+ 
+  @UpdateDateColumn({type:'timestamp', name: 'tModifiedDate'})
   tModifiedDate: Date;
 
   @Column("enum", {

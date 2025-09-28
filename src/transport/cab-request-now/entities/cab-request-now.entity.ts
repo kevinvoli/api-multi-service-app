@@ -51,7 +51,7 @@ export class CabRequestNow {
     comment:
       "Requesting - default; Cancelled- if user want to cancel; Complete - driver accepted the ride",
     enum: ["Requesting", "Cancelled", "Complete", "Pending"],
-    default: () => "'Requesting'",
+    default: "Requesting",
   })
   eStatus: "Requesting" | "Cancelled" | "Complete" | "Pending";
 

@@ -10,7 +10,7 @@ export class BannerImpression {
 
   @Column("timestamp", {
     name: "dDateTime",
-    default: "CURRENT_TIMESTAMP",
+    default: () => "CURRENT_TIMESTAMP",
   })
   dDateTime: Date;
 

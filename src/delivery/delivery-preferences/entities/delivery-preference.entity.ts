@@ -14,7 +14,7 @@ export class DeliveryPreferences {
   @Column("enum", {
     name: "ePreferenceFor",
     enum: ["Store", "Provider"],
-    default: () => "'Store'",
+    default: "Store",
   })
   ePreferenceFor: "Store" | "Provider";
 

@@ -20,7 +20,7 @@ export class DeliveryFields {
   @Column("enum", {
     name: "eInputType",
     enum: ["Text", "Textarea", "Select", "Number"],
-    default: () => "'Text'",
+    default: "Text",
   })
   eInputType: "Text" | "Textarea" | "Select" | "Number";
 

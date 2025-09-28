@@ -39,7 +39,7 @@ export class MemberLog {
   @Column("enum", {
     name: "eDeviceType",
     enum: ["Android", "Ios", "Web", "Admin"],
-    default: () => "'Web'",
+    default: "Web",
   })
   eDeviceType: "Android" | "Ios" | "Web" | "Admin";
 
@@ -71,7 +71,7 @@ export class MemberLog {
   @Column("enum", {
     name: "eFor",
     enum: ["SignIn", "SignUp"],
-    default: () => "'SignIn'",
+    default: "SignIn",
   })
   eFor: "SignIn" | "SignUp";
 }

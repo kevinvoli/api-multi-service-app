@@ -1,7 +1,6 @@
-export class TripsDeliveryLocation {}
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity("trips_delivery_locations", { schema: "amygo1" })
+@Entity("trips_delivery_locations")
 export class TripsDeliveryLocations {
   @PrimaryGeneratedColumn({ type: "int", name: "iTripDeliveryLocationId" })
   iTripDeliveryLocationId: number;
@@ -27,7 +26,7 @@ export class TripsDeliveryLocations {
   @Column("enum", {
     name: "eRequestType",
     enum: ["Ridenow", "Ridelater"],
-    default: () => "'Ridenow'",
+    default: "Ridenow",
   })
   eRequestType: "Ridenow" | "Ridelater";
 

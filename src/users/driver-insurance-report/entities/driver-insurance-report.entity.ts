@@ -40,7 +40,7 @@ export class DriverInsuranceReport {
     comment:
       "Available:driver online to Accept,Accept:Accept to start trip,Trip:Start to end trip",
     enum: ["Available", "Accept", "Trip"],
-    default: () => "'Available'",
+    default: "Available",
   })
   eAddedFor: "Available" | "Accept" | "Trip";
 
