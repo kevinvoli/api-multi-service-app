@@ -188,6 +188,6 @@ export class TripsDeliveryLocations {
   @Column("enum", {
     name: "ePaymentBy",
     enum: ["Sender", "Receiver", "Individual"],
-  })
+  }) 
   ePaymentBy: "Sender" | "Receiver" | "Individual";
 }

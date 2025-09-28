@@ -17,9 +17,12 @@ import { RewardSettingsModule } from './reward-settings/reward-settings.module';
 import { UserWalletModule } from './user-wallet/user-wallet.module';
 import { WalletMoneyReferrerEmailModule } from './wallet-money-referrer-email/wallet-money-referrer-email.module';
 import { WithdrawRequestsModule } from './withdraw-requests/withdraw-requests.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Payments } from './entities/payment.entity';
 
 @Module({
   imports: [
+    TypeOrmModule.forFeature([Payments]),
     ConfigurationsPaymentLogModule,
     ConfigurationsPaymentsModule,
     CouponModule,

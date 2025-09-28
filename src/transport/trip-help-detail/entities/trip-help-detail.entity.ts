@@ -1,34 +1,25 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity("trip_destinations", { schema: "amygo1" })
-export class TripDestinations {
-  @PrimaryGeneratedColumn({ type: "int", name: "iTripDestinationId" })
-  iTripDestinationId: number;
+@Entity("trip_help_detail", { schema: "amygo1" })
+export class TripHelpDetail {
+  @PrimaryGeneratedColumn({ type: "int", name: "iTripHelpDetailId" })
+  iTripHelpDetailId: number;
 
   @Column("int", { name: "iTripId" })
   iTripId: number;
 
-  @Column("text", { name: "tDaddress" })
-  tDaddress: string;
+  @Column("int", { name: "iOrderId" })
+  iOrderId: number;
 
-  @Column("mediumtext", { name: "tEndLat" })
-  tEndLat: string;
+  @Column("int", { name: "iUserId" })
+  iUserId: number;
 
-  @Column("mediumtext", { name: "tEndLong" })
-  tEndLong: string;
+  @Column("int", { name: "iHelpDetailId" })
+  iHelpDetailId: number;
 
-  @Column("mediumtext", { name: "tDriverLatitude" })
-  tDriverLatitude: string;
+  @Column("text", { name: "vComment" })
+  vComment: string;
 
-  @Column("mediumtext", { name: "tDriverLongitude" })
-  tDriverLongitude: string;
-
-  @Column("enum", { name: "eUserType", enum: ["Driver", "Passenger"] })
-  eUserType: "Driver" | "Passenger";
-
-  @Column("timestamp", {
-    name: "dAddedDate",
-    default: () => "CURRENT_TIMESTAMP",
-  })
-  dAddedDate: Date;
+  @Column("datetime", { name: "tDate" })
+  tDate: Date;
 }
