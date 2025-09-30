@@ -1,3 +1,4 @@
+import { Orders } from "../../../orders/entities/order.entity";
 import { OrderRequest } from "../../../orders/order-request/entities/order-request.entity";
 import { CabBooking } from "../../../transport/cab-booking/entities/cab-booking.entity";
 import { CabRequestNow } from "../../../transport/cab-request-now/entities/cab-request-now.entity";
@@ -528,4 +529,7 @@ export class RegisterDriver {
     (location) => location.driver,
   )
   driverLocationAirports: DriverLocationAirport[];
+
+  @OneToMany(() => Orders, (order) => order.driver)
+  orders: Orders[];
 }

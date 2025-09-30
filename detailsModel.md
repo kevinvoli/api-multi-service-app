@@ -122,11 +122,11 @@ Cette table contient les informations sur les commandes.
 
 **Relations :**
 
-- **Relation implicite** avec `service_categories` via `iServiceId`.
-- **Relation implicite** avec `order_status` via `iStatusCode`.
+- **Un à plusieurs** avec `service_categories` : Une commande est associée à une catégorie de service. (Explicite via `@ManyToOne`)
+- **Un à plusieurs** avec `order_status` : Une commande est associée à un statut de commande. (Explicite via `@ManyToOne`)
 - **Un à plusieurs** avec `register_user` : Une commande est associée à un utilisateur. (Explicite via `@ManyToOne`)
-- **Relation implicite** avec `register_driver` via `iDriverId`.
-- **Relation implicite** avec `company` via `iCompanyId`.
+- **Un à plusieurs** avec `register_driver` : Une commande est associée à un conducteur. (Explicite via `@ManyToOne`)
+- **Un à plusieurs** avec `company` : Une commande est associée à une entreprise. (Explicite via `@ManyToOne`)
 
 ### `driver_vehicle`
 
