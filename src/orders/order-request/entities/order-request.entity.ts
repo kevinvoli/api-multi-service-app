@@ -1,4 +1,12 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Orders } from "../../../orders/entities/order.entity";
+import { RegisterDriver } from "../../../users/register-driver/entities/register-driver.entity";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 
 @Entity("order_request", { schema: "amygo1" })
 export class OrderRequest {
@@ -8,6 +16,10 @@ export class OrderRequest {
   @Column("int", { name: "iOrderId" })
   iOrderId: number;
 
+  @ManyToOne(() => Orders, (order) => order.orderRequest)
+  @JoinColumn({ name: "iOrderId", referencedColumnName: "iOrderId" })
+  order: Orders;
+
   @Column("longtext", { name: "vMsgCode" })
   vMsgCode: string;
 
@@ -16,4 +28,8 @@ export class OrderRequest {
 
   @Column("int", { name: "iDriverId" })
   iDriverId: number;
+
+  @ManyToOne(() => RegisterDriver, (driver) => driver.orderRequests)
+  @JoinColumn({ name: "iDriverId", referencedColumnName: "iDriverId" })
+  driver: RegisterDriver;
 }

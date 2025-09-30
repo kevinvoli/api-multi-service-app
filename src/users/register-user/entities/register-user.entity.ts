@@ -1,12 +1,11 @@
-import { Company } from "../../company/entities/company.entity";
-import { Trips } from "../../../transport/trips/entities/trip.entity";
 import { UserWallet } from "../../../payments/user-wallet/entities/user-wallet.entity";
+import { CabBooking } from "../../../transport/cab-booking/entities/cab-booking.entity";
+import { CabRequestNow } from "../../../transport/cab-request-now/entities/cab-request-now.entity";
+import { Trips } from "../../../transport/trips/entities/trip.entity";
 import {
   Column,
   Entity,
   Index,
-  JoinColumn,
-  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
@@ -18,12 +17,8 @@ export class RegisterUser {
   @PrimaryGeneratedColumn({ type: "int", name: "iUserId" })
   iUserId: number;
 
-  @Column("int", { name: "iCompanyId", nullable: true })
+  @Column("int", { name: "iCompanyId" })
   iCompanyId: number;
-
-  @ManyToOne(() => Company, (company) => company.registerUsers)
-  @JoinColumn([{ name: "iCompanyId", referencedColumnName: "iCompanyId" }])
-  company: Company;
 
   @Column("int", { name: "iRefUserId" })
   iRefUserId: number;
@@ -456,4 +451,10 @@ export class RegisterUser {
 
   @OneToMany(() => UserWallet, (userWallet) => userWallet.iUser)
   userWallets: UserWallet[];
+
+  @OneToMany(() => CabBooking, (cabBooking) => cabBooking.user)
+  cabBookings: CabBooking[];
+
+  @OneToMany(() => CabRequestNow, (cabRequestNow) => cabRequestNow.user)
+  cabRequestNows: CabRequestNow[];
 }

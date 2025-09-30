@@ -6,8 +6,11 @@ import {
   Index,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
+import { CabBooking } from "../../cab-booking/entities/cab-booking.entity";
+import { CabRequestNow } from "../../cab-request-now/entities/cab-request-now.entity";
 
 
 @Index("vOrderNoUnique", ["vOrderNoUnique"], { unique: true })
@@ -1056,4 +1059,10 @@ export class Trips {
   })
   @JoinColumn([{ name: "iUserId", referencedColumnName: "iUserId" }])
   iUser: RegisterUser;
+
+  @OneToMany(() => CabBooking, (cabBooking) => cabBooking.trip)
+  cabBookings: CabBooking[];
+
+  @OneToMany(() => CabRequestNow, (cabRequestNow) => cabRequestNow.trip)
+  cabRequestNows: CabRequestNow[];
 }

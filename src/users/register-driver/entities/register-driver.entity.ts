@@ -1,5 +1,11 @@
-import { Company } from "../../company/entities/company.entity";
+import { OrderRequest } from "../../../orders/order-request/entities/order-request.entity";
+import { CabBooking } from "../../../transport/cab-booking/entities/cab-booking.entity";
+import { CabRequestNow } from "../../../transport/cab-request-now/entities/cab-request-now.entity";
+import { DriverDestinations } from "../../../transport/driver-destinations/entities/driver-destination.entity";
+import { DriverDestinationsRoute } from "../../../transport/driver-destinations-route/entities/driver-destinations-route.entity";
+import { DriverLocationAirport } from "../../../transport/driver-location-airport/entities/driver-location-airport.entity";
 import { Trips } from "../../../transport/trips/entities/trip.entity";
+import { Company } from "../../company/entities/company.entity";
 import {
   Column,
   Entity,
@@ -495,4 +501,31 @@ export class RegisterDriver {
 
   @OneToMany(() => Trips, (trips) => trips.iDriver)
   trips: Trips[];
+
+  @OneToMany(() => OrderRequest, (orderRequest) => orderRequest.driver)
+  orderRequests: OrderRequest[];
+
+  @OneToMany(() => CabBooking, (cabBooking) => cabBooking.driver)
+  cabBookings: CabBooking[];
+
+  @OneToMany(() => CabRequestNow, (cabRequestNow) => cabRequestNow.driver)
+  cabRequestNows: CabRequestNow[];
+
+  @OneToMany(
+    () => DriverDestinations,
+    (destination) => destination.driver,
+  )
+  driverDestinations: DriverDestinations[];
+
+  @OneToMany(
+    () => DriverDestinationsRoute,
+    (route) => route.driver,
+  )
+  driverDestinationsRoutes: DriverDestinationsRoute[];
+
+  @OneToMany(
+    () => DriverLocationAirport,
+    (location) => location.driver,
+  )
+  driverLocationAirports: DriverLocationAirport[];
 }

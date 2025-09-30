@@ -1,4 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { CabBooking } from "../cab-booking/entities/cab-booking.entity";
+import { CabRequestNow } from "../cab-request-now/entities/cab-request-now.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("rental_package", { schema: "amygo1" })
 export class RentalPackage {
@@ -37,4 +39,13 @@ export class RentalPackage {
     precision: 12,
   })
   fPricePerHour: number;
+
+  @OneToMany(() => CabBooking, (cabBooking) => cabBooking.rentalPackage)
+  cabBookings: CabBooking[];
+
+  @OneToMany(
+    () => CabRequestNow,
+    (cabRequestNow) => cabRequestNow.rentalPackage,
+  )
+  cabRequestNows: CabRequestNow[];
 }

@@ -1,4 +1,21 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Administrator } from "../../../administration/administrators/entities/administrator.entity";
+import { CancelReason } from "../../../core_app/cancel-reason/entities/cancel-reason.entity";
+import { PackageType } from "../../../delivery/package-type/entities/package-type.entity";
+import { Company } from "../../../users/company/entities/company.entity";
+import { Organization } from "../../../users/company/organization/entities/organization.entity";
+import { RegisterDriver } from "../../../users/register-driver/entities/register-driver.entity";
+import { RegisterUser } from "../../../users/register-user/entities/register-user.entity";
+import { VehicleType } from "../../../vehicles/vehicle-type/entities/vehicle-type.entity";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { RentalPackage } from "../../rental-package/entities/rental-package.entity";
+import { TripReason } from "../../trip-reason/entities/trip-reason.entity";
+import { Trips } from "../../trips/entities/trip.entity";
 
 @Entity("cab_booking", { schema: "amygo1" })
 export class CabBooking {
@@ -11,14 +28,33 @@ export class CabBooking {
   @Column("int", { name: "iCompanyId", default: () => "'1'" })
   iCompanyId: number;
 
+  @ManyToOne(() => Company, (company) => company.cabBookings)
+  @JoinColumn({ name: "iCompanyId", referencedColumnName: "iCompanyId" })
+  company: Company;
+
   @Column("int", { name: "iUserId", comment: "link with register_uesr table" })
   iUserId: number;
+
+  @ManyToOne(() => RegisterUser, (user) => user.cabBookings)
+  @JoinColumn({ name: "iUserId", referencedColumnName: "iUserId" })
+  user: RegisterUser;
 
   @Column("int", { name: "iDriverId" })
   iDriverId: number;
 
+  @ManyToOne(() => RegisterDriver, (driver) => driver.cabBookings)
+  @JoinColumn({ name: "iDriverId", referencedColumnName: "iDriverId" })
+  driver: RegisterDriver;
+
   @Column("int", { name: "iOrganizationId" })
   iOrganizationId: number;
+
+  @ManyToOne(() => Organization, (organization) => organization.cabBookings)
+  @JoinColumn({
+    name: "iOrganizationId",
+    referencedColumnName: "iOrganizationId",
+  })
+  organization: Organization;
 
   @Column("varchar", {
     name: "vSourceLatitude",
@@ -91,6 +127,10 @@ export class CabBooking {
   })
   iTripId: number;
 
+  @ManyToOne(() => Trips, (trip) => trip.cabBookings)
+  @JoinColumn({ name: "iTripId", referencedColumnName: "iTripId" })
+  trip: Trips;
+
   @Column("enum", {
     name: "eStatus",
     comment:
@@ -128,11 +168,28 @@ export class CabBooking {
   })
   iVehicleTypeId: number;
 
+  @ManyToOne(() => VehicleType, (vehicleType) => vehicleType.cabBookings)
+  @JoinColumn({
+    name: "iVehicleTypeId",
+    referencedColumnName: "iVehicleTypeId",
+  })
+  vehicleType: VehicleType;
+
   @Column("int", {
     name: "iRentalPackageId",
     comment: "linked to rental_package table",
   })
   iRentalPackageId: number;
+
+  @ManyToOne(
+    () => RentalPackage,
+    (rentalPackage) => rentalPackage.cabBookings,
+  )
+  @JoinColumn({
+    name: "iRentalPackageId",
+    referencedColumnName: "iRentalPackageId",
+  })
+  rentalPackage: RentalPackage;
 
   @Column("float", {
     name: "fPickUpPrice",
@@ -162,6 +219,13 @@ export class CabBooking {
   @Column("int", { name: "iCancelReasonId", default: "0" })
   iCancelReasonId: number;
 
+  @ManyToOne(() => CancelReason, (reason) => reason.cabBookings)
+  @JoinColumn({
+    name: "iCancelReasonId",
+    referencedColumnName: "iCancelReasonId",
+  })
+  cancelReason: CancelReason;
+
   @Column("varchar", { name: "vFailReason", length: 200 })
   vFailReason: string;
 
@@ -176,6 +240,13 @@ export class CabBooking {
 
   @Column("int", { name: "iPackageTypeId" })
   iPackageTypeId: number;
+
+  @ManyToOne(() => PackageType, (packageType) => packageType.cabBookings)
+  @JoinColumn({
+    name: "iPackageTypeId",
+    referencedColumnName: "iPackageTypeId",
+  })
+  packageType: PackageType;
 
   @Column("varchar", { name: "vReceiverName", length: 50 })
   vReceiverName: string;
@@ -515,6 +586,10 @@ export class CabBooking {
   @Column("int", { name: "iAdminId" })
   iAdminId: number;
 
+  @ManyToOne(() => Administrator, (admin) => admin.cabBookings)
+  @JoinColumn({ name: "iAdminId", referencedColumnName: "iAdminId" })
+  admin: Administrator;
+
   @Column("int", { name: "iHotelBookingId", comment: "For Hotel Panel Web" })
   iHotelBookingId: number;
 
@@ -550,6 +625,10 @@ export class CabBooking {
 
   @Column("int", { name: "iTripReasonId" })
   iTripReasonId: number;
+
+  @ManyToOne(() => TripReason, (reason) => reason.cabBookings)
+  @JoinColumn({ name: "iTripReasonId", referencedColumnName: "iTripReasonId" })
+  tripReason: TripReason;
 
   @Column("text", { name: "vReasonTitle" })
   vReasonTitle: string;

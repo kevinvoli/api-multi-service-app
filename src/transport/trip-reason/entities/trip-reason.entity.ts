@@ -1,4 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { CabBooking } from "../cab-booking/entities/cab-booking.entity";
+import { CabRequestNow } from "../cab-request-now/entities/cab-request-now.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("trip_reason", { schema: "amygo1" })
 export class TripReason {
@@ -17,4 +19,10 @@ export class TripReason {
     default: "Active",
   })
   eStatus: "Active" | "Inactive" | "Deleted";
+
+  @OneToMany(() => CabBooking, (cabBooking) => cabBooking.tripReason)
+  cabBookings: CabBooking[];
+
+  @OneToMany(() => CabRequestNow, (cabRequestNow) => cabRequestNow.tripReason)
+  cabRequestNows: CabRequestNow[];
 }

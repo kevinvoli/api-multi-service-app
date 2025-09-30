@@ -1,7 +1,8 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { CabBooking } from "../../../transport/cab-booking/entities/cab-booking.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("administrators", { schema: "amygo1" })
-export class Administrators {
+export class Administrator {
   @PrimaryGeneratedColumn({ type: "int", name: "iAdminId" })
   iAdminId: number;
 
@@ -78,4 +79,7 @@ export class Administrators {
     default: "No",
   })
   eDefault: "Yes" | "No";
+
+  @OneToMany(() => CabBooking, (cabBooking) => cabBooking.admin)
+  cabBookings: CabBooking[];
 }

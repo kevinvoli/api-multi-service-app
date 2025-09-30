@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { AirportsurchargeFare } from "../../../transport/airportsurcharge-fare/entities/airportsurcharge-fare.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("location_master", { schema: "amygo1" })
 export class LocationMaster {
@@ -62,4 +63,10 @@ export class LocationMaster {
 
   @Column("varchar", { name: "vLocationAddress", length: 255 })
   vLocationAddress: string;
+
+  @OneToMany(
+    () => AirportsurchargeFare,
+    (airportSurchargeFare) => airportSurchargeFare.location,
+  )
+  airportSurchargeFares: AirportsurchargeFare[];
 }

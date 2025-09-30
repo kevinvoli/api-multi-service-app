@@ -9,8 +9,12 @@ import {
   Index,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
+import { OrderDriverLog } from "../order-driver-log/entities/order-driver-log.entity";
+import { OrderRequest } from "../order-request/entities/order-request.entity";
+import { OrderStatusLogs } from "../order-status-logs/entities/order-status-log.entity";
 
 @Index("iCustomerId", ["iUserId"], {})
 @Index("vOrderNo", ["vOrderNo"], {})
@@ -494,6 +498,18 @@ export class Orders {
   })
   dateEndOrder: Date | null;
 
+  @OneToMany(() => OrderDriverLog, (orderDriverLog) => orderDriverLog.order)
+  orderDriverLogs: OrderDriverLog[];
+
+  @OneToMany(() => OrderRequest, (orderRequest) => orderRequest.order)
+  orderRequest: OrderRequest[];
+
+  @OneToMany(
+    () => OrderStatusLogs,
+    (orderStatusLogs) => orderStatusLogs.order,
+  )
+  orderStatusLogs: OrderStatusLogs[];
+
   @ManyToOne(
     () => ServiceCategories,
     (serviceCategories) => serviceCategories.orders,
@@ -523,10 +539,10 @@ export class Orders {
   // @JoinColumn([{ name: "iCompanyId", referencedColumnName: "iCompanyId" }])
   // company: Company;
 
-  // @ManyToOne(() => OrderStatus, (orderStatus) => orderStatus.orders, {
-  //   onDelete: "NO ACTION",
-  //   onUpdate: "NO ACTION",
-  // })
-  // @JoinColumn([{ name: "iStatusCode", referencedColumnName: "iStatusCode" }])
-  // orderStatus: OrderStatus;
+  @ManyToOne(() => OrderStatus, (orderStatus) => orderStatus.orders, {
+    onDelete: "NO ACTION",
+    onUpdate: "NO ACTION",
+  })
+  @JoinColumn([{ name: "iStatusCode", referencedColumnName: "iStatusCode" }])
+  orderStatus: OrderStatus;
 }

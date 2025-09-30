@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { CabRequestNow } from "../../../transport/cab-request-now/entities/cab-request-now.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("user_profile", { schema: "amygo1" })
 export class UserProfile {
@@ -29,4 +30,7 @@ export class UserProfile {
     | "Deleted"
     | "Terminate"
     | "Reject";
+
+  @OneToMany(() => CabRequestNow, (cabRequestNow) => cabRequestNow.userProfile)
+  cabRequestNows: CabRequestNow[];
 }

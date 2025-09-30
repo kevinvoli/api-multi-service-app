@@ -1,4 +1,13 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
+import { LocationMaster } from "../../../location/location-master/entities/location-master.entity";
+import { VehicleType } from "../../../vehicles/vehicle-type/entities/vehicle-type.entity";
+import {
+  Column,
+  Entity,
+  Index,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 
 @Index("iLocatioId", ["iLocatioId"], { unique: true })
 @Entity("airportsurcharge_fare", { schema: "amygo1" })
@@ -15,6 +24,10 @@ export class AirportsurchargeFare {
   @Column("int", { name: "iLocationIds" })
   iLocationIds: number;
 
+  @ManyToOne(() => LocationMaster, (location) => location.airportSurchargeFares)
+  @JoinColumn({ name: "iLocationIds", referencedColumnName: "iLocationId" })
+  location: LocationMaster;
+
   @Column("varchar", { name: "vFromCity", length: 10 })
   vFromCity: string;
 
@@ -27,4 +40,11 @@ export class AirportsurchargeFare {
 
   @Column("int", { name: "iVehicleTypeId" })
   iVehicleTypeId: number;
+
+  @ManyToOne(() => VehicleType, (vehicleType) => vehicleType.airportSurchargeFares)
+  @JoinColumn({
+    name: "iVehicleTypeId",
+    referencedColumnName: "iVehicleTypeId",
+  })
+  vehicleType: VehicleType;
 }

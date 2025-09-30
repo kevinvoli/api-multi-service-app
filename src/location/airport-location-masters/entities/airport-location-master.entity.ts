@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { DriverLocationAirport } from "../../../transport/driver-location-airport/entities/driver-location-airport.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("airport_location_master", { schema: "amygo1" })
 export class AirportLocationMaster {
@@ -25,4 +26,10 @@ export class AirportLocationMaster {
 
   @Column("enum", { name: "eStatus", enum: ["Active", "Inactive"] })
   eStatus: "Active" | "Inactive";
+
+  @OneToMany(
+    () => DriverLocationAirport,
+    (driverLocationAirport) => driverLocationAirport.airportLocation,
+  )
+  driverLocationAirports: DriverLocationAirport[];
 }

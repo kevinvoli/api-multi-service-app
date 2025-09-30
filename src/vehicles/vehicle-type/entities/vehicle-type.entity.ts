@@ -1,4 +1,7 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { AirportsurchargeFare } from "../../../transport/airportsurcharge-fare/entities/airportsurcharge-fare.entity";
+import { CabBooking } from "../../../transport/cab-booking/entities/cab-booking.entity";
+import { CabRequestNow } from "../../../transport/cab-request-now/entities/cab-request-now.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("vehicle_type", { schema: "amygo1" })
 export class VehicleType {
@@ -395,4 +398,16 @@ export class VehicleType {
 
   @Column("enum", { name: "eOTPCodeEnable", enum: ["No", "Yes"] })
   eOtpCodeEnable: "No" | "Yes";
+
+  @OneToMany(
+    () => AirportsurchargeFare,
+    (airportSurchargeFare) => airportSurchargeFare.vehicleType,
+  )
+  airportSurchargeFares: AirportsurchargeFare[];
+
+  @OneToMany(() => CabBooking, (cabBooking) => cabBooking.vehicleType)
+  cabBookings: CabBooking[];
+
+  @OneToMany(() => CabRequestNow, (cabRequestNow) => cabRequestNow.vehicleType)
+  cabRequestNows: CabRequestNow[];
 }

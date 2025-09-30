@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { CabRequestNow } from "../../../transport/cab-request-now/entities/cab-request-now.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("hotel", { schema: "amygo1" })
 export class Hotel {
@@ -210,4 +211,7 @@ export class Hotel {
     default: "No",
   })
   eAppTerminate: "Yes" | "No";
+
+  @OneToMany(() => CabRequestNow, (cabRequestNow) => cabRequestNow.hotel)
+  cabRequestNows: CabRequestNow[];
 }

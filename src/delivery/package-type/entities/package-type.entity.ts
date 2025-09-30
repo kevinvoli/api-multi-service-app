@@ -1,4 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { CabBooking } from "../../../transport/cab-booking/entities/cab-booking.entity";
+import { CabRequestNow } from "../../../transport/cab-request-now/entities/cab-request-now.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("package_type", { schema: "amygo1" })
 export class PackageType {
@@ -23,4 +25,10 @@ export class PackageType {
 
   @Column("int", { name: "iDeliveryFieldId" })
   iDeliveryFieldId: number;
+
+  @OneToMany(() => CabBooking, (cabBooking) => cabBooking.packageType)
+  cabBookings: CabBooking[];
+
+  @OneToMany(() => CabRequestNow, (cabRequestNow) => cabRequestNow.packageType)
+  cabRequestNows: CabRequestNow[];
 }
