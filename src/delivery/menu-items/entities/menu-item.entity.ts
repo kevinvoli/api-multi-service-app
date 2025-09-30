@@ -1,4 +1,15 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  Index,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { FoodMenu } from "../../food-menu/entities/food-menu.entity";
+import { Company } from "../../../users/company/entities/company.entity";
+import { MenuitemOptions } from "../menu-item-options/entities/menu-item-option.entity";
+import { MenuitemOptionsCategory } from "../menu-item-options-category/entities/menu-item-options-category.entity";
 
 @Index("iFoodMenuId", ["iFoodMenuId"], {})
 @Index("eFoodType", ["eFoodType"], {})
@@ -13,11 +24,19 @@ export class MenuItems {
   @PrimaryGeneratedColumn({ type: "int", name: "iMenuItemId" })
   iMenuItemId: number;
 
-  @Column("int", { name: "store", nullable: true })
-  store: number | null;
+  @Column({ type: "int", name: "store", nullable: true })
+  storeId: number | null;
+
+  @ManyToOne(() => Company, (company) => company.menuItems)
+  @JoinColumn({ name: "store", referencedColumnName: "iCompanyId" })
+  store: Company;
 
   @Column("int", { name: "iFoodMenuId", default: "0" })
   iFoodMenuId: number;
+
+  @ManyToOne(() => FoodMenu, (foodMenu) => foodMenu.menuItems)
+  @JoinColumn({ name: "iFoodMenuId", referencedColumnName: "iFoodMenuId" })
+  foodMenu: FoodMenu;
 
   @Column("varchar", { name: "vItemType_EN", length: 255 })
   vItemTypeEn: string;
@@ -138,4 +157,16 @@ export class MenuItems {
 
   @Column("varchar", { name: "adresse", nullable: true, length: 255 })
   adresse: string | null;
+
+  @OneToMany(
+    () => MenuitemOptions,
+    (menuItemOption) => menuItemOption.menuItem,
+  )
+  menuItemOptions: MenuitemOptions[];
+
+  @OneToMany(
+    () => MenuitemOptionsCategory,
+    (menuItemOptionsCategory) => menuItemOptionsCategory.menuItem,
+  )
+  menuItemOptionsCategories: MenuitemOptionsCategory[];
 }

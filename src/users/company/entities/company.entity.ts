@@ -15,6 +15,7 @@ import { ServiceCategories } from "../../../core_app/service-categories/entities
 import { Trips } from "../../../transport/trips/entities/trip.entity";
 import { Intentions } from "../../../business-logic/intentions/entities/intention.entity";
 import { StoreWiseBanners } from "../../../cms/store-wise-banners/entities/store-wise-banner.entity";
+import { MenuItems } from "../../../delivery/menu-items/entities/menu-item.entity";
 
 @Index("iServiceId", ["iServiceId"], {})
 @Index("eStatus", ["eStatus"], {})
@@ -596,4 +597,7 @@ export class Company {
     (storeWiseBanner) => storeWiseBanner.company,
   )
   storeWiseBanners: StoreWiseBanners[];
+
+  @OneToMany(() => MenuItems, (menuItem) => menuItem.store)
+  menuItems: MenuItems[];
 }

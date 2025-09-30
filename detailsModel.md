@@ -230,6 +230,61 @@ Cette table contient les informations sur les entreprises.
 - **Un à plusieurs** avec `register_driver` : Une entreprise peut avoir plusieurs conducteurs. (Explicite via `@OneToMany`)
 - **Plusieurs à un** avec `service_categories` : Une entreprise est associée à une catégorie de service. (Explicite via `@ManyToOne`)
 - **Un à plusieurs** avec `__intentions`: Une entreprise peut être associée à plusieurs intentions (en tant que magasin). (Explicite via `@OneToMany`)
+- **Un à plusieurs** avec `menu_items`: Une entreprise peut avoir plusieurs articles de menu (en tant que magasin). (Explicite via `@OneToMany`)
+
+### `food_menu`
+
+Cette table contient les menus des restaurants/magasins.
+
+**Colonnes :**
+- `iFoodMenuId` (Primaire)
+- `iCompanyId`
+- `vMenu_EN`
+
+**Relations :**
+- **Un à plusieurs** avec `menu_items`: Un menu peut contenir plusieurs articles. (Explicite via `@OneToMany`)
+- **Un à plusieurs** avec `__intentions`: Un menu peut être associé à plusieurs intentions. (Explicite via `@OneToMany`)
+
+### `menu_items`
+
+Cette table contient les articles d'un menu.
+
+**Colonnes :**
+- `iMenuItemId` (Primaire)
+- `store` (iCompanyId)
+- `iFoodMenuId`
+- `vItemType_EN`
+
+**Relations :**
+- **Plusieurs à un** avec `company` (en tant que magasin): Un article est associé à un magasin. (Explicite via `@ManyToOne`)
+- **Plusieurs à un** avec `food_menu`: Un article appartient à un menu. (Explicite via `@ManyToOne`)
+- **Un à plusieurs** avec `menuitem_options`: Un article de menu peut avoir plusieurs options. (Explicite via `@OneToMany`)
+- **Un à plusieurs** avec `menuitem_options_category`: Un article de menu peut avoir plusieurs catégories d'options. (Explicite via `@OneToMany`)
+
+### `menuitem_options`
+
+Cette table contient les options pour un article de menu.
+
+**Colonnes :**
+- `iOptionId` (Primaire)
+- `iMenuItemId`
+- `vOptionName`
+- `fPrice`
+
+**Relations :**
+- **Plusieurs à un** avec `menu_items`: Une option est associée à un article de menu. (Explicite via `@ManyToOne`)
+
+### `menuitem_options_category`
+
+Cette table contient les catégories d'options pour un article de menu.
+
+**Colonnes :**
+- `iOptionsCategoryId` (Primaire)
+- `iMenuItemId`
+- `tCategoryName`
+
+**Relations :**
+- **Plusieurs à un** avec `menu_items`: Une catégorie d'options est associée à un article de menu. (Explicite via `@ManyToOne`)
 
 ### `service_categories`
 

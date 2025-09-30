@@ -1,4 +1,12 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  Index,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { MenuItems } from "../../menu-items/entities/menu-item.entity";
 
 @Index("iMenuItemId", ["iMenuItemId"], {})
 @Index("eDefault", ["eDefault"], {})
@@ -11,6 +19,10 @@ export class MenuitemOptions {
 
   @Column("int", { name: "iMenuItemId" })
   iMenuItemId: number;
+
+  @ManyToOne(() => MenuItems, (menuItem) => menuItem.menuItemOptions)
+  @JoinColumn({ name: "iMenuItemId", referencedColumnName: "iMenuItemId" })
+  menuItem: MenuItems;
 
   @Column("varchar", { name: "vOptionName", length: 255 })
   vOptionName: string;
