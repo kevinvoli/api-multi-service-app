@@ -124,7 +124,7 @@ Cette table contient les informations sur les commandes.
 
 - **Relation implicite** avec `service_categories` via `iServiceId`.
 - **Relation implicite** avec `order_status` via `iStatusCode`.
-- **Relation implicite** avec `register_user` via `iUserId`.
+- **Un à plusieurs** avec `register_user` : Une commande est associée à un utilisateur. (Explicite via `@ManyToOne`)
 - **Relation implicite** avec `register_driver` via `iDriverId`.
 - **Relation implicite** avec `company` via `iCompanyId`.
 

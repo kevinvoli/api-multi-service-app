@@ -518,12 +518,12 @@ export class Orders {
   @JoinColumn([{ name: "iServiceId", referencedColumnName: "iServiceId" }])
   serviceCategory: ServiceCategories;
 
-  // @ManyToOne(() => RegisterUser, (registerUser) => registerUser.orders, {
-  //   onDelete: "NO ACTION",
-  //   onUpdate: "NO ACTION",
-  // })
-  // @JoinColumn([{ name: "iUserId", referencedColumnName: "iUserId" }])
-  // user: RegisterUser;
+  @ManyToOne(() => RegisterUser, (registerUser) => registerUser.orders, {
+    onDelete: "NO ACTION",
+    onUpdate: "NO ACTION",
+  })
+  @JoinColumn([{ name: "iUserId", referencedColumnName: "iUserId" }])
+  user: RegisterUser;
 
   // @ManyToOne(() => RegisterDriver, (registerDriver) => registerDriver.orders, {
   //   onDelete: "NO ACTION",

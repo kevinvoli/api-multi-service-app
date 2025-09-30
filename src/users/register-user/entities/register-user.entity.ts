@@ -1,3 +1,4 @@
+import { Orders } from "../../../orders/entities/order.entity";
 import { UserWallet } from "../../../payments/user-wallet/entities/user-wallet.entity";
 import { CabBooking } from "../../../transport/cab-booking/entities/cab-booking.entity";
 import { CabRequestNow } from "../../../transport/cab-request-now/entities/cab-request-now.entity";
@@ -457,4 +458,7 @@ export class RegisterUser {
 
   @OneToMany(() => CabRequestNow, (cabRequestNow) => cabRequestNow.user)
   cabRequestNows: CabRequestNow[];
+
+  @OneToMany(() => Orders, (order) => order.user)
+  orders: Orders[];
 }
