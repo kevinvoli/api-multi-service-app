@@ -1,4 +1,5 @@
 import { Trips } from "../../../transport/trips/entities/trip.entity";
+import { BiddingPost } from "../../../bidding/bidding-post/entities/bidding-post.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("user_address", { schema: "amygo1" })
@@ -49,4 +50,7 @@ export class UserAddress {
 
   @OneToMany(() => Trips, (trip) => trip.userAddress)
   trips: Trips[];
+
+  @OneToMany(() => BiddingPost, (biddingPost) => biddingPost.address)
+  biddingPosts: BiddingPost[];
 }

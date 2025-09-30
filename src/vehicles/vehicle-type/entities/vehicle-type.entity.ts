@@ -2,6 +2,7 @@ import { AirportsurchargeFare } from "../../../transport/airportsurcharge-fare/e
 import { CabBooking } from "../../../transport/cab-booking/entities/cab-booking.entity";
 import { CabRequestNow } from "../../../transport/cab-request-now/entities/cab-request-now.entity";
 import { Trips } from "../../../transport/trips/entities/trip.entity";
+import { Intentions } from "../../../business-logic/intentions/entities/intention.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("vehicle_type", { schema: "amygo1" })
@@ -414,4 +415,7 @@ export class VehicleType {
 
   @OneToMany(() => Trips, (trip) => trip.vehicleType)
   trips: Trips[];
+
+  @OneToMany(() => Intentions, (intention) => intention.vehicleType)
+  intentions: Intentions[];
 }

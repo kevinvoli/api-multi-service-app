@@ -4,6 +4,8 @@ import { CabBooking } from "../../../transport/cab-booking/entities/cab-booking.
 import { CabRequestNow } from "../../../transport/cab-request-now/entities/cab-request-now.entity";
 import { Trips } from "../../../transport/trips/entities/trip.entity";
 import { BiddingPost } from "../../../bidding/bidding-post/entities/bidding-post.entity";
+import { Intentions } from "../../../business-logic/intentions/entities/intention.entity";
+import { IntentionsCriteres } from "../../../business-logic/intentions-criteres/entities/intentions-critere.entity";
 import {
   Column,
   Entity,
@@ -465,4 +467,13 @@ export class RegisterUser {
 
   @OneToMany(() => BiddingPost, (biddingPost) => biddingPost.user)
   biddingPosts: BiddingPost[];
+
+  @OneToMany(() => Intentions, (intention) => intention.user)
+  intentions: Intentions[];
+
+  @OneToMany(
+    () => IntentionsCriteres,
+    (intentionsCritere) => intentionsCritere.user,
+  )
+  intentionsCriteres: IntentionsCriteres[];
 }

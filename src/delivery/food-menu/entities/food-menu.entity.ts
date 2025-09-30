@@ -1,4 +1,5 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
+import { Intentions } from "../../../business-logic/intentions/entities/intention.entity";
+import { Column, Entity, Index, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Index("iCompanyId", ["iCompanyId"], {})
 @Index("iCompanyId_2", ["iCompanyId"], {})
@@ -55,4 +56,7 @@ export class FoodMenu {
 
   @Column("int", { name: "iServiceId" })
   iServiceId: number;
+
+  @OneToMany(() => Intentions, (intention) => intention.item)
+  intentions: Intentions[];
 }

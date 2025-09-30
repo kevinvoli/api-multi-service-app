@@ -1,4 +1,12 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { RegisterUser } from "../../../users/register-user/entities/register-user.entity";
+import { Intentions } from "../intentions/entities/intention.entity";
 
 @Entity("__intentions_criteres", { schema: "amygo1" })
 export class IntentionsCriteres {
@@ -8,11 +16,19 @@ export class IntentionsCriteres {
   @Column("int", { name: "user_id", nullable: true })
   userId: number | null;
 
+  @ManyToOne(() => RegisterUser, (user) => user.intentionsCriteres)
+  @JoinColumn({ name: "user_id", referencedColumnName: "iUserId" })
+  user: RegisterUser;
+
   @Column("varchar", { name: "stamp", nullable: true, length: 50 })
   stamp: string | null;
 
   @Column("int", { name: "intention_id" })
   intentionId: number;
+
+  @ManyToOne(() => Intentions, (intention) => intention.intentionsCriteres)
+  @JoinColumn({ name: "intention_id", referencedColumnName: "id" })
+  intention: Intentions;
 
   @Column("int", { name: "sous_service" })
   sousService: number;

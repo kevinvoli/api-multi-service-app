@@ -1,6 +1,11 @@
 import { Orders } from "../../../orders/entities/order.entity";
 import { Company } from "../../../users/company/entities/company.entity";
 import { Trips } from "../../../transport/trips/entities/trip.entity";
+import { Intentions } from "../../../business-logic/intentions/entities/intention.entity";
+import { ObjectCategories } from "../../../business-logic/object-categories/entities/object-category.entity";
+import { ObjectObjectifs } from "../../../business-logic/object-objectifs/entities/object-objectif.entity";
+import { ObjectProspections } from "../../../business-logic/object-prospections/entities/object-prospection.entity";
+import { ObjectRealisations } from "../../../business-logic/object-realisation/entities/object-realisation.entity";
 import {
   Column,
   Entity,
@@ -103,4 +108,31 @@ export class ServiceCategories {
 
   @OneToMany(() => Trips, (trip) => trip.service)
   trips: Trips[];
+
+  @OneToMany(() => Intentions, (intention) => intention.service)
+  intentions: Intentions[];
+
+  @OneToMany(
+    () => ObjectCategories,
+    (objectCategory) => objectCategory.service,
+  )
+  objectCategories: ObjectCategories[];
+
+  @OneToMany(
+    () => ObjectObjectifs,
+    (objectObjectif) => objectObjectif.service,
+  )
+  objectObjectifs: ObjectObjectifs[];
+
+  @OneToMany(
+    () => ObjectProspections,
+    (objectProspection) => objectProspection.service,
+  )
+  objectProspections: ObjectProspections[];
+
+  @OneToMany(
+    () => ObjectRealisations,
+    (objectRealisation) => objectRealisation.service,
+  )
+  objectRealisations: ObjectRealisations[];
 }

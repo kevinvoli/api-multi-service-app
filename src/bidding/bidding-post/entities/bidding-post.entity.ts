@@ -7,6 +7,9 @@ import {
 } from "typeorm";
 import { RegisterUser } from "../../../users/register-user/entities/register-user.entity";
 import { RegisterDriver } from "../../../users/register-driver/entities/register-driver.entity";
+import { UserAddress } from "../../../users/user-address/entities/user-address.entity";
+import { CancelReason } from "../../../core_app/cancel-reason/entities/cancel-reason.entity";
+import { UserPaymentInfo } from "../../../users/user-payment-info/entities/user-payment-info.entity";
 
 @Entity("bidding_post", { schema: "amygo1" })
 export class BiddingPost {
@@ -51,6 +54,10 @@ export class BiddingPost {
   @Column("int", { name: "iAddressId" })
   iAddressId: number;
 
+  @ManyToOne(() => UserAddress, (address) => address.biddingPosts)
+  @JoinColumn({ name: "iAddressId", referencedColumnName: "iUserAddressId" })
+  address: UserAddress;
+
   @Column("varchar", { name: "vContactName", length: 255 })
   vContactName: string;
 
@@ -80,6 +87,13 @@ export class BiddingPost {
 
   @Column("int", { name: "iCancelReasonId" })
   iCancelReasonId: number;
+
+  @ManyToOne(() => CancelReason, (cancelReason) => cancelReason.biddingPosts)
+  @JoinColumn({
+    name: "iCancelReasonId",
+    referencedColumnName: "iCancelReasonId",
+  })
+  cancelReason: CancelReason;
 
   @Column("text", { name: "vCancelReason" })
   vCancelReason: string;
@@ -139,6 +153,13 @@ export class BiddingPost {
 
   @Column("int", { name: "iPaymentInfoId" })
   iPaymentInfoId: number;
+
+  @ManyToOne(() => UserPaymentInfo, (paymentInfo) => paymentInfo.biddingPosts)
+  @JoinColumn({
+    name: "iPaymentInfoId",
+    referencedColumnName: "iPaymentInfoId",
+  })
+  paymentInfo: UserPaymentInfo;
 
   @Column("decimal", { name: "fCommission", precision: 10, scale: 2 })
   fCommission: string;
