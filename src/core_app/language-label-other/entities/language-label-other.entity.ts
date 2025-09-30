@@ -1,4 +1,13 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  Index,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { LanguageMaster } from "../../language-master/entities/language-master.entity";
+import { AppScreenMaster } from "../../../cms/app-screen-master/entities/app-screen-master.entity";
 
 @Index("UNIQUE_LABEL", ["vCode", "vLabel"], { unique: true })
 @Entity("language_label_other", { schema: "amygo1" })
@@ -9,8 +18,22 @@ export class LanguageLabelOther {
   @Column("int", { name: "lPage_id" })
   lPageId: number;
 
+  @ManyToOne(
+    () => AppScreenMaster,
+    (appScreenMaster) => appScreenMaster.languageLabelOthers,
+  )
+  @JoinColumn({ name: "lPage_id", referencedColumnName: "lPageId" })
+  appScreen: AppScreenMaster;
+
   @Column("varchar", { name: "vCode", length: 5 })
   vCode: string;
+
+  @ManyToOne(
+    () => LanguageMaster,
+    (languageMaster) => languageMaster.languageLabelOthers,
+  )
+  @JoinColumn({ name: "vCode", referencedColumnName: "vCode" })
+  language: LanguageMaster;
 
   @Column("varchar", { name: "vLabel", length: 100 })
   vLabel: string;

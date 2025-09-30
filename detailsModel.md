@@ -562,6 +562,55 @@ Cette table contient les écrans de l'application, avec une structure hiérarchi
 **Relations :**
 - **Plusieurs à un** avec `app_screen_master` (self-referencing): Un écran peut avoir un écran parent. (Explicite via `@ManyToOne`)
 - **Un à plusieurs** avec `app_screen_master` (self-referencing): Un écran peut avoir plusieurs écrans enfants. (Explicite via `@OneToMany`)
+- **Un à plusieurs** avec `language_label`: Un écran peut avoir plusieurs libellés de langue. (Explicite via `@OneToMany`)
+- **Un à plusieurs** avec `language_label_other`: Un écran peut avoir plusieurs autres libellés de langue. (Explicite via `@OneToMany`)
+- **Un à plusieurs** avec `language_label_1`: Un écran peut avoir plusieurs libellés de langue (table 1). (Explicite via `@OneToMany`)
+- **Un à plusieurs** avec `language_label_2`: Un écran peut avoir plusieurs libellés de langue (table 2). (Explicite via `@OneToMany`)
+- **Un à plusieurs** avec `language_label_5`: Un écran peut avoir plusieurs libellés de langue (table 5). (Explicite via `@OneToMany`)
+
+### `language_master`
+
+Cette table contient les langues disponibles dans l'application.
+
+**Colonnes :**
+- `iLanguageMasId` (Primaire)
+- `vCode`
+- `vTitle`
+
+**Relations :**
+- **Un à plusieurs** avec `language_label`: Une langue peut avoir plusieurs libellés. (Explicite via `@OneToMany`)
+- **Un à plusieurs** avec `language_label_other`: Une langue peut avoir plusieurs autres libellés. (Explicite via `@OneToMany`)
+- **Un à plusieurs** avec `language_label_1`: Une langue peut avoir plusieurs libellés (table 1). (Explicite via `@OneToMany`)
+- **Un à plusieurs** avec `language_label_2`: Une langue peut avoir plusieurs libellés (table 2). (Explicite via `@OneToMany`)
+- **Un à plusieurs** avec `language_label_5`: Une langue peut avoir plusieurs libellés (table 5). (Explicite via `@OneToMany`)
+
+### `language_label`
+
+Cette table contient les libellés de langue pour les différentes parties de l'application.
+
+**Colonnes :**
+- `LanguageLabelId` (Primaire)
+- `lPage_id`
+- `vCode`
+- `vLabel`
+
+**Relations :**
+- **Plusieurs à un** avec `app_screen_master`: Un libellé est associé à un écran d'application. (Explicite via `@ManyToOne`)
+- **Plusieurs à un** avec `language_master`: Un libellé est associé à une langue. (Explicite via `@ManyToOne`)
+
+### `language_label_other`
+
+Cette table contient d'autres libellés de langue pour l'application.
+
+**Colonnes :**
+- `LanguageLabelId` (Primaire)
+- `lPage_id`
+- `vCode`
+- `vLabel`
+
+**Relations :**
+- **Plusieurs à un** avec `app_screen_master`: Un libellé est associé à un écran d'application. (Explicite via `@ManyToOne`)
+- **Plusieurs à un** avec `language_master`: Un libellé est associé à une langue. (Explicite via `@ManyToOne`)
 
 ### `content_cubex_details`
 
