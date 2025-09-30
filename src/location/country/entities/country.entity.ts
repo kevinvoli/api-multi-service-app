@@ -1,4 +1,6 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
+import { City } from "../../city/entities/city.entity";
+import { State } from "../../state/entities/state.entity";
+import { Column, Entity, Index, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Index("IDX_COUNTRIES_NAME", ["vCountry"], {})
 @Index("vCountryCode", ["vCountryCode"], {})
@@ -127,4 +129,10 @@ export class Country {
     default: "Yes",
   })
   eEnableSinch: "Yes" | "No";
+
+  @OneToMany(() => City, (city) => city.country)
+  cities: City[];
+
+  @OneToMany(() => State, (state) => state.country)
+  states: State[];
 }

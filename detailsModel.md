@@ -369,6 +369,46 @@ Cette table contient les informations sur les véhicules des conducteurs.
 - **Un à plusieurs** avec `make` : Un véhicule est associé à une marque. (Explicite via `@ManyToOne`)
 - **Un à plusieurs** avec `model` : Un véhicule est associé à un modèle. (Explicite via `@ManyToOne`)
 
+### `country`
+
+Cette table contient les pays.
+
+**Colonnes :**
+- `iCountryId` (Primaire)
+- `vCountry`
+- `vCountryCode`
+
+**Relations :**
+- **Un à plusieurs** avec `state`: Un pays peut avoir plusieurs états/régions. (Explicite via `@OneToMany`)
+- **Un à plusieurs** avec `city`: Un pays peut avoir plusieurs villes. (Explicite via `@OneToMany`)
+
+### `state`
+
+Cette table contient les états ou régions d'un pays.
+
+**Colonnes :**
+- `iStateId` (Primaire)
+- `vState`
+- `iCountryId`
+
+**Relations :**
+- **Plusieurs à un** avec `country`: Un état appartient à un pays. (Explicite via `@ManyToOne`)
+- **Un à plusieurs** avec `city`: Un état peut avoir plusieurs villes. (Explicite via `@OneToMany`)
+
+### `city`
+
+Cette table contient les villes.
+
+**Colonnes :**
+- `iCityId` (Primaire)
+- `vCity`
+- `iCountryId`
+- `iStateId`
+
+**Relations :**
+- **Plusieurs à un** avec `country`: Une ville appartient à un pays. (Explicite via `@ManyToOne`)
+- **Plusieurs à un** avec `state`: Une ville appartient à un état/région. (Explicite via `@ManyToOne`)
+
 ### `advertise_banners`
 
 Cette table contient les bannières publicitaires pour la page principale.
