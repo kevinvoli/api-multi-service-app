@@ -6,9 +6,12 @@ import {
   Column,
   Entity,
   Index,
+  JoinColumn,
+  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
+import { ServiceCategories } from "../../../core_app/service-categories/entities/service-category.entity";
 
 @Index("iServiceId", ["iServiceId"], {})
 @Index("eStatus", ["eStatus"], {})
@@ -20,6 +23,10 @@ export class Company {
 
   @Column("int", { name: "iServiceId" })
   iServiceId: number;
+
+  @ManyToOne(() => ServiceCategories, (service) => service.companies)
+  @JoinColumn({ name: "iServiceId", referencedColumnName: "iServiceId" })
+  service: ServiceCategories;
 
   @Column("varchar", { name: "vContactName", length: 100 })
   vContactName: string;

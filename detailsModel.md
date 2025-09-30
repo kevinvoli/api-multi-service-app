@@ -104,7 +104,7 @@ Cette table contient les informations sur les entreprises.
 **Relations :**
 
 - **Un à plusieurs** avec `register_driver` : Une entreprise peut avoir plusieurs conducteurs. (Explicite via `@OneToMany`)
-- **Relation implicite** avec `service` via `iServiceId`.
+- **Plusieurs à un** avec `service_categories` : Une entreprise est associée à une catégorie de service. (Explicite via `@ManyToOne`)
 
 ### `orders`
 

@@ -1,4 +1,5 @@
 import { Orders } from "../../../orders/entities/order.entity";
+import { Company } from "../../../users/company/entities/company.entity";
 import {
   Column,
   Entity,
@@ -95,4 +96,7 @@ export class ServiceCategories {
 
   @OneToMany(() => Orders, (orders) => orders.serviceCategory)
   orders: Orders[];
+
+  @OneToMany(() => Company, (company) => company.service)
+  companies: Company[];
 }
