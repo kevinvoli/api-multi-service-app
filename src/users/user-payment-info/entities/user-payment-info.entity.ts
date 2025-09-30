@@ -1,4 +1,5 @@
 import { CabRequestNow } from "../../../transport/cab-request-now/entities/cab-request-now.entity";
+import { Trips } from "../../../transport/trips/entities/trip.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("user_payment_info", { schema: "amygo1" })
@@ -49,4 +50,7 @@ export class UserPaymentInfo {
 
   @OneToMany(() => CabRequestNow, (cabRequestNow) => cabRequestNow.paymentInfo)
   cabRequestNows: CabRequestNow[];
+
+  @OneToMany(() => Trips, (trip) => trip.paymentInfo)
+  trips: Trips[];
 }

@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Trips } from "../../../transport/trips/entities/trip.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("user_address", { schema: "amygo1" })
 export class UserAddress {
@@ -45,4 +46,7 @@ export class UserAddress {
     default: "Active",
   })
   eStatus: "Active" | "Inactive" | "Deleted";
+
+  @OneToMany(() => Trips, (trip) => trip.userAddress)
+  trips: Trips[];
 }

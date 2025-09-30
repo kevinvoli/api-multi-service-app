@@ -10,6 +10,7 @@ import { RegisterDriver } from "../../register-driver/entities/register-driver.e
 import { Company } from "../../company/entities/company.entity";
 import { Make } from "../../../vehicles/make/entities/make.entity";
 import { Model } from "../../../vehicles/model/entities/model.entity";
+import { Trips } from "../../../transport/trips/entities/trip.entity";
 
 @Index("iDriverVehicleId", ["iDriverVehicleId"], {})
 @Entity("driver_vehicle", { schema: "amygo1" })
@@ -136,4 +137,7 @@ export class DriverVehicle {
 
   @Column("int", { name: "iTrackServiceCompanyId" })
   iTrackServiceCompanyId: number;
+
+  @OneToMany(() => Trips, (trip) => trip.driverVehicle)
+  trips: Trips[];
 }

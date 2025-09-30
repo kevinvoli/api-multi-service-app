@@ -1,4 +1,5 @@
 import { CabBooking } from "../../../transport/cab-booking/entities/cab-booking.entity";
+import { Trips } from "../../../transport/trips/entities/trip.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("cancel_reason", { schema: "amygo1" })
@@ -52,4 +53,7 @@ export class CancelReason {
 
   @OneToMany(() => CabBooking, (cabBooking) => cabBooking.cancelReason)
   cabBookings: CabBooking[];
+
+  @OneToMany(() => Trips, (trip) => trip.cancelReason)
+  trips: Trips[];
 }

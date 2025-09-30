@@ -68,6 +68,88 @@ Cette table contient les informations sur les voyages.
 
 - **Plusieurs à un** avec `register_user` : Un voyage est associé à un utilisateur. (Explicite via `@ManyToOne`)
 - **Plusieurs à un** avec `register_driver` : Un voyage est associé à un conducteur. (Explicite via `@ManyToOne`)
+- **Plusieurs à un** avec `company` : Un voyage est associé à une entreprise. (Explicite via `@ManyToOne`)
+- **Plusieurs à un** avec `orders` : Un voyage est associé à une commande. (Explicite via `@ManyToOne`)
+- **Plusieurs à un** avec `driver_vehicle` : Un voyage est associé à un véhicule de conducteur. (Explicite via `@ManyToOne`)
+- **Plusieurs à un** avec `service_categories` : Un voyage est associé à une catégorie de service. (Explicite via `@ManyToOne`)
+- **Plusieurs à un** avec `organization` : Un voyage est associé à une organisation. (Explicite via `@ManyToOne`)
+- **Plusieurs à un** avec `hotel` : Un voyage est associé à un hôtel. (Explicite via `@ManyToOne`)
+- **Plusieurs à un** avec `vehicle_type` : Un voyage est associé à un type de véhicule. (Explicite via `@ManyToOne`)
+- **Plusieurs à un** avec `rental_package` : Un voyage est associé à un forfait de location. (Explicite via `@ManyToOne`)
+- **Plusieurs à un** avec `cancel_reason` : Un voyage est associé à une raison d'annulation. (Explicite via `@ManyToOne`)
+- **Plusieurs à un** avec `user_profile` : Un voyage est associé à un profil utilisateur. (Explicite via `@ManyToOne`)
+- **Plusieurs à un** avec `trip_reason` : Un voyage est associé à un motif de voyage. (Explicite via `@ManyToOne`)
+- **Plusieurs à un** avec `user_address` : Un voyage est associé à une adresse utilisateur. (Explicite via `@ManyToOne`)
+- **Plusieurs à un** avec `user_payment_info` : Un voyage est associé à une information de paiement. (Explicite via `@ManyToOne`)
+
+### `user_payment_info`
+
+Cette table contient les informations de paiement des utilisateurs.
+
+**Colonnes :**
+
+- `iPaymentInfoId` (Primaire)
+- `iMemberId`
+- `eUserType`
+- `tCardToken`
+- ... (et de nombreuses autres colonnes)
+
+**Relations :**
+
+- **Un à plusieurs** avec `cab_request_now` : Une information de paiement peut être associée à plusieurs demandes de taxi. (Explicite via `@OneToMany`)
+- **Un à plusieurs** avec `trips` : Une information de paiement peut être associée à plusieurs voyages. (Explicite via `@OneToMany`)
+
+### `user_address`
+
+Cette table contient les adresses des utilisateurs et des conducteurs.
+
+**Colonnes :**
+
+- `iUserAddressId` (Primaire)
+- `iUserId`
+- `eUserType`
+- `vServiceAddress`
+- ... (et de nombreuses autres colonnes)
+
+**Relations :**
+
+- **Un à plusieurs** avec `trips` : Une adresse peut être associée à plusieurs voyages. (Explicite via `@OneToMany`)
+
+### `trip_reason`
+
+Cette table contient les informations sur les motifs de voyage.
+
+**Colonnes :**
+
+- `iTripReasonId` (Primaire)
+- `iUserProfileMasterId`
+- `vReasonTitle`
+- `eStatus`
+
+**Relations :**
+
+- **Un à plusieurs** avec `cab_booking` : Un motif de voyage peut être associé à plusieurs réservations de taxi. (Explicite via `@OneToMany`)
+- **Un à plusieurs** avec `cab_request_now` : Un motif de voyage peut être associé à plusieurs demandes de taxi. (Explicite via `@OneToMany`)
+- **Un à plusieurs** avec `trips` : Un motif de voyage peut être associé à plusieurs voyages. (Explicite via `@OneToMany`)
+
+### `user_profile`
+
+Cette table contient les informations sur les profils des utilisateurs.
+
+**Colonnes :**
+
+- `iUserProfileId` (Primaire)
+- `iUserId`
+- `iUserProfileMasterId`
+- `iOrganizationId`
+- `vProfileEmail`
+- `eStatus`
+- ... (et de nombreuses autres colonnes)
+
+**Relations :**
+
+- **Un à plusieurs** avec `cab_request_now` : Un profil utilisateur peut avoir plusieurs demandes de taxi. (Explicite via `@OneToMany`)
+- **Un à plusieurs** avec `trips` : Un profil utilisateur peut avoir plusieurs voyages. (Explicite via `@OneToMany`)
 
 ### `user_wallet`
 

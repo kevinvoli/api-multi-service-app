@@ -3,6 +3,7 @@ import { UserWallet } from "../../../payments/user-wallet/entities/user-wallet.e
 import { CabBooking } from "../../../transport/cab-booking/entities/cab-booking.entity";
 import { CabRequestNow } from "../../../transport/cab-request-now/entities/cab-request-now.entity";
 import { Trips } from "../../../transport/trips/entities/trip.entity";
+import { BiddingPost } from "../../../bidding/bidding-post/entities/bidding-post.entity";
 import {
   Column,
   Entity,
@@ -461,4 +462,7 @@ export class RegisterUser {
 
   @OneToMany(() => Orders, (order) => order.user)
   orders: Orders[];
+
+  @OneToMany(() => BiddingPost, (biddingPost) => biddingPost.user)
+  biddingPosts: BiddingPost[];
 }

@@ -15,6 +15,7 @@ import {
 import { OrderDriverLog } from "../order-driver-log/entities/order-driver-log.entity";
 import { OrderRequest } from "../order-request/entities/order-request.entity";
 import { OrderStatusLogs } from "../order-status-logs/entities/order-status-log.entity";
+import { Trips } from "../../transport/trips/entities/trip.entity";
 
 @Index("iCustomerId", ["iUserId"], {})
 @Index("vOrderNo", ["vOrderNo"], {})
@@ -545,4 +546,7 @@ export class Orders {
   })
   @JoinColumn([{ name: "iStatusCode", referencedColumnName: "iStatusCode" }])
   orderStatus: OrderStatus;
+
+  @OneToMany(() => Trips, (trip) => trip.order)
+  trips: Trips[];
 }

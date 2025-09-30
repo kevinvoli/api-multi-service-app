@@ -1,5 +1,6 @@
 import { CabBooking } from "../../../../transport/cab-booking/entities/cab-booking.entity";
 import { CabRequestNow } from "../../../../transport/cab-request-now/entities/cab-request-now.entity";
+import { Trips } from "../../../../transport/trips/entities/trip.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("organization", { schema: "amygo1" })
@@ -227,4 +228,7 @@ export class Organization {
 
   @OneToMany(() => CabRequestNow, (cabRequestNow) => cabRequestNow.organization)
   cabRequestNows: CabRequestNow[];
+
+  @OneToMany(() => Trips, (trip) => trip.organization)
+  trips: Trips[];
 }

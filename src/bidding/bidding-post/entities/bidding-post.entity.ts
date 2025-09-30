@@ -1,4 +1,12 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { RegisterUser } from "../../../users/register-user/entities/register-user.entity";
+import { RegisterDriver } from "../../../users/register-driver/entities/register-driver.entity";
 
 @Entity("bidding_post", { schema: "amygo1" })
 export class BiddingPost {
@@ -14,8 +22,16 @@ export class BiddingPost {
   @Column("int", { name: "iUserId" })
   iUserId: number;
 
+  @ManyToOne(() => RegisterUser, (user) => user.biddingPosts)
+  @JoinColumn({ name: "iUserId", referencedColumnName: "iUserId" })
+  user: RegisterUser;
+
   @Column("int", { name: "iDriverId" })
   iDriverId: number;
+
+  @ManyToOne(() => RegisterDriver, (driver) => driver.biddingPosts)
+  @JoinColumn({ name: "iDriverId", referencedColumnName: "iDriverId" })
+  driver: RegisterDriver;
 
   @Column("text", { name: "fBiddingAmount" })
   fBiddingAmount: string;

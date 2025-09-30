@@ -8,6 +8,7 @@ import { DriverLocationAirport } from "../../../transport/driver-location-airpor
 import { Trips } from "../../../transport/trips/entities/trip.entity";
 import { Company } from "../../company/entities/company.entity";
 import { DriverVehicle } from "../driver-vehicle/entities/driver-vehicle.entity";
+import { BiddingPost } from "../../../bidding/bidding-post/entities/bidding-post.entity";
 import {
   Column,
   Entity,
@@ -536,4 +537,7 @@ export class RegisterDriver {
 
   @OneToMany(() => DriverVehicle, (driverVehicle) => driverVehicle.driver)
   driverVehicles: DriverVehicle[];
+
+  @OneToMany(() => BiddingPost, (biddingPost) => biddingPost.driver)
+  biddingPosts: BiddingPost[];
 }

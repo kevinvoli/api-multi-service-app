@@ -12,6 +12,7 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { ServiceCategories } from "../../../core_app/service-categories/entities/service-category.entity";
+import { Trips } from "../../../transport/trips/entities/trip.entity";
 
 @Index("iServiceId", ["iServiceId"], {})
 @Index("eStatus", ["eStatus"], {})
@@ -581,4 +582,7 @@ export class Company {
 
   @OneToMany(() => DriverVehicle, (driverVehicle) => driverVehicle.company)
   driverVehicles: DriverVehicle[];
+
+  @OneToMany(() => Trips, (trip) => trip.company)
+  trips: Trips[];
 }
