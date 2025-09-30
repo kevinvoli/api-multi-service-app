@@ -1,4 +1,15 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  Index,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { RegisterDriver } from "../../register-driver/entities/register-driver.entity";
+import { Company } from "../../company/entities/company.entity";
+import { Make } from "../../../vehicles/make/entities/make.entity";
+import { Model } from "../../../vehicles/model/entities/model.entity";
 
 @Index("iDriverVehicleId", ["iDriverVehicleId"], {})
 @Entity("driver_vehicle", { schema: "amygo1" })
@@ -16,14 +27,33 @@ export class DriverVehicle {
   })
   iDriverId: number;
 
+  @ManyToOne(
+    () => RegisterDriver,
+    (registerDriver) => registerDriver.driverVehicles,
+  )
+  @JoinColumn([{ name: "iDriverId", referencedColumnName: "iDriverId" }])
+  driver: RegisterDriver;
+
   @Column("int", { name: "iCompanyId" })
   iCompanyId: number;
+
+  @ManyToOne(() => Company, (company) => company.driverVehicles)
+  @JoinColumn([{ name: "iCompanyId", referencedColumnName: "iCompanyId" }])
+  company: Company;
 
   @Column("int", { name: "iMakeId" })
   iMakeId: number;
 
+  @ManyToOne(() => Make, (make) => make.driverVehicles)
+  @JoinColumn([{ name: "iMakeId", referencedColumnName: "iMakeId" }])
+  make: Make;
+
   @Column("int", { name: "iModelId" })
   iModelId: number;
+
+  @ManyToOne(() => Model, (model) => model.driverVehicles)
+  @JoinColumn([{ name: "iModelId", referencedColumnName: "iModelId" }])
+  model: Model;
 
   @Column("int", { name: "iYear" })
   iYear: number;

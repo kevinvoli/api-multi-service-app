@@ -144,12 +144,12 @@ Cette table contient les informations sur les véhicules des conducteurs.
 
 **Relations :**
 
-- **Relation implicite** avec `register_driver` via `iDriverId`.
+- **Un à plusieurs** avec `register_driver` : Un véhicule est associé à un conducteur. (Explicite via `@ManyToOne`)
 - **Relation implicite** avec `vehicle_type` via `vCarType`.
 - **Relation implicite** avec `rental_package` via `vRentalCarType`.
-- **Relation implicite** avec `company` via `iCompanyId`.
-- **Relation implicite** avec `make` via `iMakeId`.
-- **Relation implicite** avec `model` via `iModelId`.
+- **Un à plusieurs** avec `company` : Un véhicule est associé à une entreprise. (Explicite via `@ManyToOne`)
+- **Un à plusieurs** avec `make` : Un véhicule est associé à une marque. (Explicite via `@ManyToOne`)
+- **Un à plusieurs** avec `model` : Un véhicule est associé à un modèle. (Explicite via `@ManyToOne`)
 
 ## Autres entités
 

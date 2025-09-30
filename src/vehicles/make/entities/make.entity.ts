@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { DriverVehicle } from "../../../users/driver-vehicle/entities/driver-vehicle.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("make", { schema: "amygo1" })
 export class Make {
@@ -21,4 +22,7 @@ export class Make {
     default: "Active",
   })
   eStatus: "Active" | "Inactive" | "Deleted";
+
+  @OneToMany(() => DriverVehicle, (driverVehicle) => driverVehicle.make)
+  driverVehicles: DriverVehicle[];
 }

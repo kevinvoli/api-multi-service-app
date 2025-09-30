@@ -7,6 +7,7 @@ import { DriverDestinationsRoute } from "../../../transport/driver-destinations-
 import { DriverLocationAirport } from "../../../transport/driver-location-airport/entities/driver-location-airport.entity";
 import { Trips } from "../../../transport/trips/entities/trip.entity";
 import { Company } from "../../company/entities/company.entity";
+import { DriverVehicle } from "../driver-vehicle/entities/driver-vehicle.entity";
 import {
   Column,
   Entity,
@@ -532,4 +533,7 @@ export class RegisterDriver {
 
   @OneToMany(() => Orders, (order) => order.driver)
   orders: Orders[];
+
+  @OneToMany(() => DriverVehicle, (driverVehicle) => driverVehicle.driver)
+  driverVehicles: DriverVehicle[];
 }

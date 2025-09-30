@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { DriverVehicle } from "../../../users/driver-vehicle/entities/driver-vehicle.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("model", { schema: "amygo1" })
 export class Model {
@@ -17,4 +18,7 @@ export class Model {
     default: "Active",
   })
   eStatus: "Active" | "Inactive" | "Deleted";
+
+  @OneToMany(() => DriverVehicle, (driverVehicle) => driverVehicle.model)
+  driverVehicles: DriverVehicle[];
 }
