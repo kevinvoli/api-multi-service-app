@@ -525,6 +525,18 @@ Cette table contient les écrans de l'application, avec une structure hiérarchi
 - **Plusieurs à un** avec `app_screen_master` (self-referencing): Un écran peut avoir un écran parent. (Explicite via `@ManyToOne`)
 - **Un à plusieurs** avec `app_screen_master` (self-referencing): Un écran peut avoir plusieurs écrans enfants. (Explicite via `@OneToMany`)
 
+### `content_cubex_details`
+
+Cette table contient les détails du contenu pour la section "Cubex".
+
+**Colonnes :**
+- `id` (Primaire)
+- `eFor`
+- `iVehicleCategoryId`
+
+**Relations :**
+- **Plusieurs à un** avec `vehicle_category`: Un détail de contenu est associé à une catégorie de véhicule. (Explicite via `@ManyToOne`)
+
 ## Autres entités
 
 Il existe un grand nombre d'autres entités dans le projet. La plupart d'entre elles semblent suivre le même modèle de relations implicites, où les clés étrangères sont définies comme des colonnes standard avec des commentaires indiquant la table liée.

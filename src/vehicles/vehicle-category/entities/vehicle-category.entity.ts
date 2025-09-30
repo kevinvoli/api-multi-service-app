@@ -1,4 +1,5 @@
 import { Banners } from "../../../cms/banners/entities/banner.entity";
+import { ContentCubexDetails } from "../../../cms/content-cubex-details/entities/content-cubex-detail.entity";
 import { Column, Entity, Index, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 export enum VehicleCategoryType {
@@ -290,4 +291,10 @@ export class VehicleCategory {
 
   @OneToMany(() => Banners, (banner) => banner.vehicleCategory)
   banners: Banners[];
+
+  @OneToMany(
+    () => ContentCubexDetails,
+    (contentCubexDetail) => contentCubexDetail.vehicleCategory,
+  )
+  contentCubexDetails: ContentCubexDetails[];
 }

@@ -1,4 +1,12 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  Index,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { VehicleCategory } from "../../../vehicles/vehicle-category/entities/vehicle-category.entity";
 
 @Index("id", ["id"], { unique: true })
 @Entity("content_cubex_details", { schema: "amygo1" })
@@ -44,6 +52,16 @@ export class ContentCubexDetails {
     comment: "Its used for ride,deliverall,otherservice\t",
   })
   iVehicleCategoryId: number;
+
+  @ManyToOne(
+    () => VehicleCategory,
+    (vehicleCategory) => vehicleCategory.contentCubexDetails,
+  )
+  @JoinColumn({
+    name: "iVehicleCategoryId",
+    referencedColumnName: "iVehicleCategoryId",
+  })
+  vehicleCategory: VehicleCategory;
 
   @Column("enum", {
     name: "eStatus",
