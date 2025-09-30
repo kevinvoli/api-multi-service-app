@@ -1,4 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { HelpDetailCategories } from "../../help-detail-categories/entities/help-detail-category.entity";
 
 @Entity("help_detail", { schema: "amygo1" })
 export class HelpDetail {
@@ -7,6 +14,16 @@ export class HelpDetail {
 
   @Column("int", { name: "iHelpDetailCategoryId" })
   iHelpDetailCategoryId: number;
+
+  @ManyToOne(
+    () => HelpDetailCategories,
+    (helpDetailCategory) => helpDetailCategory.helpDetails,
+  )
+  @JoinColumn({
+    name: "iHelpDetailCategoryId",
+    referencedColumnName: "iHelpDetailCategoryId",
+  })
+  helpDetailCategory: HelpDetailCategories;
 
   @Column("enum", {
     name: "eStatus",

@@ -1,4 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { FaqCategories } from "../../faq-categories/entities/faq-category.entity";
 
 @Entity("faqs", { schema: "amygo1" })
 export class Faqs {
@@ -7,6 +14,13 @@ export class Faqs {
 
   @Column("int", { name: "iFaqcategoryId" })
   iFaqcategoryId: number;
+
+  @ManyToOne(() => FaqCategories, (faqCategory) => faqCategory.faqs)
+  @JoinColumn({
+    name: "iFaqcategoryId",
+    referencedColumnName: "iFaqcategoryId",
+  })
+  faqCategory: FaqCategories;
 
   @Column("enum", {
     name: "eStatus",

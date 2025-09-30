@@ -1,4 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { Hotel } from "../../../stores/hotel/entities/hotel.entity";
 
 @Entity("hotel_banners", { schema: "amygo1" })
 export class HotelBanners {
@@ -7,6 +14,10 @@ export class HotelBanners {
 
   @Column("int", { name: "iHotelId", default: "0" })
   iHotelId: number;
+
+  @ManyToOne(() => Hotel, (hotel) => hotel.hotelBanners)
+  @JoinColumn({ name: "iHotelId", referencedColumnName: "iHotelId" })
+  hotel: Hotel;
 
   @Column("enum", {
     name: "eStatus",

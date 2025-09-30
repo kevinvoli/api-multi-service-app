@@ -1,5 +1,6 @@
 import { CabRequestNow } from "../../../transport/cab-request-now/entities/cab-request-now.entity";
 import { Trips } from "../../../transport/trips/entities/trip.entity";
+import { HotelBanners } from "../../../cms/hotel-banners/entities/hotel-banner.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("hotel", { schema: "amygo1" })
@@ -218,4 +219,7 @@ export class Hotel {
 
   @OneToMany(() => Trips, (trip) => trip.hotel)
   trips: Trips[];
+
+  @OneToMany(() => HotelBanners, (hotelBanner) => hotelBanner.hotel)
+  hotelBanners: HotelBanners[];
 }

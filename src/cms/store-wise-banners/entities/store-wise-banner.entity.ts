@@ -1,4 +1,12 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { ServiceCategories } from "../../../core_app/service-categories/entities/service-category.entity";
+import { Company } from "../../../users/company/entities/company.entity";
 
 @Entity("store_wise_banners", { schema: "amygo1" })
 export class StoreWiseBanners {
@@ -8,8 +16,16 @@ export class StoreWiseBanners {
   @Column("int", { name: "iServiceId" })
   iServiceId: number;
 
+  @ManyToOne(() => ServiceCategories, (service) => service.storeWiseBanners)
+  @JoinColumn({ name: "iServiceId", referencedColumnName: "iServiceId" })
+  service: ServiceCategories;
+
   @Column("int", { name: "iCompanyId" })
   iCompanyId: number;
+
+  @ManyToOne(() => Company, (company) => company.storeWiseBanners)
+  @JoinColumn({ name: "iCompanyId", referencedColumnName: "iCompanyId" })
+  company: Company;
 
   @Column("enum", {
     name: "eStatus",

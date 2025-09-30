@@ -1,4 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 
 @Entity("app_screen_master", { schema: "amygo1" })
 export class AppScreenMaster {
@@ -13,6 +20,13 @@ export class AppScreenMaster {
 
   @Column("int", { name: "iParentId" })
   iParentId: number;
+
+  @ManyToOne(() => AppScreenMaster, (appScreenMaster) => appScreenMaster.children)
+  @JoinColumn({ name: "iParentId", referencedColumnName: "lPageId" })
+  parent: AppScreenMaster;
+
+  @OneToMany(() => AppScreenMaster, (appScreenMaster) => appScreenMaster.parent)
+  children: AppScreenMaster[];
 
   @Column("enum", {
     name: "eStatus",

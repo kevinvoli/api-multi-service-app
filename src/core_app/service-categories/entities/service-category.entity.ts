@@ -6,6 +6,8 @@ import { ObjectCategories } from "../../../business-logic/object-categories/enti
 import { ObjectObjectifs } from "../../../business-logic/object-objectifs/entities/object-objectif.entity";
 import { ObjectProspections } from "../../../business-logic/object-prospections/entities/object-prospection.entity";
 import { ObjectRealisations } from "../../../business-logic/object-realisation/entities/object-realisation.entity";
+import { Banners } from "../../../cms/banners/entities/banner.entity";
+import { StoreWiseBanners } from "../../../cms/store-wise-banners/entities/store-wise-banner.entity";
 import {
   Column,
   Entity,
@@ -135,4 +137,13 @@ export class ServiceCategories {
     (objectRealisation) => objectRealisation.service,
   )
   objectRealisations: ObjectRealisations[];
+
+  @OneToMany(() => Banners, (banner) => banner.service)
+  banners: Banners[];
+
+  @OneToMany(
+    () => StoreWiseBanners,
+    (storeWiseBanner) => storeWiseBanner.service,
+  )
+  storeWiseBanners: StoreWiseBanners[];
 }

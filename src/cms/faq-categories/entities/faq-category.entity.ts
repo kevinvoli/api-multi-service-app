@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Faqs } from "../../faqs/entities/faq.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("faq_categories", { schema: "amygo1" })
 export class FaqCategories {
@@ -34,4 +35,7 @@ export class FaqCategories {
     default: "General",
   })
   eCategoryType: "General" | "Passenger" | "Driver";
+
+  @OneToMany(() => Faqs, (faq) => faq.faqCategory)
+  faqs: Faqs[];
 }

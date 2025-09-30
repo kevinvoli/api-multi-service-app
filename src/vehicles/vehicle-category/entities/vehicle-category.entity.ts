@@ -1,4 +1,5 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
+import { Banners } from "../../../cms/banners/entities/banner.entity";
+import { Column, Entity, Index, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 export enum VehicleCategoryType {
   Ride = "Ride",
@@ -286,4 +287,7 @@ export class VehicleCategory {
 
   @Column("text", { name: "vListLogo3" })
   vListLogo3: string;
+
+  @OneToMany(() => Banners, (banner) => banner.vehicleCategory)
+  banners: Banners[];
 }

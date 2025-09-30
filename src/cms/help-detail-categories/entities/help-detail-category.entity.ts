@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { HelpDetail } from "../../help-detail/entities/help-detail.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("help_detail_categories", { schema: "amygo1" })
 export class HelpDetailCategories {
@@ -34,4 +35,7 @@ export class HelpDetailCategories {
     default: "General",
   })
   eSystem: "General" | "DeliverAll";
+
+  @OneToMany(() => HelpDetail, (helpDetail) => helpDetail.helpDetailCategory)
+  helpDetails: HelpDetail[];
 }

@@ -1,4 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { AdvertiseBanners } from "../../advertise-banners/entities/advertise-banner.entity";
 
 @Entity("banner_impression", { schema: "amygo1" })
 export class BannerImpression {
@@ -7,6 +14,16 @@ export class BannerImpression {
 
   @Column("int", { name: "iAdvertBannerId" })
   iAdvertBannerId: number;
+
+  @ManyToOne(
+    () => AdvertiseBanners,
+    (advertiseBanner) => advertiseBanner.bannerImpressions,
+  )
+  @JoinColumn({
+    name: "iAdvertBannerId",
+    referencedColumnName: "iAdvertBannerId",
+  })
+  advertiseBanner: AdvertiseBanners;
 
   @Column("timestamp", {
     name: "dDateTime",

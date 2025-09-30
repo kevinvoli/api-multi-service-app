@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Helps } from "../../helps/entities/help.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("helps_categories", { schema: "amygo1" })
 export class HelpsCategories {
@@ -23,4 +24,7 @@ export class HelpsCategories {
     enum: ["Front", "Admin", "RiderApp", "DriverApp", "General"],
   })
   eTopic: "Front" | "Admin" | "RiderApp" | "DriverApp" | "General";
+
+  @OneToMany(() => Helps, (help) => help.helpsCategory)
+  helps: Helps[];
 }

@@ -276,6 +276,69 @@ Cette table contient les informations sur les véhicules des conducteurs.
 - **Un à plusieurs** avec `make` : Un véhicule est associé à une marque. (Explicite via `@ManyToOne`)
 - **Un à plusieurs** avec `model` : Un véhicule est associé à un modèle. (Explicite via `@ManyToOne`)
 
+### `advertise_banners`
+
+Cette table contient les bannières publicitaires pour la page principale.
+
+**Colonnes :**
+- `iAdvertBannerId` (Primaire)
+- `vBannerTitle`
+- `vBannerImage`
+
+**Relations :**
+- **Un à plusieurs** avec `banner_impression`: Une bannière publicitaire peut avoir plusieurs impressions. (Explicite via `@OneToMany`)
+
+### `banner_impression`
+
+Cette table enregistre les impressions des bannières publicitaires.
+
+**Colonnes :**
+- `iBannerImpLog` (Primaire)
+- `iAdvertBannerId`
+- `iUserId`
+
+**Relations :**
+- **Plusieurs à un** avec `advertise_banners`: Une impression est liée à une bannière publicitaire. (Explicite via `@ManyToOne`)
+
+### `hotel_banners`
+
+Cette table contient les bannières spécifiques aux hôtels.
+
+**Colonnes :**
+- `iHotelBannerId` (Primaire)
+- `iHotelId`
+- `vTitle`
+
+**Relations :**
+- **Plusieurs à un** avec `hotel`: Une bannière est associée à un hôtel. (Explicite via `@ManyToOne`)
+
+### `store_wise_banners`
+
+Cette table contient les bannières spécifiques aux magasins.
+
+**Colonnes :**
+- `iBannerId` (Primaire)
+- `iServiceId`
+- `iCompanyId`
+
+**Relations :**
+- **Plusieurs à un** avec `service_categories`: Une bannière est associée à un service. (Explicite via `@ManyToOne`)
+- **Plusieurs à un** avec `company` (en tant que magasin): Une bannière est associée à un magasin. (Explicite via `@ManyToOne`)
+
+### `banners`
+
+Cette table contient les bannières publicitaires.
+
+**Colonnes :**
+- `iBannerId` (Primaire)
+- `iServiceId`
+- `iVehicleCategoryId`
+- `vTitle`
+
+**Relations :**
+- **Plusieurs à un** avec `service_categories`: Une bannière est associée à un service. (Explicite via `@ManyToOne`)
+- **Plusieurs à un** avec `vehicle_category`: Une bannière est associée à une catégorie de véhicule. (Explicite via `@ManyToOne`)
+
 ### `__intentions`
 
 Cette table stocke les intentions des utilisateurs pour les services.
@@ -373,6 +436,94 @@ Cette table stocke les réalisations quantitatives pour une catégorie et un ser
 **Relations :**
 - **Plusieurs à un** avec `service_categories`: Une réalisation est associée à un service. (Explicite via `@ManyToOne`)
 - **Plusieurs à un** avec `__object_categories`: Une réalisation est associée à une catégorie. (Explicite via `@ManyToOne`)
+
+### `faqs`
+
+Cette table contient les questions fréquemment posées.
+
+**Colonnes :**
+- `iFaqId` (Primaire)
+- `iFaqcategoryId`
+- `vTitle_EN`
+- `tAnswer_EN`
+
+**Relations :**
+- **Plusieurs à un** avec `faq_categories`: Une FAQ est associée à une catégorie de FAQ. (Explicite via `@ManyToOne`)
+
+### `faq_categories`
+
+Cette table contient les catégories pour les FAQ.
+
+**Colonnes :**
+- `iFaqcategoryId` (Primaire)
+- `vTitle`
+- `eCategoryType`
+
+**Relations :**
+- **Un à plusieurs** avec `faqs`: Une catégorie peut avoir plusieurs FAQs. (Explicite via `@OneToMany`)
+
+### `helps`
+
+Cette table contient les rubriques d'aide.
+
+**Colonnes :**
+- `iHelpsId` (Primaire)
+- `iHelpscategoryId`
+- `vTitle`
+- `tDescription`
+
+**Relations :**
+- **Plusieurs à un** avec `helps_categories`: Une rubrique d'aide est associée à une catégorie d'aide. (Explicite via `@ManyToOne`)
+
+### `helps_categories`
+
+Cette table contient les catégories pour les rubriques d'aide.
+
+**Colonnes :**
+- `iHelpscategoryId` (Primaire)
+- `vTitle`
+- `eTopic`
+
+**Relations :**
+- **Un à plusieurs** avec `helps`: Une catégorie peut avoir plusieurs rubriques d'aide. (Explicite via `@OneToMany`)
+
+### `help_detail`
+
+Cette table contient les détails de l'aide.
+
+**Colonnes :**
+- `iHelpDetailId` (Primaire)
+- `iHelpDetailCategoryId`
+- `vTitle_EN`
+- `tAnswer_EN`
+
+**Relations :**
+- **Plusieurs à un** avec `help_detail_categories`: Un détail d'aide est associé à une catégorie de détails d'aide. (Explicite via `@ManyToOne`)
+
+### `help_detail_categories`
+
+Cette table contient les catégories pour les détails de l'aide.
+
+**Colonnes :**
+- `iHelpDetailCategoryId` (Primaire)
+- `vTitle`
+- `eSystem`
+
+**Relations :**
+- **Un à plusieurs** avec `help_detail`: Une catégorie peut avoir plusieurs détails d'aide. (Explicite via `@OneToMany`)
+
+### `app_screen_master`
+
+Cette table contient les écrans de l'application, avec une structure hiérarchique.
+
+**Colonnes :**
+- `lPageId` (Primaire)
+- `vScreenName`
+- `iParentId`
+
+**Relations :**
+- **Plusieurs à un** avec `app_screen_master` (self-referencing): Un écran peut avoir un écran parent. (Explicite via `@ManyToOne`)
+- **Un à plusieurs** avec `app_screen_master` (self-referencing): Un écran peut avoir plusieurs écrans enfants. (Explicite via `@OneToMany`)
 
 ## Autres entités
 

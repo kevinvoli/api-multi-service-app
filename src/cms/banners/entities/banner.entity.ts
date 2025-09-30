@@ -1,4 +1,12 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { ServiceCategories } from "../../../core_app/service-categories/entities/service-category.entity";
+import { VehicleCategory } from "../../../vehicles/vehicle-category/entities/vehicle-category.entity";
 
 @Entity("banners", { schema: "amygo1" })
 export class Banners {
@@ -7,6 +15,10 @@ export class Banners {
 
   @Column("int", { name: "iServiceId", default: "0" })
   iServiceId: number;
+
+  @ManyToOne(() => ServiceCategories, (service) => service.banners)
+  @JoinColumn({ name: "iServiceId", referencedColumnName: "iServiceId" })
+  service: ServiceCategories;
 
   @Column("enum", {
     name: "eStatus",
@@ -59,4 +71,14 @@ export class Banners {
 
   @Column("int", { name: "iVehicleCategoryId" })
   iVehicleCategoryId: number;
+
+  @ManyToOne(
+    () => VehicleCategory,
+    (vehicleCategory) => vehicleCategory.banners,
+  )
+  @JoinColumn({
+    name: "iVehicleCategoryId",
+    referencedColumnName: "iVehicleCategoryId",
+  })
+  vehicleCategory: VehicleCategory;
 }

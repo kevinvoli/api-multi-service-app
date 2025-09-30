@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BannerImpression } from "../../banner-impression/entities/banner-impression.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("advertise_banners", { schema: "amygo1" })
 export class AdvertiseBanners {
@@ -60,4 +61,10 @@ export class AdvertiseBanners {
     default: "Custom",
   })
   eValidityType: "Permanent" | "Custom";
+
+  @OneToMany(
+    () => BannerImpression,
+    (bannerImpression) => bannerImpression.advertiseBanner,
+  )
+  bannerImpressions: BannerImpression[];
 }
