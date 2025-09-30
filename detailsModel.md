@@ -231,6 +231,44 @@ Cette table contient les informations sur les entreprises.
 - **Plusieurs à un** avec `service_categories` : Une entreprise est associée à une catégorie de service. (Explicite via `@ManyToOne`)
 - **Un à plusieurs** avec `__intentions`: Une entreprise peut être associée à plusieurs intentions (en tant que magasin). (Explicite via `@OneToMany`)
 
+### `service_categories`
+
+Cette table contient les catégories de services principaux.
+
+**Colonnes :**
+- `iServiceId` (Primaire)
+- `vService`
+- `eType`
+
+**Relations :**
+- **Un à plusieurs** avec `orders`: Une catégorie de service peut avoir plusieurs commandes. (Explicite via `@OneToMany`)
+- **Un à plusieurs** avec `company`: Une catégorie de service peut avoir plusieurs entreprises. (Explicite via `@OneToMany`)
+- **Un à plusieurs** avec `trips`: Une catégorie de service peut avoir plusieurs voyages. (Explicite via `@OneToMany`)
+- **Un à plusieurs** avec `__intentions`: Une catégorie de service peut avoir plusieurs intentions. (Explicite via `@OneToMany`)
+- **Un à plusieurs** avec `banners`: Une catégorie de service peut avoir plusieurs bannières. (Explicite via `@OneToMany`)
+- **Un à plusieurs** avec `store_wise_banners`: Une catégorie de service peut avoir plusieurs bannières de magasin. (Explicite via `@OneToMany`)
+- **Un à plusieurs** avec `__object_categories`: Une catégorie de service peut avoir plusieurs catégories d'objets. (Explicite via `@OneToMany`)
+- **Un à plusieurs** avec `__object_objectifs`: Une catégorie de service peut avoir plusieurs objectifs d'objets. (Explicite via `@OneToMany`)
+- **Un à plusieurs** avec `__object_prospections`: Une catégorie de service peut avoir plusieurs prospections d'objets. (Explicite via `@OneToMany`)
+- **Un à plusieurs** avec `__object_realisations`: Une catégorie de service peut avoir plusieurs réalisations d'objets. (Explicite via `@OneToMany`)
+- **Un à plusieurs** avec `master_service_menu`: Une catégorie de service peut avoir plusieurs menus. (Explicite via `@OneToMany`)
+- **Un à plusieurs** avec `content_cubex_details`: Une catégorie de service peut avoir plusieurs détails de contenu Cubex. (Explicite via `@OneToMany`)
+
+### `master_service_menu`
+
+Cette table contient les menus des services principaux.
+
+**Colonnes :**
+- `iServiceMenuId` (Primaire)
+- `vTitle`
+- `iParentId`
+- `iServiceId`
+
+**Relations :**
+- **Plusieurs à un** avec `master_service_menu` (self-referencing): Un menu peut avoir un menu parent. (Explicite via `@ManyToOne`)
+- **Un à plusieurs** avec `master_service_menu` (self-referencing): Un menu peut avoir plusieurs menus enfants. (Explicite via `@OneToMany`)
+- **Plusieurs à un** avec `service_categories`: Un menu est associé à une catégorie de service. (Explicite via `@ManyToOne`)
+
 ### `orders`
 
 Cette table contient les informations sur les commandes.

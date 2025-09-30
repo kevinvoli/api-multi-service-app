@@ -8,6 +8,7 @@ import { ObjectProspections } from "../../../business-logic/object-prospections/
 import { ObjectRealisations } from "../../../business-logic/object-realisation/entities/object-realisation.entity";
 import { Banners } from "../../../cms/banners/entities/banner.entity";
 import { StoreWiseBanners } from "../../../cms/store-wise-banners/entities/store-wise-banner.entity";
+import { MasterServiceMenu } from "../../master-service-menu/entities/master-service-menu.entity";
 import {
   Column,
   Entity,
@@ -146,4 +147,10 @@ export class ServiceCategories {
     (storeWiseBanner) => storeWiseBanner.service,
   )
   storeWiseBanners: StoreWiseBanners[];
+
+  @OneToMany(
+    () => MasterServiceMenu,
+    (masterServiceMenu) => masterServiceMenu.service,
+  )
+  masterServiceMenus: MasterServiceMenu[];
 }
