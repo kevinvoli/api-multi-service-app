@@ -3,7 +3,15 @@ import { CabBooking } from "../../../transport/cab-booking/entities/cab-booking.
 import { CabRequestNow } from "../../../transport/cab-request-now/entities/cab-request-now.entity";
 import { Trips } from "../../../transport/trips/entities/trip.entity";
 import { Intentions } from "../../../business-logic/intentions/entities/intention.entity";
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { VehicleCategory } from "../../vehicle-category/entities/vehicle-category.entity";
 
 @Entity("vehicle_type", { schema: "amygo1" })
 export class VehicleType {
@@ -12,6 +20,16 @@ export class VehicleType {
 
   @Column("int", { name: "iVehicleCategoryId", default: "0" })
   iVehicleCategoryId: number;
+
+  @ManyToOne(
+    () => VehicleCategory,
+    (vehicleCategory) => vehicleCategory.vehicleTypes,
+  )
+  @JoinColumn({
+    name: "iVehicleCategoryId",
+    referencedColumnName: "iVehicleCategoryId",
+  })
+  vehicleCategory: VehicleCategory;
 
   @Column("int", { name: "iLocationid", default: () => "'-1'" })
   iLocationid: number;

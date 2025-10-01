@@ -399,6 +399,49 @@ Cette table contient les informations sur les véhicules des conducteurs.
 - **Un à plusieurs** avec `make` : Un véhicule est associé à une marque. (Explicite via `@ManyToOne`)
 - **Un à plusieurs** avec `model` : Un véhicule est associé à un modèle. (Explicite via `@ManyToOne`)
 
+### `vehicle_category`
+
+Cette table contient les catégories de véhicules.
+
+**Colonnes :**
+- `iVehicleCategoryId` (Primaire)
+- `vCategoryEn`
+- `iParentId`
+- `iMasterVehicleCategoryId`
+
+**Relations :**
+- **Plusieurs à un** avec `vehicle_category` (self-referencing): Une catégorie peut avoir une catégorie parente. (Explicite via `@ManyToOne`)
+- **Un à plusieurs** avec `vehicle_category` (self-referencing): Une catégorie peut avoir plusieurs catégories enfants. (Explicite via `@OneToMany`)
+- **Plusieurs à un** avec `master_vehicle_category`: Une catégorie de véhicule est associée à une catégorie maîtresse. (Explicite via `@ManyToOne`)
+- **Un à plusieurs** avec `vehicle_type`: Une catégorie de véhicule peut avoir plusieurs types de véhicules. (Explicite via `@OneToMany`)
+- **Un à plusieurs** avec `document_master`: Une catégorie de véhicule peut être associée à plusieurs types de documents. (Explicite via `@OneToMany`)
+- **Un à plusieurs** avec `banners`: Une catégorie de véhicule peut avoir plusieurs bannières. (Explicite via `@OneToMany`)
+- **Un à plusieurs** avec `content_cubex_details`: Une catégorie de véhicule peut avoir plusieurs détails de contenu Cubex. (Explicite via `@OneToMany`)
+
+### `master_vehicle_category`
+
+Cette table contient les catégories maîtresses de véhicules.
+
+**Colonnes :**
+- `iMasterVehicleCategoryId` (Primaire)
+- `vCategoryName`
+- `iVehicleCategoryId`
+
+**Relations :**
+- **Un à plusieurs** avec `vehicle_category`: Une catégorie maîtresse peut avoir plusieurs catégories de véhicules. (Explicite via `@OneToMany`)
+
+### `vehicle_type`
+
+Cette table contient les types de véhicules.
+
+**Colonnes :**
+- `iVehicleTypeId` (Primaire)
+- `vVehicleType`
+- `iVehicleCategoryId`
+
+**Relations :**
+- **Plusieurs à un** avec `vehicle_category`: Un type de véhicule est associé à une catégorie de véhicule. (Explicite via `@ManyToOne`)
+
 ### `country`
 
 Cette table contient les pays.

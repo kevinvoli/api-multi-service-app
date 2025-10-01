@@ -1,7 +1,17 @@
 import { Banners } from "../../../cms/banners/entities/banner.entity";
 import { ContentCubexDetails } from "../../../cms/content-cubex-details/entities/content-cubex-detail.entity";
 import { DocumentMaster } from "../../../users/document-master/entities/document-master.entity";
-import { Column, Entity, Index, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  Index,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { MasterVehicleCategory } from "../master-vehicle-category/entities/master-vehicle-category.entity";
+import { VehicleType } from "../vehicle-type/entities/vehicle-type.entity";
 
 export enum VehicleCategoryType {
   Ride = "Ride",
@@ -53,6 +63,13 @@ export class VehicleCategory {
 
   @Column("int", { name: "iParentId", default: "0" })
   iParentId: number;
+
+  @ManyToOne(() => VehicleCategory, (vehicleCategory) => vehicleCategory.children)
+  @JoinColumn({ name: "iParentId", referencedColumnName: "iVehicleCategoryId" })
+  parent: VehicleCategory;
+
+  @OneToMany(() => VehicleCategory, (vehicleCategory) => vehicleCategory.parent)
+  children: VehicleCategory[];
 
   @Column("mediumtext", { name: "vLogo" })
   vLogo: string;
@@ -190,6 +207,16 @@ export class VehicleCategory {
   @Column("int", { name: "iMasterVehicleCategoryId" })
   iMasterVehicleCategoryId: number;
 
+  @ManyToOne(
+    () => MasterVehicleCategory,
+    (masterVehicleCategory) => masterVehicleCategory.vehicleCategories,
+  )
+  @JoinColumn({
+    name: "iMasterVehicleCategoryId",
+    referencedColumnName: "iMasterVehicleCategoryId",
+  })
+  masterVehicleCategory: MasterVehicleCategory;
+
   @Column("int", { name: "iDisplayOrderHomepage" })
   iDisplayOrderHomepage: number;
 
@@ -301,4 +328,7 @@ export class VehicleCategory {
 
   @OneToMany(() => DocumentMaster, (docMaster) => docMaster.vehicleCategory)
   documentMasters: DocumentMaster[];
+
+  @OneToMany(() => VehicleType, (vehicleType) => vehicleType.vehicleCategory)
+  vehicleTypes: VehicleType[];
 }

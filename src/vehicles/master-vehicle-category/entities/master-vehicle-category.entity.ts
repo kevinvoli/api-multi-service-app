@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { VehicleCategory } from "../../vehicle-category/entities/vehicle-category.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("master_vehicle_category", { schema: "amygo1" })
 export class MasterVehicleCategory {
@@ -10,4 +11,10 @@ export class MasterVehicleCategory {
 
   @Column("int", { name: "iVehicleCategoryId" })
   iVehicleCategoryId: number;
+
+  @OneToMany(
+    () => VehicleCategory,
+    (vehicleCategory) => vehicleCategory.masterVehicleCategory,
+  )
+  vehicleCategories: VehicleCategory[];
 }
