@@ -1,4 +1,13 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  Index,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { RegisterUser } from "../../../users/register-user/entities/register-user.entity";
+import { Company } from "../../../users/company/entities/company.entity";
 
 @Index("UNIQUE_FAV_STORE", ["iUserId", "iCompanyId", "eIsFavourite"], {
   unique: true,
@@ -14,8 +23,16 @@ export class FavoriteStore {
   @Column("int", { name: "iUserId" })
   iUserId: number;
 
+  @ManyToOne(() => RegisterUser, (user) => user.favoriteStores)
+  @JoinColumn({ name: "iUserId", referencedColumnName: "iUserId" })
+  user: RegisterUser;
+
   @Column("int", { name: "iCompanyId" })
   iCompanyId: number;
+
+  @ManyToOne(() => Company, (company) => company.favoriteStores)
+  @JoinColumn({ name: "iCompanyId", referencedColumnName: "iCompanyId" })
+  company: Company;
 
   @Column("enum", {
     name: "eIsFavourite",

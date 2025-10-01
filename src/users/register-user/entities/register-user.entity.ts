@@ -7,6 +7,7 @@ import { BiddingPost } from "../../../bidding/bidding-post/entities/bidding-post
 import { Intentions } from "../../../business-logic/intentions/entities/intention.entity";
 import { IntentionsCriteres } from "../../../business-logic/intentions-criteres/entities/intentions-critere.entity";
 import { PlanPurchaseMaster } from "../../../payments/plan-purchase-master/entities/plan-purchase-master.entity";
+import { FavoriteStore } from "../../../stores/favorite-store/entities/favorite-store.entity";
 import {
   Column,
   Entity,
@@ -483,4 +484,7 @@ export class RegisterUser {
     (planPurchase) => planPurchase.user,
   )
   planPurchases: PlanPurchaseMaster[];
+
+  @OneToMany(() => FavoriteStore, (favoriteStore) => favoriteStore.user)
+  favoriteStores: FavoriteStore[];
 }

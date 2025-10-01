@@ -17,6 +17,7 @@ import { Intentions } from "../../../business-logic/intentions/entities/intentio
 import { StoreWiseBanners } from "../../../cms/store-wise-banners/entities/store-wise-banner.entity";
 import { MenuItems } from "../../../delivery/menu-items/entities/menu-item.entity";
 import { Coupon } from "../../../payments/coupon/entities/coupon.entity";
+import { FavoriteStore } from "../../../stores/favorite-store/entities/favorite-store.entity";
 
 @Index("iServiceId", ["iServiceId"], {})
 @Index("eStatus", ["eStatus"], {})
@@ -604,4 +605,7 @@ export class Company {
 
   @OneToMany(() => Coupon, (coupon) => coupon.company)
   coupons: Coupon[];
+
+  @OneToMany(() => FavoriteStore, (favoriteStore) => favoriteStore.company)
+  favoriteStores: FavoriteStore[];
 }
