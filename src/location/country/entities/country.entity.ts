@@ -1,5 +1,6 @@
 import { City } from "../../city/entities/city.entity";
 import { State } from "../../state/entities/state.entity";
+import { DocumentMaster } from "../../../users/document-master/entities/document-master.entity";
 import { Column, Entity, Index, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Index("IDX_COUNTRIES_NAME", ["vCountry"], {})
@@ -135,4 +136,7 @@ export class Country {
 
   @OneToMany(() => State, (state) => state.country)
   states: State[];
+
+  @OneToMany(() => DocumentMaster, (docMaster) => docMaster.country)
+  documentMasters: DocumentMaster[];
 }

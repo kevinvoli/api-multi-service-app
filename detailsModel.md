@@ -51,6 +51,7 @@ Cette table contient les informations sur les conducteurs.
 - **Un à plusieurs** avec `withdraw_requests`: Un conducteur peut avoir plusieurs demandes de retrait. (Explicite via `@OneToMany`)
 - **Un à plusieurs** avec `payment_requests`: Un conducteur peut avoir plusieurs demandes de paiement. (Explicite via `@OneToMany`)
 - **Un à plusieurs** avec `withdraw_requests`: Un conducteur peut avoir plusieurs demandes de retrait. (Explicite via `@OneToMany`)
+- **Un à plusieurs** avec `driver_doc`: Un conducteur peut avoir plusieurs documents. (Explicite via `@OneToMany`)
 
 ### `payment_requests`
 
@@ -437,6 +438,47 @@ Cette table contient les villes.
 **Relations :**
 - **Plusieurs à un** avec `country`: Une ville appartient à un pays. (Explicite via `@ManyToOne`)
 - **Plusieurs à un** avec `state`: Une ville appartient à un état/région. (Explicite via `@ManyToOne`)
+
+### `document_master`
+
+Cette table contient les types de documents requis pour les utilisateurs, les véhicules, etc.
+
+**Colonnes :**
+- `doc_masterid` (Primaire)
+- `doc_usertype`
+- `doc_name`
+- `country`
+- `iVehicleCategoryId`
+- `iBiddingId`
+
+**Relations :**
+- **Plusieurs à un** avec `country`: Un type de document est associé à un pays. (Explicite via `@ManyToOne`)
+- **Plusieurs à un** avec `vehicle_category`: Un type de document peut être associé à une catégorie de véhicule. (Explicite via `@ManyToOne`)
+- **Plusieurs à un** avec `bidding_service`: Un type de document peut être associé à un service d'enchères. (Explicite via `@ManyToOne`)
+- **Un à plusieurs** avec `document_list`: Un type de document peut avoir plusieurs documents soumis. (Explicite via `@OneToMany`)
+
+### `document_list`
+
+Cette table contient les documents soumis par les utilisateurs/conducteurs.
+
+**Colonnes :**
+- `doc_id` (Primaire)
+- `doc_masterid`
+- `doc_userid`
+
+**Relations :**
+- **Plusieurs à un** avec `document_master`: Un document soumis est d'un certain type. (Explicite via `@ManyToOne`)
+
+### `driver_doc`
+
+Cette table contient les documents spécifiques aux conducteurs.
+
+**Colonnes :**
+- `iDriverDocId` (Primaire)
+- `iDriverId`
+
+**Relations :**
+- **Plusieurs à un** avec `register_driver`: Un document de conducteur est associé à un conducteur. (Explicite via `@ManyToOne`)
 
 ### `advertise_banners`
 

@@ -11,6 +11,7 @@ import { DriverVehicle } from "../driver-vehicle/entities/driver-vehicle.entity"
 import { BiddingPost } from "../../../bidding/bidding-post/entities/bidding-post.entity";
 import { PaymentRequests } from "../../../payments/payment-requests/entities/payment-request.entity";
 import { WithdrawRequests } from "../../../payments/withdraw-requests/entities/withdraw-request.entity";
+import { DriverDoc } from "../driver-doc/entities/driver-doc.entity";
 import {
   Column,
   Entity,
@@ -551,4 +552,7 @@ export class RegisterDriver {
     (withdrawRequest) => withdrawRequest.driver,
   )
   withdrawRequests: WithdrawRequests[];
+
+  @OneToMany(() => DriverDoc, (driverDoc) => driverDoc.driver)
+  driverDocs: DriverDoc[];
 }

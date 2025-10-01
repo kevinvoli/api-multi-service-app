@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { DocumentMaster } from "../../../users/document-master/entities/document-master.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("bidding_service", { schema: "amygo1" })
 export class BiddingService {
@@ -39,4 +40,7 @@ export class BiddingService {
 
   @Column("decimal", { name: "fCommission", precision: 10, scale: 2 })
   fCommission: string;
+
+  @OneToMany(() => DocumentMaster, (docMaster) => docMaster.bidding)
+  documentMasters: DocumentMaster[];
 }

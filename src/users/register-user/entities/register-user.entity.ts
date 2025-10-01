@@ -8,6 +8,7 @@ import { Intentions } from "../../../business-logic/intentions/entities/intentio
 import { IntentionsCriteres } from "../../../business-logic/intentions-criteres/entities/intentions-critere.entity";
 import { PlanPurchaseMaster } from "../../../payments/plan-purchase-master/entities/plan-purchase-master.entity";
 import { FavoriteStore } from "../../../stores/favorite-store/entities/favorite-store.entity";
+import { IdproofImages } from "../idproof-images/entities/idproof-image.entity";
 import {
   Column,
   Entity,
@@ -487,4 +488,7 @@ export class RegisterUser {
 
   @OneToMany(() => FavoriteStore, (favoriteStore) => favoriteStore.user)
   favoriteStores: FavoriteStore[];
+
+  @OneToMany(() => IdproofImages, (idproofImage) => idproofImage.user)
+  idproofImages: IdproofImages[];
 }

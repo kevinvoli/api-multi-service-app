@@ -1,4 +1,12 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { RegisterUser } from "../../register-user/entities/register-user.entity";
+import { Orders } from "../../../orders/entities/order.entity";
 
 @Entity("idproof_images", { schema: "amygo1" })
 export class IdproofImages {
@@ -7,6 +15,10 @@ export class IdproofImages {
 
   @Column("int", { name: "iUserId" })
   iUserId: number;
+
+  @ManyToOne(() => RegisterUser, (user) => user.idproofImages)
+  @JoinColumn({ name: "iUserId", referencedColumnName: "iUserId" })
+  user: RegisterUser;
 
   @Column("text", { name: "vImage" })
   vImage: string;
@@ -19,4 +31,8 @@ export class IdproofImages {
 
   @Column("int", { name: "iOrderId" })
   iOrderId: number;
+
+  @ManyToOne(() => Orders, (order) => order.idproofImages)
+  @JoinColumn({ name: "iOrderId", referencedColumnName: "iOrderId" })
+  order: Orders;
 }

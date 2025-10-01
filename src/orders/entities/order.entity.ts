@@ -17,6 +17,7 @@ import { OrderRequest } from "../order-request/entities/order-request.entity";
 import { OrderStatusLogs } from "../order-status-logs/entities/order-status-log.entity";
 import { Trips } from "../../transport/trips/entities/trip.entity";
 import { UserWallet } from "../../payments/user-wallet/entities/user-wallet.entity";
+import { IdproofImages } from "../../users/idproof-images/entities/idproof-image.entity";
 
 @Index("iCustomerId", ["iUserId"], {})
 @Index("vOrderNo", ["vOrderNo"], {})
@@ -553,4 +554,7 @@ export class Orders {
 
   @OneToMany(() => UserWallet, (userWallet) => userWallet.order)
   userWallets: UserWallet[];
+
+  @OneToMany(() => IdproofImages, (idproofImage) => idproofImage.order)
+  idproofImages: IdproofImages[];
 }

@@ -1,4 +1,14 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { Country } from "../../../location/country/entities/country.entity";
+import { VehicleCategory } from "../../../vehicles/vehicle-category/entities/vehicle-category.entity";
+import { BiddingService } from "../../../bidding/bidding-service/entities/bidding-service.entity";
+import { DocumentList } from "../document-list/entities/document-list.entity";
 
 @Entity("document_master", { schema: "amygo1" })
 export class DocumentMaster {
@@ -15,7 +25,11 @@ export class DocumentMaster {
   docName: string;
 
   @Column("varchar", { name: "country", length: 10 })
-  country: string;
+  countryCode: string;
+
+  @ManyToOne(() => Country, (country) => country.documentMasters)
+  @JoinColumn({ name: "country", referencedColumnName: "vCountryCode" })
+  country: Country;
 
   @Column("enum", { name: "ex_status", enum: ["yes", "no"] })
   exStatus: "yes" | "no";
@@ -56,9 +70,26 @@ export class DocumentMaster {
   @Column("int", { name: "iVehicleCategoryId", default: "0" })
   iVehicleCategoryId: number;
 
+  @ManyToOne(
+    () => VehicleCategory,
+    (vehicleCategory) => vehicleCategory.documentMasters,
+  )
+  @JoinColumn({
+    name: "iVehicleCategoryId",
+    referencedColumnName: "iVehicleCategoryId",
+  })
+  vehicleCategory: VehicleCategory;
+
   @Column("int", { name: "iDisplayOrder", default: () => "'1'" })
   iDisplayOrder: number;
 
   @Column("int", { name: "iBiddingId" })
   iBiddingId: number;
+
+  @ManyToOne(() => BiddingService, (bidding) => bidding.documentMasters)
+  @JoinColumn({ name: "iBiddingId", referencedColumnName: "iBiddingId" })
+  bidding: BiddingService;
+
+  @OneToMany(() => DocumentList, (docList) => docList.documentMaster)
+  documentLists: DocumentList[];
 }

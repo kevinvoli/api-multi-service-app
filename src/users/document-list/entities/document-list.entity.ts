@@ -1,4 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { DocumentMaster } from "../../document-master/entities/document-master.entity";
 
 @Entity("document_list", { schema: "amygo1" })
 export class DocumentList {
@@ -7,6 +14,10 @@ export class DocumentList {
 
   @Column("int", { name: "doc_masterid" })
   docMasterid: number;
+
+  @ManyToOne(() => DocumentMaster, (docMaster) => docMaster.documentLists)
+  @JoinColumn({ name: "doc_masterid", referencedColumnName: "docMasterid" })
+  documentMaster: DocumentMaster;
 
   @Column("enum", {
     name: "doc_usertype",
