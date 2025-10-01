@@ -1,4 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { RegisterDriver } from "../../../users/register-driver/entities/register-driver.entity";
 
 @Entity("withdraw_requests", { schema: "amygo1" })
 export class WithdrawRequests {
@@ -7,6 +14,10 @@ export class WithdrawRequests {
 
   @Column("int", { name: "iDriverId" })
   iDriverId: number;
+
+  @ManyToOne(() => RegisterDriver, (driver) => driver.withdrawRequests)
+  @JoinColumn({ name: "iDriverId", referencedColumnName: "iDriverId" })
+  driver: RegisterDriver;
 
   @Column("varchar", { name: "vName", length: 100 })
   vName: string;

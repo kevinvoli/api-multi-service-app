@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { PlanPurchaseMaster } from "../../../payments/plan-purchase-master/entities/plan-purchase-master.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("driver_subscription_plan", { schema: "amygo1" })
 export class DriverSubscriptionPlan {
@@ -47,4 +48,10 @@ export class DriverSubscriptionPlan {
     default: () => "CURRENT_TIMESTAMP",
   })
   tSubscribeDate: Date;
+
+  @OneToMany(
+    () => PlanPurchaseMaster,
+    (planPurchase) => planPurchase.plan,
+  )
+  planPurchases: PlanPurchaseMaster[];
 }

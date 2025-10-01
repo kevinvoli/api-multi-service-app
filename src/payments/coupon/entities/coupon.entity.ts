@@ -1,4 +1,14 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  Index,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { Company } from "../../../users/company/entities/company.entity";
+import { ServiceCategories } from "../../../core_app/service-categories/entities/service-category.entity";
+import { LocationMaster } from "../../../location/location-master/entities/location-master.entity";
 
 @Index("vCouponCode", ["vCouponCode"], {})
 @Entity("coupon", { schema: "amygo1" })
@@ -37,7 +47,7 @@ export class Coupon {
   @Column("date", { name: "dActiveDate", nullable: true })
   dActiveDate: string;
 
-  @Column("date", { name: "dExpiryDate", nullable:true })
+  @Column("date", { name: "dExpiryDate", nullable: true })
   dExpiryDate: string;
 
   @Column("int", { name: "iUsageLimit", default: 0 })
@@ -80,8 +90,16 @@ export class Coupon {
   @Column("int", { name: "iCompanyId" })
   iCompanyId: number;
 
+  @ManyToOne(() => Company, (company) => company.coupons)
+  @JoinColumn({ name: "iCompanyId", referencedColumnName: "iCompanyId" })
+  company: Company;
+
   @Column("int", { name: "iServiceId" })
   iServiceId: number;
+
+  @ManyToOne(() => ServiceCategories, (service) => service.coupons)
+  @JoinColumn({ name: "iServiceId", referencedColumnName: "iServiceId" })
+  service: ServiceCategories;
 
   @Column("enum", {
     name: "eFreeDelivery",
@@ -92,6 +110,10 @@ export class Coupon {
 
   @Column("int", { name: "iLocationId" })
   iLocationId: number;
+
+  @ManyToOne(() => LocationMaster, (location) => location.coupons)
+  @JoinColumn({ name: "iLocationId", referencedColumnName: "iLocationId" })
+  location: LocationMaster;
 
   @Column("datetime", {
     name: "createdDate",

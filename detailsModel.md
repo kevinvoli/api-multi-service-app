@@ -47,6 +47,34 @@ Cette table contient les informations sur les conducteurs.
 - **Plusieurs à un** avec `company` : Un conducteur appartient à une entreprise. (Explicite via `@ManyToOne`)
 - **Un à plusieurs** avec `trips` : Un conducteur peut avoir plusieurs voyages. (Explicite via `@OneToMany`)
 - **Un à plusieurs** avec `bidding_post`: Un conducteur peut avoir plusieurs offres. (Explicite via `@OneToMany`)
+- **Un à plusieurs** avec `payment_requests`: Un conducteur peut avoir plusieurs demandes de paiement. (Explicite via `@OneToMany`)
+- **Un à plusieurs** avec `withdraw_requests`: Un conducteur peut avoir plusieurs demandes de retrait. (Explicite via `@OneToMany`)
+- **Un à plusieurs** avec `payment_requests`: Un conducteur peut avoir plusieurs demandes de paiement. (Explicite via `@OneToMany`)
+- **Un à plusieurs** avec `withdraw_requests`: Un conducteur peut avoir plusieurs demandes de retrait. (Explicite via `@OneToMany`)
+
+### `payment_requests`
+
+Cette table contient les demandes de paiement des conducteurs.
+
+**Colonnes :**
+- `iPaymentRequestsId` (Primaire)
+- `iDriverId`
+- `fAmount`
+
+**Relations :**
+- **Plusieurs à un** avec `register_driver`: Une demande de paiement est associée à un conducteur. (Explicite via `@ManyToOne`)
+
+### `withdraw_requests`
+
+Cette table contient les demandes de retrait des conducteurs.
+
+**Colonnes :**
+- `iWithdrawRequestsId` (Primaire)
+- `iDriverId`
+- `fAmount`
+
+**Relations :**
+- **Plusieurs à un** avec `register_driver`: Une demande de retrait est associée à un conducteur. (Explicite via `@ManyToOne`)
 
 ### `trips`
 
@@ -211,6 +239,7 @@ Cette table contient les informations sur le portefeuille des utilisateurs.
 **Relations :**
 
 - **Plusieurs à un** avec `register_user` : Une transaction de portefeuille est associée à un utilisateur. (Explicite via `@ManyToOne`)
+- **Plusieurs à un** avec `orders` : Une transaction de portefeuille peut être associée à une commande. (Explicite via `@ManyToOne`)
 
 ### `company`
 

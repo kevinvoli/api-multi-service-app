@@ -16,6 +16,7 @@ import { OrderDriverLog } from "../order-driver-log/entities/order-driver-log.en
 import { OrderRequest } from "../order-request/entities/order-request.entity";
 import { OrderStatusLogs } from "../order-status-logs/entities/order-status-log.entity";
 import { Trips } from "../../transport/trips/entities/trip.entity";
+import { UserWallet } from "../../payments/user-wallet/entities/user-wallet.entity";
 
 @Index("iCustomerId", ["iUserId"], {})
 @Index("vOrderNo", ["vOrderNo"], {})
@@ -549,4 +550,7 @@ export class Orders {
 
   @OneToMany(() => Trips, (trip) => trip.order)
   trips: Trips[];
+
+  @OneToMany(() => UserWallet, (userWallet) => userWallet.order)
+  userWallets: UserWallet[];
 }

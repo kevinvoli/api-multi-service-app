@@ -6,6 +6,7 @@ import { Trips } from "../../../transport/trips/entities/trip.entity";
 import { BiddingPost } from "../../../bidding/bidding-post/entities/bidding-post.entity";
 import { Intentions } from "../../../business-logic/intentions/entities/intention.entity";
 import { IntentionsCriteres } from "../../../business-logic/intentions-criteres/entities/intentions-critere.entity";
+import { PlanPurchaseMaster } from "../../../payments/plan-purchase-master/entities/plan-purchase-master.entity";
 import {
   Column,
   Entity,
@@ -476,4 +477,10 @@ export class RegisterUser {
     (intentionsCritere) => intentionsCritere.user,
   )
   intentionsCriteres: IntentionsCriteres[];
+
+  @OneToMany(
+    () => PlanPurchaseMaster,
+    (planPurchase) => planPurchase.user,
+  )
+  planPurchases: PlanPurchaseMaster[];
 }

@@ -9,6 +9,8 @@ import { Trips } from "../../../transport/trips/entities/trip.entity";
 import { Company } from "../../company/entities/company.entity";
 import { DriverVehicle } from "../driver-vehicle/entities/driver-vehicle.entity";
 import { BiddingPost } from "../../../bidding/bidding-post/entities/bidding-post.entity";
+import { PaymentRequests } from "../../../payments/payment-requests/entities/payment-request.entity";
+import { WithdrawRequests } from "../../../payments/withdraw-requests/entities/withdraw-request.entity";
 import {
   Column,
   Entity,
@@ -540,4 +542,13 @@ export class RegisterDriver {
 
   @OneToMany(() => BiddingPost, (biddingPost) => biddingPost.driver)
   biddingPosts: BiddingPost[];
+
+  @OneToMany(() => PaymentRequests, (paymentRequest) => paymentRequest.driver)
+  paymentRequests: PaymentRequests[];
+
+  @OneToMany(
+    () => WithdrawRequests,
+    (withdrawRequest) => withdrawRequest.driver,
+  )
+  withdrawRequests: WithdrawRequests[];
 }

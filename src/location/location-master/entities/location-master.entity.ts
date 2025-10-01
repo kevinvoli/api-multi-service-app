@@ -1,4 +1,5 @@
 import { AirportsurchargeFare } from "../../../transport/airportsurcharge-fare/entities/airportsurcharge-fare.entity";
+import { Coupon } from "../../../payments/coupon/entities/coupon.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("location_master", { schema: "amygo1" })
@@ -69,4 +70,7 @@ export class LocationMaster {
     (airportSurchargeFare) => airportSurchargeFare.location,
   )
   airportSurchargeFares: AirportsurchargeFare[];
+
+  @OneToMany(() => Coupon, (coupon) => coupon.location)
+  coupons: Coupon[];
 }

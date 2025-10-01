@@ -1,4 +1,12 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { RegisterUser } from "../../../users/register-user/entities/register-user.entity";
+import { DriverSubscriptionPlan } from "../../../users/driver-subscription-plan/entities/driver-subscription-plan.entity";
 
 @Entity("plan_purchase_master", { schema: "amygo1" })
 export class PlanPurchaseMaster {
@@ -8,11 +16,25 @@ export class PlanPurchaseMaster {
   @Column("int", { name: "iUserId" })
   iUserId: number;
 
+  @ManyToOne(() => RegisterUser, (user) => user.planPurchases)
+  @JoinColumn({ name: "iUserId", referencedColumnName: "iUserId" })
+  user: RegisterUser;
+
   @Column("date", { name: "dStartDate" })
   dStartDate: string;
 
   @Column("int", { name: "iPlanId" })
   iPlanId: number;
+
+  @ManyToOne(
+    () => DriverSubscriptionPlan,
+    (plan) => plan.planPurchases,
+  )
+  @JoinColumn({
+    name: "iPlanId",
+    referencedColumnName: "iDriverSubscriptionPlanId",
+  })
+  plan: DriverSubscriptionPlan;
 
   @Column("enum", {
     name: "ePlanType",

@@ -1,4 +1,5 @@
 import { RegisterUser } from "../../../users/register-user/entities/register-user.entity";
+import { Orders } from "../../../orders/entities/order.entity";
 import {
   Column,
   Entity,
@@ -105,6 +106,10 @@ export class UserWallet {
 
   @Column("int", { name: "iOrderId" })
   iOrderId: number;
+
+  @ManyToOne(() => Orders, (order) => order.userWallets)
+  @JoinColumn({ name: "iOrderId", referencedColumnName: "iOrderId" })
+  order: Orders;
 
   @Column("mediumtext", { name: "iTransactionId" })
   iTransactionId: string;

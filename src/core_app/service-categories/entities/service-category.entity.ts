@@ -9,6 +9,7 @@ import { ObjectRealisations } from "../../../business-logic/object-realisation/e
 import { Banners } from "../../../cms/banners/entities/banner.entity";
 import { StoreWiseBanners } from "../../../cms/store-wise-banners/entities/store-wise-banner.entity";
 import { MasterServiceMenu } from "../../master-service-menu/entities/master-service-menu.entity";
+import { Coupon } from "../../../payments/coupon/entities/coupon.entity";
 import {
   Column,
   Entity,
@@ -153,4 +154,7 @@ export class ServiceCategories {
     (masterServiceMenu) => masterServiceMenu.service,
   )
   masterServiceMenus: MasterServiceMenu[];
+
+  @OneToMany(() => Coupon, (coupon) => coupon.service)
+  coupons: Coupon[];
 }
