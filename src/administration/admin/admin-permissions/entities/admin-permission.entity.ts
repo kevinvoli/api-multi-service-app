@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { AdminGroupPermission } from "../admin-group-permission/entities/admin-group-permission.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("admin_permissions", { schema: "amygo1" })
 export class AdminPermissions {
@@ -74,4 +75,7 @@ export class AdminPermissions {
     | "TrackService"
     | "RideShare"
     | "NearBy";
+
+  @OneToMany(() => AdminGroupPermission, (agp) => agp.permission)
+  groups: AdminGroupPermission[];
 }

@@ -833,6 +833,55 @@ Cette table contient les détails du contenu pour la section "Cubex".
 **Relations :**
 - **Plusieurs à un** avec `vehicle_category`: Un détail de contenu est associé à une catégorie de véhicule. (Explicite via `@ManyToOne`)
 
+### `admin_groups`
+
+Cette table contient les groupes d'administrateurs.
+
+**Colonnes :**
+- `iGroupId` (Primaire)
+- `vGroup`
+
+**Relations :**
+- **Un à plusieurs** avec `admin_group_permission`: Un groupe peut avoir plusieurs permissions. (Explicite via `@OneToMany`)
+- **Un à plusieurs** avec `administrators`: Un groupe peut avoir plusieurs administrateurs. (Explicite via `@OneToMany`)
+
+### `admin_permissions`
+
+Cette table contient les permissions disponibles.
+
+**Colonnes :**
+- `id` (Primaire)
+- `permission_name`
+
+**Relations :**
+- **Un à plusieurs** avec `admin_group_permission`: Une permission peut être associée à plusieurs groupes. (Explicite via `@OneToMany`)
+
+### `admin_group_permission`
+
+Cette table de jonction lie les groupes aux permissions.
+
+**Colonnes :**
+- `id` (Primaire)
+- `group_id`
+- `permission_id`
+
+**Relations :**
+- **Plusieurs à un** avec `admin_groups`: Une ligne de permission est associée à un groupe. (Explicite via `@ManyToOne`)
+- **Plusieurs à un** avec `admin_permissions`: Une ligne de permission est associée à une permission. (Explicite via `@ManyToOne`)
+
+### `administrators`
+
+Cette table contient les comptes des administrateurs.
+
+**Colonnes :**
+- `iAdminId` (Primaire)
+- `iGroupId`
+- `vFirstName`
+- `vEmail`
+
+**Relations :**
+- **Plusieurs à un** avec `admin_groups`: Un administrateur appartient à un groupe. (Explicite via `@ManyToOne`)
+
 ## Autres entités
 
 Il existe un grand nombre d'autres entités dans le projet. La plupart d'entre elles semblent suivre le même modèle de relations implicites, où les clés étrangères sont définies comme des colonnes standard avec des commentaires indiquant la table liée.

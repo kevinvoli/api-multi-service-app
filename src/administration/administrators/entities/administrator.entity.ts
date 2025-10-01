@@ -1,13 +1,25 @@
 import { CabBooking } from "../../../transport/cab-booking/entities/cab-booking.entity";
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { AdminGroups } from "../../admin/admin-groups/entities/admin-group.entity";
 
 @Entity("administrators", { schema: "amygo1" })
 export class Administrator {
   @PrimaryGeneratedColumn({ type: "int", name: "iAdminId" })
   iAdminId: number;
 
-  @Column("int", { name: "iGroupId", default:"1" })
+  @Column("int", { name: "iGroupId", default: "1" })
   iGroupId: number;
+
+  @ManyToOne(() => AdminGroups, (group) => group.administrators)
+  @JoinColumn({ name: "iGroupId", referencedColumnName: "iGroupId" })
+  group: AdminGroups;
 
   @Column("varchar", { name: "vFirstName", length: 255 })
   vFirstName: string;
