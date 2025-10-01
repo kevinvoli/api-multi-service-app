@@ -1,4 +1,12 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { RegisterDriver } from "../../register-driver/entities/register-driver.entity";
+import { Trips } from "../../../transport/trips/entities/trip.entity";
 
 @Entity("driver_insurance_report", { schema: "amygo1" })
 export class DriverInsuranceReport {
@@ -8,8 +16,16 @@ export class DriverInsuranceReport {
   @Column("int", { name: "iDriverId" })
   iDriverId: number;
 
+  @ManyToOne(() => RegisterDriver, (driver) => driver.driverInsuranceReports)
+  @JoinColumn({ name: "iDriverId", referencedColumnName: "iDriverId" })
+  driver: RegisterDriver;
+
   @Column("int", { name: "iTripId", default: "0" })
   iTripId: number;
+
+  @ManyToOne(() => Trips, (trip) => trip.driverInsuranceReports)
+  @JoinColumn({ name: "iTripId", referencedColumnName: "iTripId" })
+  trip: Trips;
 
   @Column("datetime", { name: "dStartDate" })
   dStartDate: Date;

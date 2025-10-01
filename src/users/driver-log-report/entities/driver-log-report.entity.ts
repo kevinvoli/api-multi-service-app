@@ -1,4 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { RegisterDriver } from "../../register-driver/entities/register-driver.entity";
 
 @Entity("driver_log_report", { schema: "amygo1" })
 export class DriverLogReport {
@@ -7,6 +14,10 @@ export class DriverLogReport {
 
   @Column("int", { name: "iDriverId" })
   iDriverId: number;
+
+  @ManyToOne(() => RegisterDriver, (driver) => driver.driverLogReports)
+  @JoinColumn({ name: "iDriverId", referencedColumnName: "iDriverId" })
+  driver: RegisterDriver;
 
   @Column("timestamp", {
     name: "dLoginDateTime",

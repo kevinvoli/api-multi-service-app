@@ -13,6 +13,7 @@ import { UserProfile } from "../../../users/user-profile/entities/user-profile.e
 import { TripReason } from "../trip-reason/entities/trip-reason.entity";
 import { UserAddress } from "../../../users/user-address/entities/user-address.entity";
 import { UserPaymentInfo } from "../../../users/user-payment-info/entities/user-payment-info.entity";
+import { DriverInsuranceReport } from "../../../users/driver-insurance-report/entities/driver-insurance-report.entity";
 import {
   Column,
   Entity,
@@ -1154,4 +1155,10 @@ export class Trips {
 
   @OneToMany(() => CabRequestNow, (cabRequestNow) => cabRequestNow.trip)
   cabRequestNows: CabRequestNow[];
+
+  @OneToMany(
+    () => DriverInsuranceReport,
+    (driverInsuranceReport) => driverInsuranceReport.trip,
+  )
+  driverInsuranceReports: DriverInsuranceReport[];
 }

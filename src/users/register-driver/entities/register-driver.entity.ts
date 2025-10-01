@@ -12,6 +12,11 @@ import { BiddingPost } from "../../../bidding/bidding-post/entities/bidding-post
 import { PaymentRequests } from "../../../payments/payment-requests/entities/payment-request.entity";
 import { WithdrawRequests } from "../../../payments/withdraw-requests/entities/withdraw-request.entity";
 import { DriverDoc } from "../driver-doc/entities/driver-doc.entity";
+import { DriverFavorites } from "../driver-favorites/entities/driver-favorite.entity";
+import { DriverInsuranceReport } from "../driver-insurance-report/entities/driver-insurance-report.entity";
+import { DriverLogReport } from "../driver-log-report/entities/driver-log-report.entity";
+import { DriverManageTiming } from "../driver-manage-timing/entities/driver-manage-timing.entity";
+import { DriverPreferences } from "../driver-preferences/entities/driver-preference.entity";
 import {
   Column,
   Entity,
@@ -555,4 +560,28 @@ export class RegisterDriver {
 
   @OneToMany(() => DriverDoc, (driverDoc) => driverDoc.driver)
   driverDocs: DriverDoc[];
+
+  @OneToMany(() => DriverFavorites, (driverFavorite) => driverFavorite.driver)
+  driverFavorites: DriverFavorites[];
+
+  @OneToMany(
+    () => DriverInsuranceReport,
+    (driverInsuranceReport) => driverInsuranceReport.driver,
+  )
+  driverInsuranceReports: DriverInsuranceReport[];
+
+  @OneToMany(() => DriverLogReport, (driverLogReport) => driverLogReport.driver)
+  driverLogReports: DriverLogReport[];
+
+  @OneToMany(
+    () => DriverManageTiming,
+    (driverManageTiming) => driverManageTiming.driver,
+  )
+  driverManageTimings: DriverManageTiming[];
+
+  @OneToMany(
+    () => DriverPreferences,
+    (driverPreference) => driverPreference.driver,
+  )
+  driverPreferences: DriverPreferences[];
 }

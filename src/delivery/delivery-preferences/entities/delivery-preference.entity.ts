@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { DriverPreferences } from "../../../users/driver-preferences/entities/driver-preference.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("delivery_preferences", { schema: "amygo1" })
 export class DeliveryPreferences {
@@ -44,4 +45,10 @@ export class DeliveryPreferences {
 
   @Column("int", { name: "is_deleted", default: "0" })
   isDeleted: number;
+
+  @OneToMany(
+    () => DriverPreferences,
+    (driverPreference) => driverPreference.preference,
+  )
+  driverPreferences: DriverPreferences[];
 }
