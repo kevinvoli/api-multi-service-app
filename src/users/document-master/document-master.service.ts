@@ -11,7 +11,7 @@ export class DocumentMasterService {
     @InjectRepository(DocumentMaster)
     private readonly documentMasterRepository: Repository<DocumentMaster>,
   ) {}
-  async create(createDocumentMasterDto: CreateDocumentMasterDto): Promise<DocumentMaster> {
+  async create(createDocumentMasterDto: CreateDocumentMasterDto) {
     const newDocMaster = this.documentMasterRepository.create(createDocumentMasterDto);
     return await this.documentMasterRepository.save(newDocMaster);
   }

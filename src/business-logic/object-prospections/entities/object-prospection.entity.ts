@@ -7,7 +7,7 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { ServiceCategories } from "../../../core_app/service-categories/entities/service-category.entity";
-import { ObjectCategories } from "../object-categories/entities/object-category.entity";
+import { ObjectCategories } from "../../object-categories/entities/object-category.entity";
 
 @Index("id_commando", ["idService"], {})
 @Entity("__object_prospections", { schema: "amygo1" })

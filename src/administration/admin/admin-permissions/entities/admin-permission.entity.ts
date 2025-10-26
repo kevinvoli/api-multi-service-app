@@ -1,5 +1,5 @@
-import { AdminGroupPermission } from "../admin-group-permission/entities/admin-group-permission.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { AdminGroupPermission } from "../../admin-group-permission/entities/admin-group-permission.entity";
 
 @Entity("admin_permissions", { schema: "amygo1" })
 export class AdminPermissions {

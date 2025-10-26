@@ -1,4 +1,4 @@
-import { Administrator } from "../../../administration/administrators/entities/administrator.entity";
+import { Administrators } from "../../../administration/administrators/entities/administrator.entity";
 import { CancelReason } from "../../../core_app/cancel-reason/entities/cancel-reason.entity";
 import { PackageType } from "../../../delivery/package-type/entities/package-type.entity";
 import { Company } from "../../../users/company/entities/company.entity";
@@ -586,9 +586,9 @@ export class CabBooking {
   @Column("int", { name: "iAdminId" })
   iAdminId: number;
 
-  @ManyToOne(() => Administrator, (admin) => admin.cabBookings)
+  @ManyToOne(() => Administrators, (admin) => admin.cabBookings)
   @JoinColumn({ name: "iAdminId", referencedColumnName: "iAdminId" })
-  admin: Administrator;
+  admin: Administrators;
 
   @Column("int", { name: "iHotelBookingId", comment: "For Hotel Panel Web" })
   iHotelBookingId: number;

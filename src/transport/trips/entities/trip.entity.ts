@@ -7,10 +7,10 @@ import { ServiceCategories } from "../../../core_app/service-categories/entities
 import { Organization } from "../../../users/company/organization/entities/organization.entity";
 import { Hotel } from "../../../stores/hotel/entities/hotel.entity";
 import { VehicleType } from "../../../vehicles/vehicle-type/entities/vehicle-type.entity";
-import { RentalPackage } from "../rental-package/entities/rental-package.entity";
+import { RentalPackage } from "../../rental-package/entities/rental-package.entity";
 import { CancelReason } from "../../../core_app/cancel-reason/entities/cancel-reason.entity";
 import { UserProfile } from "../../../users/user-profile/entities/user-profile.entity";
-import { TripReason } from "../trip-reason/entities/trip-reason.entity";
+import { TripReason } from "../../trip-reason/entities/trip-reason.entity";
 import { UserAddress } from "../../../users/user-address/entities/user-address.entity";
 import { UserPaymentInfo } from "../../../users/user-payment-info/entities/user-payment-info.entity";
 import { DriverInsuranceReport } from "../../../users/driver-insurance-report/entities/driver-insurance-report.entity";

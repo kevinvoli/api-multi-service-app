@@ -3,6 +3,7 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { VehicleType } from "../../../vehicles/vehicle-type/entities/vehicle-type.entity";
@@ -10,7 +11,7 @@ import { RegisterUser } from "../../../users/register-user/entities/register-use
 import { ServiceCategories } from "../../../core_app/service-categories/entities/service-category.entity";
 import { Company } from "../../../users/company/entities/company.entity";
 import { FoodMenu } from "../../../delivery/food-menu/entities/food-menu.entity";
-import { IntentionsCriteres } from "../intentions-criteres/entities/intentions-critere.entity";
+import { IntentionsCriteres } from "../../intentions-criteres/entities/intentions-critere.entity";
 
 @Entity("__intentions", { schema: "amygo1" })
 export class Intentions {

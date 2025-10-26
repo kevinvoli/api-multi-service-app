@@ -1,6 +1,6 @@
-import { Intentions } from "../../../business-logic/intentions/entities/intention.entity";
-import { Intentions } from "../../../business-logic/intentions/entities/intention.entity";
-import { MenuItems } from "../menu-items/entities/menu-item.entity";
+
+import { Intentions } from "src/business-logic/intentions/entities/intention.entity";
+import { MenuItems } from "../../menu-items/entities/menu-item.entity";
 import { Column, Entity, Index, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Index("iCompanyId", ["iCompanyId"], {})

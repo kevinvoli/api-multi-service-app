@@ -1,6 +1,6 @@
-import { AdminGroupPermission } from "../admin-group-permission/entities/admin-group-permission.entity";
-import { Administrator } from "../../../administrators/entities/administrator.entity";
+import { Administrators } from "../../../administrators/entities/administrator.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { AdminGroupPermission } from "../../admin-group-permission/entities/admin-group-permission.entity";
 
 @Entity("admin_groups")
 export class AdminGroups {
@@ -20,6 +20,6 @@ export class AdminGroups {
   @OneToMany(() => AdminGroupPermission, (agp) => agp.group)
   permissions: AdminGroupPermission[];
 
-  @OneToMany(() => Administrator, (admin) => admin.group)
-  administrators: Administrator[];
+  @OneToMany(() => Administrators, (admin) => admin.group)
+  administrators: Administrators[];
 }

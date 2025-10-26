@@ -10,8 +10,8 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { MasterVehicleCategory } from "../master-vehicle-category/entities/master-vehicle-category.entity";
-import { VehicleType } from "../vehicle-type/entities/vehicle-type.entity";
+import { MasterVehicleCategory } from "../../master-vehicle-category/entities/master-vehicle-category.entity";
+import { VehicleType } from "../../vehicle-type/entities/vehicle-type.entity";
 
 export enum VehicleCategoryType {
   Ride = "Ride",

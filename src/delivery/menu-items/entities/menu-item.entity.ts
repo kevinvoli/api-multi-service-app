@@ -4,12 +4,13 @@ import {
   Index,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { FoodMenu } from "../../food-menu/entities/food-menu.entity";
 import { Company } from "../../../users/company/entities/company.entity";
-import { MenuitemOptions } from "../menu-item-options/entities/menu-item-option.entity";
-import { MenuitemOptionsCategory } from "../menu-item-options-category/entities/menu-item-options-category.entity";
+import { MenuitemOptions } from "../../menu-item-options/entities/menu-item-option.entity";
+import { MenuitemOptionsCategory } from "../../menu-item-options-category/entities/menu-item-options-category.entity";
 
 @Index("iFoodMenuId", ["iFoodMenuId"], {})
 @Index("eFoodType", ["eFoodType"], {})

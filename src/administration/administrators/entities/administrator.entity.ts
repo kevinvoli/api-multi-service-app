@@ -10,7 +10,7 @@ import {
 import { AdminGroups } from "../../admin/admin-groups/entities/admin-group.entity";
 
 @Entity("administrators", { schema: "amygo1" })
-export class Administrator {
+export class Administrators {
   @PrimaryGeneratedColumn({ type: "int", name: "iAdminId" })
   iAdminId: number;
 

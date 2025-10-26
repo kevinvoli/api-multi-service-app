@@ -3,12 +3,13 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { Country } from "../../../location/country/entities/country.entity";
 import { VehicleCategory } from "../../../vehicles/vehicle-category/entities/vehicle-category.entity";
 import { BiddingService } from "../../../bidding/bidding-service/entities/bidding-service.entity";
-import { DocumentList } from "../document-list/entities/document-list.entity";
+import { DocumentList } from "../../document-list/entities/document-list.entity";
 
 @Entity("document_master", { schema: "amygo1" })
 export class DocumentMaster {

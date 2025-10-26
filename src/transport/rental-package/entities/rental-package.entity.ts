@@ -1,6 +1,6 @@
-import { CabBooking } from "../cab-booking/entities/cab-booking.entity";
-import { CabRequestNow } from "../cab-request-now/entities/cab-request-now.entity";
-import { Trips } from "../trips/entities/trip.entity";
+import { CabBooking } from "../../cab-booking/entities/cab-booking.entity";
+import { CabRequestNow } from "../../cab-request-now/entities/cab-request-now.entity";
+import { Trips } from "../../trips/entities/trip.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("rental_package", { schema: "amygo1" })

@@ -6,7 +6,7 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { RegisterUser } from "../../../users/register-user/entities/register-user.entity";
-import { Intentions } from "../intentions/entities/intention.entity";
+import { Intentions } from "../../intentions/entities/intention.entity";
 
 @Entity("__intentions_criteres", { schema: "amygo1" })
 export class IntentionsCriteres {
