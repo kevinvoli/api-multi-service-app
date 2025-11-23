@@ -23,38 +23,46 @@ export class DriverVehicle {
   })
   iDriverVehicleId: number;
 
-  @Column("int", {
-    name: "iDriverId",
-    comment: "link with registration_driver_details",
-  })
-  iDriverId: number;
+  // @Column("int", {
+  //   name: "iDriverId",
+  //   comment: "link with registration_driver_details",
+  // })
+  // iDriverId: number;
 
-  @ManyToOne(
-    () => RegisterDriver,
-    (registerDriver) => registerDriver.driverVehicles,
-  )
-  @JoinColumn([{ name: "iDriverId", referencedColumnName: "iDriverId" }])
-  driver: RegisterDriver;
+  // @ManyToOne(
+  //   () => RegisterDriver,
+  //   (registerDriver) => registerDriver.driverVehicles,
+  // )
+  // @JoinColumn([{ name: "iDriverId",
+  //   //  referencedColumnName: "iDriverId" 
+  //   }])
+  // driver: RegisterDriver;
 
   @Column("int", { name: "iCompanyId" })
   iCompanyId: number;
 
   @ManyToOne(() => Company, (company) => company.driverVehicles)
-  @JoinColumn([{ name: "iCompanyId", referencedColumnName: "iCompanyId" }])
+  @JoinColumn([{ name: "iCompanyId", 
+    // referencedColumnName: "iCompanyId"
+   }])
   company: Company;
 
   @Column("int", { name: "iMakeId" })
   iMakeId: number;
 
   @ManyToOne(() => Make, (make) => make.driverVehicles)
-  @JoinColumn([{ name: "iMakeId", referencedColumnName: "iMakeId" }])
+  @JoinColumn([{ name: "iMakeId", 
+    // referencedColumnName: "iMakeId"
+   }])
   make: Make;
 
   @Column("int", { name: "iModelId" })
   iModelId: number;
 
   @ManyToOne(() => Model, (model) => model.driverVehicles)
-  @JoinColumn([{ name: "iModelId", referencedColumnName: "iModelId" }])
+  @JoinColumn([{ name: "iModelId",
+    //  referencedColumnName: "iModelId"
+     }])
   model: Model;
 
   @Column("int", { name: "iYear" })

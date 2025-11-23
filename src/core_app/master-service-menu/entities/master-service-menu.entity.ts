@@ -23,7 +23,9 @@ export class MasterServiceMenu {
     () => MasterServiceMenu,
     (masterServiceMenu) => masterServiceMenu.children,
   )
-  @JoinColumn({ name: "iParentId", referencedColumnName: "iServiceMenuId" })
+  @JoinColumn({ name: "iParentId", 
+    // referencedColumnName: "iServiceMenuId" 
+  })
   parent: MasterServiceMenu;
 
   @OneToMany(
@@ -60,7 +62,9 @@ export class MasterServiceMenu {
     () => ServiceCategories,
     (serviceCategory) => serviceCategory.masterServiceMenus,
   )
-  @JoinColumn({ name: "iServiceId", referencedColumnName: "iServiceId" })
+  @JoinColumn({ name: "iServiceId", 
+    // referencedColumnName: "iServiceId" 
+  })
   service: ServiceCategories;
 
   @Column("enum", { name: "eStatus", enum: ["Active", "Inactive", "Deleted"] })

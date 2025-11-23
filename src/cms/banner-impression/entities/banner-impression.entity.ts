@@ -21,7 +21,7 @@ export class BannerImpression {
   )
   @JoinColumn({
     name: "iAdvertBannerId",
-    referencedColumnName: "iAdvertBannerId",
+    // referencedColumnName: "iAdvertBannerId",
   })
   advertiseBanner: AdvertiseBanners;
 

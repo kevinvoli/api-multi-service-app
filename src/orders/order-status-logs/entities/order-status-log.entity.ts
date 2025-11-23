@@ -17,14 +17,18 @@ export class OrderStatusLogs {
   iOrderId: number;
 
   @ManyToOne(() => Orders, (order) => order.orderStatusLogs)
-  @JoinColumn({ name: "iOrderId", referencedColumnName: "iOrderId" })
+  @JoinColumn({ name: "iOrderId", 
+    // referencedColumnName: "iOrderId" 
+  })
   order: Orders;
 
   @Column("int", { name: "iStatusCode", comment: "Relation with order status" })
   iStatusCode: number;
 
   @ManyToOne(() => OrderStatus, (orderStatus) => orderStatus.orderStatusLogs)
-  @JoinColumn({ name: "iStatusCode", referencedColumnName: "iStatusCode" })
+  @JoinColumn({ name: "iStatusCode",
+    //  referencedColumnName: "iStatusCode"
+     })
   orderStatus: OrderStatus;
 
   @Column("datetime", { name: "dDate" })

@@ -27,7 +27,9 @@ export class AppScreenMaster {
   iParentId: number;
 
   @ManyToOne(() => AppScreenMaster, (appScreenMaster) => appScreenMaster.children)
-  @JoinColumn({ name: "iParentId", referencedColumnName: "lPageId" })
+  @JoinColumn({ name: "iParentId", 
+    // referencedColumnName: "lPageId"
+   })
   parent: AppScreenMaster;
 
   @OneToMany(() => AppScreenMaster, (appScreenMaster) => appScreenMaster.parent)

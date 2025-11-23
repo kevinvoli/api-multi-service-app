@@ -17,7 +17,9 @@ export class Banners {
   iServiceId: number;
 
   @ManyToOne(() => ServiceCategories, (service) => service.banners)
-  @JoinColumn({ name: "iServiceId", referencedColumnName: "iServiceId" })
+  @JoinColumn({ name: "iServiceId", 
+    // referencedColumnName: "iServiceId" 
+  })
   service: ServiceCategories;
 
   @Column("enum", {
@@ -78,7 +80,7 @@ export class Banners {
   )
   @JoinColumn({
     name: "iVehicleCategoryId",
-    referencedColumnName: "iVehicleCategoryId",
+    // referencedColumnName: "iVehicleCategoryId",
   })
   vehicleCategory: VehicleCategory;
 }

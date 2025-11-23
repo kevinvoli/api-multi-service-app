@@ -1,25 +1,31 @@
 import { IsEnum, IsNotEmpty, IsNumber, IsString, IsOptional } from "class-validator";
+import { docUsertype, eDocServiceType, eType, exStatus, status } from "../entities/document-master.entity";
 
 export class CreateDocumentMasterDto {
+
+     @IsNumber()
+  @IsOptional()
+  docMasterid?:number; 
+
     @IsEnum(["company", "driver", "car", "store"])
     @IsNotEmpty()
-    docUsertype: "company" | "driver" | "car" | "store";
+    docUsertype: docUsertype;
 
     @IsString()
     @IsNotEmpty()
     docName: string;
 
-    @IsString()
-    @IsNotEmpty()
-    country: string;
+    // @IsString()
+    // @IsNotEmpty()
+    // countryCode: string;
 
     @IsEnum(["yes", "no"])
     @IsNotEmpty()
-    exStatus: "yes" | "no";
+    exStatus: exStatus;
 
     @IsOptional()
     @IsEnum(["Active", "Inactive", "Deleted"])
-    status?: "Active" | "Inactive" | "Deleted";
+    status?: status;
 
     @IsString()
     @IsNotEmpty()
@@ -31,11 +37,11 @@ export class CreateDocumentMasterDto {
 
     @IsOptional()
     @IsEnum(["Ride", "Delivery", "UberX"])
-    eType?: "Ride" | "Delivery" | "UberX";
+    eType?: eType;
 
     @IsOptional()
     @IsEnum(["General", "ServiceSpecific", "BiddingSpecific"])
-    eDocServiceType?: "General" | "ServiceSpecific" | "BiddingSpecific";
+    eDocServiceType?: eDocServiceType;
 
     @IsOptional()
     @IsNumber()
@@ -47,5 +53,5 @@ export class CreateDocumentMasterDto {
 
     @IsNumber()
     @IsNotEmpty()
-    iBiddingId: number;
+    iBiddingId?: number;
 }

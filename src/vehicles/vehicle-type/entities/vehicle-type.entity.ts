@@ -27,7 +27,7 @@ export class VehicleType {
   )
   @JoinColumn({
     name: "iVehicleCategoryId",
-    referencedColumnName: "iVehicleCategoryId",
+    // referencedColumnName: "iVehicleCategoryId",
   })
   vehicleCategory: VehicleCategory;
 

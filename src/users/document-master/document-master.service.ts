@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateDocumentMasterDto } from './dto/create-document-master.dto';
 import { UpdateDocumentMasterDto } from './dto/update-document-master.dto';
-import { DocumentMaster } from './entities/document-master.entity';
+import { DocumentMaster, status } from './entities/document-master.entity';
 
 @Injectable()
 export class DocumentMasterService {
@@ -28,20 +28,20 @@ export class DocumentMasterService {
     return docMaster;
   }
 
-  async update(id: number, updateDocumentMasterDto: UpdateDocumentMasterDto): Promise<DocumentMaster> {
-    const docMaster = await this.documentMasterRepository.preload({
-      docMasterid: id,
-      ...updateDocumentMasterDto,
-    });
-    if (!docMaster) {
-      throw new NotFoundException(`Document master with ID "${id}" not found`);
-    }
-    return this.documentMasterRepository.save(docMaster);
-  }
+  // async update(id: number, updateDocumentMasterDto: UpdateDocumentMasterDto): Promise<DocumentMaster> {
+  //   const docMaster = await this.documentMasterRepository.preload({
+  //     docMasterid: id,
+  //     ...updateDocumentMasterDto,
+  //   });
+  //   if (!docMaster) {
+  //     throw new NotFoundException(`Document master with ID "${id}" not found`);
+  //   }
+  //   return this.documentMasterRepository.save(docMaster);
+  // }
 
   async remove(id: number): Promise<DocumentMaster> {
     const docMaster = await this.findOne(id);
-    docMaster.status = 'Deleted';
+    docMaster.status = status.Deleted;
     return await this.documentMasterRepository.save(docMaster);
   }
 }

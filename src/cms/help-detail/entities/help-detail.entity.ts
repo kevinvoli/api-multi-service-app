@@ -21,7 +21,7 @@ export class HelpDetail {
   )
   @JoinColumn({
     name: "iHelpDetailCategoryId",
-    referencedColumnName: "iHelpDetailCategoryId",
+    // referencedColumnName: "iHelpDetailCategoryId",
   })
   helpDetailCategory: HelpDetailCategories;
 

@@ -23,7 +23,9 @@ export class ObjectCategories {
   idService: number | null;
 
   @ManyToOne(() => ServiceCategories, (service) => service.objectCategories)
-  @JoinColumn({ name: "id_service", referencedColumnName: "iServiceId" })
+  @JoinColumn({ name: "id_service",
+    //  referencedColumnName: "iServiceId" 
+    })
   service: ServiceCategories;
 
   @Column("varchar", { name: "libelle_fr", nullable: true, length: 255 })

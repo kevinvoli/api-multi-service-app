@@ -59,7 +59,7 @@ export class ContentCubexDetails {
   )
   @JoinColumn({
     name: "iVehicleCategoryId",
-    referencedColumnName: "iVehicleCategoryId",
+    // referencedColumnName: "iVehicleCategoryId",
   })
   vehicleCategory: VehicleCategory;
 

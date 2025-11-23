@@ -20,14 +20,18 @@ export class City {
   iCountryId: number;
 
   @ManyToOne(() => Country, (country) => country.cities)
-  @JoinColumn({ name: "iCountryId", referencedColumnName: "iCountryId" })
+  @JoinColumn({ name: "iCountryId", 
+    // referencedColumnName: "iCountryId"
+   })
   country: Country;
 
   @Column("int", { name: "iStateId" })
   iStateId: number;
 
   @ManyToOne(() => State, (state) => state.cities)
-  @JoinColumn({ name: "iStateId", referencedColumnName: "iStateId" })
+  @JoinColumn({ name: "iStateId",
+    //  referencedColumnName: "iStateId"
+     })
   state: State;
 
   @Column("enum", {

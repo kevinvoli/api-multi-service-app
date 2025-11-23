@@ -17,15 +17,19 @@ export class DriverFavorites {
   iUserId: number;
 
   @ManyToOne(() => RegisterUser, (user) => user.driverFavorites)
-  @JoinColumn({ name: "iUserId", referencedColumnName: "iUserId" })
+  @JoinColumn({ name: "iUserId",
+    //  referencedColumnName: "iUserId" 
+    })
   user: RegisterUser;
 
-  @Column("int", { name: "iDriverId" })
-  iDriverId: number;
+  // @Column("int", { name: "iDriverId" })
+  // iDriverId: number;
 
-  @ManyToOne(() => RegisterDriver, (driver) => driver.driverFavorites)
-  @JoinColumn({ name: "iDriverId", referencedColumnName: "iDriverId" })
-  driver: RegisterDriver;
+  // @ManyToOne(() => RegisterDriver, (driver) => driver.driverFavorites)
+  // @JoinColumn({ name: "iDriverId", 
+  //   // referencedColumnName: "iDriverId" 
+  // })
+  // driver: RegisterDriver;
 
   @Column("enum", {
     name: "eType",

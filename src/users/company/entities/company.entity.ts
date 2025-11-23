@@ -31,7 +31,9 @@ export class Company {
   iServiceId: number;
 
   @ManyToOne(() => ServiceCategories, (service) => service.companies)
-  @JoinColumn({ name: "iServiceId", referencedColumnName: "iServiceId" })
+  @JoinColumn({ name: "iServiceId", 
+    // referencedColumnName: "iServiceId"
+   })
   service: ServiceCategories;
 
   @Column("varchar", { name: "vContactName", length: 100 })
@@ -576,8 +578,8 @@ export class Company {
   @Column("enum", { name: "eForKiosk", enum: ["No", "Yes"] })
   eForKiosk: "No" | "Yes";
 
-  @OneToMany(() => RegisterDriver, (registerDriver) => registerDriver.iCompany)
-  registerDrivers: RegisterDriver[];
+  // @OneToMany(() => RegisterDriver, (registerDriver) => registerDriver.iCompany)
+  // registerDrivers: RegisterDriver[];
 
   @OneToMany(() => CabBooking, (cabBooking) => cabBooking.company)
   cabBookings: CabBooking[];

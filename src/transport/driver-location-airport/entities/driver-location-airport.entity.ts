@@ -24,16 +24,18 @@ export class DriverLocationAirport {
   )
   @JoinColumn({
     name: "iAirportLocationId",
-    referencedColumnName: "iAirportLocationId",
+    // referencedColumnName: "iAirportLocationId",
   })
   airportLocation: AirportLocationMaster;
 
-  @Column("int", { name: "iDriverId" })
-  iDriverId: number;
+  // @Column("int", { name: "iDriverId" })
+  // iDriverId: number;
 
-  @ManyToOne(() => RegisterDriver, (driver) => driver.driverLocationAirports)
-  @JoinColumn({ name: "iDriverId", referencedColumnName: "iDriverId" })
-  driver: RegisterDriver;
+  // @ManyToOne(() => RegisterDriver, (driver) => driver.driverLocationAirports)
+  // @JoinColumn({ name: "iDriverId", 
+  //   // referencedColumnName: "iDriverId"
+  //  })
+  // driver: RegisterDriver;
 
   @Column("timestamp", {
     name: "tAddedDate",

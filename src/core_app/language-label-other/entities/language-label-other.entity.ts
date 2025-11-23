@@ -22,17 +22,23 @@ export class LanguageLabelOther {
     () => AppScreenMaster,
     (appScreenMaster) => appScreenMaster.languageLabelOthers,
   )
-  @JoinColumn({ name: "lPage_id", referencedColumnName: "lPageId" })
+  @JoinColumn({ name: "lPage_id", 
+    // referencedColumnName: "lPageId"
+   })
   appScreen: AppScreenMaster;
 
-  @Column("varchar", { name: "vCode", length: 5 })
+  @Column("varchar", { name: "vCode",
+    //  length: 5
+     })
   vCode: string;
 
   @ManyToOne(
     () => LanguageMaster,
     (languageMaster) => languageMaster.languageLabelOthers,
   )
-  @JoinColumn({ name: "vCode", referencedColumnName: "vCode" })
+  @JoinColumn({ name: "vCode",
+    //  referencedColumnName: "vCode" 
+    })
   language: LanguageMaster;
 
   @Column("varchar", { name: "vLabel", length: 100 })

@@ -19,14 +19,18 @@ export class ObjectObjectifs {
   idService: number | null;
 
   @ManyToOne(() => ServiceCategories, (service) => service.objectObjectifs)
-  @JoinColumn({ name: "id_service", referencedColumnName: "iServiceId" })
+  @JoinColumn({ name: "id_service",
+    //  referencedColumnName: "iServiceId"
+     })
   service: ServiceCategories;
 
   @Column("int", { name: "id_categorie", nullable: true })
   idCategorie: number | null;
 
   @ManyToOne(() => ObjectCategories, (category) => category.objectObjectifs)
-  @JoinColumn({ name: "id_categorie", referencedColumnName: "id" })
+  @JoinColumn({ name: "id_categorie", 
+    // referencedColumnName: "id"
+   })
   categorie: ObjectCategories;
 
   @Column("int", { name: "quantite", nullable: true })

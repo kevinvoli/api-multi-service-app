@@ -60,21 +60,27 @@ export class Trips {
   iCompanyId: number;
 
   @ManyToOne(() => Company, (company) => company.trips)
-  @JoinColumn({ name: "iCompanyId", referencedColumnName: "iCompanyId" })
+  @JoinColumn({ name: "iCompanyId", 
+    // referencedColumnName: "iCompanyId" 
+  })
   company: Company;
 
   @Column("int", { name: "iOrderId" })
   iOrderId: number;
 
   @ManyToOne(() => Orders, (order) => order.trips)
-  @JoinColumn({ name: "iOrderId", referencedColumnName: "iOrderId" })
+  @JoinColumn({ name: "iOrderId", 
+    // referencedColumnName: "iOrderId" 
+  })
   order: Orders;
 
   @Column("int", { name: "iServiceId" })
   iServiceId: number;
 
   @ManyToOne(() => ServiceCategories, (service) => service.trips)
-  @JoinColumn({ name: "iServiceId", referencedColumnName: "iServiceId" })
+  @JoinColumn({ name: "iServiceId",
+    //  referencedColumnName: "iServiceId"
+     })
   service: ServiceCategories;
 
   @Column("int", { name: "iOrganizationId" })
@@ -83,7 +89,7 @@ export class Trips {
   @ManyToOne(() => Organization, (organization) => organization.trips)
   @JoinColumn({
     name: "iOrganizationId",
-    referencedColumnName: "iOrganizationId",
+    // referencedColumnName: "iOrganizationId",
   })
   organization: Organization;
 
@@ -99,7 +105,9 @@ export class Trips {
   iHotelId: number;
 
   @ManyToOne(() => Hotel, (hotel) => hotel.trips)
-  @JoinColumn({ name: "iHotelId", referencedColumnName: "iHotelId" })
+  @JoinColumn({ name: "iHotelId",
+    //  referencedColumnName: "iHotelId"
+     })
   hotel: Hotel;
 
   @Column("datetime", { name: "tTripRequestDate" })
@@ -112,7 +120,7 @@ export class Trips {
     name: "tStartDate",
     nullable:true,
   })
-  tStartDate: Date;
+  tStartDate?: Date;
 
   @Column("timestamp", {
     name: "tEndDate",
@@ -129,7 +137,7 @@ export class Trips {
   @ManyToOne(() => DriverVehicle, (driverVehicle) => driverVehicle.trips)
   @JoinColumn({
     name: "iDriverVehicleId",
-    referencedColumnName: "iDriverVehicleId",
+    // referencedColumnName: "iDriverVehicleId",
   })
   driverVehicle: DriverVehicle;
 
@@ -257,7 +265,7 @@ export class Trips {
   @ManyToOne(() => VehicleType, (vehicleType) => vehicleType.trips)
   @JoinColumn({
     name: "iVehicleTypeId",
-    referencedColumnName: "iVehicleTypeId",
+    // referencedColumnName: "iVehicleTypeId",
   })
   vehicleType: VehicleType;
 
@@ -270,7 +278,7 @@ export class Trips {
   @ManyToOne(() => RentalPackage, (rentalPackage) => rentalPackage.trips)
   @JoinColumn({
     name: "iRentalPackageId",
-    referencedColumnName: "iRentalPackageId",
+    // referencedColumnName: "iRentalPackageId",
   })
   rentalPackage: RentalPackage;
 
@@ -331,7 +339,7 @@ export class Trips {
   @ManyToOne(() => CancelReason, (cancelReason) => cancelReason.trips)
   @JoinColumn({
     name: "iCancelReasonId",
-    referencedColumnName: "iCancelReasonId",
+    // referencedColumnName: "iCancelReasonId",
   })
   cancelReason: CancelReason;
 
@@ -623,7 +631,7 @@ export class Trips {
   @ManyToOne(() => UserAddress, (userAddress) => userAddress.trips)
   @JoinColumn({
     name: "iUserAddressId",
-    referencedColumnName: "iUserAddressId",
+    // referencedColumnName: "iUserAddressId",
   })
   userAddress: UserAddress;
 
@@ -841,7 +849,7 @@ export class Trips {
   @ManyToOne(() => UserProfile, (userProfile) => userProfile.trips)
   @JoinColumn({
     name: "iUserProfileId",
-    referencedColumnName: "iUserProfileId",
+    // referencedColumnName: "iUserProfileId",
   })
   userProfile: UserProfile;
 
@@ -849,7 +857,9 @@ export class Trips {
   iTripReasonId: number;
 
   @ManyToOne(() => TripReason, (tripReason) => tripReason.trips)
-  @JoinColumn({ name: "iTripReasonId", referencedColumnName: "iTripReasonId" })
+  @JoinColumn({ name: "iTripReasonId",
+    //  referencedColumnName: "iTripReasonId"
+     })
   tripReason: TripReason;
 
   @Column("text", { name: "vReasonTitle" })
@@ -1053,7 +1063,7 @@ export class Trips {
   @ManyToOne(() => UserPaymentInfo, (paymentInfo) => paymentInfo.trips)
   @JoinColumn({
     name: "iPaymentInfoId",
-    referencedColumnName: "iPaymentInfoId",
+    // referencedColumnName: "iPaymentInfoId",
   })
   paymentInfo: UserPaymentInfo;
 
@@ -1136,18 +1146,22 @@ export class Trips {
   })
   isSkipRating: "Yes" | "No";
 
-  @ManyToOne(() => RegisterDriver, (registerDriver) => registerDriver.trips, {
-    onDelete: "NO ACTION",
-    onUpdate: "NO ACTION",
-  })
-  @JoinColumn([{ name: "iDriverId", referencedColumnName: "iDriverId" }])
-  iDriver: RegisterDriver;
+  // @ManyToOne(() => RegisterDriver, (registerDriver) => registerDriver.trips, {
+  //   onDelete: "NO ACTION",
+  //   onUpdate: "NO ACTION",
+  // })
+  // @JoinColumn([{ name: "iDriverId", 
+  //   // referencedColumnName: "iDriverId" 
+  // }])
+  // iDriver: RegisterDriver;
 
   @ManyToOne(() => RegisterUser, (registerUser) => registerUser.trips, {
     onDelete: "NO ACTION",
     onUpdate: "NO ACTION",
   })
-  @JoinColumn([{ name: "iUserId", referencedColumnName: "iUserId" }])
+  @JoinColumn([{ name: "iUserId",
+    //  referencedColumnName: "iUserId" 
+    }])
   iUser: RegisterUser;
 
   @OneToMany(() => CabBooking, (cabBooking) => cabBooking.trip)

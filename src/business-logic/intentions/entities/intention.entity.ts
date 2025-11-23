@@ -24,7 +24,7 @@ export class Intentions {
   @ManyToOne(() => VehicleType, (vehicleType) => vehicleType.intentions)
   @JoinColumn({
     name: "vehicule_type_id",
-    referencedColumnName: "iVehicleTypeId",
+    // referencedColumnName: "iVehicleTypeId",
   })
   vehicleType: VehicleType;
 
@@ -35,28 +35,36 @@ export class Intentions {
   userId: number | null;
 
   @ManyToOne(() => RegisterUser, (user) => user.intentions)
-  @JoinColumn({ name: "userID", referencedColumnName: "iUserId" })
+  @JoinColumn({ name: "userID", 
+    // referencedColumnName: "iUserId" 
+  })
   user: RegisterUser;
 
   @Column("int", { name: "service_id", default: "0" })
   serviceId: number;
 
   @ManyToOne(() => ServiceCategories, (service) => service.intentions)
-  @JoinColumn({ name: "service_id", referencedColumnName: "iServiceId" })
+  @JoinColumn({ name: "service_id", 
+    // referencedColumnName: "iServiceId" 
+  })
   service: ServiceCategories;
 
   @Column("int", { name: "store_id", nullable: true })
   storeId: number | null;
 
   @ManyToOne(() => Company, (store) => store.intentions)
-  @JoinColumn({ name: "store_id", referencedColumnName: "iCompanyId" })
+  @JoinColumn({ name: "store_id", 
+    // referencedColumnName: "iCompanyId"
+   })
   store: Company;
 
   @Column("int", { name: "item_id", nullable: true })
   itemId: number | null;
 
   @ManyToOne(() => FoodMenu, (item) => item.intentions)
-  @JoinColumn({ name: "item_id", referencedColumnName: "iFoodMenuId" })
+  @JoinColumn({ name: "item_id", 
+    // referencedColumnName: "iFoodMenuId" 
+  })
   item: FoodMenu;
 
   @Column("varchar", { name: "commune", nullable: true, length: 255 })

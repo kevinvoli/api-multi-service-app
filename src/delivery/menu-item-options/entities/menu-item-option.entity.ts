@@ -21,7 +21,9 @@ export class MenuitemOptions {
   iMenuItemId: number;
 
   @ManyToOne(() => MenuItems, (menuItem) => menuItem.menuItemOptions)
-  @JoinColumn({ name: "iMenuItemId", referencedColumnName: "iMenuItemId" })
+  @JoinColumn({ name: "iMenuItemId", 
+    // referencedColumnName: "iMenuItemId" 
+  })
   menuItem: MenuItems;
 
   @Column("varchar", { name: "vOptionName", length: 255 })

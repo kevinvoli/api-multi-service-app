@@ -29,14 +29,18 @@ export class MenuItems {
   storeId: number | null;
 
   @ManyToOne(() => Company, (company) => company.menuItems)
-  @JoinColumn({ name: "store", referencedColumnName: "iCompanyId" })
+  @JoinColumn({ name: "store", 
+    // referencedColumnName: "iCompanyId"
+   })
   store: Company;
 
   @Column("int", { name: "iFoodMenuId", default: "0" })
   iFoodMenuId: number;
 
   @ManyToOne(() => FoodMenu, (foodMenu) => foodMenu.menuItems)
-  @JoinColumn({ name: "iFoodMenuId", referencedColumnName: "iFoodMenuId" })
+  @JoinColumn({ name: "iFoodMenuId", 
+    // referencedColumnName: "iFoodMenuId" 
+  })
   foodMenu: FoodMenu;
 
   @Column("varchar", { name: "vItemType_EN", length: 255 })

@@ -17,13 +17,17 @@ export class AdminGroupPermission {
   groupId: number;
 
   @ManyToOne(() => AdminGroups, (group) => group.permissions)
-  @JoinColumn({ name: "group_id", referencedColumnName: "iGroupId" })
+  @JoinColumn({ name: "group_id", 
+    // referencedColumnName: "iGroupId" 
+  })
   group: AdminGroups;
 
   @Column("int", { name: "permission_id" })
   permissionId: number;
 
   @ManyToOne(() => AdminPermissions, (permission) => permission.groups)
-  @JoinColumn({ name: "permission_id", referencedColumnName: "id" })
+  @JoinColumn({ name: "permission_id",
+    //  referencedColumnName: "id" 
+    })
   permission: AdminPermissions;
 }

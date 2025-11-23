@@ -58,7 +58,10 @@ export class OrderStatus {
 
   @OneToMany(
     () => OrderStatusLogs,
-    (orderStatusLogs) => orderStatusLogs.orderStatus,
+    (orderStatusLogs) => orderStatusLogs.orderStatus,{
+      cascade: ['soft-remove'], 
+      onDelete: 'CASCADE'
+    }
   )
   orderStatusLogs: OrderStatusLogs[];
 }

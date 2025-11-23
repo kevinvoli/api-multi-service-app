@@ -28,8 +28,8 @@ import {
 } from "typeorm";
 
 
-@Index("iCompanyId", ["iCompanyId"], {})
-@Index("iCompanyId_2", ["iCompanyId"], {})
+// @Index("iCompanyId", ["iCompanyId"], {})
+// @Index("iCompanyId_2", ["iCompanyId"], {})
 @Entity("register_driver", { schema: "amygo1" })
 export class RegisterDriver {
   @PrimaryGeneratedColumn({ type: "int", name: "iDriverId" })
@@ -164,11 +164,11 @@ export class RegisterDriver {
   @Column("mediumtext", { name: "vCountry" })
   vCountry: string;
 
-  @Column("timestamp", {
-    name: "tLastOnline",
-    nullable:true,
-  })
-  tLastOnline: Date;
+  // @Column("timestamp", {
+  //   name: "tLastOnline",
+  //   nullable:true,
+  // })
+  // tLastOnline: Date;
 
   @Column("timestamp", {
     name: "tOnline",
@@ -503,85 +503,87 @@ export class RegisterDriver {
   @Column("int", { name: "iTrackServiceCompanyId" })
   iTrackServiceCompanyId: number;
 
-  @ManyToOne(() => Company, (company) => company.registerDrivers, {
-    onDelete: "NO ACTION",
-    onUpdate: "NO ACTION",
-  })
-  @JoinColumn([{ name: "iCompanyId", referencedColumnName: "iCompanyId" }])
-  iCompany: Company;
+  // @ManyToOne(() => Company, (company) => company.registerDrivers, {
+  //   onDelete: "NO ACTION",
+  //   onUpdate: "NO ACTION",
+  // })
+  // @JoinColumn([{ name: "iCompanyId", 
+  //   // referencedColumnName: "iCompanyId"
+  //  }])
+  // iCompany: Company;
 
-  @OneToMany(() => Trips, (trips) => trips.iDriver)
-  trips: Trips[];
+  // @OneToMany(() => Trips, (trips) => trips.iDriver)
+  // trips: Trips[];
 
-  @OneToMany(() => OrderRequest, (orderRequest) => orderRequest.driver)
-  orderRequests: OrderRequest[];
+  // @OneToMany(() => OrderRequest, (orderRequest) => orderRequest.driver)
+  // orderRequests: OrderRequest[];
 
-  @OneToMany(() => CabBooking, (cabBooking) => cabBooking.driver)
-  cabBookings: CabBooking[];
+  // @OneToMany(() => CabBooking, (cabBooking) => cabBooking.driver)
+  // cabBookings: CabBooking[];
 
-  @OneToMany(() => CabRequestNow, (cabRequestNow) => cabRequestNow.driver)
-  cabRequestNows: CabRequestNow[];
+  // @OneToMany(() => CabRequestNow, (cabRequestNow) => cabRequestNow.driver)
+  // cabRequestNows: CabRequestNow[];
 
-  @OneToMany(
-    () => DriverDestinations,
-    (destination) => destination.driver,
-  )
-  driverDestinations: DriverDestinations[];
+  // @OneToMany(
+  //   () => DriverDestinations,
+  //   (destination) => destination.driver,
+  // )
+  // driverDestinations: DriverDestinations[];
 
-  @OneToMany(
-    () => DriverDestinationsRoute,
-    (route) => route.driver,
-  )
-  driverDestinationsRoutes: DriverDestinationsRoute[];
+  // @OneToMany(
+  //   () => DriverDestinationsRoute,
+  //   (route) => route.driver,
+  // )
+  // driverDestinationsRoutes: DriverDestinationsRoute[];
 
-  @OneToMany(
-    () => DriverLocationAirport,
-    (location) => location.driver,
-  )
-  driverLocationAirports: DriverLocationAirport[];
+  // @OneToMany(
+  //   () => DriverLocationAirport,
+  //   (location) => location.driver,
+  // )
+  // driverLocationAirports: DriverLocationAirport[];
 
-  @OneToMany(() => Orders, (order) => order.driver)
-  orders: Orders[];
+  // @OneToMany(() => Orders, (order) => order.driver)
+  // orders: Orders[];
 
-  @OneToMany(() => DriverVehicle, (driverVehicle) => driverVehicle.driver)
-  driverVehicles: DriverVehicle[];
+  // @OneToMany(() => DriverVehicle, (driverVehicle) => driverVehicle.driver)
+  // driverVehicles: DriverVehicle[];
 
-  @OneToMany(() => BiddingPost, (biddingPost) => biddingPost.driver)
-  biddingPosts: BiddingPost[];
+  // @OneToMany(() => BiddingPost, (biddingPost) => biddingPost.driver)
+  // biddingPosts: BiddingPost[];
 
-  @OneToMany(() => PaymentRequests, (paymentRequest) => paymentRequest.driver)
-  paymentRequests: PaymentRequests[];
+  // @OneToMany(() => PaymentRequests, (paymentRequest) => paymentRequest.driver)
+  // paymentRequests: PaymentRequests[];
 
-  @OneToMany(
-    () => WithdrawRequests,
-    (withdrawRequest) => withdrawRequest.driver,
-  )
-  withdrawRequests: WithdrawRequests[];
+  // @OneToMany(
+  //   () => WithdrawRequests,
+  //   (withdrawRequest) => withdrawRequest.driver,
+  // )
+  // withdrawRequests: WithdrawRequests[];
 
-  @OneToMany(() => DriverDoc, (driverDoc) => driverDoc.driver)
-  driverDocs: DriverDoc[];
+  // @OneToMany(() => DriverDoc, (driverDoc) => driverDoc.driver)
+  // driverDocs: DriverDoc[];
 
-  @OneToMany(() => DriverFavorites, (driverFavorite) => driverFavorite.driver)
-  driverFavorites: DriverFavorites[];
+  // @OneToMany(() => DriverFavorites, (driverFavorite) => driverFavorite.driver)
+  // driverFavorites: DriverFavorites[];
 
-  @OneToMany(
-    () => DriverInsuranceReport,
-    (driverInsuranceReport) => driverInsuranceReport.driver,
-  )
-  driverInsuranceReports: DriverInsuranceReport[];
+  // @OneToMany(
+  //   () => DriverInsuranceReport,
+  //   (driverInsuranceReport) => driverInsuranceReport.driver,
+  // )
+  // driverInsuranceReports: DriverInsuranceReport[];
 
-  @OneToMany(() => DriverLogReport, (driverLogReport) => driverLogReport.driver)
-  driverLogReports: DriverLogReport[];
+  // @OneToMany(() => DriverLogReport, (driverLogReport) => driverLogReport.driver)
+  // driverLogReports: DriverLogReport[];
 
-  @OneToMany(
-    () => DriverManageTiming,
-    (driverManageTiming) => driverManageTiming.driver,
-  )
-  driverManageTimings: DriverManageTiming[];
+  // @OneToMany(
+  //   () => DriverManageTiming,
+  //   (driverManageTiming) => driverManageTiming.driver,
+  // )
+  // driverManageTimings: DriverManageTiming[];
 
-  @OneToMany(
-    () => DriverPreferences,
-    (driverPreference) => driverPreference.driver,
-  )
-  driverPreferences: DriverPreferences[];
+  // @OneToMany(
+  //   () => DriverPreferences,
+  //   (driverPreference) => driverPreference.driver,
+  // )
+  // driverPreferences: DriverPreferences[];
 }

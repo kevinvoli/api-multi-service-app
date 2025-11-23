@@ -12,12 +12,14 @@ export class WithdrawRequests {
   @PrimaryGeneratedColumn({ type: "int", name: "iWithdrawRequestsId" })
   iWithdrawRequestsId: number;
 
-  @Column("int", { name: "iDriverId" })
-  iDriverId: number;
+  // @Column("int", { name: "iDriverId" })
+  // iDriverId: number;
 
-  @ManyToOne(() => RegisterDriver, (driver) => driver.withdrawRequests)
-  @JoinColumn({ name: "iDriverId", referencedColumnName: "iDriverId" })
-  driver: RegisterDriver;
+  // @ManyToOne(() => RegisterDriver, (driver) => driver.withdrawRequests)
+  // @JoinColumn({ name: "iDriverId",
+  //   //  referencedColumnName: "iDriverId" 
+  //   })
+  // driver: RegisterDriver;
 
   @Column("varchar", { name: "vName", length: 100 })
   vName: string;

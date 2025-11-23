@@ -20,15 +20,19 @@ export class DriverPreferences {
     () => DeliveryPreferences,
     (deliveryPreference) => deliveryPreference.driverPreferences,
   )
-  @JoinColumn({ name: "iPreferenceId", referencedColumnName: "iPreferenceId" })
+  @JoinColumn({ name: "iPreferenceId",
+    //  referencedColumnName: "iPreferenceId"
+     })
   preference: DeliveryPreferences;
 
-  @Column("int", { name: "iDriverId" })
-  iDriverId: number;
+  // @Column("int", { name: "iDriverId" })
+  // iDriverId: number;
 
-  @ManyToOne(() => RegisterDriver, (driver) => driver.driverPreferences)
-  @JoinColumn({ name: "iDriverId", referencedColumnName: "iDriverId" })
-  driver: RegisterDriver;
+  // @ManyToOne(() => RegisterDriver, (driver) => driver.driverPreferences)
+  // @JoinColumn({ name: "iDriverId", 
+  //   // referencedColumnName: "iDriverId"
+  //  })
+  // driver: RegisterDriver;
 
   @Column("enum", { name: "eType", enum: ["Yes", "No"], default: "No" })
   eType: "Yes" | "No";

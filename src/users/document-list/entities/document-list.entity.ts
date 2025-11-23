@@ -16,7 +16,9 @@ export class DocumentList {
   docMasterid: number;
 
   @ManyToOne(() => DocumentMaster, (docMaster) => docMaster.documentLists)
-  @JoinColumn({ name: "doc_masterid", referencedColumnName: "docMasterid" })
+  @JoinColumn({ name: "doc_masterid", 
+    // referencedColumnName: "docMasterid"
+   })
   documentMaster: DocumentMaster;
 
   @Column("enum", {

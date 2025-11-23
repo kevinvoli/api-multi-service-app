@@ -18,7 +18,7 @@ export class Faqs {
   @ManyToOne(() => FaqCategories, (faqCategory) => faqCategory.faqs)
   @JoinColumn({
     name: "iFaqcategoryId",
-    referencedColumnName: "iFaqcategoryId",
+    // referencedColumnName: "iFaqcategoryId",
   })
   faqCategory: FaqCategories;
 

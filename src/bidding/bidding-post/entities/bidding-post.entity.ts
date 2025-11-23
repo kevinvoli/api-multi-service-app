@@ -26,15 +26,19 @@ export class BiddingPost {
   iUserId: number;
 
   @ManyToOne(() => RegisterUser, (user) => user.biddingPosts)
-  @JoinColumn({ name: "iUserId", referencedColumnName: "iUserId" })
+  @JoinColumn({ name: "iUserId", 
+    // referencedColumnName: "iUserId" 
+  })
   user: RegisterUser;
 
-  @Column("int", { name: "iDriverId" })
-  iDriverId: number;
+  // @Column("int", { name: "iDriverId" })
+  // iDriverId: number;
 
-  @ManyToOne(() => RegisterDriver, (driver) => driver.biddingPosts)
-  @JoinColumn({ name: "iDriverId", referencedColumnName: "iDriverId" })
-  driver: RegisterDriver;
+  // @ManyToOne(() => RegisterDriver, (driver) => driver.biddingPosts)
+  // @JoinColumn({ name: "iDriverId", 
+  //   // referencedColumnName: "iDriverId" 
+  // })
+  // driver: RegisterDriver;
 
   @Column("text", { name: "fBiddingAmount" })
   fBiddingAmount: string;
@@ -55,7 +59,9 @@ export class BiddingPost {
   iAddressId: number;
 
   @ManyToOne(() => UserAddress, (address) => address.biddingPosts)
-  @JoinColumn({ name: "iAddressId", referencedColumnName: "iUserAddressId" })
+  @JoinColumn({ name: "iAddressId", 
+    // referencedColumnName: "iUserAddressId"
+   })
   address: UserAddress;
 
   @Column("varchar", { name: "vContactName", length: 255 })
@@ -91,7 +97,7 @@ export class BiddingPost {
   @ManyToOne(() => CancelReason, (cancelReason) => cancelReason.biddingPosts)
   @JoinColumn({
     name: "iCancelReasonId",
-    referencedColumnName: "iCancelReasonId",
+    // referencedColumnName: "iCancelReasonId",
   })
   cancelReason: CancelReason;
 
@@ -157,7 +163,7 @@ export class BiddingPost {
   @ManyToOne(() => UserPaymentInfo, (paymentInfo) => paymentInfo.biddingPosts)
   @JoinColumn({
     name: "iPaymentInfoId",
-    referencedColumnName: "iPaymentInfoId",
+    // referencedColumnName: "iPaymentInfoId",
   })
   paymentInfo: UserPaymentInfo;
 

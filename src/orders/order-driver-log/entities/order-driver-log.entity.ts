@@ -16,7 +16,9 @@ export class OrderDriverLog {
   iOrderId: number;
 
   @ManyToOne(() => Orders, (orders) => orders.orderDriverLogs)
-  @JoinColumn([{ name: "iOrderId", referencedColumnName: "iOrderId" }])
+  @JoinColumn([{ name: "iOrderId",
+    //  referencedColumnName: "iOrderId" 
+    }])
   order: Orders;
 
   @Column("int", { name: "iDriverId" })

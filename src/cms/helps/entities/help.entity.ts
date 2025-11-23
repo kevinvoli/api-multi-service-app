@@ -18,7 +18,7 @@ export class Helps {
   @ManyToOne(() => HelpsCategories, (helpsCategory) => helpsCategory.helps)
   @JoinColumn({
     name: "iHelpscategoryId",
-    referencedColumnName: "iHelpscategoryId",
+    // referencedColumnName: "iHelpscategoryId",
   })
   helpsCategory: HelpsCategories;
 

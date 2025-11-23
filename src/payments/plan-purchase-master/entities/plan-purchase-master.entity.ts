@@ -17,7 +17,9 @@ export class PlanPurchaseMaster {
   iUserId: number;
 
   @ManyToOne(() => RegisterUser, (user) => user.planPurchases)
-  @JoinColumn({ name: "iUserId", referencedColumnName: "iUserId" })
+  @JoinColumn({ name: "iUserId", 
+    // referencedColumnName: "iUserId"
+   })
   user: RegisterUser;
 
   @Column("date", { name: "dStartDate" })

@@ -16,7 +16,9 @@ export class HotelBanners {
   iHotelId: number;
 
   @ManyToOne(() => Hotel, (hotel) => hotel.hotelBanners)
-  @JoinColumn({ name: "iHotelId", referencedColumnName: "iHotelId" })
+  @JoinColumn({ name: "iHotelId", 
+    // referencedColumnName: "iHotelId" 
+  })
   hotel: Hotel;
 
   @Column("enum", {

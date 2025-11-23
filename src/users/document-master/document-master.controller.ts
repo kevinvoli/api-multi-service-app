@@ -22,10 +22,10 @@ export class DocumentMasterController {
     return await this.documentMasterService.findOne(+id);
   }
 
-  @Patch(':id')
-  async update(@Param('id') id: string, @Body() updateDocumentMasterDto: UpdateDocumentMasterDto) {
-    return await this.documentMasterService.update(+id, updateDocumentMasterDto);
-  }
+  // @Patch(':id')
+  // async update(@Param('id') id: string, @Body() updateDocumentMasterDto: UpdateDocumentMasterDto) {
+  //   return await this.documentMasterService.update(+id, updateDocumentMasterDto);
+  // }
 
   @Delete(':id')
   async remove(@Param('id') id: string) {

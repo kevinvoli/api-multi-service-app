@@ -11,6 +11,26 @@ import { VehicleCategory } from "../../../vehicles/vehicle-category/entities/veh
 import { BiddingService } from "../../../bidding/bidding-service/entities/bidding-service.entity";
 import { DocumentList } from "../../document-list/entities/document-list.entity";
 
+export enum docUsertype{
+  "company", "driver", "car", "store"
+}
+
+export enum exStatus{
+ "yes", "no" 
+}
+
+export enum status{
+  "Active", "Inactive", "Deleted"
+}
+
+export enum eType{
+  "Ride", "Delivery", "UberX"
+}
+
+export enum eDocServiceType{
+  "General", "ServiceSpecific", "BiddingSpecific"
+}
+
 @Entity("document_master", { schema: "amygo1" })
 export class DocumentMaster {
   @PrimaryGeneratedColumn({ type: "int", name: "doc_masterid" })
@@ -18,35 +38,38 @@ export class DocumentMaster {
 
   @Column("enum", {
     name: "doc_usertype",
-    enum: ["company", "driver", "car", "store"],
+    enum: docUsertype,
   })
-  docUsertype: "company" | "driver" | "car" | "store";
+  docUsertype: docUsertype;
 
   @Column("varchar", { name: "doc_name", length: 50 })
   docName: string;
 
-  @Column("varchar", { name: "country", length: 10 })
-  countryCode: string;
+  // @Column("varchar", { name: "country", length: 10 })
+  // countryCode?: string;
 
   @ManyToOne(() => Country, (country) => country.documentMasters)
-  @JoinColumn({ name: "country", referencedColumnName: "vCountryCode" })
+  @JoinColumn({ name: "country",
+    //  referencedColumnName: "vCountryCode" 
+    })
   country: Country;
 
-  @Column("enum", { name: "ex_status", enum: ["yes", "no"] })
-  exStatus: "yes" | "no";
+  @Column("enum", { name: "ex_status", enum: exStatus })
+  exStatus: exStatus;
 
   @Column("enum", {
     name: "status",
-    enum: ["Active", "Inactive", "Deleted"],
-    default: "Active",
+    enum:status,
+    nullable:true,
+    // default: "Active",
   })
-  status: "Active" | "Inactive" | "Deleted";
+  status: status;
 
   @Column("timestamp", {
     name: "doc_instime",
     default: () => "CURRENT_TIMESTAMP",
   })
-  docInstime: Date;
+  docInstime?: Date;
 
   @Column("varchar", { name: "doc_name_EN", length: 50 })
   docNameEn: string;
@@ -56,20 +79,22 @@ export class DocumentMaster {
 
   @Column("enum", {
     name: "eType",
-    enum: ["Ride", "Delivery", "UberX"],
-    default: "Ride",
+    enum: eType,
+    nullable:true
+    // default: "Ride",
   })
-  eType: "Ride" | "Delivery" | "UberX";
+  eType?:eType;
 
   @Column("enum", {
     name: "eDocServiceType",
-    enum: ["General", "ServiceSpecific", "BiddingSpecific"],
-    default: "General",
+    enum: eDocServiceType,
+    nullable:true,
+    // default: "General",
   })
-  eDocServiceType: "General" | "ServiceSpecific" | "BiddingSpecific";
+  eDocServiceType?: eDocServiceType;
 
   @Column("int", { name: "iVehicleCategoryId", default: "0" })
-  iVehicleCategoryId: number;
+  iVehicleCategoryId?: number;
 
   @ManyToOne(
     () => VehicleCategory,
@@ -77,20 +102,22 @@ export class DocumentMaster {
   )
   @JoinColumn({
     name: "iVehicleCategoryId",
-    referencedColumnName: "iVehicleCategoryId",
+    // referencedColumnName: "iVehicleCategoryId",
   })
-  vehicleCategory: VehicleCategory;
+  vehicleCategory?: VehicleCategory;
 
   @Column("int", { name: "iDisplayOrder", default: () => "'1'" })
-  iDisplayOrder: number;
+  iDisplayOrder?: number;
 
   @Column("int", { name: "iBiddingId" })
-  iBiddingId: number;
+  iBiddingId?: number;
 
   @ManyToOne(() => BiddingService, (bidding) => bidding.documentMasters)
-  @JoinColumn({ name: "iBiddingId", referencedColumnName: "iBiddingId" })
-  bidding: BiddingService;
+  @JoinColumn({ name: "iBiddingId", 
+    // referencedColumnName: "iBiddingId"
+   })
+  bidding?: BiddingService;
 
   @OneToMany(() => DocumentList, (docList) => docList.documentMaster)
-  documentLists: DocumentList[];
+  documentLists?: DocumentList[];
 }

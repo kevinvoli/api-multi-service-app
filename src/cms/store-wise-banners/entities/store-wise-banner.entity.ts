@@ -17,14 +17,18 @@ export class StoreWiseBanners {
   iServiceId: number;
 
   @ManyToOne(() => ServiceCategories, (service) => service.storeWiseBanners)
-  @JoinColumn({ name: "iServiceId", referencedColumnName: "iServiceId" })
+  @JoinColumn({ name: "iServiceId", 
+    // referencedColumnName: "iServiceId" 
+  })
   service: ServiceCategories;
 
   @Column("int", { name: "iCompanyId" })
   iCompanyId: number;
 
   @ManyToOne(() => Company, (company) => company.storeWiseBanners)
-  @JoinColumn({ name: "iCompanyId", referencedColumnName: "iCompanyId" })
+  @JoinColumn({ name: "iCompanyId", 
+    // referencedColumnName: "iCompanyId" 
+  })
   company: Company;
 
   @Column("enum", {

@@ -15,12 +15,14 @@ export class PaymentRequests {
   @Column("text", { name: "vRideNo" })
   vRideNo: string;
 
-  @Column("int", { name: "iDriverId" })
-  iDriverId: number;
+  // @Column("int", { name: "iDriverId" })
+  // iDriverId: number;
 
-  @ManyToOne(() => RegisterDriver, (driver) => driver.paymentRequests)
-  @JoinColumn({ name: "iDriverId", referencedColumnName: "iDriverId" })
-  driver: RegisterDriver;
+  // @ManyToOne(() => RegisterDriver, (driver) => driver.paymentRequests)
+  // @JoinColumn({ name: "iDriverId",
+  //   //  referencedColumnName: "iDriverId"
+  //    })
+  // driver: RegisterDriver;
 
   @Column("varchar", { name: "vName", length: 100 })
   vName: string;

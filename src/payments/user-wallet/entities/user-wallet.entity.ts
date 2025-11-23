@@ -108,7 +108,9 @@ export class UserWallet {
   iOrderId: number;
 
   @ManyToOne(() => Orders, (order) => order.userWallets)
-  @JoinColumn({ name: "iOrderId", referencedColumnName: "iOrderId" })
+  @JoinColumn({ name: "iOrderId", 
+    // referencedColumnName: "iOrderId" 
+  })
   order: Orders;
 
   @Column("mediumtext", { name: "iTransactionId" })
@@ -136,6 +138,8 @@ export class UserWallet {
     onDelete: "NO ACTION",
     onUpdate: "NO ACTION",
   })
-  @JoinColumn([{ name: "iUserId", referencedColumnName: "iUserId" }])
+  @JoinColumn([{ name: "iUserId", 
+    // referencedColumnName: "iUserId" 
+  }])
   iUser: RegisterUser;
 }

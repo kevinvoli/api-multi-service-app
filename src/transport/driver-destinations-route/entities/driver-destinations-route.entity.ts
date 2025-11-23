@@ -12,12 +12,14 @@ export class DriverDestinationsRoute {
   @PrimaryGeneratedColumn({ type: "int", name: "iRootId" })
   iRootId: number;
 
-  @Column("int", { name: "iDriverId" })
-  iDriverId: number;
+  // @Column("int", { name: "iDriverId" })
+  // iDriverId: number;
 
-  @ManyToOne(() => RegisterDriver, (driver) => driver.driverDestinationsRoutes)
-  @JoinColumn({ name: "iDriverId", referencedColumnName: "iDriverId" })
-  driver: RegisterDriver;
+  // @ManyToOne(() => RegisterDriver, (driver) => driver.driverDestinationsRoutes)
+  // @JoinColumn({ name: "iDriverId", 
+  //   // referencedColumnName: "iDriverId"
+  //  })
+  // driver: RegisterDriver;
 
   @Column("longtext", { name: "tDestLatitudes" })
   tDestLatitudes: string;

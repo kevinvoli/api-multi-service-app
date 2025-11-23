@@ -45,15 +45,19 @@ export class CabRequestNow {
   iUserId: number;
 
   @ManyToOne(() => RegisterUser, (user) => user.cabRequestNows)
-  @JoinColumn({ name: "iUserId", referencedColumnName: "iUserId" })
+  @JoinColumn({ name: "iUserId",
+    // referencedColumnName: "iUserId" 
+  })
   user: RegisterUser;
 
-  @Column("int", { name: "iDriverId", default: "0" })
-  iDriverId: number;
+  // @Column("int", { name: "iDriverId", default: "0" })
+  // iDriverId: number;
 
-  @ManyToOne(() => RegisterDriver, (driver) => driver.cabRequestNows)
-  @JoinColumn({ name: "iDriverId", referencedColumnName: "iDriverId" })
-  driver: RegisterDriver;
+  // @ManyToOne(() => RegisterDriver, (driver) => driver.cabRequestNows)
+  // @JoinColumn({ name: "iDriverId", 
+  //   // referencedColumnName: "iDriverId"
+  //  })
+  // driver: RegisterDriver;
 
   @Column("int", { name: "iOrganizationId" })
   iOrganizationId: number;
@@ -61,7 +65,7 @@ export class CabRequestNow {
   @ManyToOne(() => Organization, (organization) => organization.cabRequestNows)
   @JoinColumn({
     name: "iOrganizationId",
-    referencedColumnName: "iOrganizationId",
+    // referencedColumnName: "iOrganizationId",
   })
   organization: Organization;
 
@@ -69,7 +73,9 @@ export class CabRequestNow {
   iHotelId: number;
 
   @ManyToOne(() => Hotel, (hotel) => hotel.cabRequestNows)
-  @JoinColumn({ name: "iHotelId", referencedColumnName: "iHotelId" })
+  @JoinColumn({ name: "iHotelId", 
+    // referencedColumnName: "iHotelId"
+   })
   hotel: Hotel;
 
   @Column("longtext", { name: "tMsgCode" })
@@ -83,7 +89,9 @@ export class CabRequestNow {
   iTripId: number;
 
   @ManyToOne(() => Trips, (trip) => trip.cabRequestNows)
-  @JoinColumn({ name: "iTripId", referencedColumnName: "iTripId" })
+  @JoinColumn({ name: "iTripId", 
+    // referencedColumnName: "iTripId" 
+  })
   trip: Trips;
 
   @Column("enum", {
@@ -145,7 +153,7 @@ export class CabRequestNow {
   @ManyToOne(() => VehicleType, (vehicleType) => vehicleType.cabRequestNows)
   @JoinColumn({
     name: "iVehicleTypeId",
-    referencedColumnName: "iVehicleTypeId",
+    // referencedColumnName: "iVehicleTypeId",
   })
   vehicleType: VehicleType;
 
@@ -161,7 +169,7 @@ export class CabRequestNow {
   )
   @JoinColumn({
     name: "iRentalPackageId",
-    referencedColumnName: "iRentalPackageId",
+    // referencedColumnName: "iRentalPackageId",
   })
   rentalPackage: RentalPackage;
 
@@ -195,7 +203,7 @@ export class CabRequestNow {
   @ManyToOne(() => PackageType, (packageType) => packageType.cabRequestNows)
   @JoinColumn({
     name: "iPackageTypeId",
-    referencedColumnName: "iPackageTypeId",
+    // referencedColumnName: "iPackageTypeId",
   })
   packageType: PackageType;
 
@@ -501,7 +509,7 @@ export class CabRequestNow {
   @ManyToOne(() => UserProfile, (profile) => profile.cabRequestNows)
   @JoinColumn({
     name: "iUserProfileId",
-    referencedColumnName: "iUserProfileId",
+    // referencedColumnName: "iUserProfileId",
   })
   userProfile: UserProfile;
 
@@ -509,7 +517,9 @@ export class CabRequestNow {
   iTripReasonId: number;
 
   @ManyToOne(() => TripReason, (reason) => reason.cabRequestNows)
-  @JoinColumn({ name: "iTripReasonId", referencedColumnName: "iTripReasonId" })
+  @JoinColumn({ name: "iTripReasonId", 
+    // referencedColumnName: "iTripReasonId"
+   })
   tripReason: TripReason;
 
   @Column("text", { name: "vReasonTitle" })
@@ -620,7 +630,7 @@ export class CabRequestNow {
   )
   @JoinColumn({
     name: "iPaymentInfoId",
-    referencedColumnName: "iPaymentInfoId",
+    // referencedColumnName: "iPaymentInfoId",
   })
   paymentInfo: UserPaymentInfo;
 

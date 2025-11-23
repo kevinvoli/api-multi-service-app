@@ -25,7 +25,9 @@ export class AirportsurchargeFare {
   iLocationIds: number;
 
   @ManyToOne(() => LocationMaster, (location) => location.airportSurchargeFares)
-  @JoinColumn({ name: "iLocationIds", referencedColumnName: "iLocationId" })
+  @JoinColumn({ name: "iLocationIds",
+    //  referencedColumnName: "iLocationId"
+     })
   location: LocationMaster;
 
   @Column("varchar", { name: "vFromCity", length: 10 })
@@ -44,7 +46,7 @@ export class AirportsurchargeFare {
   @ManyToOne(() => VehicleType, (vehicleType) => vehicleType.airportSurchargeFares)
   @JoinColumn({
     name: "iVehicleTypeId",
-    referencedColumnName: "iVehicleTypeId",
+    // referencedColumnName: "iVehicleTypeId",
   })
   vehicleType: VehicleType;
 }

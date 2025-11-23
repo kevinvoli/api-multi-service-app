@@ -18,7 +18,9 @@ export class Administrators {
   iGroupId: number;
 
   @ManyToOne(() => AdminGroups, (group) => group.administrators)
-  @JoinColumn({ name: "iGroupId", referencedColumnName: "iGroupId" })
+  @JoinColumn({ name: "iGroupId", 
+    // referencedColumnName: "iGroupId" 
+  })
   group: AdminGroups;
 
   @Column("varchar", { name: "vFirstName", length: 255 })

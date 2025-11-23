@@ -17,7 +17,9 @@ export class OrderRequest {
   iOrderId: number;
 
   @ManyToOne(() => Orders, (order) => order.orderRequest)
-  @JoinColumn({ name: "iOrderId", referencedColumnName: "iOrderId" })
+  @JoinColumn({ name: "iOrderId", 
+    // referencedColumnName: "iOrderId"
+   })
   order: Orders;
 
   @Column("longtext", { name: "vMsgCode" })
@@ -26,10 +28,12 @@ export class OrderRequest {
   @Column("enum", { name: "eStatus", enum: ["Pending", "Accept"] })
   eStatus: "Pending" | "Accept";
 
-  @Column("int", { name: "iDriverId" })
-  iDriverId: number;
+  // @Column("int", { name: "iDriverId" })
+  // iDriverId: number;
 
-  @ManyToOne(() => RegisterDriver, (driver) => driver.orderRequests)
-  @JoinColumn({ name: "iDriverId", referencedColumnName: "iDriverId" })
-  driver: RegisterDriver;
+  // @ManyToOne(() => RegisterDriver, (driver) => driver.orderRequests)
+  // @JoinColumn({ name: "iDriverId",
+  //   //  referencedColumnName: "iDriverId"
+  //    })
+  // driver: RegisterDriver;
 }

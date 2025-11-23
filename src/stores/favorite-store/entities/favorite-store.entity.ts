@@ -24,14 +24,18 @@ export class FavoriteStore {
   iUserId: number;
 
   @ManyToOne(() => RegisterUser, (user) => user.favoriteStores)
-  @JoinColumn({ name: "iUserId", referencedColumnName: "iUserId" })
+  @JoinColumn({ name: "iUserId", 
+    // referencedColumnName: "iUserId" 
+  })
   user: RegisterUser;
 
   @Column("int", { name: "iCompanyId" })
   iCompanyId: number;
 
   @ManyToOne(() => Company, (company) => company.favoriteStores)
-  @JoinColumn({ name: "iCompanyId", referencedColumnName: "iCompanyId" })
+  @JoinColumn({ name: "iCompanyId",
+    //  referencedColumnName: "iCompanyId" 
+    })
   company: Company;
 
   @Column("enum", {

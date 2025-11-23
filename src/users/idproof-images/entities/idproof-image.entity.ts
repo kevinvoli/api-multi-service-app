@@ -17,7 +17,9 @@ export class IdproofImages {
   iUserId: number;
 
   @ManyToOne(() => RegisterUser, (user) => user.idproofImages)
-  @JoinColumn({ name: "iUserId", referencedColumnName: "iUserId" })
+  @JoinColumn({ name: "iUserId", 
+    // referencedColumnName: "iUserId"
+   })
   user: RegisterUser;
 
   @Column("text", { name: "vImage" })
@@ -33,6 +35,8 @@ export class IdproofImages {
   iOrderId: number;
 
   @ManyToOne(() => Orders, (order) => order.idproofImages)
-  @JoinColumn({ name: "iOrderId", referencedColumnName: "iOrderId" })
+  @JoinColumn({ name: "iOrderId", 
+    // referencedColumnName: "iOrderId"
+   })
   order: Orders;
 }

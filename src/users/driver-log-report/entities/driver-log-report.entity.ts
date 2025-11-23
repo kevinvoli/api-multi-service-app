@@ -12,12 +12,14 @@ export class DriverLogReport {
   @PrimaryGeneratedColumn({ type: "int", name: "iDriverLogId" })
   iDriverLogId: number;
 
-  @Column("int", { name: "iDriverId" })
-  iDriverId: number;
+  // @Column("int", { name: "iDriverId" })
+  // iDriverId: number;
 
-  @ManyToOne(() => RegisterDriver, (driver) => driver.driverLogReports)
-  @JoinColumn({ name: "iDriverId", referencedColumnName: "iDriverId" })
-  driver: RegisterDriver;
+  // @ManyToOne(() => RegisterDriver, (driver) => driver.driverLogReports)
+  // @JoinColumn({ name: "iDriverId", 
+  //   // referencedColumnName: "iDriverId"
+  //  })
+  // driver: RegisterDriver;
 
   @Column("timestamp", {
     name: "dLoginDateTime",

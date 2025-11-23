@@ -12,12 +12,14 @@ export class DriverDoc {
   @PrimaryColumn({ type: "int", name: "iDriverDocId" })
   iDriverDocId: number;
 
-  @Column("int", { name: "iDriverId" })
-  iDriverId: number;
+  // @Column("int", { name: "iDriverId" })
+  // iDriverId: number;
 
-  @ManyToOne(() => RegisterDriver, (driver) => driver.driverDocs)
-  @JoinColumn({ name: "iDriverId", referencedColumnName: "iDriverId" })
-  driver: RegisterDriver;
+  // @ManyToOne(() => RegisterDriver, (driver) => driver.driverDocs)
+  // @JoinColumn({ name: "iDriverId",
+  //   //  referencedColumnName: "iDriverId"
+  //    })
+  // driver: RegisterDriver;
 
   @Column("varchar", { name: "vLicence", length: 500 })
   vLicence: string;

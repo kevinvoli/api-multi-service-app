@@ -13,18 +13,22 @@ export class DriverInsuranceReport {
   @PrimaryGeneratedColumn({ type: "int", name: "iInsuranceReportId" })
   iInsuranceReportId: number;
 
-  @Column("int", { name: "iDriverId" })
-  iDriverId: number;
+  // @Column("int", { name: "iDriverId" })
+  // iDriverId: number;
 
-  @ManyToOne(() => RegisterDriver, (driver) => driver.driverInsuranceReports)
-  @JoinColumn({ name: "iDriverId", referencedColumnName: "iDriverId" })
-  driver: RegisterDriver;
+  // @ManyToOne(() => RegisterDriver, (driver) => driver.driverInsuranceReports)
+  // @JoinColumn({ name: "iDriverId",
+  //   //  referencedColumnName: "iDriverId"
+  //    })
+  // driver: RegisterDriver;
 
   @Column("int", { name: "iTripId", default: "0" })
   iTripId: number;
 
   @ManyToOne(() => Trips, (trip) => trip.driverInsuranceReports)
-  @JoinColumn({ name: "iTripId", referencedColumnName: "iTripId" })
+  @JoinColumn({ name: "iTripId", 
+    // referencedColumnName: "iTripId" 
+  })
   trip: Trips;
 
   @Column("datetime", { name: "dStartDate" })

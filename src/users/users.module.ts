@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { RegisterUserModule } from './register-user/register-user.module';
-import { RegisterDriverModule } from './register-driver/register-driver.module';
+// import { RegisterDriverModule } from './register-driver/register-driver.module';
 import { UserProfileModule } from './user-profile/user-profile.module';
 import { UserProfileMasterModule } from './user-profile-master/user-profile-master.module';
 import { UserAddressModule } from './user-address/user-address.module';
@@ -39,7 +39,7 @@ import { RatingsUserDriverModule } from './ratings-user-driver/ratings-user-driv
 @Module({
   imports: [
     RegisterUserModule,
-    RegisterDriverModule,
+    // RegisterDriverModule,
     UserProfileModule,
     UserProfileMasterModule,
     UserAddressModule,
@@ -77,7 +77,7 @@ import { RatingsUserDriverModule } from './ratings-user-driver/ratings-user-driv
   ],
   exports: [
     RegisterUserModule,
-    RegisterDriverModule,
+    // RegisterDriverModule,
     UserProfileModule,
     UserProfileMasterModule,
     UserAddressModule,

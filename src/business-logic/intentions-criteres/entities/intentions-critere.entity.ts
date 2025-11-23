@@ -17,7 +17,9 @@ export class IntentionsCriteres {
   userId: number | null;
 
   @ManyToOne(() => RegisterUser, (user) => user.intentionsCriteres)
-  @JoinColumn({ name: "user_id", referencedColumnName: "iUserId" })
+  @JoinColumn({ name: "user_id", 
+    // referencedColumnName: "iUserId" 
+  })
   user: RegisterUser;
 
   @Column("varchar", { name: "stamp", nullable: true, length: 50 })
@@ -27,7 +29,9 @@ export class IntentionsCriteres {
   intentionId: number;
 
   @ManyToOne(() => Intentions, (intention) => intention.intentionsCriteres)
-  @JoinColumn({ name: "intention_id", referencedColumnName: "id" })
+  @JoinColumn({ name: "intention_id",
+    //  referencedColumnName: "id" 
+    })
   intention: Intentions;
 
   @Column("int", { name: "sous_service" })

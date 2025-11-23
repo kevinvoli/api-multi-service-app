@@ -91,14 +91,18 @@ export class Coupon {
   iCompanyId: number;
 
   @ManyToOne(() => Company, (company) => company.coupons)
-  @JoinColumn({ name: "iCompanyId", referencedColumnName: "iCompanyId" })
+  @JoinColumn({ name: "iCompanyId", 
+    // referencedColumnName: "iCompanyId"
+   })
   company: Company;
 
   @Column("int", { name: "iServiceId" })
   iServiceId: number;
 
   @ManyToOne(() => ServiceCategories, (service) => service.coupons)
-  @JoinColumn({ name: "iServiceId", referencedColumnName: "iServiceId" })
+  @JoinColumn({ name: "iServiceId", 
+    // referencedColumnName: "iServiceId"
+   })
   service: ServiceCategories;
 
   @Column("enum", {
@@ -112,7 +116,9 @@ export class Coupon {
   iLocationId: number;
 
   @ManyToOne(() => LocationMaster, (location) => location.coupons)
-  @JoinColumn({ name: "iLocationId", referencedColumnName: "iLocationId" })
+  @JoinColumn({ name: "iLocationId",
+    //  referencedColumnName: "iLocationId"
+     })
   location: LocationMaster;
 
   @Column("datetime", {

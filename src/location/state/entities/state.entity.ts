@@ -18,7 +18,9 @@ export class State {
   iCountryId: number;
 
   @ManyToOne(() => Country, (country) => country.states)
-  @JoinColumn({ name: "iCountryId", referencedColumnName: "iCountryId" })
+  @JoinColumn({ name: "iCountryId",
+    //  referencedColumnName: "iCountryId"
+     })
   country: Country;
 
   @Column("varchar", { name: "vStateCode", length: 32, default: () => "''" })

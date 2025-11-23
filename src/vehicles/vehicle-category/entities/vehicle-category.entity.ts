@@ -65,7 +65,9 @@ export class VehicleCategory {
   iParentId: number;
 
   @ManyToOne(() => VehicleCategory, (vehicleCategory) => vehicleCategory.children)
-  @JoinColumn({ name: "iParentId", referencedColumnName: "iVehicleCategoryId" })
+  @JoinColumn({ name: "iParentId", 
+    // referencedColumnName: "iVehicleCategoryId"
+   })
   parent: VehicleCategory;
 
   @OneToMany(() => VehicleCategory, (vehicleCategory) => vehicleCategory.parent)
@@ -213,7 +215,7 @@ export class VehicleCategory {
   )
   @JoinColumn({
     name: "iMasterVehicleCategoryId",
-    referencedColumnName: "iMasterVehicleCategoryId",
+    // referencedColumnName: "iMasterVehicleCategoryId",
   })
   masterVehicleCategory: MasterVehicleCategory;
 

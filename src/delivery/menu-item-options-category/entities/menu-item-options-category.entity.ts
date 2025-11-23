@@ -19,7 +19,9 @@ export class MenuitemOptionsCategory {
     () => MenuItems,
     (menuItem) => menuItem.menuItemOptionsCategories,
   )
-  @JoinColumn({ name: "iMenuItemId", referencedColumnName: "iMenuItemId" })
+  @JoinColumn({ name: "iMenuItemId", 
+    // referencedColumnName: "iMenuItemId" 
+  })
   menuItem: MenuItems;
 
   @Column("text", { name: "tCategoryName" })

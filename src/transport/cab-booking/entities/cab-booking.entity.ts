@@ -29,22 +29,28 @@ export class CabBooking {
   iCompanyId: number;
 
   @ManyToOne(() => Company, (company) => company.cabBookings)
-  @JoinColumn({ name: "iCompanyId", referencedColumnName: "iCompanyId" })
+  @JoinColumn({ name: "iCompanyId",
+    //  referencedColumnName: "iCompanyId"
+     })
   company: Company;
 
   @Column("int", { name: "iUserId", comment: "link with register_uesr table" })
   iUserId: number;
 
   @ManyToOne(() => RegisterUser, (user) => user.cabBookings)
-  @JoinColumn({ name: "iUserId", referencedColumnName: "iUserId" })
+  @JoinColumn({ name: "iUserId", 
+    // referencedColumnName: "iUserId"
+   })
   user: RegisterUser;
 
-  @Column("int", { name: "iDriverId" })
-  iDriverId: number;
+  // @Column("int", { name: "iDriverId" })
+  // iDriverId: number;
 
-  @ManyToOne(() => RegisterDriver, (driver) => driver.cabBookings)
-  @JoinColumn({ name: "iDriverId", referencedColumnName: "iDriverId" })
-  driver: RegisterDriver;
+  // @ManyToOne(() => RegisterDriver, (driver) => driver.cabBookings)
+  // @JoinColumn({ name: "iDriverId",
+  //   //  referencedColumnName: "iDriverId"
+  //    })
+  // driver: RegisterDriver;
 
   @Column("int", { name: "iOrganizationId" })
   iOrganizationId: number;
@@ -52,7 +58,7 @@ export class CabBooking {
   @ManyToOne(() => Organization, (organization) => organization.cabBookings)
   @JoinColumn({
     name: "iOrganizationId",
-    referencedColumnName: "iOrganizationId",
+    // referencedColumnName: "iOrganizationId",
   })
   organization: Organization;
 
@@ -128,7 +134,9 @@ export class CabBooking {
   iTripId: number;
 
   @ManyToOne(() => Trips, (trip) => trip.cabBookings)
-  @JoinColumn({ name: "iTripId", referencedColumnName: "iTripId" })
+  @JoinColumn({ name: "iTripId",
+    //  referencedColumnName: "iTripId"
+     })
   trip: Trips;
 
   @Column("enum", {
@@ -171,7 +179,7 @@ export class CabBooking {
   @ManyToOne(() => VehicleType, (vehicleType) => vehicleType.cabBookings)
   @JoinColumn({
     name: "iVehicleTypeId",
-    referencedColumnName: "iVehicleTypeId",
+    // referencedColumnName: "iVehicleTypeId",
   })
   vehicleType: VehicleType;
 
@@ -187,7 +195,7 @@ export class CabBooking {
   )
   @JoinColumn({
     name: "iRentalPackageId",
-    referencedColumnName: "iRentalPackageId",
+    // referencedColumnName: "iRentalPackageId",
   })
   rentalPackage: RentalPackage;
 
@@ -222,7 +230,7 @@ export class CabBooking {
   @ManyToOne(() => CancelReason, (reason) => reason.cabBookings)
   @JoinColumn({
     name: "iCancelReasonId",
-    referencedColumnName: "iCancelReasonId",
+    // referencedColumnName: "iCancelReasonId",
   })
   cancelReason: CancelReason;
 
@@ -244,7 +252,7 @@ export class CabBooking {
   @ManyToOne(() => PackageType, (packageType) => packageType.cabBookings)
   @JoinColumn({
     name: "iPackageTypeId",
-    referencedColumnName: "iPackageTypeId",
+    // referencedColumnName: "iPackageTypeId",
   })
   packageType: PackageType;
 
@@ -587,7 +595,9 @@ export class CabBooking {
   iAdminId: number;
 
   @ManyToOne(() => Administrators, (admin) => admin.cabBookings)
-  @JoinColumn({ name: "iAdminId", referencedColumnName: "iAdminId" })
+  @JoinColumn({ name: "iAdminId", 
+    // referencedColumnName: "iAdminId" 
+  })
   admin: Administrators;
 
   @Column("int", { name: "iHotelBookingId", comment: "For Hotel Panel Web" })
@@ -627,7 +637,9 @@ export class CabBooking {
   iTripReasonId: number;
 
   @ManyToOne(() => TripReason, (reason) => reason.cabBookings)
-  @JoinColumn({ name: "iTripReasonId", referencedColumnName: "iTripReasonId" })
+  @JoinColumn({ name: "iTripReasonId",
+    //  referencedColumnName: "iTripReasonId"
+     })
   tripReason: TripReason;
 
   @Column("text", { name: "vReasonTitle" })
