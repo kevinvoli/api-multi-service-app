@@ -28,7 +28,7 @@ import { CabRequestNow } from "../../cab-request-now/entities/cab-request-now.en
 
 
 @Index("vOrderNoUnique", ["vOrderNoUnique"], { unique: true })
-@Index("trips_drivers", ["iDriverId"], {})
+// @Index("trips_drivers", ["iDriverId"], {})
 @Index("trips_users", ["iUserId"], {})
 @Index("index_trdate", ["tTripRequestDate"], {})
 @Index("index_company_id", ["iCompanyId"], {})

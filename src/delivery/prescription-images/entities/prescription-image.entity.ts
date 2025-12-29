@@ -16,13 +16,14 @@ export class PrescriptionImages {
 
   @Column("timestamp", {
     name: "tAddedDate",
-    default: () => "CURRENT_TIMESTAMP",
+    default: () =>"CURRENT_T IMESTAMP",
   })
   tAddedDate: Date;
 
   @Column("timestamp", {
     name: "tModifiedDate",
     nullable:true,
+
   })
   tModifiedDate: Date;
 
