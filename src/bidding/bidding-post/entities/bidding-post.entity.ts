@@ -6,7 +6,6 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { RegisterUser } from "../../../users/register-user/entities/register-user.entity";
-import { RegisterDriver } from "../../../users/register-driver/entities/register-driver.entity";
 import { UserAddress } from "../../../users/user-address/entities/user-address.entity";
 import { CancelReason } from "../../../core_app/cancel-reason/entities/cancel-reason.entity";
 import { UserPaymentInfo } from "../../../users/user-payment-info/entities/user-payment-info.entity";

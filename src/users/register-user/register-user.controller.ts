@@ -14,6 +14,8 @@ export class RegisterUserController {
 
   @Get()
   async findAll() {
+    console.log("la liste de suser");
+    
     return await this.registerUserService.findAll();
   }
 

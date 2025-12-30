@@ -1,6 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity("prescription_images", { schema: "amygo1" })
+@Entity('prescription_images', { schema: 'amygo1' })
 export class PrescriptionImages {
   @PrimaryGeneratedColumn({ type: "int", name: "iImageId" })
   iImageId: number;

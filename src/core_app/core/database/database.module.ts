@@ -20,7 +20,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
           keepConnectionAlive: true,
           connectTimeout: 10000,
           autoLoadEntities: true,
-          synchronize: true,
+          synchronize: false,
+          migrationsRun: false,
         })
     })
   ],

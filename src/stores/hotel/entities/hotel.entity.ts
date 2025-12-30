@@ -124,6 +124,7 @@ export class Hotel {
   @Column("timestamp", {
     name: "tLastOnline",
     nullable:true,
+    default: () => "NULL",
   })
   tLastOnline: Date;
 
@@ -141,8 +142,8 @@ export class Hotel {
   })
   ePhoneVerified: "Yes" | "No";
 
-  // @Column("varchar", { name: "vPasswordToken", length: 255 })
-  // vPasswordToken: string;
+  @Column("varchar", { name: "vPasswordToken", length: 255 })
+  vPasswordToken: string;
 
   @Column("enum", {
     name: "eSignUpType",
@@ -155,7 +156,7 @@ export class Hotel {
   tSessionId: string;
 
   @Column("varchar", { name: "vPassword_token", length: 255 })
-  vPasswordToken: string;
+  vPassword_token: string;
 
   @Column("text", { name: "tDeviceSessionId" })
   tDeviceSessionId: string;

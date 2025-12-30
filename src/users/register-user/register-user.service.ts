@@ -11,7 +11,7 @@ export class RegisterUserService {
   constructor(
     @InjectRepository(RegisterUser)
     private readonly registerUserRepository: Repository<RegisterUser>,
-  ) {}
+  ) { }
   async create(createRegisterUserDto: CreateRegisterUserDto): Promise<Omit<RegisterUser, 'vPassword'>> {
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(createRegisterUserDto.vPassword, salt);
@@ -27,12 +27,47 @@ export class RegisterUserService {
     return result;
   }
 
-  async findAll(): Promise<Omit<RegisterUser, 'vPassword'>[]> {
-    const users = await this.registerUserRepository.find();
-    return users.map(user => {
+  async findAll(
+    page: number = 1,
+    limit: number = 50,
+    filters?: any
+  ): Promise<{
+    users: Omit<RegisterUser, 'vPassword'>[];
+    total: number;
+    page: number;
+    totalPages: number;
+  }> {
+    const skip = (page - 1) * limit;
+
+    const [users, total] = await this.registerUserRepository.findAndCount({
+      skip,
+      take: limit,
+      // where: filters ? filters : {},
+      select: this.getSafeUserFields(), // Sélectionner uniquement les champs nécessaires
+      order: { tRegistrationDate: 'DESC' } // Trier par date
+    });
+
+    const safeUsers = users.map(user => {
       const { vPassword, ...result } = user;
       return result;
     });
+
+    return {
+      users: safeUsers,
+      total,
+      page,
+      totalPages: Math.ceil(total / limit)
+    };
+  }
+
+  private getSafeUserFields(): (keyof RegisterUser)[] {
+    // Liste explicite des champs à retourner (exclure vPassword et autres champs sensibles)
+    return [
+      'iUserId', 'vName', 'vLastName', 'vEmail', 'vPhone',
+      'eStatus', 'tRegistrationDate', 'eGender', 'vCountry',
+      'vAvgRating', 'eEmailVerified', 'ePhoneVerified',
+      'tLastOnline', 'vImgName', 'eDeviceType'
+    ];
   }
 
   async findOne(id: number): Promise<Omit<RegisterUser, 'vPassword'>> {

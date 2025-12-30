@@ -1,11 +1,8 @@
 import {
   Column,
   Entity,
-  JoinColumn,
-  ManyToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { RegisterDriver } from "../../register-driver/entities/register-driver.entity";
 
 @Entity("driver_log_report", { schema: "amygo1" })
 export class DriverLogReport {
