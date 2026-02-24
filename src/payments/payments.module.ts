@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { PaymentsService } from './payments.service';
 import { PaymentsController } from './payments.controller';
 import { ConfigurationsPaymentLogModule } from './configurations-payment-log/configurations-payment-log.module';
@@ -17,9 +18,13 @@ import { RewardSettingsModule } from './reward-settings/reward-settings.module';
 import { UserWalletModule } from './user-wallet/user-wallet.module';
 import { WalletMoneyReferrerEmailModule } from './wallet-money-referrer-email/wallet-money-referrer-email.module';
 import { WithdrawRequestsModule } from './withdraw-requests/withdraw-requests.module';
+import { PaymentTransaction } from './entities/payment-transaction.entity'; // Import the PaymentTransaction entity
+import { UserWallet } from './entities/user-wallet.entity'; // Import the UserWallet entity
+import { User } from '../users/entities/user.entity'; // Import User entity
 
 @Module({
   imports: [
+    TypeOrmModule.forFeature([PaymentTransaction, UserWallet, User]), // Add PaymentTransaction, UserWallet, and User entities here
     ConfigurationsPaymentLogModule,
     ConfigurationsPaymentsModule,
     CouponModule,
@@ -40,6 +45,7 @@ import { WithdrawRequestsModule } from './withdraw-requests/withdraw-requests.mo
   controllers: [PaymentsController],
   providers: [PaymentsService],
   exports: [
+    TypeOrmModule.forFeature([PaymentTransaction, UserWallet, User]), // Export for other modules if needed
     ConfigurationsPaymentLogModule,
     ConfigurationsPaymentsModule,
     CouponModule,

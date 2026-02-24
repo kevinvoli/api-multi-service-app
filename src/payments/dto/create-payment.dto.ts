@@ -1,1 +1,16 @@
-export class CreatePaymentDto {}
+import { IsString, IsNumber, IsOptional } from 'class-validator';
+
+export class CreatePaymentDto {
+  @IsNumber()
+  userId: number;
+
+  @IsNumber()
+  amount: number;
+
+  @IsString()
+  currency: string;
+
+  @IsOptional()
+  @IsString()
+  status?: string;
+}

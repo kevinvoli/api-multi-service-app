@@ -1,4 +1,9 @@
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { User } from './entities/user.entity'; // Import the User entity
+import { UsersService } from './users.service';
+import { UsersController } from './users.controller';
+
 import { RegisterUserModule } from './register-user/register-user.module';
 import { RegisterDriverModule } from './register-driver/register-driver.module';
 import { UserProfileModule } from './user-profile/user-profile.module';
@@ -38,6 +43,7 @@ import { RatingsUserDriverModule } from './ratings-user-driver/ratings-user-driv
 
 @Module({
   imports: [
+    TypeOrmModule.forFeature([User]),
     RegisterUserModule,
     RegisterDriverModule,
     UserProfileModule,
@@ -75,7 +81,11 @@ import { RatingsUserDriverModule } from './ratings-user-driver/ratings-user-driv
     SendMessageTemplatesModule,
     RatingsUserDriverModule,
   ],
+  controllers: [UsersController],
+  providers: [UsersService],
   exports: [
+    TypeOrmModule.forFeature([User]),
+    UsersService,
     RegisterUserModule,
     RegisterDriverModule,
     UserProfileModule,
