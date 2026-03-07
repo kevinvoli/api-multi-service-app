@@ -6,6 +6,7 @@ import { AdminLocationsModule } from './admin/admin-locations/admin-locations.mo
 import { AdminPermissionsModule } from './admin/admin-permissions/admin-permissions.module';
 import { AdminPermissionsDisplayGroupsModule } from './admin-permissions-display-groups/admin-permissions-display-groups.module';
 import { AdministratorsModule } from './administrators/administrators.module';
+import { AdminPanelModule } from './admin-panel/admin-panel.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { AdministratorsModule } from './administrators/administrators.module';
     AdminPermissionsModule,
     AdminPermissionsDisplayGroupsModule,
     AdministratorsModule,
+    AdminPanelModule,
   ],
   exports: [
     AdminAlertsModule,
@@ -25,6 +27,7 @@ import { AdministratorsModule } from './administrators/administrators.module';
     AdminPermissionsModule,
     AdminPermissionsDisplayGroupsModule,
     AdministratorsModule,
+    AdminPanelModule,
   ],
 })
 export class AdministrationModule {}

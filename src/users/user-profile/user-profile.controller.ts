@@ -1,34 +1,62 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Patch, Delete, Body, Param, Query } from '@nestjs/common';
 import { UserProfileService } from './user-profile.service';
-import { CreateUserProfileDto } from './dto/create-user-profile.dto';
-import { UpdateUserProfileDto } from './dto/update-user-profile.dto';
+import { UpdateProfileDto } from './dto/update-profile.dto';
+import { ChangePasswordDto } from './dto/change-password.dto';
+import { AddAddressDto } from './dto/add-address.dto';
 
-@Controller('user-profile')
+@Controller('profile')
 export class UserProfileController {
-  constructor(private readonly userProfileService: UserProfileService) {}
+  constructor(private readonly profileService: UserProfileService) {}
 
-  @Post()
-  create(@Body() createUserProfileDto: CreateUserProfileDto) {
-    return this.userProfileService.create(createUserProfileDto);
+  /** GET /profile/:userId?userType=rider — Obtenir le profil */
+  @Get(':userId')
+  getProfile(
+    @Param('userId') userId: string,
+    @Query('userType') userType = 'rider',
+  ) {
+    return this.profileService.getProfile(+userId, userType);
   }
 
-  @Get()
-  findAll() {
-    return this.userProfileService.findAll();
+  /** PATCH /profile — Mettre à jour le profil (ajax_profile_rider_a.php action=all) */
+  @Patch()
+  updateProfile(@Body() dto: UpdateProfileDto) {
+    return this.profileService.updateProfile(dto);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userProfileService.findOne(+id);
+  /** POST /profile/change-password — Changer le mot de passe (action=pass) */
+  @Post('change-password')
+  changePassword(@Body() dto: ChangePasswordDto) {
+    return this.profileService.changePassword(dto);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserProfileDto: UpdateUserProfileDto) {
-    return this.userProfileService.update(+id, updateUserProfileDto);
+  /** POST /profile/verify-password — Vérifier le mot de passe (ajax_check_password_a.php) */
+  @Post('verify-password')
+  verifyPassword(
+    @Body('iUserId') iUserId: number,
+    @Body('userType') userType: string,
+    @Body('password') password: string,
+  ) {
+    return this.profileService.verifyPassword(iUserId, userType, password);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userProfileService.remove(+id);
+  /** GET /profile/:userId/addresses — Lister les adresses */
+  @Get(':userId/addresses')
+  listAddresses(@Param('userId') userId: string) {
+    return this.profileService.listAddresses(+userId);
+  }
+
+  /** POST /profile/addresses — Ajouter une adresse (ajax_add_delivery_address.php) */
+  @Post('addresses')
+  addAddress(@Body() dto: AddAddressDto) {
+    return this.profileService.addAddress(dto);
+  }
+
+  /** DELETE /profile/:userId/addresses/:addressId — Supprimer une adresse (soft delete) */
+  @Delete(':userId/addresses/:addressId')
+  removeAddress(
+    @Param('userId') userId: string,
+    @Param('addressId') addressId: string,
+  ) {
+    return this.profileService.removeAddress(+userId, +addressId);
   }
 }

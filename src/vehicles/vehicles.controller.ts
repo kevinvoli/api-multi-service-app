@@ -105,7 +105,7 @@ export class VehiclesController {
   @Patch('drivers/:id')
   updateDriver(@Param('id') id: string, @Body() updateDriverDto: UpdateDriverDto): Promise<Driver> {
     // Note: updating driver directly might not be ideal as it's linked to User
-    return this.vehiclesService.updateDriver(+id, updateDriverDto);
+    return this.vehiclesService.updateDriver(+id, updateDriverDto as any);
   }
 
   @Delete('drivers/:id')
