@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { BackupDatabase } from './entities/backup-database.entity';
 import { CreateBackupDatabaseDto } from './dto/create-backup-database.dto';
 import { UpdateBackupDatabaseDto } from './dto/update-backup-database.dto';
 
 @Injectable()
 export class BackupDatabaseService {
-  create(createBackupDatabaseDto: CreateBackupDatabaseDto) {
-    return 'This action adds a new backupDatabase';
+  constructor(
+    @InjectRepository(BackupDatabase)
+    private readonly repository: Repository<BackupDatabase>,
+  ) {}
+
+  async create(createDto: CreateBackupDatabaseDto): Promise<BackupDatabase> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all backupDatabase`;
+  async findAll(): Promise<BackupDatabase[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} backupDatabase`;
+  async findOne(id: number): Promise<BackupDatabase> {
+    const entity = await this.repository.findOneBy({ iBackupId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateBackupDatabaseDto: UpdateBackupDatabaseDto) {
-    return `This action updates a #${id} backupDatabase`;
+  async update(id: number, updateDto: UpdateBackupDatabaseDto): Promise<BackupDatabase> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} backupDatabase`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

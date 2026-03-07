@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Configurations } from './entities/configuration.entity';
 import { CreateConfigurationDto } from './dto/create-configuration.dto';
 import { UpdateConfigurationDto } from './dto/update-configuration.dto';
 
 @Injectable()
 export class ConfigurationsService {
-  create(createConfigurationDto: CreateConfigurationDto) {
-    return 'This action adds a new configuration';
+  constructor(
+    @InjectRepository(Configurations)
+    private readonly repository: Repository<Configurations>,
+  ) {}
+
+  async create(createDto: CreateConfigurationDto): Promise<Configurations> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all configurations`;
+  async findAll(): Promise<Configurations[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} configuration`;
+  async findOne(id: number): Promise<Configurations> {
+    const entity = await this.repository.findOneBy({ iSettingId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateConfigurationDto: UpdateConfigurationDto) {
-    return `This action updates a #${id} configuration`;
+  async update(id: number, updateDto: UpdateConfigurationDto): Promise<Configurations> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} configuration`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

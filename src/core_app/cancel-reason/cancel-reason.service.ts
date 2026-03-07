@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { CancelReason } from './entities/cancel-reason.entity';
 import { CreateCancelReasonDto } from './dto/create-cancel-reason.dto';
 import { UpdateCancelReasonDto } from './dto/update-cancel-reason.dto';
 
 @Injectable()
 export class CancelReasonService {
-  create(createCancelReasonDto: CreateCancelReasonDto) {
-    return 'This action adds a new cancelReason';
+  constructor(
+    @InjectRepository(CancelReason)
+    private readonly repository: Repository<CancelReason>,
+  ) {}
+
+  async create(createDto: CreateCancelReasonDto): Promise<CancelReason> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all cancelReason`;
+  async findAll(): Promise<CancelReason[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} cancelReason`;
+  async findOne(id: number): Promise<CancelReason> {
+    const entity = await this.repository.findOneBy({ iCancelReasonId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateCancelReasonDto: UpdateCancelReasonDto) {
-    return `This action updates a #${id} cancelReason`;
+  async update(id: number, updateDto: UpdateCancelReasonDto): Promise<CancelReason> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} cancelReason`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

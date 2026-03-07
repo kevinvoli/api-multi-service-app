@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { HomeDriver } from './entities/home-driver.entity';
 import { CreateHomeDriverDto } from './dto/create-home-driver.dto';
 import { UpdateHomeDriverDto } from './dto/update-home-driver.dto';
 
 @Injectable()
 export class HomeDriverService {
-  create(createHomeDriverDto: CreateHomeDriverDto) {
-    return 'This action adds a new homeDriver';
+  constructor(
+    @InjectRepository(HomeDriver)
+    private readonly repository: Repository<HomeDriver>,
+  ) {}
+
+  async create(createDto: CreateHomeDriverDto): Promise<HomeDriver> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all homeDriver`;
+  async findAll(): Promise<HomeDriver[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} homeDriver`;
+  async findOne(id: number): Promise<HomeDriver> {
+    const entity = await this.repository.findOneBy({ iDriverId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateHomeDriverDto: UpdateHomeDriverDto) {
-    return `This action updates a #${id} homeDriver`;
+  async update(id: number, updateDto: UpdateHomeDriverDto): Promise<HomeDriver> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} homeDriver`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

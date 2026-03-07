@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { AdminGroups } from './entities/admin-group.entity';
 import { CreateAdminGroupDto } from './dto/create-admin-group.dto';
 import { UpdateAdminGroupDto } from './dto/update-admin-group.dto';
 
 @Injectable()
 export class AdminGroupsService {
-  create(createAdminGroupDto: CreateAdminGroupDto) {
-    return 'This action adds a new adminGroup';
+  constructor(
+    @InjectRepository(AdminGroups)
+    private readonly repository: Repository<AdminGroups>,
+  ) {}
+
+  async create(createDto: CreateAdminGroupDto): Promise<AdminGroups> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all adminGroups`;
+  async findAll(): Promise<AdminGroups[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} adminGroup`;
+  async findOne(id: number): Promise<AdminGroups> {
+    const entity = await this.repository.findOneBy({ iGroupId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateAdminGroupDto: UpdateAdminGroupDto) {
-    return `This action updates a #${id} adminGroup`;
+  async update(id: number, updateDto: UpdateAdminGroupDto): Promise<AdminGroups> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} adminGroup`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

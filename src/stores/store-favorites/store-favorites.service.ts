@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { StoreFavorites } from './entities/store-favorite.entity';
 import { CreateStoreFavoriteDto } from './dto/create-store-favorite.dto';
 import { UpdateStoreFavoriteDto } from './dto/update-store-favorite.dto';
 
 @Injectable()
 export class StoreFavoritesService {
-  create(createStoreFavoriteDto: CreateStoreFavoriteDto) {
-    return 'This action adds a new storeFavorite';
+  constructor(
+    @InjectRepository(StoreFavorites)
+    private readonly repository: Repository<StoreFavorites>,
+  ) {}
+
+  async create(createDto: CreateStoreFavoriteDto): Promise<StoreFavorites> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all storeFavorites`;
+  async findAll(): Promise<StoreFavorites[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} storeFavorite`;
+  async findOne(id: number): Promise<StoreFavorites> {
+    const entity = await this.repository.findOneBy({ iStoreFavorite: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateStoreFavoriteDto: UpdateStoreFavoriteDto) {
-    return `This action updates a #${id} storeFavorite`;
+  async update(id: number, updateDto: UpdateStoreFavoriteDto): Promise<StoreFavorites> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} storeFavorite`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

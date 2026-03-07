@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { PassengerRequests } from './entities/passenger-request.entity';
 import { CreatePassengerRequestDto } from './dto/create-passenger-request.dto';
 import { UpdatePassengerRequestDto } from './dto/update-passenger-request.dto';
 
 @Injectable()
 export class PassengerRequestsService {
-  create(createPassengerRequestDto: CreatePassengerRequestDto) {
-    return 'This action adds a new passengerRequest';
+  constructor(
+    @InjectRepository(PassengerRequests)
+    private readonly repository: Repository<PassengerRequests>,
+  ) {}
+
+  async create(createDto: CreatePassengerRequestDto): Promise<PassengerRequests> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all passengerRequests`;
+  async findAll(): Promise<PassengerRequests[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} passengerRequest`;
+  async findOne(id: number): Promise<PassengerRequests> {
+    const entity = await this.repository.findOneBy({ iRequestId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updatePassengerRequestDto: UpdatePassengerRequestDto) {
-    return `This action updates a #${id} passengerRequest`;
+  async update(id: number, updateDto: UpdatePassengerRequestDto): Promise<PassengerRequests> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} passengerRequest`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

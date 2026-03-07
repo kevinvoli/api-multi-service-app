@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { OrderDeliveryChargeDetails } from './entities/order-delivery-charge-detail.entity';
 import { CreateOrderDeliveryChargeDetailDto } from './dto/create-order-delivery-charge-detail.dto';
 import { UpdateOrderDeliveryChargeDetailDto } from './dto/update-order-delivery-charge-detail.dto';
 
 @Injectable()
 export class OrderDeliveryChargeDetailsService {
-  create(createOrderDeliveryChargeDetailDto: CreateOrderDeliveryChargeDetailDto) {
-    return 'This action adds a new orderDeliveryChargeDetail';
+  constructor(
+    @InjectRepository(OrderDeliveryChargeDetails)
+    private readonly repository: Repository<OrderDeliveryChargeDetails>,
+  ) {}
+
+  async create(createDto: CreateOrderDeliveryChargeDetailDto): Promise<OrderDeliveryChargeDetails> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all orderDeliveryChargeDetails`;
+  async findAll(): Promise<OrderDeliveryChargeDetails[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} orderDeliveryChargeDetail`;
+  async findOne(id: number): Promise<OrderDeliveryChargeDetails> {
+    const entity = await this.repository.findOneBy({ iOrderDeliveryChargeId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateOrderDeliveryChargeDetailDto: UpdateOrderDeliveryChargeDetailDto) {
-    return `This action updates a #${id} orderDeliveryChargeDetail`;
+  async update(id: number, updateDto: UpdateOrderDeliveryChargeDetailDto): Promise<OrderDeliveryChargeDetails> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} orderDeliveryChargeDetail`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

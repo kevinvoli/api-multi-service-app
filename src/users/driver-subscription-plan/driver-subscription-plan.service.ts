@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { DriverSubscriptionPlan } from './entities/driver-subscription-plan.entity';
 import { CreateDriverSubscriptionPlanDto } from './dto/create-driver-subscription-plan.dto';
 import { UpdateDriverSubscriptionPlanDto } from './dto/update-driver-subscription-plan.dto';
 
 @Injectable()
 export class DriverSubscriptionPlanService {
-  create(createDriverSubscriptionPlanDto: CreateDriverSubscriptionPlanDto) {
-    return 'This action adds a new driverSubscriptionPlan';
+  constructor(
+    @InjectRepository(DriverSubscriptionPlan)
+    private readonly repository: Repository<DriverSubscriptionPlan>,
+  ) {}
+
+  async create(createDto: CreateDriverSubscriptionPlanDto): Promise<DriverSubscriptionPlan> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all driverSubscriptionPlan`;
+  async findAll(): Promise<DriverSubscriptionPlan[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} driverSubscriptionPlan`;
+  async findOne(id: number): Promise<DriverSubscriptionPlan> {
+    const entity = await this.repository.findOneBy({ iDriverSubscriptionPlanId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateDriverSubscriptionPlanDto: UpdateDriverSubscriptionPlanDto) {
-    return `This action updates a #${id} driverSubscriptionPlan`;
+  async update(id: number, updateDto: UpdateDriverSubscriptionPlanDto): Promise<DriverSubscriptionPlan> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} driverSubscriptionPlan`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

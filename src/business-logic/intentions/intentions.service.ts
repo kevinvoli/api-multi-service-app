@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Intentions } from './entities/intention.entity';
 import { CreateIntentionDto } from './dto/create-intention.dto';
 import { UpdateIntentionDto } from './dto/update-intention.dto';
 
 @Injectable()
 export class IntentionsService {
-  create(createIntentionDto: CreateIntentionDto) {
-    return 'This action adds a new intention';
+  constructor(
+    @InjectRepository(Intentions)
+    private readonly repository: Repository<Intentions>,
+  ) {}
+
+  async create(createDto: CreateIntentionDto): Promise<Intentions> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all intentions`;
+  async findAll(): Promise<Intentions[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} intention`;
+  async findOne(id: number): Promise<Intentions> {
+    const entity = await this.repository.findOneBy({ id: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateIntentionDto: UpdateIntentionDto) {
-    return `This action updates a #${id} intention`;
+  async update(id: number, updateDto: UpdateIntentionDto): Promise<Intentions> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} intention`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

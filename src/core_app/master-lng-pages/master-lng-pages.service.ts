@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { MasterLngPages } from './entities/master-lng-page.entity';
 import { CreateMasterLngPageDto } from './dto/create-master-lng-page.dto';
 import { UpdateMasterLngPageDto } from './dto/update-master-lng-page.dto';
 
 @Injectable()
 export class MasterLngPagesService {
-  create(createMasterLngPageDto: CreateMasterLngPageDto) {
-    return 'This action adds a new masterLngPage';
+  constructor(
+    @InjectRepository(MasterLngPages)
+    private readonly repository: Repository<MasterLngPages>,
+  ) {}
+
+  async create(createDto: CreateMasterLngPageDto): Promise<MasterLngPages> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all masterLngPages`;
+  async findAll(): Promise<MasterLngPages[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} masterLngPage`;
+  async findOne(id: number): Promise<MasterLngPages> {
+    const entity = await this.repository.findOneBy({ iPageId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateMasterLngPageDto: UpdateMasterLngPageDto) {
-    return `This action updates a #${id} masterLngPage`;
+  async update(id: number, updateDto: UpdateMasterLngPageDto): Promise<MasterLngPages> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} masterLngPage`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

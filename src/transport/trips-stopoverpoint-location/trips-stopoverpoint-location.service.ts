@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { TripsStopoverpointLocation } from './entities/trips-stopoverpoint-location.entity';
 import { CreateTripsStopoverpointLocationDto } from './dto/create-trips-stopoverpoint-location.dto';
 import { UpdateTripsStopoverpointLocationDto } from './dto/update-trips-stopoverpoint-location.dto';
 
 @Injectable()
 export class TripsStopoverpointLocationService {
-  create(createTripsStopoverpointLocationDto: CreateTripsStopoverpointLocationDto) {
-    return 'This action adds a new tripsStopoverpointLocation';
+  constructor(
+    @InjectRepository(TripsStopoverpointLocation)
+    private readonly repository: Repository<TripsStopoverpointLocation>,
+  ) {}
+
+  async create(createDto: CreateTripsStopoverpointLocationDto): Promise<TripsStopoverpointLocation> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all tripsStopoverpointLocation`;
+  async findAll(): Promise<TripsStopoverpointLocation[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} tripsStopoverpointLocation`;
+  async findOne(id: number): Promise<TripsStopoverpointLocation> {
+    const entity = await this.repository.findOneBy({ iStopId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateTripsStopoverpointLocationDto: UpdateTripsStopoverpointLocationDto) {
-    return `This action updates a #${id} tripsStopoverpointLocation`;
+  async update(id: number, updateDto: UpdateTripsStopoverpointLocationDto): Promise<TripsStopoverpointLocation> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} tripsStopoverpointLocation`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

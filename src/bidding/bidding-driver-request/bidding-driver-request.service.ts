@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { BiddingDriverRequest } from './entities/bidding-driver-request.entity';
 import { CreateBiddingDriverRequestDto } from './dto/create-bidding-driver-request.dto';
 import { UpdateBiddingDriverRequestDto } from './dto/update-bidding-driver-request.dto';
 
 @Injectable()
 export class BiddingDriverRequestService {
-  create(createBiddingDriverRequestDto: CreateBiddingDriverRequestDto) {
-    return 'This action adds a new biddingDriverRequest';
+  constructor(
+    @InjectRepository(BiddingDriverRequest)
+    private readonly repository: Repository<BiddingDriverRequest>,
+  ) {}
+
+  async create(createDto: CreateBiddingDriverRequestDto): Promise<BiddingDriverRequest> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all biddingDriverRequest`;
+  async findAll(): Promise<BiddingDriverRequest[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} biddingDriverRequest`;
+  async findOne(id: number): Promise<BiddingDriverRequest> {
+    const entity = await this.repository.findOneBy({ iRequestId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateBiddingDriverRequestDto: UpdateBiddingDriverRequestDto) {
-    return `This action updates a #${id} biddingDriverRequest`;
+  async update(id: number, updateDto: UpdateBiddingDriverRequestDto): Promise<BiddingDriverRequest> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} biddingDriverRequest`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

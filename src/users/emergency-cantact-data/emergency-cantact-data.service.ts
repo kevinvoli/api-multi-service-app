@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { EmergencyContactData } from './entities/emergency-cantact-datum.entity';
 import { CreateEmergencyCantactDatumDto } from './dto/create-emergency-cantact-datum.dto';
 import { UpdateEmergencyCantactDatumDto } from './dto/update-emergency-cantact-datum.dto';
 
 @Injectable()
 export class EmergencyCantactDataService {
-  create(createEmergencyCantactDatumDto: CreateEmergencyCantactDatumDto) {
-    return 'This action adds a new emergencyCantactDatum';
+  constructor(
+    @InjectRepository(EmergencyContactData)
+    private readonly repository: Repository<EmergencyContactData>,
+  ) {}
+
+  async create(createDto: CreateEmergencyCantactDatumDto): Promise<EmergencyContactData> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all emergencyCantactData`;
+  async findAll(): Promise<EmergencyContactData[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} emergencyCantactDatum`;
+  async findOne(id: number): Promise<EmergencyContactData> {
+    const entity = await this.repository.findOneBy({ iEmergencyContactId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateEmergencyCantactDatumDto: UpdateEmergencyCantactDatumDto) {
-    return `This action updates a #${id} emergencyCantactDatum`;
+  async update(id: number, updateDto: UpdateEmergencyCantactDatumDto): Promise<EmergencyContactData> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} emergencyCantactDatum`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

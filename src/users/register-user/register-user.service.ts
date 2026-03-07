@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { RegisterUser } from './entities/register-user.entity';
 import { CreateRegisterUserDto } from './dto/create-register-user.dto';
 import { UpdateRegisterUserDto } from './dto/update-register-user.dto';
 
 @Injectable()
 export class RegisterUserService {
-  create(createRegisterUserDto: CreateRegisterUserDto) {
-    return 'This action adds a new registerUser';
+  constructor(
+    @InjectRepository(RegisterUser)
+    private readonly repository: Repository<RegisterUser>,
+  ) {}
+
+  async create(createDto: CreateRegisterUserDto): Promise<RegisterUser> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all registerUser`;
+  async findAll(): Promise<RegisterUser[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} registerUser`;
+  async findOne(id: number): Promise<RegisterUser> {
+    const entity = await this.repository.findOneBy({ iUserId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateRegisterUserDto: UpdateRegisterUserDto) {
-    return `This action updates a #${id} registerUser`;
+  async update(id: number, updateDto: UpdateRegisterUserDto): Promise<RegisterUser> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} registerUser`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

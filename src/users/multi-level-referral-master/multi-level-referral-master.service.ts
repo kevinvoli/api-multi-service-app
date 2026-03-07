@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { MultiLevelReferralMaster } from './entities/multi-level-referral-master.entity';
 import { CreateMultiLevelReferralMasterDto } from './dto/create-multi-level-referral-master.dto';
 import { UpdateMultiLevelReferralMasterDto } from './dto/update-multi-level-referral-master.dto';
 
 @Injectable()
 export class MultiLevelReferralMasterService {
-  create(createMultiLevelReferralMasterDto: CreateMultiLevelReferralMasterDto) {
-    return 'This action adds a new multiLevelReferralMaster';
+  constructor(
+    @InjectRepository(MultiLevelReferralMaster)
+    private readonly repository: Repository<MultiLevelReferralMaster>,
+  ) {}
+
+  async create(createDto: CreateMultiLevelReferralMasterDto): Promise<MultiLevelReferralMaster> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all multiLevelReferralMaster`;
+  async findAll(): Promise<MultiLevelReferralMaster[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} multiLevelReferralMaster`;
+  async findOne(id: number): Promise<MultiLevelReferralMaster> {
+    const entity = await this.repository.findOneBy({ iReferralId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateMultiLevelReferralMasterDto: UpdateMultiLevelReferralMasterDto) {
-    return `This action updates a #${id} multiLevelReferralMaster`;
+  async update(id: number, updateDto: UpdateMultiLevelReferralMasterDto): Promise<MultiLevelReferralMaster> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} multiLevelReferralMaster`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

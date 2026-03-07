@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { RequestPostData } from './entities/request-post-datum.entity';
 import { CreateRequestPostDatumDto } from './dto/create-request-post-datum.dto';
 import { UpdateRequestPostDatumDto } from './dto/update-request-post-datum.dto';
 
 @Injectable()
 export class RequestPostDataService {
-  create(createRequestPostDatumDto: CreateRequestPostDatumDto) {
-    return 'This action adds a new requestPostDatum';
+  constructor(
+    @InjectRepository(RequestPostData)
+    private readonly repository: Repository<RequestPostData>,
+  ) {}
+
+  async create(createDto: CreateRequestPostDatumDto): Promise<RequestPostData> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all requestPostData`;
+  async findAll(): Promise<RequestPostData[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} requestPostDatum`;
+  async findOne(id: number): Promise<RequestPostData> {
+    const entity = await this.repository.findOneBy({ iRequestPostId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateRequestPostDatumDto: UpdateRequestPostDatumDto) {
-    return `This action updates a #${id} requestPostDatum`;
+  async update(id: number, updateDto: UpdateRequestPostDatumDto): Promise<RequestPostData> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} requestPostDatum`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

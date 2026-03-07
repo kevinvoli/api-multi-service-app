@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { RewardSettings } from './entities/reward-setting.entity';
 import { CreateRewardSettingDto } from './dto/create-reward-setting.dto';
 import { UpdateRewardSettingDto } from './dto/update-reward-setting.dto';
 
 @Injectable()
 export class RewardSettingsService {
-  create(createRewardSettingDto: CreateRewardSettingDto) {
-    return 'This action adds a new rewardSetting';
+  constructor(
+    @InjectRepository(RewardSettings)
+    private readonly repository: Repository<RewardSettings>,
+  ) {}
+
+  async create(createDto: CreateRewardSettingDto): Promise<RewardSettings> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all rewardSettings`;
+  async findAll(): Promise<RewardSettings[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} rewardSetting`;
+  async findOne(id: number): Promise<RewardSettings> {
+    const entity = await this.repository.findOneBy({ iRewardId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateRewardSettingDto: UpdateRewardSettingDto) {
-    return `This action updates a #${id} rewardSetting`;
+  async update(id: number, updateDto: UpdateRewardSettingDto): Promise<RewardSettings> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} rewardSetting`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Pages } from './entities/page.entity';
 import { CreatePageDto } from './dto/create-page.dto';
 import { UpdatePageDto } from './dto/update-page.dto';
 
 @Injectable()
 export class PagesService {
-  create(createPageDto: CreatePageDto) {
-    return 'This action adds a new page';
+  constructor(
+    @InjectRepository(Pages)
+    private readonly repository: Repository<Pages>,
+  ) {}
+
+  async create(createDto: CreatePageDto): Promise<Pages> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all pages`;
+  async findAll(): Promise<Pages[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} page`;
+  async findOne(id: number): Promise<Pages> {
+    const entity = await this.repository.findOneBy({ iPageId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updatePageDto: UpdatePageDto) {
-    return `This action updates a #${id} page`;
+  async update(id: number, updateDto: UpdatePageDto): Promise<Pages> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} page`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

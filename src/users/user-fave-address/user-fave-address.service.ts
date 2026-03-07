@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { UserFaveAddress } from './entities/user-fave-address.entity';
 import { CreateUserFaveAddressDto } from './dto/create-user-fave-address.dto';
 import { UpdateUserFaveAddressDto } from './dto/update-user-fave-address.dto';
 
 @Injectable()
 export class UserFaveAddressService {
-  create(createUserFaveAddressDto: CreateUserFaveAddressDto) {
-    return 'This action adds a new userFaveAddress';
+  constructor(
+    @InjectRepository(UserFaveAddress)
+    private readonly repository: Repository<UserFaveAddress>,
+  ) {}
+
+  async create(createDto: CreateUserFaveAddressDto): Promise<UserFaveAddress> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all userFaveAddress`;
+  async findAll(): Promise<UserFaveAddress[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} userFaveAddress`;
+  async findOne(id: number): Promise<UserFaveAddress> {
+    const entity = await this.repository.findOneBy({ iUserFavAddressId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateUserFaveAddressDto: UpdateUserFaveAddressDto) {
-    return `This action updates a #${id} userFaveAddress`;
+  async update(id: number, updateDto: UpdateUserFaveAddressDto): Promise<UserFaveAddress> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} userFaveAddress`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

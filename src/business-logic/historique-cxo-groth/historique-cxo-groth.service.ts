@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { HistoriqueCxoGroth } from './entities/historique-cxo-groth.entity';
 import { CreateHistoriqueCxoGrothDto } from './dto/create-historique-cxo-groth.dto';
 import { UpdateHistoriqueCxoGrothDto } from './dto/update-historique-cxo-groth.dto';
 
 @Injectable()
 export class HistoriqueCxoGrothService {
-  create(createHistoriqueCxoGrothDto: CreateHistoriqueCxoGrothDto) {
-    return 'This action adds a new historiqueCxoGroth';
+  constructor(
+    @InjectRepository(HistoriqueCxoGroth)
+    private readonly repository: Repository<HistoriqueCxoGroth>,
+  ) {}
+
+  async create(createDto: CreateHistoriqueCxoGrothDto): Promise<HistoriqueCxoGroth> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all historiqueCxoGroth`;
+  async findAll(): Promise<HistoriqueCxoGroth[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} historiqueCxoGroth`;
+  async findOne(id: number): Promise<HistoriqueCxoGroth> {
+    const entity = await this.repository.findOneBy({ id: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateHistoriqueCxoGrothDto: UpdateHistoriqueCxoGrothDto) {
-    return `This action updates a #${id} historiqueCxoGroth`;
+  async update(id: number, updateDto: UpdateHistoriqueCxoGrothDto): Promise<HistoriqueCxoGroth> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} historiqueCxoGroth`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { DataStorageEngine } from './entities/data-storage-engine.entity';
 import { CreateDataStorageEngineDto } from './dto/create-data-storage-engine.dto';
 import { UpdateDataStorageEngineDto } from './dto/update-data-storage-engine.dto';
 
 @Injectable()
 export class DataStorageEngineService {
-  create(createDataStorageEngineDto: CreateDataStorageEngineDto) {
-    return 'This action adds a new dataStorageEngine';
+  constructor(
+    @InjectRepository(DataStorageEngine)
+    private readonly repository: Repository<DataStorageEngine>,
+  ) {}
+
+  async create(createDto: CreateDataStorageEngineDto): Promise<DataStorageEngine> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all dataStorageEngine`;
+  async findAll(): Promise<DataStorageEngine[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} dataStorageEngine`;
+  async findOne(id: number): Promise<DataStorageEngine> {
+    const entity = await this.repository.findOneBy({ iEngineId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateDataStorageEngineDto: UpdateDataStorageEngineDto) {
-    return `This action updates a #${id} dataStorageEngine`;
+  async update(id: number, updateDto: UpdateDataStorageEngineDto): Promise<DataStorageEngine> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} dataStorageEngine`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

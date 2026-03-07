@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { CabRequestNow } from './entities/cab-request-now.entity';
 import { CreateCabRequestNowDto } from './dto/create-cab-request-now.dto';
 import { UpdateCabRequestNowDto } from './dto/update-cab-request-now.dto';
 
 @Injectable()
 export class CabRequestNowService {
-  create(createCabRequestNowDto: CreateCabRequestNowDto) {
-    return 'This action adds a new cabRequestNow';
+  constructor(
+    @InjectRepository(CabRequestNow)
+    private readonly repository: Repository<CabRequestNow>,
+  ) {}
+
+  async create(createDto: CreateCabRequestNowDto): Promise<CabRequestNow> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all cabRequestNow`;
+  async findAll(): Promise<CabRequestNow[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} cabRequestNow`;
+  async findOne(id: number): Promise<CabRequestNow> {
+    const entity = await this.repository.findOneBy({ iCabRequestId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateCabRequestNowDto: UpdateCabRequestNowDto) {
-    return `This action updates a #${id} cabRequestNow`;
+  async update(id: number, updateDto: UpdateCabRequestNowDto): Promise<CabRequestNow> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} cabRequestNow`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

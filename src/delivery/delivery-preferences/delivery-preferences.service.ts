@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { DeliveryPreferences } from './entities/delivery-preference.entity';
 import { CreateDeliveryPreferenceDto } from './dto/create-delivery-preference.dto';
 import { UpdateDeliveryPreferenceDto } from './dto/update-delivery-preference.dto';
 
 @Injectable()
 export class DeliveryPreferencesService {
-  create(createDeliveryPreferenceDto: CreateDeliveryPreferenceDto) {
-    return 'This action adds a new deliveryPreference';
+  constructor(
+    @InjectRepository(DeliveryPreferences)
+    private readonly repository: Repository<DeliveryPreferences>,
+  ) {}
+
+  async create(createDto: CreateDeliveryPreferenceDto): Promise<DeliveryPreferences> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all deliveryPreferences`;
+  async findAll(): Promise<DeliveryPreferences[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} deliveryPreference`;
+  async findOne(id: number): Promise<DeliveryPreferences> {
+    const entity = await this.repository.findOneBy({ iPreferenceId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateDeliveryPreferenceDto: UpdateDeliveryPreferenceDto) {
-    return `This action updates a #${id} deliveryPreference`;
+  async update(id: number, updateDto: UpdateDeliveryPreferenceDto): Promise<DeliveryPreferences> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} deliveryPreference`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

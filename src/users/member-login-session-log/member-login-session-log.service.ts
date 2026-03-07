@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { MemberLoginSessionLog } from './entities/member-login-session-log.entity';
 import { CreateMemberLoginSessionLogDto } from './dto/create-member-login-session-log.dto';
 import { UpdateMemberLoginSessionLogDto } from './dto/update-member-login-session-log.dto';
 
 @Injectable()
 export class MemberLoginSessionLogService {
-  create(createMemberLoginSessionLogDto: CreateMemberLoginSessionLogDto) {
-    return 'This action adds a new memberLoginSessionLog';
+  constructor(
+    @InjectRepository(MemberLoginSessionLog)
+    private readonly repository: Repository<MemberLoginSessionLog>,
+  ) {}
+
+  async create(createDto: CreateMemberLoginSessionLogDto): Promise<MemberLoginSessionLog> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all memberLoginSessionLog`;
+  async findAll(): Promise<MemberLoginSessionLog[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} memberLoginSessionLog`;
+  async findOne(id: number): Promise<MemberLoginSessionLog> {
+    const entity = await this.repository.findOneBy({ iSessionLogId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateMemberLoginSessionLogDto: UpdateMemberLoginSessionLogDto) {
-    return `This action updates a #${id} memberLoginSessionLog`;
+  async update(id: number, updateDto: UpdateMemberLoginSessionLogDto): Promise<MemberLoginSessionLog> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} memberLoginSessionLog`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

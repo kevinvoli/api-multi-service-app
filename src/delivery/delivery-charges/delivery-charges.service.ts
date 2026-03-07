@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { DeliveryCharges } from './entities/delivery-charge.entity';
 import { CreateDeliveryChargeDto } from './dto/create-delivery-charge.dto';
 import { UpdateDeliveryChargeDto } from './dto/update-delivery-charge.dto';
 
 @Injectable()
 export class DeliveryChargesService {
-  create(createDeliveryChargeDto: CreateDeliveryChargeDto) {
-    return 'This action adds a new deliveryCharge';
+  constructor(
+    @InjectRepository(DeliveryCharges)
+    private readonly repository: Repository<DeliveryCharges>,
+  ) {}
+
+  async create(createDto: CreateDeliveryChargeDto): Promise<DeliveryCharges> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all deliveryCharges`;
+  async findAll(): Promise<DeliveryCharges[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} deliveryCharge`;
+  async findOne(id: number): Promise<DeliveryCharges> {
+    const entity = await this.repository.findOneBy({ iDeliveyChargeId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateDeliveryChargeDto: UpdateDeliveryChargeDto) {
-    return `This action updates a #${id} deliveryCharge`;
+  async update(id: number, updateDto: UpdateDeliveryChargeDto): Promise<DeliveryCharges> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} deliveryCharge`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

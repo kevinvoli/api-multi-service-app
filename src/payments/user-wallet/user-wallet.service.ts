@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { UserWallet } from './entities/user-wallet.entity';
 import { CreateUserWalletDto } from './dto/create-user-wallet.dto';
 import { UpdateUserWalletDto } from './dto/update-user-wallet.dto';
 
 @Injectable()
 export class UserWalletService {
-  create(createUserWalletDto: CreateUserWalletDto) {
-    return 'This action adds a new userWallet';
+  constructor(
+    @InjectRepository(UserWallet)
+    private readonly repository: Repository<UserWallet>,
+  ) {}
+
+  async create(createDto: CreateUserWalletDto): Promise<UserWallet> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all userWallet`;
+  async findAll(): Promise<UserWallet[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} userWallet`;
+  async findOne(id: number): Promise<UserWallet> {
+    const entity = await this.repository.findOneBy({ iUserWalletId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateUserWalletDto: UpdateUserWalletDto) {
-    return `This action updates a #${id} userWallet`;
+  async update(id: number, updateDto: UpdateUserWalletDto): Promise<UserWallet> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} userWallet`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

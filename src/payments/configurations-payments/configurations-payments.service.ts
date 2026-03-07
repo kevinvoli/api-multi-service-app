@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { ConfigurationsPayment } from './entities/configurations-payment.entity';
 import { CreateConfigurationsPaymentDto } from './dto/create-configurations-payment.dto';
 import { UpdateConfigurationsPaymentDto } from './dto/update-configurations-payment.dto';
 
 @Injectable()
 export class ConfigurationsPaymentsService {
-  create(createConfigurationsPaymentDto: CreateConfigurationsPaymentDto) {
-    return 'This action adds a new configurationsPayment';
+  constructor(
+    @InjectRepository(ConfigurationsPayment)
+    private readonly repository: Repository<ConfigurationsPayment>,
+  ) {}
+
+  async create(createDto: CreateConfigurationsPaymentDto): Promise<ConfigurationsPayment> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all configurationsPayments`;
+  async findAll(): Promise<ConfigurationsPayment[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} configurationsPayment`;
+  async findOne(id: number): Promise<ConfigurationsPayment> {
+    const entity = await this.repository.findOneBy({ iSettingId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateConfigurationsPaymentDto: UpdateConfigurationsPaymentDto) {
-    return `This action updates a #${id} configurationsPayment`;
+  async update(id: number, updateDto: UpdateConfigurationsPaymentDto): Promise<ConfigurationsPayment> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} configurationsPayment`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

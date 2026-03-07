@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { DriverFavorites } from './entities/driver-favorite.entity';
 import { CreateDriverFavoriteDto } from './dto/create-driver-favorite.dto';
 import { UpdateDriverFavoriteDto } from './dto/update-driver-favorite.dto';
 
 @Injectable()
 export class DriverFavoritesService {
-  create(createDriverFavoriteDto: CreateDriverFavoriteDto) {
-    return 'This action adds a new driverFavorite';
+  constructor(
+    @InjectRepository(DriverFavorites)
+    private readonly repository: Repository<DriverFavorites>,
+  ) {}
+
+  async create(createDto: CreateDriverFavoriteDto): Promise<DriverFavorites> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all driverFavorites`;
+  async findAll(): Promise<DriverFavorites[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} driverFavorite`;
+  async findOne(id: number): Promise<DriverFavorites> {
+    const entity = await this.repository.findOneBy({ iDriverFavorite: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateDriverFavoriteDto: UpdateDriverFavoriteDto) {
-    return `This action updates a #${id} driverFavorite`;
+  async update(id: number, updateDto: UpdateDriverFavoriteDto): Promise<DriverFavorites> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} driverFavorite`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

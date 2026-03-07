@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { BiddingDriverService } from './entities/bidding-driver-service.entity';
 import { CreateBiddingDriverServiceDto } from './dto/create-bidding-driver-service.dto';
 import { UpdateBiddingDriverServiceDto } from './dto/update-bidding-driver-service.dto';
 
 @Injectable()
 export class BiddingDriverServiceService {
-  create(createBiddingDriverServiceDto: CreateBiddingDriverServiceDto) {
-    return 'This action adds a new biddingDriverService';
+  constructor(
+    @InjectRepository(BiddingDriverService)
+    private readonly repository: Repository<BiddingDriverService>,
+  ) {}
+
+  async create(createDto: CreateBiddingDriverServiceDto): Promise<BiddingDriverService> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all biddingDriverService`;
+  async findAll(): Promise<BiddingDriverService[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} biddingDriverService`;
+  async findOne(id: number): Promise<BiddingDriverService> {
+    const entity = await this.repository.findOneBy({ iBiddingDriverServiceId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateBiddingDriverServiceDto: UpdateBiddingDriverServiceDto) {
-    return `This action updates a #${id} biddingDriverService`;
+  async update(id: number, updateDto: UpdateBiddingDriverServiceDto): Promise<BiddingDriverService> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} biddingDriverService`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

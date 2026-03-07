@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { LanguageLabel_2 } from './entities/language-label_2.entity';
 import { CreateLanguageLabel2Dto } from './dto/create-language-label_2.dto';
 import { UpdateLanguageLabel2Dto } from './dto/update-language-label_2.dto';
 
 @Injectable()
 export class LanguageLabel2Service {
-  create(createLanguageLabel2Dto: CreateLanguageLabel2Dto) {
-    return 'This action adds a new languageLabel2';
+  constructor(
+    @InjectRepository(LanguageLabel_2)
+    private readonly repository: Repository<LanguageLabel_2>,
+  ) {}
+
+  async create(createDto: CreateLanguageLabel2Dto): Promise<LanguageLabel_2> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all languageLabel2`;
+  async findAll(): Promise<LanguageLabel_2[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} languageLabel2`;
+  async findOne(id: number): Promise<LanguageLabel_2> {
+    const entity = await this.repository.findOneBy({ languageLabelId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateLanguageLabel2Dto: UpdateLanguageLabel2Dto) {
-    return `This action updates a #${id} languageLabel2`;
+  async update(id: number, updateDto: UpdateLanguageLabel2Dto): Promise<LanguageLabel_2> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} languageLabel2`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

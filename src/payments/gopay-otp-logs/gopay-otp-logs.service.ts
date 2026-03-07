@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { GopayOtpLogs } from './entities/gopay-otp-log.entity';
 import { CreateGopayOtpLogDto } from './dto/create-gopay-otp-log.dto';
 import { UpdateGopayOtpLogDto } from './dto/update-gopay-otp-log.dto';
 
 @Injectable()
 export class GopayOtpLogsService {
-  create(createGopayOtpLogDto: CreateGopayOtpLogDto) {
-    return 'This action adds a new gopayOtpLog';
+  constructor(
+    @InjectRepository(GopayOtpLogs)
+    private readonly repository: Repository<GopayOtpLogs>,
+  ) {}
+
+  async create(createDto: CreateGopayOtpLogDto): Promise<GopayOtpLogs> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all gopayOtpLogs`;
+  async findAll(): Promise<GopayOtpLogs[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} gopayOtpLog`;
+  async findOne(id: number): Promise<GopayOtpLogs> {
+    const entity = await this.repository.findOneBy({ iOtplogId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateGopayOtpLogDto: UpdateGopayOtpLogDto) {
-    return `This action updates a #${id} gopayOtpLog`;
+  async update(id: number, updateDto: UpdateGopayOtpLogDto): Promise<GopayOtpLogs> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} gopayOtpLog`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

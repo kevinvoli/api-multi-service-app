@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { AllDatabaseDetails } from './entities/all-database-detail.entity';
 import { CreateAllDatabaseDetailDto } from './dto/create-all-database-detail.dto';
 import { UpdateAllDatabaseDetailDto } from './dto/update-all-database-detail.dto';
 
 @Injectable()
 export class AllDatabaseDetailsService {
-  create(createAllDatabaseDetailDto: CreateAllDatabaseDetailDto) {
-    return 'This action adds a new allDatabaseDetail';
+  constructor(
+    @InjectRepository(AllDatabaseDetails)
+    private readonly repository: Repository<AllDatabaseDetails>,
+  ) {}
+
+  async create(createDto: CreateAllDatabaseDetailDto): Promise<AllDatabaseDetails> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all allDatabaseDetails`;
+  async findAll(): Promise<AllDatabaseDetails[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} allDatabaseDetail`;
+  async findOne(id: number): Promise<AllDatabaseDetails> {
+    const entity = await this.repository.findOneBy({ id: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateAllDatabaseDetailDto: UpdateAllDatabaseDetailDto) {
-    return `This action updates a #${id} allDatabaseDetail`;
+  async update(id: number, updateDto: UpdateAllDatabaseDetailDto): Promise<AllDatabaseDetails> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} allDatabaseDetail`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

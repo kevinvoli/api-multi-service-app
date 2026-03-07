@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { OdaAreasLocation } from './entities/oda-areas-location.entity';
 import { CreateOdaAreasLocationDto } from './dto/create-oda-areas-location.dto';
 import { UpdateOdaAreasLocationDto } from './dto/update-oda-areas-location.dto';
 
 @Injectable()
 export class OdaAreasLocationService {
-  create(createOdaAreasLocationDto: CreateOdaAreasLocationDto) {
-    return 'This action adds a new odaAreasLocation';
+  constructor(
+    @InjectRepository(OdaAreasLocation)
+    private readonly repository: Repository<OdaAreasLocation>,
+  ) {}
+
+  async create(createDto: CreateOdaAreasLocationDto): Promise<OdaAreasLocation> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all odaAreasLocation`;
+  async findAll(): Promise<OdaAreasLocation[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} odaAreasLocation`;
+  async findOne(id: number): Promise<OdaAreasLocation> {
+    const entity = await this.repository.findOneBy({ areaId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateOdaAreasLocationDto: UpdateOdaAreasLocationDto) {
-    return `This action updates a #${id} odaAreasLocation`;
+  async update(id: number, updateDto: UpdateOdaAreasLocationDto): Promise<OdaAreasLocation> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} odaAreasLocation`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { ContentCubexDetails } from './entities/content-cubex-detail.entity';
 import { CreateContentCubexDetailDto } from './dto/create-content-cubex-detail.dto';
 import { UpdateContentCubexDetailDto } from './dto/update-content-cubex-detail.dto';
 
 @Injectable()
 export class ContentCubexDetailsService {
-  create(createContentCubexDetailDto: CreateContentCubexDetailDto) {
-    return 'This action adds a new contentCubexDetail';
+  constructor(
+    @InjectRepository(ContentCubexDetails)
+    private readonly repository: Repository<ContentCubexDetails>,
+  ) {}
+
+  async create(createDto: CreateContentCubexDetailDto): Promise<ContentCubexDetails> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all contentCubexDetails`;
+  async findAll(): Promise<ContentCubexDetails[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} contentCubexDetail`;
+  async findOne(id: number): Promise<ContentCubexDetails> {
+    const entity = await this.repository.findOneBy({ id: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateContentCubexDetailDto: UpdateContentCubexDetailDto) {
-    return `This action updates a #${id} contentCubexDetail`;
+  async update(id: number, updateDto: UpdateContentCubexDetailDto): Promise<ContentCubexDetails> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} contentCubexDetail`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

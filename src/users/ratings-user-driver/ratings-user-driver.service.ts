@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { RatingsUserDriver } from './entities/ratings-user-driver.entity';
 import { CreateRatingsUserDriverDto } from './dto/create-ratings-user-driver.dto';
 import { UpdateRatingsUserDriverDto } from './dto/update-ratings-user-driver.dto';
 
 @Injectable()
 export class RatingsUserDriverService {
-  create(createRatingsUserDriverDto: CreateRatingsUserDriverDto) {
-    return 'This action adds a new ratingsUserDriver';
+  constructor(
+    @InjectRepository(RatingsUserDriver)
+    private readonly repository: Repository<RatingsUserDriver>,
+  ) {}
+
+  async create(createDto: CreateRatingsUserDriverDto): Promise<RatingsUserDriver> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all ratingsUserDriver`;
+  async findAll(): Promise<RatingsUserDriver[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} ratingsUserDriver`;
+  async findOne(id: number): Promise<RatingsUserDriver> {
+    const entity = await this.repository.findOneBy({ iRatingId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateRatingsUserDriverDto: UpdateRatingsUserDriverDto) {
-    return `This action updates a #${id} ratingsUserDriver`;
+  async update(id: number, updateDto: UpdateRatingsUserDriverDto): Promise<RatingsUserDriver> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} ratingsUserDriver`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

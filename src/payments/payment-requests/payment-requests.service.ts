@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { PaymentRequests } from './entities/payment-request.entity';
 import { CreatePaymentRequestDto } from './dto/create-payment-request.dto';
 import { UpdatePaymentRequestDto } from './dto/update-payment-request.dto';
 
 @Injectable()
 export class PaymentRequestsService {
-  create(createPaymentRequestDto: CreatePaymentRequestDto) {
-    return 'This action adds a new paymentRequest';
+  constructor(
+    @InjectRepository(PaymentRequests)
+    private readonly repository: Repository<PaymentRequests>,
+  ) {}
+
+  async create(createDto: CreatePaymentRequestDto): Promise<PaymentRequests> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all paymentRequests`;
+  async findAll(): Promise<PaymentRequests[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} paymentRequest`;
+  async findOne(id: number): Promise<PaymentRequests> {
+    const entity = await this.repository.findOneBy({ iPaymentRequestsId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updatePaymentRequestDto: UpdatePaymentRequestDto) {
-    return `This action updates a #${id} paymentRequest`;
+  async update(id: number, updateDto: UpdatePaymentRequestDto): Promise<PaymentRequests> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} paymentRequest`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

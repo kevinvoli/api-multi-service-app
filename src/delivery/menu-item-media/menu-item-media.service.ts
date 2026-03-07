@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { MenuItemMedia } from './entities/menu-item-media.entity';
 import { CreateMenuItemMediaDto } from './dto/create-menu-item-media.dto';
 import { UpdateMenuItemMediaDto } from './dto/update-menu-item-media.dto';
 
 @Injectable()
 export class MenuItemMediaService {
-  create(createMenuItemMediaDto: CreateMenuItemMediaDto) {
-    return 'This action adds a new menuItemMedia';
+  constructor(
+    @InjectRepository(MenuItemMedia)
+    private readonly repository: Repository<MenuItemMedia>,
+  ) {}
+
+  async create(createDto: CreateMenuItemMediaDto): Promise<MenuItemMedia> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all menuItemMedia`;
+  async findAll(): Promise<MenuItemMedia[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} menuItemMedia`;
+  async findOne(id: number): Promise<MenuItemMedia> {
+    const entity = await this.repository.findOneBy({ iMediaId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateMenuItemMediaDto: UpdateMenuItemMediaDto) {
-    return `This action updates a #${id} menuItemMedia`;
+  async update(id: number, updateDto: UpdateMenuItemMediaDto): Promise<MenuItemMedia> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} menuItemMedia`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

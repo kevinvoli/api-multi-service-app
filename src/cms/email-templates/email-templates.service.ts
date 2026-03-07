@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { EmailTemplates } from './entities/email-template.entity';
 import { CreateEmailTemplateDto } from './dto/create-email-template.dto';
 import { UpdateEmailTemplateDto } from './dto/update-email-template.dto';
 
 @Injectable()
 export class EmailTemplatesService {
-  create(createEmailTemplateDto: CreateEmailTemplateDto) {
-    return 'This action adds a new emailTemplate';
+  constructor(
+    @InjectRepository(EmailTemplates)
+    private readonly repository: Repository<EmailTemplates>,
+  ) {}
+
+  async create(createDto: CreateEmailTemplateDto): Promise<EmailTemplates> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all emailTemplates`;
+  async findAll(): Promise<EmailTemplates[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} emailTemplate`;
+  async findOne(id: number): Promise<EmailTemplates> {
+    const entity = await this.repository.findOneBy({ iEmailId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateEmailTemplateDto: UpdateEmailTemplateDto) {
-    return `This action updates a #${id} emailTemplate`;
+  async update(id: number, updateDto: UpdateEmailTemplateDto): Promise<EmailTemplates> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} emailTemplate`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

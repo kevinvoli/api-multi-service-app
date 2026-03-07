@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { BiddingPost } from './entities/bidding-post.entity';
 import { CreateBiddingPostDto } from './dto/create-bidding-post.dto';
 import { UpdateBiddingPostDto } from './dto/update-bidding-post.dto';
 
 @Injectable()
 export class BiddingPostService {
-  create(createBiddingPostDto: CreateBiddingPostDto) {
-    return 'This action adds a new biddingPost';
+  constructor(
+    @InjectRepository(BiddingPost)
+    private readonly repository: Repository<BiddingPost>,
+  ) {}
+
+  async create(createDto: CreateBiddingPostDto): Promise<BiddingPost> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all biddingPost`;
+  async findAll(): Promise<BiddingPost[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} biddingPost`;
+  async findOne(id: number): Promise<BiddingPost> {
+    const entity = await this.repository.findOneBy({ iBiddingPostId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateBiddingPostDto: UpdateBiddingPostDto) {
-    return `This action updates a #${id} biddingPost`;
+  async update(id: number, updateDto: UpdateBiddingPostDto): Promise<BiddingPost> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} biddingPost`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { BiddingPostMedia } from './entities/bidding-post-media.entity';
 import { CreateBiddingPostMediaDto } from './dto/create-bidding-post-media.dto';
 import { UpdateBiddingPostMediaDto } from './dto/update-bidding-post-media.dto';
 
 @Injectable()
 export class BiddingPostMediaService {
-  create(createBiddingPostMediaDto: CreateBiddingPostMediaDto) {
-    return 'This action adds a new biddingPostMedia';
+  constructor(
+    @InjectRepository(BiddingPostMedia)
+    private readonly repository: Repository<BiddingPostMedia>,
+  ) {}
+
+  async create(createDto: CreateBiddingPostMediaDto): Promise<BiddingPostMedia> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all biddingPostMedia`;
+  async findAll(): Promise<BiddingPostMedia[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} biddingPostMedia`;
+  async findOne(id: number): Promise<BiddingPostMedia> {
+    const entity = await this.repository.findOneBy({ ibiddingPostMediaId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateBiddingPostMediaDto: UpdateBiddingPostMediaDto) {
-    return `This action updates a #${id} biddingPostMedia`;
+  async update(id: number, updateDto: UpdateBiddingPostMediaDto): Promise<BiddingPostMedia> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} biddingPostMedia`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

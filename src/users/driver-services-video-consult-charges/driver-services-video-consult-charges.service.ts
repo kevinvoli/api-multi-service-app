@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { DriverServicesVideoConsultCharges } from './entities/driver-services-video-consult-charge.entity';
 import { CreateDriverServicesVideoConsultChargeDto } from './dto/create-driver-services-video-consult-charge.dto';
 import { UpdateDriverServicesVideoConsultChargeDto } from './dto/update-driver-services-video-consult-charge.dto';
 
 @Injectable()
 export class DriverServicesVideoConsultChargesService {
-  create(createDriverServicesVideoConsultChargeDto: CreateDriverServicesVideoConsultChargeDto) {
-    return 'This action adds a new driverServicesVideoConsultCharge';
+  constructor(
+    @InjectRepository(DriverServicesVideoConsultCharges)
+    private readonly repository: Repository<DriverServicesVideoConsultCharges>,
+  ) {}
+
+  async create(createDto: CreateDriverServicesVideoConsultChargeDto): Promise<DriverServicesVideoConsultCharges> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all driverServicesVideoConsultCharges`;
+  async findAll(): Promise<DriverServicesVideoConsultCharges[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} driverServicesVideoConsultCharge`;
+  async findOne(id: number): Promise<DriverServicesVideoConsultCharges> {
+    const entity = await this.repository.findOneBy({ iDriverServiceId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateDriverServicesVideoConsultChargeDto: UpdateDriverServicesVideoConsultChargeDto) {
-    return `This action updates a #${id} driverServicesVideoConsultCharge`;
+  async update(id: number, updateDto: UpdateDriverServicesVideoConsultChargeDto): Promise<DriverServicesVideoConsultCharges> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} driverServicesVideoConsultCharge`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

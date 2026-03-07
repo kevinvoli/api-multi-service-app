@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { PlanPurchaseMaster } from './entities/plan-purchase-master.entity';
 import { CreatePlanPurchaseMasterDto } from './dto/create-plan-purchase-master.dto';
 import { UpdatePlanPurchaseMasterDto } from './dto/update-plan-purchase-master.dto';
 
 @Injectable()
 export class PlanPurchaseMasterService {
-  create(createPlanPurchaseMasterDto: CreatePlanPurchaseMasterDto) {
-    return 'This action adds a new planPurchaseMaster';
+  constructor(
+    @InjectRepository(PlanPurchaseMaster)
+    private readonly repository: Repository<PlanPurchaseMaster>,
+  ) {}
+
+  async create(createDto: CreatePlanPurchaseMasterDto): Promise<PlanPurchaseMaster> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all planPurchaseMaster`;
+  async findAll(): Promise<PlanPurchaseMaster[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} planPurchaseMaster`;
+  async findOne(id: number): Promise<PlanPurchaseMaster> {
+    const entity = await this.repository.findOneBy({ iPurchaseId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updatePlanPurchaseMasterDto: UpdatePlanPurchaseMasterDto) {
-    return `This action updates a #${id} planPurchaseMaster`;
+  async update(id: number, updateDto: UpdatePlanPurchaseMasterDto): Promise<PlanPurchaseMaster> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} planPurchaseMaster`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

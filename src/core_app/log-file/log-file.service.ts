@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { LogFile } from './entities/log-file.entity';
 import { CreateLogFileDto } from './dto/create-log-file.dto';
 import { UpdateLogFileDto } from './dto/update-log-file.dto';
 
 @Injectable()
 export class LogFileService {
-  create(createLogFileDto: CreateLogFileDto) {
-    return 'This action adds a new logFile';
+  constructor(
+    @InjectRepository(LogFile)
+    private readonly repository: Repository<LogFile>,
+  ) {}
+
+  async create(createDto: CreateLogFileDto): Promise<LogFile> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all logFile`;
+  async findAll(): Promise<LogFile[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} logFile`;
+  async findOne(id: number): Promise<LogFile> {
+    const entity = await this.repository.findOneBy({ iLogId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateLogFileDto: UpdateLogFileDto) {
-    return `This action updates a #${id} logFile`;
+  async update(id: number, updateDto: UpdateLogFileDto): Promise<LogFile> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} logFile`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

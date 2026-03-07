@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { TripsDeliveryLocation } from './entities/trips-delivery-location.entity';
 import { CreateTripsDeliveryLocationDto } from './dto/create-trips-delivery-location.dto';
 import { UpdateTripsDeliveryLocationDto } from './dto/update-trips-delivery-location.dto';
 
 @Injectable()
 export class TripsDeliveryLocationsService {
-  create(createTripsDeliveryLocationDto: CreateTripsDeliveryLocationDto) {
-    return 'This action adds a new tripsDeliveryLocation';
+  constructor(
+    @InjectRepository(TripsDeliveryLocation)
+    private readonly repository: Repository<TripsDeliveryLocation>,
+  ) {}
+
+  async create(createDto: CreateTripsDeliveryLocationDto): Promise<TripsDeliveryLocation> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all tripsDeliveryLocations`;
+  async findAll(): Promise<TripsDeliveryLocation[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} tripsDeliveryLocation`;
+  async findOne(id: number): Promise<TripsDeliveryLocation> {
+    const entity = await this.repository.findOneBy({ iTripDeliveryLocationId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateTripsDeliveryLocationDto: UpdateTripsDeliveryLocationDto) {
-    return `This action updates a #${id} tripsDeliveryLocation`;
+  async update(id: number, updateDto: UpdateTripsDeliveryLocationDto): Promise<TripsDeliveryLocation> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} tripsDeliveryLocation`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

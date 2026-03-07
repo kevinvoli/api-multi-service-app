@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { OrderStatusLogs } from './entities/order-status-log.entity';
 import { CreateOrderStatusLogDto } from './dto/create-order-status-log.dto';
 import { UpdateOrderStatusLogDto } from './dto/update-order-status-log.dto';
 
 @Injectable()
 export class OrderStatusLogsService {
-  create(createOrderStatusLogDto: CreateOrderStatusLogDto) {
-    return 'This action adds a new orderStatusLog';
+  constructor(
+    @InjectRepository(OrderStatusLogs)
+    private readonly repository: Repository<OrderStatusLogs>,
+  ) {}
+
+  async create(createDto: CreateOrderStatusLogDto): Promise<OrderStatusLogs> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all orderStatusLogs`;
+  async findAll(): Promise<OrderStatusLogs[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} orderStatusLog`;
+  async findOne(id: number): Promise<OrderStatusLogs> {
+    const entity = await this.repository.findOneBy({ iOrderLogId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateOrderStatusLogDto: UpdateOrderStatusLogDto) {
-    return `This action updates a #${id} orderStatusLog`;
+  async update(id: number, updateDto: UpdateOrderStatusLogDto): Promise<OrderStatusLogs> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} orderStatusLog`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

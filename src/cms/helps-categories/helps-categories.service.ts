@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { HelpsCategories } from './entities/helps-category.entity';
 import { CreateHelpsCategoryDto } from './dto/create-helps-category.dto';
 import { UpdateHelpsCategoryDto } from './dto/update-helps-category.dto';
 
 @Injectable()
 export class HelpsCategoriesService {
-  create(createHelpsCategoryDto: CreateHelpsCategoryDto) {
-    return 'This action adds a new helpsCategory';
+  constructor(
+    @InjectRepository(HelpsCategories)
+    private readonly repository: Repository<HelpsCategories>,
+  ) {}
+
+  async create(createDto: CreateHelpsCategoryDto): Promise<HelpsCategories> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all helpsCategories`;
+  async findAll(): Promise<HelpsCategories[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} helpsCategory`;
+  async findOne(id: number): Promise<HelpsCategories> {
+    const entity = await this.repository.findOneBy({ iHelpscategoryId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateHelpsCategoryDto: UpdateHelpsCategoryDto) {
-    return `This action updates a #${id} helpsCategory`;
+  async update(id: number, updateDto: UpdateHelpsCategoryDto): Promise<HelpsCategories> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} helpsCategory`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { ObjectRealisations } from './entities/object-realisation.entity';
 import { CreateObjectRealisationDto } from './dto/create-object-realisation.dto';
 import { UpdateObjectRealisationDto } from './dto/update-object-realisation.dto';
 
 @Injectable()
 export class ObjectRealisationService {
-  create(createObjectRealisationDto: CreateObjectRealisationDto) {
-    return 'This action adds a new objectRealisation';
+  constructor(
+    @InjectRepository(ObjectRealisations)
+    private readonly repository: Repository<ObjectRealisations>,
+  ) {}
+
+  async create(createDto: CreateObjectRealisationDto): Promise<ObjectRealisations> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all objectRealisation`;
+  async findAll(): Promise<ObjectRealisations[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} objectRealisation`;
+  async findOne(id: number): Promise<ObjectRealisations> {
+    const entity = await this.repository.findOneBy({ id: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateObjectRealisationDto: UpdateObjectRealisationDto) {
-    return `This action updates a #${id} objectRealisation`;
+  async update(id: number, updateDto: UpdateObjectRealisationDto): Promise<ObjectRealisations> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} objectRealisation`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

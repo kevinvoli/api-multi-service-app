@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { PaymentCustomerInfo } from './entities/payment-customer-info.entity';
 import { CreatePaymentCustomerInfoDto } from './dto/create-payment-customer-info.dto';
 import { UpdatePaymentCustomerInfoDto } from './dto/update-payment-customer-info.dto';
 
 @Injectable()
 export class PaymentCustomerInfoService {
-  create(createPaymentCustomerInfoDto: CreatePaymentCustomerInfoDto) {
-    return 'This action adds a new paymentCustomerInfo';
+  constructor(
+    @InjectRepository(PaymentCustomerInfo)
+    private readonly repository: Repository<PaymentCustomerInfo>,
+  ) {}
+
+  async create(createDto: CreatePaymentCustomerInfoDto): Promise<PaymentCustomerInfo> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all paymentCustomerInfo`;
+  async findAll(): Promise<PaymentCustomerInfo[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} paymentCustomerInfo`;
+  async findOne(id: number): Promise<PaymentCustomerInfo> {
+    const entity = await this.repository.findOneBy({ iCustomerInfoId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updatePaymentCustomerInfoDto: UpdatePaymentCustomerInfoDto) {
-    return `This action updates a #${id} paymentCustomerInfo`;
+  async update(id: number, updateDto: UpdatePaymentCustomerInfoDto): Promise<PaymentCustomerInfo> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} paymentCustomerInfo`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

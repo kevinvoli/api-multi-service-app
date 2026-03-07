@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { PackageType } from './entities/package-type.entity';
 import { CreatePackageTypeDto } from './dto/create-package-type.dto';
 import { UpdatePackageTypeDto } from './dto/update-package-type.dto';
 
 @Injectable()
 export class PackageTypeService {
-  create(createPackageTypeDto: CreatePackageTypeDto) {
-    return 'This action adds a new packageType';
+  constructor(
+    @InjectRepository(PackageType)
+    private readonly repository: Repository<PackageType>,
+  ) {}
+
+  async create(createDto: CreatePackageTypeDto): Promise<PackageType> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all packageType`;
+  async findAll(): Promise<PackageType[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} packageType`;
+  async findOne(id: number): Promise<PackageType> {
+    const entity = await this.repository.findOneBy({ iPackageTypeId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updatePackageTypeDto: UpdatePackageTypeDto) {
-    return `This action updates a #${id} packageType`;
+  async update(id: number, updateDto: UpdatePackageTypeDto): Promise<PackageType> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} packageType`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

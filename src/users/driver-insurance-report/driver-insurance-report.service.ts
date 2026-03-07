@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { DriverInsuranceReport } from './entities/driver-insurance-report.entity';
 import { CreateDriverInsuranceReportDto } from './dto/create-driver-insurance-report.dto';
 import { UpdateDriverInsuranceReportDto } from './dto/update-driver-insurance-report.dto';
 
 @Injectable()
 export class DriverInsuranceReportService {
-  create(createDriverInsuranceReportDto: CreateDriverInsuranceReportDto) {
-    return 'This action adds a new driverInsuranceReport';
+  constructor(
+    @InjectRepository(DriverInsuranceReport)
+    private readonly repository: Repository<DriverInsuranceReport>,
+  ) {}
+
+  async create(createDto: CreateDriverInsuranceReportDto): Promise<DriverInsuranceReport> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all driverInsuranceReport`;
+  async findAll(): Promise<DriverInsuranceReport[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} driverInsuranceReport`;
+  async findOne(id: number): Promise<DriverInsuranceReport> {
+    const entity = await this.repository.findOneBy({ iInsuranceReportId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateDriverInsuranceReportDto: UpdateDriverInsuranceReportDto) {
-    return `This action updates a #${id} driverInsuranceReport`;
+  async update(id: number, updateDto: UpdateDriverInsuranceReportDto): Promise<DriverInsuranceReport> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} driverInsuranceReport`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { ConfigurationsPaymentLog } from './entities/configurations-payment-log.entity';
 import { CreateConfigurationsPaymentLogDto } from './dto/create-configurations-payment-log.dto';
 import { UpdateConfigurationsPaymentLogDto } from './dto/update-configurations-payment-log.dto';
 
 @Injectable()
 export class ConfigurationsPaymentLogService {
-  create(createConfigurationsPaymentLogDto: CreateConfigurationsPaymentLogDto) {
-    return 'This action adds a new configurationsPaymentLog';
+  constructor(
+    @InjectRepository(ConfigurationsPaymentLog)
+    private readonly repository: Repository<ConfigurationsPaymentLog>,
+  ) {}
+
+  async create(createDto: CreateConfigurationsPaymentLogDto): Promise<ConfigurationsPaymentLog> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all configurationsPaymentLog`;
+  async findAll(): Promise<ConfigurationsPaymentLog[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} configurationsPaymentLog`;
+  async findOne(id: number): Promise<ConfigurationsPaymentLog> {
+    const entity = await this.repository.findOneBy({ iLogId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateConfigurationsPaymentLogDto: UpdateConfigurationsPaymentLogDto) {
-    return `This action updates a #${id} configurationsPaymentLog`;
+  async update(id: number, updateDto: UpdateConfigurationsPaymentLogDto): Promise<ConfigurationsPaymentLog> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} configurationsPaymentLog`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

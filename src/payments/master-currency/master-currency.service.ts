@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { MasterCurrency } from './entities/master-currency.entity';
 import { CreateMasterCurrencyDto } from './dto/create-master-currency.dto';
 import { UpdateMasterCurrencyDto } from './dto/update-master-currency.dto';
 
 @Injectable()
 export class MasterCurrencyService {
-  create(createMasterCurrencyDto: CreateMasterCurrencyDto) {
-    return 'This action adds a new masterCurrency';
+  constructor(
+    @InjectRepository(MasterCurrency)
+    private readonly repository: Repository<MasterCurrency>,
+  ) {}
+
+  async create(createDto: CreateMasterCurrencyDto): Promise<MasterCurrency> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all masterCurrency`;
+  async findAll(): Promise<MasterCurrency[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} masterCurrency`;
+  async findOne(id: number): Promise<MasterCurrency> {
+    const entity = await this.repository.findOneBy({ iCurrencyId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateMasterCurrencyDto: UpdateMasterCurrencyDto) {
-    return `This action updates a #${id} masterCurrency`;
+  async update(id: number, updateDto: UpdateMasterCurrencyDto): Promise<MasterCurrency> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} masterCurrency`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { DriverDestinationsRoute } from './entities/driver-destinations-route.entity';
 import { CreateDriverDestinationsRouteDto } from './dto/create-driver-destinations-route.dto';
 import { UpdateDriverDestinationsRouteDto } from './dto/update-driver-destinations-route.dto';
 
 @Injectable()
 export class DriverDestinationsRouteService {
-  create(createDriverDestinationsRouteDto: CreateDriverDestinationsRouteDto) {
-    return 'This action adds a new driverDestinationsRoute';
+  constructor(
+    @InjectRepository(DriverDestinationsRoute)
+    private readonly repository: Repository<DriverDestinationsRoute>,
+  ) {}
+
+  async create(createDto: CreateDriverDestinationsRouteDto): Promise<DriverDestinationsRoute> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all driverDestinationsRoute`;
+  async findAll(): Promise<DriverDestinationsRoute[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} driverDestinationsRoute`;
+  async findOne(id: number): Promise<DriverDestinationsRoute> {
+    const entity = await this.repository.findOneBy({ iRootId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateDriverDestinationsRouteDto: UpdateDriverDestinationsRouteDto) {
-    return `This action updates a #${id} driverDestinationsRoute`;
+  async update(id: number, updateDto: UpdateDriverDestinationsRouteDto): Promise<DriverDestinationsRoute> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} driverDestinationsRoute`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { CustomDeliveryChargesOrder } from './entities/custom-delivery-charges-order.entity';
 import { CreateCustomDeliveryChargesOrderDto } from './dto/create-custom-delivery-charges-order.dto';
 import { UpdateCustomDeliveryChargesOrderDto } from './dto/update-custom-delivery-charges-order.dto';
 
 @Injectable()
 export class CustomDeliveryChargesOrderService {
-  create(createCustomDeliveryChargesOrderDto: CreateCustomDeliveryChargesOrderDto) {
-    return 'This action adds a new customDeliveryChargesOrder';
+  constructor(
+    @InjectRepository(CustomDeliveryChargesOrder)
+    private readonly repository: Repository<CustomDeliveryChargesOrder>,
+  ) {}
+
+  async create(createDto: CreateCustomDeliveryChargesOrderDto): Promise<CustomDeliveryChargesOrder> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all customDeliveryChargesOrder`;
+  async findAll(): Promise<CustomDeliveryChargesOrder[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} customDeliveryChargesOrder`;
+  async findOne(id: number): Promise<CustomDeliveryChargesOrder> {
+    const entity = await this.repository.findOneBy({ iDeliveyChargeId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateCustomDeliveryChargesOrderDto: UpdateCustomDeliveryChargesOrderDto) {
-    return `This action updates a #${id} customDeliveryChargesOrder`;
+  async update(id: number, updateDto: UpdateCustomDeliveryChargesOrderDto): Promise<CustomDeliveryChargesOrder> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} customDeliveryChargesOrder`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

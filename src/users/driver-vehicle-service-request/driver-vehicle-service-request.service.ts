@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { DriverVehicleServiceRequest } from './entities/driver-vehicle-service-request.entity';
 import { CreateDriverVehicleServiceRequestDto } from './dto/create-driver-vehicle-service-request.dto';
 import { UpdateDriverVehicleServiceRequestDto } from './dto/update-driver-vehicle-service-request.dto';
 
 @Injectable()
 export class DriverVehicleServiceRequestService {
-  create(createDriverVehicleServiceRequestDto: CreateDriverVehicleServiceRequestDto) {
-    return 'This action adds a new driverVehicleServiceRequest';
+  constructor(
+    @InjectRepository(DriverVehicleServiceRequest)
+    private readonly repository: Repository<DriverVehicleServiceRequest>,
+  ) {}
+
+  async create(createDto: CreateDriverVehicleServiceRequestDto): Promise<DriverVehicleServiceRequest> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all driverVehicleServiceRequest`;
+  async findAll(): Promise<DriverVehicleServiceRequest[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} driverVehicleServiceRequest`;
+  async findOne(id: number): Promise<DriverVehicleServiceRequest> {
+    const entity = await this.repository.findOneBy({ iRequestId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateDriverVehicleServiceRequestDto: UpdateDriverVehicleServiceRequestDto) {
-    return `This action updates a #${id} driverVehicleServiceRequest`;
+  async update(id: number, updateDto: UpdateDriverVehicleServiceRequestDto): Promise<DriverVehicleServiceRequest> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} driverVehicleServiceRequest`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

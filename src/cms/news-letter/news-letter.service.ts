@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Newsfeed } from './entities/news-letter.entity';
 import { CreateNewsLetterDto } from './dto/create-news-letter.dto';
 import { UpdateNewsLetterDto } from './dto/update-news-letter.dto';
 
 @Injectable()
 export class NewsLetterService {
-  create(createNewsLetterDto: CreateNewsLetterDto) {
-    return 'This action adds a new newsLetter';
+  constructor(
+    @InjectRepository(Newsfeed)
+    private readonly repository: Repository<Newsfeed>,
+  ) {}
+
+  async create(createDto: CreateNewsLetterDto): Promise<Newsfeed> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all newsLetter`;
+  async findAll(): Promise<Newsfeed[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} newsLetter`;
+  async findOne(id: number): Promise<Newsfeed> {
+    const entity = await this.repository.findOneBy({ iNewsfeedId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateNewsLetterDto: UpdateNewsLetterDto) {
-    return `This action updates a #${id} newsLetter`;
+  async update(id: number, updateDto: UpdateNewsLetterDto): Promise<Newsfeed> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} newsLetter`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

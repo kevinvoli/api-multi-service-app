@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { TripStatusMessages } from './entities/trips-status-message.entity';
 import { CreateTripsStatusMessageDto } from './dto/create-trips-status-message.dto';
 import { UpdateTripsStatusMessageDto } from './dto/update-trips-status-message.dto';
 
 @Injectable()
 export class TripsStatusMessagesService {
-  create(createTripsStatusMessageDto: CreateTripsStatusMessageDto) {
-    return 'This action adds a new tripsStatusMessage';
+  constructor(
+    @InjectRepository(TripStatusMessages)
+    private readonly repository: Repository<TripStatusMessages>,
+  ) {}
+
+  async create(createDto: CreateTripsStatusMessageDto): Promise<TripStatusMessages> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all tripsStatusMessages`;
+  async findAll(): Promise<TripStatusMessages[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} tripsStatusMessage`;
+  async findOne(id: number): Promise<TripStatusMessages> {
+    const entity = await this.repository.findOneBy({ iStatusId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateTripsStatusMessageDto: UpdateTripsStatusMessageDto) {
-    return `This action updates a #${id} tripsStatusMessage`;
+  async update(id: number, updateDto: UpdateTripsStatusMessageDto): Promise<TripStatusMessages> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} tripsStatusMessage`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

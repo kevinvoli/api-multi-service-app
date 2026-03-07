@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { SetupInfo } from './entities/setup-info.entity';
 import { CreateSetupInfoDto } from './dto/create-setup-info.dto';
 import { UpdateSetupInfoDto } from './dto/update-setup-info.dto';
 
 @Injectable()
 export class SetupInfoService {
-  create(createSetupInfoDto: CreateSetupInfoDto) {
-    return 'This action adds a new setupInfo';
+  constructor(
+    @InjectRepository(SetupInfo)
+    private readonly repository: Repository<SetupInfo>,
+  ) {}
+
+  async create(createDto: CreateSetupInfoDto): Promise<SetupInfo> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all setupInfo`;
+  async findAll(): Promise<SetupInfo[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} setupInfo`;
+  async findOne(id: number): Promise<SetupInfo> {
+    const entity = await this.repository.findOneBy({ iSetupId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateSetupInfoDto: UpdateSetupInfoDto) {
-    return `This action updates a #${id} setupInfo`;
+  async update(id: number, updateDto: UpdateSetupInfoDto): Promise<SetupInfo> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} setupInfo`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

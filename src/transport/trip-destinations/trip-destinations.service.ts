@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { TripDestinations } from './entities/trip-destination.entity';
 import { CreateTripDestinationDto } from './dto/create-trip-destination.dto';
 import { UpdateTripDestinationDto } from './dto/update-trip-destination.dto';
 
 @Injectable()
 export class TripDestinationsService {
-  create(createTripDestinationDto: CreateTripDestinationDto) {
-    return 'This action adds a new tripDestination';
+  constructor(
+    @InjectRepository(TripDestinations)
+    private readonly repository: Repository<TripDestinations>,
+  ) {}
+
+  async create(createDto: CreateTripDestinationDto): Promise<TripDestinations> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all tripDestinations`;
+  async findAll(): Promise<TripDestinations[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} tripDestination`;
+  async findOne(id: number): Promise<TripDestinations> {
+    const entity = await this.repository.findOneBy({ iTripDestinationId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateTripDestinationDto: UpdateTripDestinationDto) {
-    return `This action updates a #${id} tripDestination`;
+  async update(id: number, updateDto: UpdateTripDestinationDto): Promise<TripDestinations> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} tripDestination`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

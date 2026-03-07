@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { DocumentList } from './entities/document-list.entity';
 import { CreateDocumentListDto } from './dto/create-document-list.dto';
 import { UpdateDocumentListDto } from './dto/update-document-list.dto';
 
 @Injectable()
 export class DocumentListService {
-  create(createDocumentListDto: CreateDocumentListDto) {
-    return 'This action adds a new documentList';
+  constructor(
+    @InjectRepository(DocumentList)
+    private readonly repository: Repository<DocumentList>,
+  ) {}
+
+  async create(createDto: CreateDocumentListDto): Promise<DocumentList> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all documentList`;
+  async findAll(): Promise<DocumentList[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} documentList`;
+  async findOne(id: number): Promise<DocumentList> {
+    const entity = await this.repository.findOneBy({ docId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateDocumentListDto: UpdateDocumentListDto) {
-    return `This action updates a #${id} documentList`;
+  async update(id: number, updateDto: UpdateDocumentListDto): Promise<DocumentList> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} documentList`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

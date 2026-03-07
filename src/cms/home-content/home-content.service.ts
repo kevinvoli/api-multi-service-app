@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { HomeContent } from './entities/home-content.entity';
 import { CreateHomeContentDto } from './dto/create-home-content.dto';
 import { UpdateHomeContentDto } from './dto/update-home-content.dto';
 
 @Injectable()
 export class HomeContentService {
-  create(createHomeContentDto: CreateHomeContentDto) {
-    return 'This action adds a new homeContent';
+  constructor(
+    @InjectRepository(HomeContent)
+    private readonly repository: Repository<HomeContent>,
+  ) {}
+
+  async create(createDto: CreateHomeContentDto): Promise<HomeContent> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all homeContent`;
+  async findAll(): Promise<HomeContent[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} homeContent`;
+  async findOne(id: number): Promise<HomeContent> {
+    const entity = await this.repository.findOneBy({ id: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateHomeContentDto: UpdateHomeContentDto) {
-    return `This action updates a #${id} homeContent`;
+  async update(id: number, updateDto: UpdateHomeContentDto): Promise<HomeContent> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} homeContent`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

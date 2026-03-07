@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { AdminPermissions } from './entities/admin-permission.entity';
 import { CreateAdminPermissionDto } from './dto/create-admin-permission.dto';
 import { UpdateAdminPermissionDto } from './dto/update-admin-permission.dto';
 
 @Injectable()
 export class AdminPermissionsService {
-  create(createAdminPermissionDto: CreateAdminPermissionDto) {
-    return 'This action adds a new adminPermission';
+  constructor(
+    @InjectRepository(AdminPermissions)
+    private readonly repository: Repository<AdminPermissions>,
+  ) {}
+
+  async create(createDto: CreateAdminPermissionDto): Promise<AdminPermissions> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all adminPermissions`;
+  async findAll(): Promise<AdminPermissions[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} adminPermission`;
+  async findOne(id: number): Promise<AdminPermissions> {
+    const entity = await this.repository.findOneBy({ id: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateAdminPermissionDto: UpdateAdminPermissionDto) {
-    return `This action updates a #${id} adminPermission`;
+  async update(id: number, updateDto: UpdateAdminPermissionDto): Promise<AdminPermissions> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} adminPermission`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

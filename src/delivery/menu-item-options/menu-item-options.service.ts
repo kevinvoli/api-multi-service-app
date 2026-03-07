@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { MenuitemOptions } from './entities/menu-item-option.entity';
 import { CreateMenuItemOptionDto } from './dto/create-menu-item-option.dto';
 import { UpdateMenuItemOptionDto } from './dto/update-menu-item-option.dto';
 
 @Injectable()
 export class MenuItemOptionsService {
-  create(createMenuItemOptionDto: CreateMenuItemOptionDto) {
-    return 'This action adds a new menuItemOption';
+  constructor(
+    @InjectRepository(MenuitemOptions)
+    private readonly repository: Repository<MenuitemOptions>,
+  ) {}
+
+  async create(createDto: CreateMenuItemOptionDto): Promise<MenuitemOptions> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all menuItemOptions`;
+  async findAll(): Promise<MenuitemOptions[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} menuItemOption`;
+  async findOne(id: number): Promise<MenuitemOptions> {
+    const entity = await this.repository.findOneBy({ iOptionId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateMenuItemOptionDto: UpdateMenuItemOptionDto) {
-    return `This action updates a #${id} menuItemOption`;
+  async update(id: number, updateDto: UpdateMenuItemOptionDto): Promise<MenuitemOptions> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} menuItemOption`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

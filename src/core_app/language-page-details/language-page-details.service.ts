@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { LanguagePageDetails } from './entities/language-page-detail.entity';
 import { CreateLanguagePageDetailDto } from './dto/create-language-page-detail.dto';
 import { UpdateLanguagePageDetailDto } from './dto/update-language-page-detail.dto';
 
 @Injectable()
 export class LanguagePageDetailsService {
-  create(createLanguagePageDetailDto: CreateLanguagePageDetailDto) {
-    return 'This action adds a new languagePageDetail';
+  constructor(
+    @InjectRepository(LanguagePageDetails)
+    private readonly repository: Repository<LanguagePageDetails>,
+  ) {}
+
+  async create(createDto: CreateLanguagePageDetailDto): Promise<LanguagePageDetails> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all languagePageDetails`;
+  async findAll(): Promise<LanguagePageDetails[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} languagePageDetail`;
+  async findOne(id: number): Promise<LanguagePageDetails> {
+    const entity = await this.repository.findOneBy({ lpId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateLanguagePageDetailDto: UpdateLanguagePageDetailDto) {
-    return `This action updates a #${id} languagePageDetail`;
+  async update(id: number, updateDto: UpdateLanguagePageDetailDto): Promise<LanguagePageDetails> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} languagePageDetail`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

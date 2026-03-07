@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Make } from './entities/make.entity';
 import { CreateMakeDto } from './dto/create-make.dto';
 import { UpdateMakeDto } from './dto/update-make.dto';
 
 @Injectable()
 export class MakeService {
-  create(createMakeDto: CreateMakeDto) {
-    return 'This action adds a new make';
+  constructor(
+    @InjectRepository(Make)
+    private readonly repository: Repository<Make>,
+  ) {}
+
+  async create(createDto: CreateMakeDto): Promise<Make> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all make`;
+  async findAll(): Promise<Make[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} make`;
+  async findOne(id: number): Promise<Make> {
+    const entity = await this.repository.findOneBy({ iMakeId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateMakeDto: UpdateMakeDto) {
-    return `This action updates a #${id} make`;
+  async update(id: number, updateDto: UpdateMakeDto): Promise<Make> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} make`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

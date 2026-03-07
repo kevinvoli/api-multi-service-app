@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { VoiceDirectionFiles } from './entities/voice-direction-file.entity';
 import { CreateVoiceDirectionFileDto } from './dto/create-voice-direction-file.dto';
 import { UpdateVoiceDirectionFileDto } from './dto/update-voice-direction-file.dto';
 
 @Injectable()
 export class VoiceDirectionFilesService {
-  create(createVoiceDirectionFileDto: CreateVoiceDirectionFileDto) {
-    return 'This action adds a new voiceDirectionFile';
+  constructor(
+    @InjectRepository(VoiceDirectionFiles)
+    private readonly repository: Repository<VoiceDirectionFiles>,
+  ) {}
+
+  async create(createDto: CreateVoiceDirectionFileDto): Promise<VoiceDirectionFiles> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all voiceDirectionFiles`;
+  async findAll(): Promise<VoiceDirectionFiles[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} voiceDirectionFile`;
+  async findOne(id: number): Promise<VoiceDirectionFiles> {
+    const entity = await this.repository.findOneBy({ iVoiceDirectionFileId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateVoiceDirectionFileDto: UpdateVoiceDirectionFileDto) {
-    return `This action updates a #${id} voiceDirectionFile`;
+  async update(id: number, updateDto: UpdateVoiceDirectionFileDto): Promise<VoiceDirectionFiles> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} voiceDirectionFile`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { DriverSubscriptionDetails } from './entities/driver-subscription-detail.entity';
 import { CreateDriverSubscriptionDetailDto } from './dto/create-driver-subscription-detail.dto';
 import { UpdateDriverSubscriptionDetailDto } from './dto/update-driver-subscription-detail.dto';
 
 @Injectable()
 export class DriverSubscriptionDetailsService {
-  create(createDriverSubscriptionDetailDto: CreateDriverSubscriptionDetailDto) {
-    return 'This action adds a new driverSubscriptionDetail';
+  constructor(
+    @InjectRepository(DriverSubscriptionDetails)
+    private readonly repository: Repository<DriverSubscriptionDetails>,
+  ) {}
+
+  async create(createDto: CreateDriverSubscriptionDetailDto): Promise<DriverSubscriptionDetails> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all driverSubscriptionDetails`;
+  async findAll(): Promise<DriverSubscriptionDetails[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} driverSubscriptionDetail`;
+  async findOne(id: number): Promise<DriverSubscriptionDetails> {
+    const entity = await this.repository.findOneBy({ iDriverSubscriptionDetailsId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateDriverSubscriptionDetailDto: UpdateDriverSubscriptionDetailDto) {
-    return `This action updates a #${id} driverSubscriptionDetail`;
+  async update(id: number, updateDto: UpdateDriverSubscriptionDetailDto): Promise<DriverSubscriptionDetails> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} driverSubscriptionDetail`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

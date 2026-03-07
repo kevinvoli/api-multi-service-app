@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { VehicleType } from './entities/vehicle-type.entity';
 import { CreateVehicleTypeDto } from './dto/create-vehicle-type.dto';
 import { UpdateVehicleTypeDto } from './dto/update-vehicle-type.dto';
 
 @Injectable()
 export class VehicleTypeService {
-  create(createVehicleTypeDto: CreateVehicleTypeDto) {
-    return 'This action adds a new vehicleType';
+  constructor(
+    @InjectRepository(VehicleType)
+    private readonly repository: Repository<VehicleType>,
+  ) {}
+
+  async create(createDto: CreateVehicleTypeDto): Promise<VehicleType> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all vehicleType`;
+  async findAll(): Promise<VehicleType[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} vehicleType`;
+  async findOne(id: number): Promise<VehicleType> {
+    const entity = await this.repository.findOneBy({ iVehicleTypeId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateVehicleTypeDto: UpdateVehicleTypeDto) {
-    return `This action updates a #${id} vehicleType`;
+  async update(id: number, updateDto: UpdateVehicleTypeDto): Promise<VehicleType> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} vehicleType`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

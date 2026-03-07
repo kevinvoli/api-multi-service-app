@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { AdminAlerts } from './entities/admin-alert.entity';
 import { CreateAdminAlertDto } from './dto/create-admin-alert.dto';
 import { UpdateAdminAlertDto } from './dto/update-admin-alert.dto';
 
 @Injectable()
 export class AdminAlertsService {
-  create(createAdminAlertDto: CreateAdminAlertDto) {
-    return 'This action adds a new adminAlert';
+  constructor(
+    @InjectRepository(AdminAlerts)
+    private readonly repository: Repository<AdminAlerts>,
+  ) {}
+
+  async create(createDto: CreateAdminAlertDto): Promise<AdminAlerts> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all adminAlerts`;
+  async findAll(): Promise<AdminAlerts[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} adminAlert`;
+  async findOne(id: number): Promise<AdminAlerts> {
+    const entity = await this.repository.findOneBy({ iAlertId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateAdminAlertDto: UpdateAdminAlertDto) {
-    return `This action updates a #${id} adminAlert`;
+  async update(id: number, updateDto: UpdateAdminAlertDto): Promise<AdminAlerts> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} adminAlert`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { SendMessageTemplates } from './entities/send-message-template.entity';
 import { CreateSendMessageTemplateDto } from './dto/create-send-message-template.dto';
 import { UpdateSendMessageTemplateDto } from './dto/update-send-message-template.dto';
 
 @Injectable()
 export class SendMessageTemplatesService {
-  create(createSendMessageTemplateDto: CreateSendMessageTemplateDto) {
-    return 'This action adds a new sendMessageTemplate';
+  constructor(
+    @InjectRepository(SendMessageTemplates)
+    private readonly repository: Repository<SendMessageTemplates>,
+  ) {}
+
+  async create(createDto: CreateSendMessageTemplateDto): Promise<SendMessageTemplates> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all sendMessageTemplates`;
+  async findAll(): Promise<SendMessageTemplates[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} sendMessageTemplate`;
+  async findOne(id: number): Promise<SendMessageTemplates> {
+    const entity = await this.repository.findOneBy({ iSendMessageId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateSendMessageTemplateDto: UpdateSendMessageTemplateDto) {
-    return `This action updates a #${id} sendMessageTemplate`;
+  async update(id: number, updateDto: UpdateSendMessageTemplateDto): Promise<SendMessageTemplates> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} sendMessageTemplate`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

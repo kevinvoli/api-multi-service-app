@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { OdaCommoditiesLocation } from './entities/oda-commodities-location.entity';
 import { CreateOdaCommoditiesLocationDto } from './dto/create-oda-commodities-location.dto';
 import { UpdateOdaCommoditiesLocationDto } from './dto/update-oda-commodities-location.dto';
 
 @Injectable()
 export class OdaCommoditiesLocationService {
-  create(createOdaCommoditiesLocationDto: CreateOdaCommoditiesLocationDto) {
-    return 'This action adds a new odaCommoditiesLocation';
+  constructor(
+    @InjectRepository(OdaCommoditiesLocation)
+    private readonly repository: Repository<OdaCommoditiesLocation>,
+  ) {}
+
+  async create(createDto: CreateOdaCommoditiesLocationDto): Promise<OdaCommoditiesLocation> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all odaCommoditiesLocation`;
+  async findAll(): Promise<OdaCommoditiesLocation[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} odaCommoditiesLocation`;
+  async findOne(id: number): Promise<OdaCommoditiesLocation> {
+    const entity = await this.repository.findOneBy({ commoditieId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateOdaCommoditiesLocationDto: UpdateOdaCommoditiesLocationDto) {
-    return `This action updates a #${id} odaCommoditiesLocation`;
+  async update(id: number, updateDto: UpdateOdaCommoditiesLocationDto): Promise<OdaCommoditiesLocation> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} odaCommoditiesLocation`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

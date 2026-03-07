@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { RelatedCommunes } from './entities/related-commune.entity';
 import { CreateRelatedCommuneDto } from './dto/create-related-commune.dto';
 import { UpdateRelatedCommuneDto } from './dto/update-related-commune.dto';
 
 @Injectable()
 export class RelatedCommunesService {
-  create(createRelatedCommuneDto: CreateRelatedCommuneDto) {
-    return 'This action adds a new relatedCommune';
+  constructor(
+    @InjectRepository(RelatedCommunes)
+    private readonly repository: Repository<RelatedCommunes>,
+  ) {}
+
+  async create(createDto: CreateRelatedCommuneDto): Promise<RelatedCommunes> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all relatedCommunes`;
+  async findAll(): Promise<RelatedCommunes[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} relatedCommune`;
+  async findOne(id: number): Promise<RelatedCommunes> {
+    const entity = await this.repository.findOneBy({ communeId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateRelatedCommuneDto: UpdateRelatedCommuneDto) {
-    return `This action updates a #${id} relatedCommune`;
+  async update(id: number, updateDto: UpdateRelatedCommuneDto): Promise<RelatedCommunes> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} relatedCommune`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

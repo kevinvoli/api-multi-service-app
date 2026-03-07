@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { AdvertiseBanners } from './entities/advertise-banner.entity';
 import { CreateAdvertiseBannerDto } from './dto/create-advertise-banner.dto';
 import { UpdateAdvertiseBannerDto } from './dto/update-advertise-banner.dto';
 
 @Injectable()
 export class AdvertiseBannersService {
-  create(createAdvertiseBannerDto: CreateAdvertiseBannerDto) {
-    return 'This action adds a new advertiseBanner';
+  constructor(
+    @InjectRepository(AdvertiseBanners)
+    private readonly repository: Repository<AdvertiseBanners>,
+  ) {}
+
+  async create(createDto: CreateAdvertiseBannerDto): Promise<AdvertiseBanners> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all advertiseBanners`;
+  async findAll(): Promise<AdvertiseBanners[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} advertiseBanner`;
+  async findOne(id: number): Promise<AdvertiseBanners> {
+    const entity = await this.repository.findOneBy({ iAdvertBannerId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateAdvertiseBannerDto: UpdateAdvertiseBannerDto) {
-    return `This action updates a #${id} advertiseBanner`;
+  async update(id: number, updateDto: UpdateAdvertiseBannerDto): Promise<AdvertiseBanners> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} advertiseBanner`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

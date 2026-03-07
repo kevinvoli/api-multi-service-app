@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { OdaSousItemsTypesLocation } from './entities/oda-sous-items-types-location.entity';
 import { CreateOdaSousItemsTypesLocationDto } from './dto/create-oda-sous-items-types-location.dto';
 import { UpdateOdaSousItemsTypesLocationDto } from './dto/update-oda-sous-items-types-location.dto';
 
 @Injectable()
 export class OdaSousItemsTypesLocationService {
-  create(createOdaSousItemsTypesLocationDto: CreateOdaSousItemsTypesLocationDto) {
-    return 'This action adds a new odaSousItemsTypesLocation';
+  constructor(
+    @InjectRepository(OdaSousItemsTypesLocation)
+    private readonly repository: Repository<OdaSousItemsTypesLocation>,
+  ) {}
+
+  async create(createDto: CreateOdaSousItemsTypesLocationDto): Promise<OdaSousItemsTypesLocation> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all odaSousItemsTypesLocation`;
+  async findAll(): Promise<OdaSousItemsTypesLocation[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} odaSousItemsTypesLocation`;
+  async findOne(id: number): Promise<OdaSousItemsTypesLocation> {
+    const entity = await this.repository.findOneBy({ sousTypeLocationId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateOdaSousItemsTypesLocationDto: UpdateOdaSousItemsTypesLocationDto) {
-    return `This action updates a #${id} odaSousItemsTypesLocation`;
+  async update(id: number, updateDto: UpdateOdaSousItemsTypesLocationDto): Promise<OdaSousItemsTypesLocation> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} odaSousItemsTypesLocation`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

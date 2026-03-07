@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { FlyLocationWiseFare } from './entities/fly-location-wise-fare.entity';
 import { CreateFlyLocationWiseFareDto } from './dto/create-fly-location-wise-fare.dto';
 import { UpdateFlyLocationWiseFareDto } from './dto/update-fly-location-wise-fare.dto';
 
 @Injectable()
 export class FlyLocationWiseFareService {
-  create(createFlyLocationWiseFareDto: CreateFlyLocationWiseFareDto) {
-    return 'This action adds a new flyLocationWiseFare';
+  constructor(
+    @InjectRepository(FlyLocationWiseFare)
+    private readonly repository: Repository<FlyLocationWiseFare>,
+  ) {}
+
+  async create(createDto: CreateFlyLocationWiseFareDto): Promise<FlyLocationWiseFare> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all flyLocationWiseFare`;
+  async findAll(): Promise<FlyLocationWiseFare[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} flyLocationWiseFare`;
+  async findOne(id: number): Promise<FlyLocationWiseFare> {
+    const entity = await this.repository.findOneBy({ iLocatioId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateFlyLocationWiseFareDto: UpdateFlyLocationWiseFareDto) {
-    return `This action updates a #${id} flyLocationWiseFare`;
+  async update(id: number, updateDto: UpdateFlyLocationWiseFareDto): Promise<FlyLocationWiseFare> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} flyLocationWiseFare`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

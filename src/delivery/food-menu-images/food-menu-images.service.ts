@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { FoodMenuImages } from './entities/food-menu-image.entity';
 import { CreateFoodMenuImageDto } from './dto/create-food-menu-image.dto';
 import { UpdateFoodMenuImageDto } from './dto/update-food-menu-image.dto';
 
 @Injectable()
 export class FoodMenuImagesService {
-  create(createFoodMenuImageDto: CreateFoodMenuImageDto) {
-    return 'This action adds a new foodMenuImage';
+  constructor(
+    @InjectRepository(FoodMenuImages)
+    private readonly repository: Repository<FoodMenuImages>,
+  ) {}
+
+  async create(createDto: CreateFoodMenuImageDto): Promise<FoodMenuImages> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all foodMenuImages`;
+  async findAll(): Promise<FoodMenuImages[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} foodMenuImage`;
+  async findOne(id: number): Promise<FoodMenuImages> {
+    const entity = await this.repository.findOneBy({ iFoodMenuImageId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateFoodMenuImageDto: UpdateFoodMenuImageDto) {
-    return `This action updates a #${id} foodMenuImage`;
+  async update(id: number, updateDto: UpdateFoodMenuImageDto): Promise<FoodMenuImages> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} foodMenuImage`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

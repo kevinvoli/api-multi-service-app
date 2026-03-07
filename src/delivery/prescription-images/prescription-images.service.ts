@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { PrescriptionImages } from './entities/prescription-image.entity';
 import { CreatePrescriptionImageDto } from './dto/create-prescription-image.dto';
 import { UpdatePrescriptionImageDto } from './dto/update-prescription-image.dto';
 
 @Injectable()
 export class PrescriptionImagesService {
-  create(createPrescriptionImageDto: CreatePrescriptionImageDto) {
-    return 'This action adds a new prescriptionImage';
+  constructor(
+    @InjectRepository(PrescriptionImages)
+    private readonly repository: Repository<PrescriptionImages>,
+  ) {}
+
+  async create(createDto: CreatePrescriptionImageDto): Promise<PrescriptionImages> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all prescriptionImages`;
+  async findAll(): Promise<PrescriptionImages[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} prescriptionImage`;
+  async findOne(id: number): Promise<PrescriptionImages> {
+    const entity = await this.repository.findOneBy({ iImageId: id } as any);
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updatePrescriptionImageDto: UpdatePrescriptionImageDto) {
-    return `This action updates a #${id} prescriptionImage`;
+  async update(id: number, updateDto: UpdatePrescriptionImageDto): Promise<PrescriptionImages> {
+    await this.repository.update(id, updateDto as any);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} prescriptionImage`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }
