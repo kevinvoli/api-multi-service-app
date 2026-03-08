@@ -8,6 +8,10 @@ import { Company } from '../../users/company/entities/company.entity';
 import { Trips } from '../../transport/trips/entities/trip.entity';
 import { RestaurantOrder } from '../../cart/entities/restaurant-order.entity';
 import { Administrators } from '../administrators/entities/administrator.entity';
+import { CabBooking } from '../../transport/cab-booking/entities/cab-booking.entity';
+import { DocumentList } from '../../users/document-list/entities/document-list.entity';
+import { UserWallet } from '../../payments/user-wallet/entities/user-wallet.entity';
+import { Coupon } from '../../payments/coupon/entities/coupon.entity';
 
 @Module({
   imports: [
@@ -18,6 +22,10 @@ import { Administrators } from '../administrators/entities/administrator.entity'
       Trips,
       RestaurantOrder,
       Administrators,
+      CabBooking,
+      DocumentList,
+      UserWallet,
+      Coupon,
     ]),
   ],
   controllers: [AdminPanelController],

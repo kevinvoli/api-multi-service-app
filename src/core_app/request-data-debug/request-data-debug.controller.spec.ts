@@ -1,6 +1,30 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { getRepositoryToken } from '@nestjs/typeorm';
 import { RequestDataDebugController } from './request-data-debug.controller';
 import { RequestDataDebugService } from './request-data-debug.service';
+import { RequestDataDebug } from './entities/request-data-debug.entity';
+
+const mockRepo = {
+  find: jest.fn().mockResolvedValue([]),
+  findOne: jest.fn().mockResolvedValue(null),
+  findOneBy: jest.fn().mockResolvedValue(null),
+  create: jest.fn().mockReturnValue({}),
+  save: jest.fn().mockResolvedValue({}),
+  update: jest.fn().mockResolvedValue({ affected: 1 }),
+  delete: jest.fn().mockResolvedValue({ affected: 1 }),
+  createQueryBuilder: jest.fn().mockReturnValue({
+    where: jest.fn().mockReturnThis(),
+    andWhere: jest.fn().mockReturnThis(),
+    select: jest.fn().mockReturnThis(),
+    orderBy: jest.fn().mockReturnThis(),
+    skip: jest.fn().mockReturnThis(),
+    take: jest.fn().mockReturnThis(),
+    getMany: jest.fn().mockResolvedValue([]),
+    getOne: jest.fn().mockResolvedValue(null),
+    getManyAndCount: jest.fn().mockResolvedValue([[], 0]),
+    getCount: jest.fn().mockResolvedValue(0),
+  }),
+};
 
 describe('RequestDataDebugController', () => {
   let controller: RequestDataDebugController;
@@ -8,7 +32,10 @@ describe('RequestDataDebugController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [RequestDataDebugController],
-      providers: [RequestDataDebugService],
+      providers: [
+        RequestDataDebugService,
+        { provide: getRepositoryToken(RequestDataDebug), useValue: mockRepo },
+      ],
     }).compile();
 
     controller = module.get<RequestDataDebugController>(RequestDataDebugController);

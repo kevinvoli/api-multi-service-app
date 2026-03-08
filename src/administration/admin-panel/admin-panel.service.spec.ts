@@ -8,6 +8,10 @@ import { Company } from '../../users/company/entities/company.entity';
 import { Trips } from '../../transport/trips/entities/trip.entity';
 import { RestaurantOrder } from '../../cart/entities/restaurant-order.entity';
 import { Administrators } from '../administrators/entities/administrator.entity';
+import { CabBooking } from '../../transport/cab-booking/entities/cab-booking.entity';
+import { DocumentList } from '../../users/document-list/entities/document-list.entity';
+import { UserWallet } from '../../payments/user-wallet/entities/user-wallet.entity';
+import { Coupon } from '../../payments/coupon/entities/coupon.entity';
 
 // ─── Mock factory ─────────────────────────────────────────────────────────────
 
@@ -16,9 +20,11 @@ function makeRepo(overrides: any = {}) {
     count: jest.fn().mockResolvedValue(0),
     find: jest.fn().mockResolvedValue([]),
     findOne: jest.fn().mockResolvedValue(null),
+    findOneBy: jest.fn().mockResolvedValue(null),
     create: jest.fn().mockReturnValue({}),
     save: jest.fn().mockImplementation((e) => Promise.resolve({ iAdminId: 99, vEmail: 'new@test.com', ...e })),
     update: jest.fn().mockResolvedValue({ affected: 1 }),
+    delete: jest.fn().mockResolvedValue({ affected: 1 }),
     createQueryBuilder: jest.fn().mockReturnValue({
       where: jest.fn().mockReturnThis(),
       andWhere: jest.fn().mockReturnThis(),
@@ -41,6 +47,10 @@ describe('AdminPanelService', () => {
   let tripRepo: any;
   let orderRepo: any;
   let adminRepo: any;
+  let cabBookingRepo: any;
+  let documentRepo: any;
+  let walletRepo: any;
+  let couponRepo: any;
 
   beforeEach(async () => {
     userRepo = makeRepo();
@@ -49,6 +59,10 @@ describe('AdminPanelService', () => {
     tripRepo = makeRepo();
     orderRepo = makeRepo();
     adminRepo = makeRepo();
+    cabBookingRepo = makeRepo();
+    documentRepo = makeRepo();
+    walletRepo = makeRepo();
+    couponRepo = makeRepo();
 
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -59,6 +73,10 @@ describe('AdminPanelService', () => {
         { provide: getRepositoryToken(Trips), useValue: tripRepo },
         { provide: getRepositoryToken(RestaurantOrder), useValue: orderRepo },
         { provide: getRepositoryToken(Administrators), useValue: adminRepo },
+        { provide: getRepositoryToken(CabBooking), useValue: cabBookingRepo },
+        { provide: getRepositoryToken(DocumentList), useValue: documentRepo },
+        { provide: getRepositoryToken(UserWallet), useValue: walletRepo },
+        { provide: getRepositoryToken(Coupon), useValue: couponRepo },
       ],
     }).compile();
 
@@ -178,6 +196,124 @@ describe('AdminPanelService', () => {
     it('leve NotFoundException si commande introuvable', async () => {
       orderRepo.update.mockResolvedValue({ affected: 0 });
       await expect(service.updateOrderStatus(999, 5)).rejects.toThrow(NotFoundException);
+    });
+  });
+
+  // ─── getRiderDetail ───────────────────────────────────────────────────────────
+
+  describe('getRiderDetail', () => {
+    it('retourne le profil complet du rider avec stats de trips', async () => {
+      const mockRider = { iUserId: 1, vName: 'Alice', vEmail: 'alice@x.com', eStatus: 'Active' };
+      const qb = {
+        select: jest.fn().mockReturnThis(),
+        where: jest.fn().mockReturnThis(),
+        getOne: jest.fn().mockResolvedValue(mockRider),
+      };
+      userRepo.createQueryBuilder.mockReturnValue(qb);
+      tripRepo.count.mockResolvedValueOnce(10).mockResolvedValueOnce(8).mockResolvedValueOnce(1);
+
+      const result = await service.getRiderDetail(1);
+      expect(result.iUserId).toBe(1);
+      expect(result.trips.total).toBe(10);
+      expect(result.trips.completed).toBe(8);
+    });
+
+    it('leve NotFoundException si rider introuvable', async () => {
+      const qb = { select: jest.fn().mockReturnThis(), where: jest.fn().mockReturnThis(), getOne: jest.fn().mockResolvedValue(null) };
+      userRepo.createQueryBuilder.mockReturnValue(qb);
+      await expect(service.getRiderDetail(999)).rejects.toThrow(NotFoundException);
+    });
+  });
+
+  // ─── getDriverDetail ──────────────────────────────────────────────────────────
+
+  describe('getDriverDetail', () => {
+    it('retourne le profil complet du driver avec docs en attente', async () => {
+      const mockDriver = { iDriverId: 5, vName: 'Bob', eStatus: 'active' };
+      const driverQb = {
+        select: jest.fn().mockReturnThis(),
+        where: jest.fn().mockReturnThis(),
+        getOne: jest.fn().mockResolvedValue(mockDriver),
+      };
+      driverRepo.createQueryBuilder.mockReturnValue(driverQb);
+      tripRepo.count.mockResolvedValueOnce(15).mockResolvedValueOnce(12).mockResolvedValueOnce(2);
+      const docQb = {
+        where: jest.fn().mockReturnThis(),
+        andWhere: jest.fn().mockReturnThis(),
+        getCount: jest.fn().mockResolvedValue(2),
+      };
+      documentRepo.createQueryBuilder.mockReturnValue(docQb);
+
+      const result = await service.getDriverDetail(5);
+      expect(result.iDriverId).toBe(5);
+      expect(result.trips.total).toBe(15);
+      expect(result.pendingDocsCount).toBe(2);
+    });
+  });
+
+  // ─── searchRiderByPhone ───────────────────────────────────────────────────────
+
+  describe('searchRiderByPhone', () => {
+    it('retourne found=true si rider trouve', async () => {
+      const mockUser = { iUserId: 1, vName: 'Alice', vPhone: '0600000000' };
+      const qb = {
+        select: jest.fn().mockReturnThis(),
+        where: jest.fn().mockReturnThis(),
+        andWhere: jest.fn().mockReturnThis(),
+        getOne: jest.fn().mockResolvedValue(mockUser),
+      };
+      userRepo.createQueryBuilder.mockReturnValue(qb);
+
+      const result = await service.searchRiderByPhone('0600000000');
+      expect(result.found).toBe(true);
+      expect((result as any).user.iUserId).toBe(1);
+    });
+
+    it('retourne found=false si aucun rider', async () => {
+      const qb = { select: jest.fn().mockReturnThis(), where: jest.fn().mockReturnThis(), andWhere: jest.fn().mockReturnThis(), getOne: jest.fn().mockResolvedValue(null) };
+      userRepo.createQueryBuilder.mockReturnValue(qb);
+      const result = await service.searchRiderByPhone('0000000000');
+      expect(result.found).toBe(false);
+    });
+  });
+
+  // ─── assignDriverToBooking ────────────────────────────────────────────────────
+
+  describe('assignDriverToBooking', () => {
+    it('assigne le driver et retourne la reservation mise a jour', async () => {
+      cabBookingRepo.update.mockResolvedValue({ affected: 1 });
+      cabBookingRepo.findOneBy.mockResolvedValue({ iCabBookingId: 10, iDriverId: 3, eStatus: 'Assign' });
+
+      const result = await service.assignDriverToBooking(10, 3);
+      expect(result.success).toBe(true);
+      expect((result.booking as any).iDriverId).toBe(3);
+    });
+
+    it('leve NotFoundException si reservation introuvable', async () => {
+      cabBookingRepo.update.mockResolvedValue({ affected: 0 });
+      await expect(service.assignDriverToBooking(999, 1)).rejects.toThrow(NotFoundException);
+    });
+  });
+
+  // ─── checkCouponCode ──────────────────────────────────────────────────────────
+
+  describe('checkCouponCode', () => {
+    it('retourne exists=true si le code existe', async () => {
+      const qb = {
+        select: jest.fn().mockReturnThis(),
+        where: jest.fn().mockReturnThis(),
+        getOne: jest.fn().mockResolvedValue({ iCouponId: 1, vCouponCode: 'PROMO10' }),
+      };
+      couponRepo.createQueryBuilder.mockReturnValue(qb);
+      const result = await service.checkCouponCode('PROMO10');
+      expect(result.exists).toBe(true);
+    });
+
+    it('retourne exists=false si le code est inconnu', async () => {
+      const qb = { select: jest.fn().mockReturnThis(), where: jest.fn().mockReturnThis(), getOne: jest.fn().mockResolvedValue(null) };
+      couponRepo.createQueryBuilder.mockReturnValue(qb);
+      const result = await service.checkCouponCode('FAUX');
+      expect(result.exists).toBe(false);
     });
   });
 });

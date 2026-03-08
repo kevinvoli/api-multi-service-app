@@ -108,9 +108,16 @@ describe('CartService', () => {
       expect(result).toBeDefined();
     });
 
-    it('leve NotFoundException si le menu item n\'existe pas', async () => {
-      menuRepo.findOneBy.mockResolvedValue(null);
-      await expect(service.addItem(dto)).rejects.toThrow(NotFoundException);
+    it('ajoute un nouvel article sans article identique existant', async () => {
+      cartRepo.find.mockResolvedValueOnce([]); // panier vide
+      cartRepo.findOne.mockResolvedValue(null); // pas de doublon
+      cartRepo.create.mockReturnValue({ ...dto, id: 1 });
+      cartRepo.save.mockResolvedValue({ ...dto, id: 1 });
+      cartRepo.find.mockResolvedValueOnce([{ ...dto, id: 1, iQty: 1 }]); // liste finale
+
+      const result = await service.addItem(dto);
+      expect(cartRepo.save).toHaveBeenCalled();
+      expect(result.totalQty).toBe(1);
     });
   });
 
@@ -127,7 +134,7 @@ describe('CartService', () => {
 
       const result = await service.getCart(1);
       expect(result.items).toEqual([]);
-      expect(result.subtotal).toBe(0);
+      expect(result.fSubTotal).toBe(0);
     });
   });
 

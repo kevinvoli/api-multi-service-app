@@ -3,6 +3,7 @@ import {
 } from '@nestjs/common';
 import { AdminPanelService } from './admin-panel.service';
 
+
 @Controller('admin')
 export class AdminPanelController {
   constructor(private readonly adminPanelService: AdminPanelService) {}
@@ -172,5 +173,88 @@ export class AdminPanelController {
     @Body('status') status: 'Active' | 'Inactive' | 'Deleted',
   ) {
     return this.adminPanelService.updateAdminStatus(id, status);
+  }
+
+  // ─── Détails Rider / Driver ───────────────────────────────────────────────────
+
+  /** GET /admin/riders/search?phone=&phoneCode= */
+  @Get('riders/search')
+  searchRider(
+    @Query('phone') phone: string,
+    @Query('phoneCode') phoneCode?: string,
+  ) {
+    return this.adminPanelService.searchRiderByPhone(phone, phoneCode);
+  }
+
+  /** GET /admin/riders/:id */
+  @Get('riders/:id')
+  getRiderDetail(@Param('id', ParseIntPipe) id: number) {
+    return this.adminPanelService.getRiderDetail(id);
+  }
+
+  /** GET /admin/drivers/by-company?companyId= */
+  @Get('drivers/by-company')
+  getDriversByCompany(@Query('companyId', ParseIntPipe) companyId: number) {
+    return this.adminPanelService.getDriversByCompany(companyId);
+  }
+
+  /** GET /admin/drivers/:id */
+  @Get('drivers/:id')
+  getDriverDetail(@Param('id', ParseIntPipe) id: number) {
+    return this.adminPanelService.getDriverDetail(id);
+  }
+
+  // ─── Réservations ────────────────────────────────────────────────────────────
+
+  /** PATCH /admin/bookings/:id/assign-driver */
+  @Patch('bookings/:id/assign-driver')
+  assignDriver(
+    @Param('id', ParseIntPipe) id: number,
+    @Body('driverId', ParseIntPipe) driverId: number,
+  ) {
+    return this.adminPanelService.assignDriverToBooking(id, driverId);
+  }
+
+  // ─── Documents ───────────────────────────────────────────────────────────────
+
+  /** PATCH /admin/drivers/docs/approve */
+  @Patch('drivers/docs/approve')
+  approveDocs(@Body('docIds') docIds: number[]) {
+    return this.adminPanelService.approveDriverDocs(docIds);
+  }
+
+  // ─── Charts Dashboard ────────────────────────────────────────────────────────
+
+  /** GET /admin/dashboard/charts?type=earnings|trips&year=2025&months=6 */
+  @Get('dashboard/charts')
+  getDashboardCharts(
+    @Query('type') type: 'earnings' | 'trips' = 'earnings',
+    @Query('year') year?: string,
+    @Query('months') months?: string,
+  ) {
+    return this.adminPanelService.getDashboardCharts(
+      type,
+      year ? parseInt(year, 10) : new Date().getFullYear(),
+      months ? parseInt(months, 10) : 6,
+    );
+  }
+
+  // ─── Wallet ──────────────────────────────────────────────────────────────────
+
+  /** GET /admin/users/:id/wallet?userType=Driver|Rider */
+  @Get('users/:id/wallet')
+  getWallet(
+    @Param('id', ParseIntPipe) id: number,
+    @Query('userType') userType: 'Driver' | 'Rider' = 'Driver',
+  ) {
+    return this.adminPanelService.getUserWalletBalance(id, userType);
+  }
+
+  // ─── Coupon ──────────────────────────────────────────────────────────────────
+
+  /** GET /admin/coupons/check?code= */
+  @Get('coupons/check')
+  checkCoupon(@Query('code') code: string) {
+    return this.adminPanelService.checkCouponCode(code);
   }
 }

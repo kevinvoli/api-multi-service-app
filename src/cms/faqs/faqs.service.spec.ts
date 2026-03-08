@@ -1,12 +1,39 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { getRepositoryToken } from '@nestjs/typeorm';
 import { FaqsService } from './faqs.service';
+import { Faqs } from './entities/faq.entity';
+
+const mockRepo = {
+  find: jest.fn().mockResolvedValue([]),
+  findOne: jest.fn().mockResolvedValue(null),
+  findOneBy: jest.fn().mockResolvedValue(null),
+  create: jest.fn().mockReturnValue({}),
+  save: jest.fn().mockResolvedValue({}),
+  update: jest.fn().mockResolvedValue({ affected: 1 }),
+  delete: jest.fn().mockResolvedValue({ affected: 1 }),
+  createQueryBuilder: jest.fn().mockReturnValue({
+    where: jest.fn().mockReturnThis(),
+    andWhere: jest.fn().mockReturnThis(),
+    select: jest.fn().mockReturnThis(),
+    orderBy: jest.fn().mockReturnThis(),
+    skip: jest.fn().mockReturnThis(),
+    take: jest.fn().mockReturnThis(),
+    getMany: jest.fn().mockResolvedValue([]),
+    getOne: jest.fn().mockResolvedValue(null),
+    getManyAndCount: jest.fn().mockResolvedValue([[], 0]),
+    getCount: jest.fn().mockResolvedValue(0),
+  }),
+};
 
 describe('FaqsService', () => {
   let service: FaqsService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [FaqsService],
+      providers: [
+        FaqsService,
+        { provide: getRepositoryToken(Faqs), useValue: mockRepo },
+      ],
     }).compile();
 
     service = module.get<FaqsService>(FaqsService);

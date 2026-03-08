@@ -1,6 +1,30 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { getRepositoryToken } from '@nestjs/typeorm';
 import { UserEmergencyContactController } from './user-emergency-contact.controller';
 import { UserEmergencyContactService } from './user-emergency-contact.service';
+import { UserEmergencyContact } from './entities/user-emergency-contact.entity';
+
+const mockRepo = {
+  find: jest.fn().mockResolvedValue([]),
+  findOne: jest.fn().mockResolvedValue(null),
+  findOneBy: jest.fn().mockResolvedValue(null),
+  create: jest.fn().mockReturnValue({}),
+  save: jest.fn().mockResolvedValue({}),
+  update: jest.fn().mockResolvedValue({ affected: 1 }),
+  delete: jest.fn().mockResolvedValue({ affected: 1 }),
+  createQueryBuilder: jest.fn().mockReturnValue({
+    where: jest.fn().mockReturnThis(),
+    andWhere: jest.fn().mockReturnThis(),
+    select: jest.fn().mockReturnThis(),
+    orderBy: jest.fn().mockReturnThis(),
+    skip: jest.fn().mockReturnThis(),
+    take: jest.fn().mockReturnThis(),
+    getMany: jest.fn().mockResolvedValue([]),
+    getOne: jest.fn().mockResolvedValue(null),
+    getManyAndCount: jest.fn().mockResolvedValue([[], 0]),
+    getCount: jest.fn().mockResolvedValue(0),
+  }),
+};
 
 describe('UserEmergencyContactController', () => {
   let controller: UserEmergencyContactController;
@@ -8,7 +32,10 @@ describe('UserEmergencyContactController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [UserEmergencyContactController],
-      providers: [UserEmergencyContactService],
+      providers: [
+        UserEmergencyContactService,
+        { provide: getRepositoryToken(UserEmergencyContact), useValue: mockRepo },
+      ],
     }).compile();
 
     controller = module.get<UserEmergencyContactController>(UserEmergencyContactController);

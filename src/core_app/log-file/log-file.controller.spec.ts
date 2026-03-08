@@ -1,6 +1,30 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { getRepositoryToken } from '@nestjs/typeorm';
 import { LogFileController } from './log-file.controller';
 import { LogFileService } from './log-file.service';
+import { LogFile } from './entities/log-file.entity';
+
+const mockRepo = {
+  find: jest.fn().mockResolvedValue([]),
+  findOne: jest.fn().mockResolvedValue(null),
+  findOneBy: jest.fn().mockResolvedValue(null),
+  create: jest.fn().mockReturnValue({}),
+  save: jest.fn().mockResolvedValue({}),
+  update: jest.fn().mockResolvedValue({ affected: 1 }),
+  delete: jest.fn().mockResolvedValue({ affected: 1 }),
+  createQueryBuilder: jest.fn().mockReturnValue({
+    where: jest.fn().mockReturnThis(),
+    andWhere: jest.fn().mockReturnThis(),
+    select: jest.fn().mockReturnThis(),
+    orderBy: jest.fn().mockReturnThis(),
+    skip: jest.fn().mockReturnThis(),
+    take: jest.fn().mockReturnThis(),
+    getMany: jest.fn().mockResolvedValue([]),
+    getOne: jest.fn().mockResolvedValue(null),
+    getManyAndCount: jest.fn().mockResolvedValue([[], 0]),
+    getCount: jest.fn().mockResolvedValue(0),
+  }),
+};
 
 describe('LogFileController', () => {
   let controller: LogFileController;
@@ -8,7 +32,10 @@ describe('LogFileController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [LogFileController],
-      providers: [LogFileService],
+      providers: [
+        LogFileService,
+        { provide: getRepositoryToken(LogFile), useValue: mockRepo },
+      ],
     }).compile();
 
     controller = module.get<LogFileController>(LogFileController);

@@ -1,6 +1,30 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { getRepositoryToken } from '@nestjs/typeorm';
 import { TripMessagesController } from './trip-messages.controller';
 import { TripMessagesService } from './trip-messages.service';
+import { TripMessages } from './entities/trip-message.entity';
+
+const mockRepo = {
+  find: jest.fn().mockResolvedValue([]),
+  findOne: jest.fn().mockResolvedValue(null),
+  findOneBy: jest.fn().mockResolvedValue(null),
+  create: jest.fn().mockReturnValue({}),
+  save: jest.fn().mockResolvedValue({}),
+  update: jest.fn().mockResolvedValue({ affected: 1 }),
+  delete: jest.fn().mockResolvedValue({ affected: 1 }),
+  createQueryBuilder: jest.fn().mockReturnValue({
+    where: jest.fn().mockReturnThis(),
+    andWhere: jest.fn().mockReturnThis(),
+    select: jest.fn().mockReturnThis(),
+    orderBy: jest.fn().mockReturnThis(),
+    skip: jest.fn().mockReturnThis(),
+    take: jest.fn().mockReturnThis(),
+    getMany: jest.fn().mockResolvedValue([]),
+    getOne: jest.fn().mockResolvedValue(null),
+    getManyAndCount: jest.fn().mockResolvedValue([[], 0]),
+    getCount: jest.fn().mockResolvedValue(0),
+  }),
+};
 
 describe('TripMessagesController', () => {
   let controller: TripMessagesController;
@@ -8,7 +32,10 @@ describe('TripMessagesController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [TripMessagesController],
-      providers: [TripMessagesService],
+      providers: [
+        TripMessagesService,
+        { provide: getRepositoryToken(TripMessages), useValue: mockRepo },
+      ],
     }).compile();
 
     controller = module.get<TripMessagesController>(TripMessagesController);
