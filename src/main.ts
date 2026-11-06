@@ -1,15 +1,29 @@
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  // Pas de whitelist : la plupart des DTO générés n'ont pas encore de décorateurs class-validator
+  // et toutes leurs propriétés seraient supprimées. À durcir domaine par domaine.
+  app.useGlobalPipes(new ValidationPipe({ transform: true }));
+
+  const origins = process.env.CORS_ORIGINS?.split(',')
+    .map((o) => o.trim())
+    .filter(Boolean);
   app.enableCors({
-    origin: '*',
-    // origin: ['http://localhost:5173', 'http://127.0.0.1:5173'],
+    origin: origins?.length ? origins : '*',
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Request-Id'],
+    exposedHeaders: ['X-Request-Id'],
   });
-  await app.listen(process.env.PORT ?? 3000);
+
+  const port = process.env.PORT ?? 3000;
+  await app.listen(port);
+  Logger.log(
+    `API démarrée sur le port ${port} (${process.env.NODE_ENV ?? 'development'})`,
+    'Bootstrap',
+  );
 }
-bootstrap();
+void bootstrap();

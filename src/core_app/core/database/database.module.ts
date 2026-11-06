@@ -1,11 +1,28 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-function parseDatabaseUrl(url: string) {
-  const match = url.match(/^mysql:\/\/([^:]+):([^@]*)@([^:/]+):?(\d+)?\/(.+)$/);
-  if (!match) throw new Error('Invalid DB_URL format (expected mysql://user:pass@host:port/db)');
-  const [, username, password, host, port, database] = match;
-  return { username, password, host, port: parseInt(port || '3306', 10), database };
+const INVALID_DB_URL =
+  'Invalid DB_URL format (expected mysql://user:pass@host:port/db)';
+
+// URL plutôt qu'une regex : gère les caractères spéciaux encodés (%40 pour @) dans le mot de passe
+export function parseDatabaseUrl(url: string) {
+  let parsed: URL;
+  try {
+    parsed = new URL(url);
+  } catch {
+    throw new Error(INVALID_DB_URL);
+  }
+  const database = decodeURIComponent(parsed.pathname.slice(1));
+  if (parsed.protocol !== 'mysql:' || !parsed.hostname || !database) {
+    throw new Error(INVALID_DB_URL);
+  }
+  return {
+    username: decodeURIComponent(parsed.username),
+    password: decodeURIComponent(parsed.password),
+    host: parsed.hostname,
+    port: parseInt(parsed.port || '3306', 10),
+    database,
+  };
 }
 
 @Module({
