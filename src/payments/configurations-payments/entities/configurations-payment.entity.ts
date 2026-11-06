@@ -1,171 +1,171 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm';
 
-@Index("vName", ["vName"], { unique: true })
-@Entity("configurations_payment", { schema: "amygo1" })
+@Index('vName', ['vName'], { unique: true })
+@Entity('configurations_payment', { schema: 'amygo1' })
 export class ConfigurationsPayment {
-  @PrimaryGeneratedColumn({ type: "int", name: "iSettingId" })
+  @PrimaryGeneratedColumn({ type: 'int', name: 'iSettingId' })
   iSettingId: number;
 
-  @Column("mediumtext", { name: "tDescription" })
+  @Column('mediumtext', { name: 'tDescription' })
   tDescription: string;
 
-  @Column("varchar", { name: "vName", unique: true, length: 255 })
+  @Column('varchar', { name: 'vName', unique: true, length: 255 })
   vName: string;
 
-  @Column("text", { name: "vValue" })
+  @Column('text', { name: 'vValue' })
   vValue: string;
 
-  @Column("int", { name: "vOrder" })
+  @Column('int', { name: 'vOrder' })
   vOrder: number;
 
-  @Column("enum", {
-    name: "eFor",
+  @Column('enum', {
+    name: 'eFor',
     enum: [
-      "",
-      "General",
-      "Ride",
-      "Delivery",
-      "Ride",
-      "Delivery",
-      "UberX",
-      "Ride",
-      "Delivery",
-      "UberX",
-      "Ride-Delivery-UberX",
-      "Multi-Delivery",
-      "DeliverAll",
-      "Kiosk",
-      "Fly",
+      '',
+      'General',
+      'Ride',
+      'Delivery',
+      'Ride',
+      'Delivery',
+      'UberX',
+      'Ride',
+      'Delivery',
+      'UberX',
+      'Ride-Delivery-UberX',
+      'Multi-Delivery',
+      'DeliverAll',
+      'Kiosk',
+      'Fly',
     ],
     default: () => "''",
   })
   eFor:
-    | ""
-    | "General"
-    | "Ride"
-    | "Delivery"
-    | "Ride,Delivery"
-    | "UberX"
-    | "Ride,Delivery,UberX"
-    | "Ride-Delivery-UberX"
-    | "Multi-Delivery"
-    | "DeliverAll"
-    | "Kiosk"
-    | "Fly";
+    | ''
+    | 'General'
+    | 'Ride'
+    | 'Delivery'
+    | 'Ride,Delivery'
+    | 'UberX'
+    | 'Ride,Delivery,UberX'
+    | 'Ride-Delivery-UberX'
+    | 'Multi-Delivery'
+    | 'DeliverAll'
+    | 'Kiosk'
+    | 'Fly';
 
-  @Column("enum", {
-    name: "eType",
+  @Column('enum', {
+    name: 'eType',
     enum: [
-      "General",
-      "Email",
-      "Apperance",
-      "Prices",
-      "Paypal",
-      "Meta",
-      "SMS",
-      "Payment",
-      "Social Media",
-      "App Settings",
-      "Installation Settings",
-      "Store Settings",
+      'General',
+      'Email',
+      'Apperance',
+      'Prices',
+      'Paypal',
+      'Meta',
+      'SMS',
+      'Payment',
+      'Social Media',
+      'App Settings',
+      'Installation Settings',
+      'Store Settings',
     ],
     default: () => "'General'",
   })
   eType:
-    | "General"
-    | "Email"
-    | "Apperance"
-    | "Prices"
-    | "Paypal"
-    | "Meta"
-    | "SMS"
-    | "Payment"
-    | "Social Media"
-    | "App Settings"
-    | "Installation Settings"
-    | "Store Settings";
+    | 'General'
+    | 'Email'
+    | 'Apperance'
+    | 'Prices'
+    | 'Paypal'
+    | 'Meta'
+    | 'SMS'
+    | 'Payment'
+    | 'Social Media'
+    | 'App Settings'
+    | 'Installation Settings'
+    | 'Store Settings';
 
-  @Column("enum", {
-    name: "eStatus",
+  @Column('enum', {
+    name: 'eStatus',
     nullable: true,
-    enum: ["Active", "Inactive"],
+    enum: ['Active', 'Inactive'],
   })
-  eStatus: "Active" | "Inactive" | null;
+  eStatus: 'Active' | 'Inactive' | null;
 
-  @Column("mediumtext", { name: "tHelp" })
+  @Column('mediumtext', { name: 'tHelp' })
   tHelp: string;
 
-  @Column("enum", {
-    name: "eInputType",
-    enum: ["Text", "Textarea", "Select", "Number", "NumericRange", "Checkbox"],
+  @Column('enum', {
+    name: 'eInputType',
+    enum: ['Text', 'Textarea', 'Select', 'Number', 'NumericRange', 'Checkbox'],
     default: () => "'Text'",
   })
   eInputType:
-    | "Text"
-    | "Textarea"
-    | "Select"
-    | "Number"
-    | "NumericRange"
-    | "Checkbox";
+    | 'Text'
+    | 'Textarea'
+    | 'Select'
+    | 'Number'
+    | 'NumericRange'
+    | 'Checkbox';
 
-  @Column("enum", {
-    name: "eZeroAllowed",
+  @Column('enum', {
+    name: 'eZeroAllowed',
     comment: "This will take effect when eInputType is 'Number'",
-    enum: ["Yes", "No"],
+    enum: ['Yes', 'No'],
     default: () => "'No'",
   })
-  eZeroAllowed: "Yes" | "No";
+  eZeroAllowed: 'Yes' | 'No';
 
-  @Column("enum", {
-    name: "eSpaceAllowed",
-    enum: ["Yes", "No"],
+  @Column('enum', {
+    name: 'eSpaceAllowed',
+    enum: ['Yes', 'No'],
     default: () => "'Yes'",
   })
-  eSpaceAllowed: "Yes" | "No";
+  eSpaceAllowed: 'Yes' | 'No';
 
-  @Column("enum", {
-    name: "eDoubleValueAllowed",
-    enum: ["Yes", "No"],
+  @Column('enum', {
+    name: 'eDoubleValueAllowed',
+    enum: ['Yes', 'No'],
     default: () => "'No'",
   })
-  eDoubleValueAllowed: "Yes" | "No";
+  eDoubleValueAllowed: 'Yes' | 'No';
 
-  @Column("mediumtext", { name: "tSelectVal" })
+  @Column('mediumtext', { name: 'tSelectVal' })
   tSelectVal: string;
 
-  @Column("enum", {
-    name: "eAdminDisplay",
-    enum: ["Yes", "No"],
+  @Column('enum', {
+    name: 'eAdminDisplay',
+    enum: ['Yes', 'No'],
     default: () => "'Yes'",
   })
-  eAdminDisplay: "Yes" | "No";
+  eAdminDisplay: 'Yes' | 'No';
 
-  @Column("enum", {
-    name: "eRequireField",
-    comment: "Use For Setup Interface Only",
-    enum: ["Yes", "No"],
+  @Column('enum', {
+    name: 'eRequireField',
+    comment: 'Use For Setup Interface Only',
+    enum: ['Yes', 'No'],
     default: () => "'No'",
   })
-  eRequireField: "Yes" | "No";
+  eRequireField: 'Yes' | 'No';
 
-  @Column("enum", {
-    name: "eConfigRequired",
-    enum: ["Yes", "No"],
+  @Column('enum', {
+    name: 'eConfigRequired',
+    enum: ['Yes', 'No'],
     default: () => "'No'",
   })
-  eConfigRequired: "Yes" | "No";
+  eConfigRequired: 'Yes' | 'No';
 
-  @Column("enum", {
-    name: "eSensitive",
-    enum: ["Yes", "No"],
+  @Column('enum', {
+    name: 'eSensitive',
+    enum: ['Yes', 'No'],
     default: () => "'No'",
   })
-  eSensitive: "Yes" | "No";
+  eSensitive: 'Yes' | 'No';
 
-  @Column("enum", {
-    name: "ePaymentMethodConfig",
-    enum: ["No", "Yes"],
+  @Column('enum', {
+    name: 'ePaymentMethodConfig',
+    enum: ['No', 'Yes'],
     default: () => "'No'",
   })
-  ePaymentMethodConfig: "No" | "Yes";
+  ePaymentMethodConfig: 'No' | 'Yes';
 }

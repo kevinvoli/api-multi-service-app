@@ -22,12 +22,17 @@ export class BiddingPostService {
   }
 
   async findOne(id: number): Promise<BiddingPost> {
-    const entity = await this.repository.findOneBy({ iBiddingPostId: id } as any);
+    const entity = await this.repository.findOneBy({
+      iBiddingPostId: id,
+    } as any);
     if (!entity) throw new NotFoundException(`Record #${id} not found`);
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateBiddingPostDto): Promise<BiddingPost> {
+  async update(
+    id: number,
+    updateDto: UpdateBiddingPostDto,
+  ): Promise<BiddingPost> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

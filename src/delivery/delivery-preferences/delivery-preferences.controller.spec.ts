@@ -34,11 +34,16 @@ describe('DeliveryPreferencesController', () => {
       controllers: [DeliveryPreferencesController],
       providers: [
         DeliveryPreferencesService,
-        { provide: getRepositoryToken(DeliveryPreferences), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(DeliveryPreferences),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    controller = module.get<DeliveryPreferencesController>(DeliveryPreferencesController);
+    controller = module.get<DeliveryPreferencesController>(
+      DeliveryPreferencesController,
+    );
   });
 
   it('should be defined', () => {

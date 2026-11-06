@@ -38,7 +38,9 @@ describe('MenuItemOptionsController', () => {
       ],
     }).compile();
 
-    controller = module.get<MenuItemOptionsController>(MenuItemOptionsController);
+    controller = module.get<MenuItemOptionsController>(
+      MenuItemOptionsController,
+    );
   });
 
   it('should be defined', () => {

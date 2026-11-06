@@ -22,12 +22,17 @@ export class AdvertiseBannersService {
   }
 
   async findOne(id: number): Promise<AdvertiseBanners> {
-    const entity = await this.repository.findOneBy({ iAdvertBannerId: id } as any);
+    const entity = await this.repository.findOneBy({
+      iAdvertBannerId: id,
+    } as any);
     if (!entity) throw new NotFoundException(`Record #${id} not found`);
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateAdvertiseBannerDto): Promise<AdvertiseBanners> {
+  async update(
+    id: number,
+    updateDto: UpdateAdvertiseBannerDto,
+  ): Promise<AdvertiseBanners> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

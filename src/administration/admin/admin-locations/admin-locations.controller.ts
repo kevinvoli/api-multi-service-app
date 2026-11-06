@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { AdminLocationsService } from './admin-locations.service';
 import { CreateAdminLocationDto } from './dto/create-admin-location.dto';
 import { UpdateAdminLocationDto } from './dto/update-admin-location.dto';
@@ -23,7 +31,10 @@ export class AdminLocationsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAdminLocationDto: UpdateAdminLocationDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateAdminLocationDto: UpdateAdminLocationDto,
+  ) {
     return this.adminLocationsService.update(+id, updateAdminLocationDto);
   }
 

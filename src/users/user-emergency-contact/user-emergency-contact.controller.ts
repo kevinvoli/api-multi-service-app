@@ -1,15 +1,27 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { UserEmergencyContactService } from './user-emergency-contact.service';
 import { CreateUserEmergencyContactDto } from './dto/create-user-emergency-contact.dto';
 import { UpdateUserEmergencyContactDto } from './dto/update-user-emergency-contact.dto';
 
 @Controller('user-emergency-contact')
 export class UserEmergencyContactController {
-  constructor(private readonly userEmergencyContactService: UserEmergencyContactService) {}
+  constructor(
+    private readonly userEmergencyContactService: UserEmergencyContactService,
+  ) {}
 
   @Post()
   create(@Body() createUserEmergencyContactDto: CreateUserEmergencyContactDto) {
-    return this.userEmergencyContactService.create(createUserEmergencyContactDto);
+    return this.userEmergencyContactService.create(
+      createUserEmergencyContactDto,
+    );
   }
 
   @Get()
@@ -23,8 +35,14 @@ export class UserEmergencyContactController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserEmergencyContactDto: UpdateUserEmergencyContactDto) {
-    return this.userEmergencyContactService.update(+id, updateUserEmergencyContactDto);
+  update(
+    @Param('id') id: string,
+    @Body() updateUserEmergencyContactDto: UpdateUserEmergencyContactDto,
+  ) {
+    return this.userEmergencyContactService.update(
+      +id,
+      updateUserEmergencyContactDto,
+    );
   }
 
   @Delete(':id')

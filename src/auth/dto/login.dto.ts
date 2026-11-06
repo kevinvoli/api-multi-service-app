@@ -1,5 +1,5 @@
 export class LoginDto {
-  login: string;       // email ou numéro de téléphone
+  login: string; // email ou numéro de téléphone
   password: string;
   userType: 'rider' | 'driver' | 'company' | 'hotel';
   countryCode?: string;

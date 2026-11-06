@@ -1,15 +1,30 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { OdaLocationsOrdersUnavailabilitiesService } from './oda-locations-orders-unavailabilities.service';
 import { CreateOdaLocationsOrdersUnavailabilityDto } from './dto/create-oda-locations-orders-unavailability.dto';
 import { UpdateOdaLocationsOrdersUnavailabilityDto } from './dto/update-oda-locations-orders-unavailability.dto';
 
 @Controller('oda-locations-orders-unavailabilities')
 export class OdaLocationsOrdersUnavailabilitiesController {
-  constructor(private readonly odaLocationsOrdersUnavailabilitiesService: OdaLocationsOrdersUnavailabilitiesService) {}
+  constructor(
+    private readonly odaLocationsOrdersUnavailabilitiesService: OdaLocationsOrdersUnavailabilitiesService,
+  ) {}
 
   @Post()
-  create(@Body() createOdaLocationsOrdersUnavailabilityDto: CreateOdaLocationsOrdersUnavailabilityDto) {
-    return this.odaLocationsOrdersUnavailabilitiesService.create(createOdaLocationsOrdersUnavailabilityDto);
+  create(
+    @Body()
+    createOdaLocationsOrdersUnavailabilityDto: CreateOdaLocationsOrdersUnavailabilityDto,
+  ) {
+    return this.odaLocationsOrdersUnavailabilitiesService.create(
+      createOdaLocationsOrdersUnavailabilityDto,
+    );
   }
 
   @Get()
@@ -23,8 +38,15 @@ export class OdaLocationsOrdersUnavailabilitiesController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateOdaLocationsOrdersUnavailabilityDto: UpdateOdaLocationsOrdersUnavailabilityDto) {
-    return this.odaLocationsOrdersUnavailabilitiesService.update(+id, updateOdaLocationsOrdersUnavailabilityDto);
+  update(
+    @Param('id') id: string,
+    @Body()
+    updateOdaLocationsOrdersUnavailabilityDto: UpdateOdaLocationsOrdersUnavailabilityDto,
+  ) {
+    return this.odaLocationsOrdersUnavailabilitiesService.update(
+      +id,
+      updateOdaLocationsOrdersUnavailabilityDto,
+    );
   }
 
   @Delete(':id')

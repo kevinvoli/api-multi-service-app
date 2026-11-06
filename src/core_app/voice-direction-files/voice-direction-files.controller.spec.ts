@@ -34,11 +34,16 @@ describe('VoiceDirectionFilesController', () => {
       controllers: [VoiceDirectionFilesController],
       providers: [
         VoiceDirectionFilesService,
-        { provide: getRepositoryToken(VoiceDirectionFiles), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(VoiceDirectionFiles),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    controller = module.get<VoiceDirectionFilesController>(VoiceDirectionFilesController);
+    controller = module.get<VoiceDirectionFilesController>(
+      VoiceDirectionFilesController,
+    );
   });
 
   it('should be defined', () => {

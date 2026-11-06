@@ -12,7 +12,9 @@ export class TripsStatusMessagesService {
     private readonly repository: Repository<TripStatusMessages>,
   ) {}
 
-  async create(createDto: CreateTripsStatusMessageDto): Promise<TripStatusMessages> {
+  async create(
+    createDto: CreateTripsStatusMessageDto,
+  ): Promise<TripStatusMessages> {
     const entity = this.repository.create(createDto);
     return this.repository.save(entity);
   }
@@ -27,7 +29,10 @@ export class TripsStatusMessagesService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateTripsStatusMessageDto): Promise<TripStatusMessages> {
+  async update(
+    id: number,
+    updateDto: UpdateTripsStatusMessageDto,
+  ): Promise<TripStatusMessages> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

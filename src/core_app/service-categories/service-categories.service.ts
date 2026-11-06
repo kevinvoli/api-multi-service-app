@@ -12,7 +12,9 @@ export class ServiceCategoriesService {
     private readonly repository: Repository<ServiceCategories>,
   ) {}
 
-  async create(createDto: CreateServiceCategoryDto): Promise<ServiceCategories> {
+  async create(
+    createDto: CreateServiceCategoryDto,
+  ): Promise<ServiceCategories> {
     const entity = this.repository.create(createDto);
     return this.repository.save(entity);
   }
@@ -27,7 +29,10 @@ export class ServiceCategoriesService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateServiceCategoryDto): Promise<ServiceCategories> {
+  async update(
+    id: number,
+    updateDto: UpdateServiceCategoryDto,
+  ): Promise<ServiceCategories> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

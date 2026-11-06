@@ -1,26 +1,26 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity("helps", { schema: "amygo1" })
+@Entity('helps', { schema: 'amygo1' })
 export class Helps {
-  @PrimaryGeneratedColumn({ type: "int", name: "iHelpsId" })
+  @PrimaryGeneratedColumn({ type: 'int', name: 'iHelpsId' })
   iHelpsId: number;
 
-  @Column("int", { name: "iHelpscategoryId" })
+  @Column('int', { name: 'iHelpscategoryId' })
   iHelpscategoryId: number;
 
-  @Column("enum", {
-    name: "eStatus",
-    enum: ["Active", "Inactive"],
+  @Column('enum', {
+    name: 'eStatus',
+    enum: ['Active', 'Inactive'],
     default: () => "'Active'",
   })
-  eStatus: "Active" | "Inactive";
+  eStatus: 'Active' | 'Inactive';
 
-  @Column("int", { name: "iDisplayOrder" })
+  @Column('int', { name: 'iDisplayOrder' })
   iDisplayOrder: number;
 
-  @Column("text", { name: "vTitle" })
+  @Column('text', { name: 'vTitle' })
   vTitle: string;
 
-  @Column("text", { name: "tDescription" })
+  @Column('text', { name: 'tDescription' })
   tDescription: string;
 }

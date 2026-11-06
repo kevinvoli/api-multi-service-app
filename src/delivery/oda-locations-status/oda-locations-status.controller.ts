@@ -1,11 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { OdaLocationsStatusService } from './oda-locations-status.service';
 import { CreateOdaLocationsStatusDto } from './dto/create-oda-locations-status.dto';
 import { UpdateOdaLocationsStatusDto } from './dto/update-oda-locations-status.dto';
 
 @Controller('oda-locations-status')
 export class OdaLocationsStatusController {
-  constructor(private readonly odaLocationsStatusService: OdaLocationsStatusService) {}
+  constructor(
+    private readonly odaLocationsStatusService: OdaLocationsStatusService,
+  ) {}
 
   @Post()
   create(@Body() createOdaLocationsStatusDto: CreateOdaLocationsStatusDto) {
@@ -23,8 +33,14 @@ export class OdaLocationsStatusController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateOdaLocationsStatusDto: UpdateOdaLocationsStatusDto) {
-    return this.odaLocationsStatusService.update(+id, updateOdaLocationsStatusDto);
+  update(
+    @Param('id') id: string,
+    @Body() updateOdaLocationsStatusDto: UpdateOdaLocationsStatusDto,
+  ) {
+    return this.odaLocationsStatusService.update(
+      +id,
+      updateOdaLocationsStatusDto,
+    );
   }
 
   @Delete(':id')

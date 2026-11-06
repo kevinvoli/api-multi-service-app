@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { LanguageLabel2Service } from './language-label_2.service';
 import { CreateLanguageLabel2Dto } from './dto/create-language-label_2.dto';
 import { UpdateLanguageLabel2Dto } from './dto/update-language-label_2.dto';
@@ -23,7 +31,10 @@ export class LanguageLabel2Controller {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateLanguageLabel2Dto: UpdateLanguageLabel2Dto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateLanguageLabel2Dto: UpdateLanguageLabel2Dto,
+  ) {
     return this.languageLabel2Service.update(+id, updateLanguageLabel2Dto);
   }
 

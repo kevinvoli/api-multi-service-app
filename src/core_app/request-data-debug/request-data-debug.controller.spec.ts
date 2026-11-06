@@ -38,7 +38,9 @@ describe('RequestDataDebugController', () => {
       ],
     }).compile();
 
-    controller = module.get<RequestDataDebugController>(RequestDataDebugController);
+    controller = module.get<RequestDataDebugController>(
+      RequestDataDebugController,
+    );
   });
 
   it('should be defined', () => {

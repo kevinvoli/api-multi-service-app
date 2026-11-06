@@ -22,10 +22,15 @@ describe('OrdersController (e2e)', () => {
     app = moduleFixture.createNestApplication();
     await app.init();
 
-    userRepository = moduleFixture.get<Repository<User>>(getRepositoryToken(User));
-    orderRepository = moduleFixture.get<Repository<Order>>(getRepositoryToken(Order));
-    orderDetailRepository = moduleFixture.get<Repository<OrderDetail>>(getRepositoryToken(OrderDetail));
-
+    userRepository = moduleFixture.get<Repository<User>>(
+      getRepositoryToken(User),
+    );
+    orderRepository = moduleFixture.get<Repository<Order>>(
+      getRepositoryToken(Order),
+    );
+    orderDetailRepository = moduleFixture.get<Repository<OrderDetail>>(
+      getRepositoryToken(OrderDetail),
+    );
 
     // Clear database before each test
     await orderDetailRepository.query('TRUNCATE TABLE order_detail');
@@ -49,8 +54,8 @@ describe('OrdersController (e2e)', () => {
     const createOrderDto = {
       userId: user.id,
       items: [
-        { productId: 1, quantity: 2, price: 10.50 },
-        { productId: 2, quantity: 1, price: 20.00 },
+        { productId: 1, quantity: 2, price: 10.5 },
+        { productId: 2, quantity: 1, price: 20.0 },
       ],
     };
 
@@ -80,7 +85,7 @@ describe('OrdersController (e2e)', () => {
     });
 
     await orderDetailRepository.save([
-      { order: order, quantity: 1, price: 50.00 },
+      { order: order, quantity: 1, price: 50.0 },
     ]);
 
     return request(app.getHttpServer())

@@ -38,7 +38,9 @@ describe('StoreWiseBannersController', () => {
       ],
     }).compile();
 
-    controller = module.get<StoreWiseBannersController>(StoreWiseBannersController);
+    controller = module.get<StoreWiseBannersController>(
+      StoreWiseBannersController,
+    );
   });
 
   it('should be defined', () => {

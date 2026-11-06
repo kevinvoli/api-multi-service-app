@@ -34,11 +34,16 @@ describe('LangConversionProcessController', () => {
       controllers: [LangConversionProcessController],
       providers: [
         LangConversionProcessService,
-        { provide: getRepositoryToken(LangConversionProcess), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(LangConversionProcess),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    controller = module.get<LangConversionProcessController>(LangConversionProcessController);
+    controller = module.get<LangConversionProcessController>(
+      LangConversionProcessController,
+    );
   });
 
   it('should be defined', () => {

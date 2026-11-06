@@ -34,11 +34,16 @@ describe('MemberLoginSessionLogController', () => {
       controllers: [MemberLoginSessionLogController],
       providers: [
         MemberLoginSessionLogService,
-        { provide: getRepositoryToken(MemberLoginSessionLog), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(MemberLoginSessionLog),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    controller = module.get<MemberLoginSessionLogController>(MemberLoginSessionLogController);
+    controller = module.get<MemberLoginSessionLogController>(
+      MemberLoginSessionLogController,
+    );
   });
 
   it('should be defined', () => {

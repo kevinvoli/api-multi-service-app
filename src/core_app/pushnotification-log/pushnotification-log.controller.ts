@@ -1,11 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { PushnotificationLogService } from './pushnotification-log.service';
 import { CreatePushnotificationLogDto } from './dto/create-pushnotification-log.dto';
 import { UpdatePushnotificationLogDto } from './dto/update-pushnotification-log.dto';
 
 @Controller('pushnotification-log')
 export class PushnotificationLogController {
-  constructor(private readonly pushnotificationLogService: PushnotificationLogService) {}
+  constructor(
+    private readonly pushnotificationLogService: PushnotificationLogService,
+  ) {}
 
   @Post()
   create(@Body() createPushnotificationLogDto: CreatePushnotificationLogDto) {
@@ -23,8 +33,14 @@ export class PushnotificationLogController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePushnotificationLogDto: UpdatePushnotificationLogDto) {
-    return this.pushnotificationLogService.update(+id, updatePushnotificationLogDto);
+  update(
+    @Param('id') id: string,
+    @Body() updatePushnotificationLogDto: UpdatePushnotificationLogDto,
+  ) {
+    return this.pushnotificationLogService.update(
+      +id,
+      updatePushnotificationLogDto,
+    );
   }
 
   @Delete(':id')

@@ -1,20 +1,20 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm';
 
-@Index("id_commando", ["idService"], {})
-@Entity("__object_realisations", { schema: "amygo1" })
+@Index('id_commando', ['idService'], {})
+@Entity('__object_realisations', { schema: 'amygo1' })
 export class ObjectRealisations {
-  @PrimaryGeneratedColumn({ type: "int", name: "id" })
+  @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
   id: number;
 
-  @Column("int", { name: "id_service", nullable: true })
+  @Column('int', { name: 'id_service', nullable: true })
   idService: number | null;
 
-  @Column("int", { name: "id_categorie", nullable: true })
+  @Column('int', { name: 'id_categorie', nullable: true })
   idCategorie: number | null;
 
-  @Column("int", { name: "quantite", nullable: true })
+  @Column('int', { name: 'quantite', nullable: true })
   quantite: number | null;
 
-  @Column("date", { name: "date", nullable: true })
+  @Column('date', { name: 'date', nullable: true })
   date: string | null;
 }

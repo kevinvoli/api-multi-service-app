@@ -27,7 +27,10 @@ export class RegisterDriverService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateRegisterDriverDto): Promise<RegisterDriver> {
+  async update(
+    id: number,
+    updateDto: UpdateRegisterDriverDto,
+  ): Promise<RegisterDriver> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { AppLaunchinfoService } from './app-launchinfo.service';
 import { CreateAppLaunchinfoDto } from './dto/create-app-launchinfo.dto';
 import { UpdateAppLaunchinfoDto } from './dto/update-app-launchinfo.dto';
@@ -23,7 +31,10 @@ export class AppLaunchinfoController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAppLaunchinfoDto: UpdateAppLaunchinfoDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateAppLaunchinfoDto: UpdateAppLaunchinfoDto,
+  ) {
     return this.appLaunchinfoService.update(+id, updateAppLaunchinfoDto);
   }
 

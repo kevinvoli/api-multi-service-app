@@ -38,7 +38,9 @@ describe('HistoriqueCxoGrothController', () => {
       ],
     }).compile();
 
-    controller = module.get<HistoriqueCxoGrothController>(HistoriqueCxoGrothController);
+    controller = module.get<HistoriqueCxoGrothController>(
+      HistoriqueCxoGrothController,
+    );
   });
 
   it('should be defined', () => {

@@ -36,7 +36,9 @@ describe('TripsStatusMessagesService', () => {
       ],
     }).compile();
 
-    service = module.get<TripsStatusMessagesService>(TripsStatusMessagesService);
+    service = module.get<TripsStatusMessagesService>(
+      TripsStatusMessagesService,
+    );
   });
 
   it('should be defined', () => {

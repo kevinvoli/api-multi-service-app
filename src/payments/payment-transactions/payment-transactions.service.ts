@@ -12,7 +12,9 @@ export class PaymentTransactionsService {
     private readonly repository: Repository<PaymentTransaction>,
   ) {}
 
-  async create(createDto: CreatePaymentTransactionDto): Promise<PaymentTransaction> {
+  async create(
+    createDto: CreatePaymentTransactionDto,
+  ): Promise<PaymentTransaction> {
     const entity = this.repository.create(createDto);
     return this.repository.save(entity);
   }
@@ -22,12 +24,17 @@ export class PaymentTransactionsService {
   }
 
   async findOne(id: number): Promise<PaymentTransaction> {
-    const entity = await this.repository.findOneBy({ iTransactionId: id } as any);
+    const entity = await this.repository.findOneBy({
+      iTransactionId: id,
+    } as any);
     if (!entity) throw new NotFoundException(`Record #${id} not found`);
     return entity;
   }
 
-  async update(id: number, updateDto: UpdatePaymentTransactionDto): Promise<PaymentTransaction> {
+  async update(
+    id: number,
+    updateDto: UpdatePaymentTransactionDto,
+  ): Promise<PaymentTransaction> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

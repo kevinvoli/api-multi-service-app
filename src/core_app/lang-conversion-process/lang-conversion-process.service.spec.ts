@@ -32,11 +32,16 @@ describe('LangConversionProcessService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         LangConversionProcessService,
-        { provide: getRepositoryToken(LangConversionProcess), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(LangConversionProcess),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    service = module.get<LangConversionProcessService>(LangConversionProcessService);
+    service = module.get<LangConversionProcessService>(
+      LangConversionProcessService,
+    );
   });
 
   it('should be defined', () => {

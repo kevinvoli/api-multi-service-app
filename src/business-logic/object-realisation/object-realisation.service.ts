@@ -12,7 +12,9 @@ export class ObjectRealisationService {
     private readonly repository: Repository<ObjectRealisations>,
   ) {}
 
-  async create(createDto: CreateObjectRealisationDto): Promise<ObjectRealisations> {
+  async create(
+    createDto: CreateObjectRealisationDto,
+  ): Promise<ObjectRealisations> {
     const entity = this.repository.create(createDto);
     return this.repository.save(entity);
   }
@@ -27,7 +29,10 @@ export class ObjectRealisationService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateObjectRealisationDto): Promise<ObjectRealisations> {
+  async update(
+    id: number,
+    updateDto: UpdateObjectRealisationDto,
+  ): Promise<ObjectRealisations> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

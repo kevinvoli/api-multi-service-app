@@ -1,11 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { TripsRouteLocationsService } from './trips-route-locations.service';
 import { CreateTripsRouteLocationDto } from './dto/create-trips-route-location.dto';
 import { UpdateTripsRouteLocationDto } from './dto/update-trips-route-location.dto';
 
 @Controller('trips-route-locations')
 export class TripsRouteLocationsController {
-  constructor(private readonly tripsRouteLocationsService: TripsRouteLocationsService) {}
+  constructor(
+    private readonly tripsRouteLocationsService: TripsRouteLocationsService,
+  ) {}
 
   @Post()
   create(@Body() createTripsRouteLocationDto: CreateTripsRouteLocationDto) {
@@ -23,8 +33,14 @@ export class TripsRouteLocationsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTripsRouteLocationDto: UpdateTripsRouteLocationDto) {
-    return this.tripsRouteLocationsService.update(+id, updateTripsRouteLocationDto);
+  update(
+    @Param('id') id: string,
+    @Body() updateTripsRouteLocationDto: UpdateTripsRouteLocationDto,
+  ) {
+    return this.tripsRouteLocationsService.update(
+      +id,
+      updateTripsRouteLocationDto,
+    );
   }
 
   @Delete(':id')

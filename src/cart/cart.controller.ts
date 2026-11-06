@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Delete, Body, Param, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Delete,
+  Body,
+  Param,
+  Query,
+} from '@nestjs/common';
 import { CartService } from './cart.service';
 import { AddCartItemDto } from './dto/add-cart-item.dto';
 import { CheckoutCartDto } from './dto/checkout-cart.dto';
@@ -19,15 +27,15 @@ export class CartController {
     @Param('userId') userId: string,
     @Query('addressId') addressId?: string,
   ) {
-    return this.cartService.getCart(+userId, addressId ? +addressId : undefined);
+    return this.cartService.getCart(
+      +userId,
+      addressId ? +addressId : undefined,
+    );
   }
 
   /** DELETE /cart/:userId/item/:itemId — Supprimer un article du panier */
   @Delete(':userId/item/:itemId')
-  removeItem(
-    @Param('userId') userId: string,
-    @Param('itemId') itemId: string,
-  ) {
+  removeItem(@Param('userId') userId: string, @Param('itemId') itemId: string) {
     return this.cartService.removeItem(+userId, +itemId);
   }
 
@@ -46,7 +54,13 @@ export class CartController {
     @Body('fDeliveryCharge') fDeliveryCharge: number,
     @Body('iCompanyId') iCompanyId?: number,
   ) {
-    return this.cartService.applyPromoCode(iUserId, vCouponCode, fNetTotal, fDeliveryCharge, iCompanyId);
+    return this.cartService.applyPromoCode(
+      iUserId,
+      vCouponCode,
+      fNetTotal,
+      fDeliveryCharge,
+      iCompanyId,
+    );
   }
 
   /** POST /cart/checkout — Finaliser la commande */

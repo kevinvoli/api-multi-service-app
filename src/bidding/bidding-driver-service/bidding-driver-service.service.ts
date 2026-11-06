@@ -12,7 +12,9 @@ export class BiddingDriverServiceService {
     private readonly repository: Repository<BiddingDriverService>,
   ) {}
 
-  async create(createDto: CreateBiddingDriverServiceDto): Promise<BiddingDriverService> {
+  async create(
+    createDto: CreateBiddingDriverServiceDto,
+  ): Promise<BiddingDriverService> {
     const entity = this.repository.create(createDto);
     return this.repository.save(entity);
   }
@@ -22,12 +24,17 @@ export class BiddingDriverServiceService {
   }
 
   async findOne(id: number): Promise<BiddingDriverService> {
-    const entity = await this.repository.findOneBy({ iBiddingDriverServiceId: id } as any);
+    const entity = await this.repository.findOneBy({
+      iBiddingDriverServiceId: id,
+    } as any);
     if (!entity) throw new NotFoundException(`Record #${id} not found`);
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateBiddingDriverServiceDto): Promise<BiddingDriverService> {
+  async update(
+    id: number,
+    updateDto: UpdateBiddingDriverServiceDto,
+  ): Promise<BiddingDriverService> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

@@ -1,11 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { PrescriptionImagesService } from './prescription-images.service';
 import { CreatePrescriptionImageDto } from './dto/create-prescription-image.dto';
 import { UpdatePrescriptionImageDto } from './dto/update-prescription-image.dto';
 
 @Controller('prescription-images')
 export class PrescriptionImagesController {
-  constructor(private readonly prescriptionImagesService: PrescriptionImagesService) {}
+  constructor(
+    private readonly prescriptionImagesService: PrescriptionImagesService,
+  ) {}
 
   @Post()
   create(@Body() createPrescriptionImageDto: CreatePrescriptionImageDto) {
@@ -23,8 +33,14 @@ export class PrescriptionImagesController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePrescriptionImageDto: UpdatePrescriptionImageDto) {
-    return this.prescriptionImagesService.update(+id, updatePrescriptionImageDto);
+  update(
+    @Param('id') id: string,
+    @Body() updatePrescriptionImageDto: UpdatePrescriptionImageDto,
+  ) {
+    return this.prescriptionImagesService.update(
+      +id,
+      updatePrescriptionImageDto,
+    );
   }
 
   @Delete(':id')

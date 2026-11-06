@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { AdminAlertsService } from './admin-alerts.service';
 import { CreateAdminAlertDto } from './dto/create-admin-alert.dto';
 import { UpdateAdminAlertDto } from './dto/update-admin-alert.dto';
@@ -23,7 +31,10 @@ export class AdminAlertsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAdminAlertDto: UpdateAdminAlertDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateAdminAlertDto: UpdateAdminAlertDto,
+  ) {
     return this.adminAlertsService.update(+id, updateAdminAlertDto);
   }
 

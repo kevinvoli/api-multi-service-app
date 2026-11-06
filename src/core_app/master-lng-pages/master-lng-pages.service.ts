@@ -27,7 +27,10 @@ export class MasterLngPagesService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateMasterLngPageDto): Promise<MasterLngPages> {
+  async update(
+    id: number,
+    updateDto: UpdateMasterLngPageDto,
+  ): Promise<MasterLngPages> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

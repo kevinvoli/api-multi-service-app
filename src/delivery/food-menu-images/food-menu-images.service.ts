@@ -22,12 +22,17 @@ export class FoodMenuImagesService {
   }
 
   async findOne(id: number): Promise<FoodMenuImages> {
-    const entity = await this.repository.findOneBy({ iFoodMenuImageId: id } as any);
+    const entity = await this.repository.findOneBy({
+      iFoodMenuImageId: id,
+    } as any);
     if (!entity) throw new NotFoundException(`Record #${id} not found`);
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateFoodMenuImageDto): Promise<FoodMenuImages> {
+  async update(
+    id: number,
+    updateDto: UpdateFoodMenuImageDto,
+  ): Promise<FoodMenuImages> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

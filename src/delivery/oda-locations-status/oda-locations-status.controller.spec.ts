@@ -38,7 +38,9 @@ describe('OdaLocationsStatusController', () => {
       ],
     }).compile();
 
-    controller = module.get<OdaLocationsStatusController>(OdaLocationsStatusController);
+    controller = module.get<OdaLocationsStatusController>(
+      OdaLocationsStatusController,
+    );
   });
 
   it('should be defined', () => {

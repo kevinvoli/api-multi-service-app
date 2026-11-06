@@ -1,15 +1,30 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { AirportLocationMastersService } from './airport-location-masters.service';
 import { CreateAirportLocationMasterDto } from './dto/create-airport-location-master.dto';
 import { UpdateAirportLocationMasterDto } from './dto/update-airport-location-master.dto';
 
 @Controller('airport-location-masters')
 export class AirportLocationMastersController {
-  constructor(private readonly airportLocationMastersService: AirportLocationMastersService) {}
+  constructor(
+    private readonly airportLocationMastersService: AirportLocationMastersService,
+  ) {}
 
   @Post()
-  create(@Body() createAirportLocationMasterDto: CreateAirportLocationMasterDto) {
-    return this.airportLocationMastersService.create(createAirportLocationMasterDto);
+  create(
+    @Body() createAirportLocationMasterDto: CreateAirportLocationMasterDto,
+  ) {
+    return this.airportLocationMastersService.create(
+      createAirportLocationMasterDto,
+    );
   }
 
   @Get()
@@ -23,8 +38,14 @@ export class AirportLocationMastersController {
   }
 
   @Patch(':id')
-  update(@Param('id', ParseIntPipe) id: number, @Body() updateAirportLocationMasterDto: UpdateAirportLocationMasterDto) {
-    return this.airportLocationMastersService.update(id, updateAirportLocationMasterDto);
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateAirportLocationMasterDto: UpdateAirportLocationMasterDto,
+  ) {
+    return this.airportLocationMastersService.update(
+      id,
+      updateAirportLocationMasterDto,
+    );
   }
 
   @Delete(':id')

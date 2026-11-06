@@ -1,4 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  HttpCode,
+  HttpStatus,
+} from '@nestjs/common';
 import { VehiclesService } from './vehicles.service';
 import { Vehicle } from './entities/vehicle.entity';
 import { Driver } from './entities/driver.entity';
@@ -75,7 +85,10 @@ export class VehiclesController {
   }
 
   @Patch(':id')
-  updateVehicle(@Param('id') id: string, @Body() updateVehicleDto: UpdateVehicleDto): Promise<Vehicle> {
+  updateVehicle(
+    @Param('id') id: string,
+    @Body() updateVehicleDto: UpdateVehicleDto,
+  ): Promise<Vehicle> {
     return this.vehiclesService.updateVehicle(+id, updateVehicleDto);
   }
 
@@ -103,7 +116,10 @@ export class VehiclesController {
   }
 
   @Patch('drivers/:id')
-  updateDriver(@Param('id') id: string, @Body() updateDriverDto: UpdateDriverDto): Promise<Driver> {
+  updateDriver(
+    @Param('id') id: string,
+    @Body() updateDriverDto: UpdateDriverDto,
+  ): Promise<Driver> {
     // Note: updating driver directly might not be ideal as it's linked to User
     return this.vehiclesService.updateDriver(+id, updateDriverDto as any);
   }
@@ -119,6 +135,9 @@ export class VehiclesController {
     @Param('vehicleId') vehicleId: string,
     @Body() assignVehicleToDriverDto: AssignVehicleToDriverDto,
   ): Promise<Vehicle> {
-    return this.vehiclesService.assignVehicleToDriver(+vehicleId, assignVehicleToDriverDto.driverId);
+    return this.vehiclesService.assignVehicleToDriver(
+      +vehicleId,
+      assignVehicleToDriverDto.driverId,
+    );
   }
 }

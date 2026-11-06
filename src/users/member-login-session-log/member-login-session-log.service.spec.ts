@@ -32,11 +32,16 @@ describe('MemberLoginSessionLogService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         MemberLoginSessionLogService,
-        { provide: getRepositoryToken(MemberLoginSessionLog), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(MemberLoginSessionLog),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    service = module.get<MemberLoginSessionLogService>(MemberLoginSessionLogService);
+    service = module.get<MemberLoginSessionLogService>(
+      MemberLoginSessionLogService,
+    );
   });
 
   it('should be defined', () => {

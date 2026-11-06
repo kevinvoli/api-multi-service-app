@@ -38,7 +38,9 @@ describe('AdvertiseBannersController', () => {
       ],
     }).compile();
 
-    controller = module.get<AdvertiseBannersController>(AdvertiseBannersController);
+    controller = module.get<AdvertiseBannersController>(
+      AdvertiseBannersController,
+    );
   });
 
   it('should be defined', () => {

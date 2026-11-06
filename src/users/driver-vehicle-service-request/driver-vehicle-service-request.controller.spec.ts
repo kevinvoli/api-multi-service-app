@@ -34,11 +34,16 @@ describe('DriverVehicleServiceRequestController', () => {
       controllers: [DriverVehicleServiceRequestController],
       providers: [
         DriverVehicleServiceRequestService,
-        { provide: getRepositoryToken(DriverVehicleServiceRequest), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(DriverVehicleServiceRequest),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    controller = module.get<DriverVehicleServiceRequestController>(DriverVehicleServiceRequestController);
+    controller = module.get<DriverVehicleServiceRequestController>(
+      DriverVehicleServiceRequestController,
+    );
   });
 
   it('should be defined', () => {

@@ -27,7 +27,10 @@ export class ObjectObjectifsService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateObjectObjectifDto): Promise<ObjectObjectifs> {
+  async update(
+    id: number,
+    updateDto: UpdateObjectObjectifDto,
+  ): Promise<ObjectObjectifs> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

@@ -1,15 +1,30 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { DriverServicesVideoConsultChargesService } from './driver-services-video-consult-charges.service';
 import { CreateDriverServicesVideoConsultChargeDto } from './dto/create-driver-services-video-consult-charge.dto';
 import { UpdateDriverServicesVideoConsultChargeDto } from './dto/update-driver-services-video-consult-charge.dto';
 
 @Controller('driver-services-video-consult-charges')
 export class DriverServicesVideoConsultChargesController {
-  constructor(private readonly driverServicesVideoConsultChargesService: DriverServicesVideoConsultChargesService) {}
+  constructor(
+    private readonly driverServicesVideoConsultChargesService: DriverServicesVideoConsultChargesService,
+  ) {}
 
   @Post()
-  create(@Body() createDriverServicesVideoConsultChargeDto: CreateDriverServicesVideoConsultChargeDto) {
-    return this.driverServicesVideoConsultChargesService.create(createDriverServicesVideoConsultChargeDto);
+  create(
+    @Body()
+    createDriverServicesVideoConsultChargeDto: CreateDriverServicesVideoConsultChargeDto,
+  ) {
+    return this.driverServicesVideoConsultChargesService.create(
+      createDriverServicesVideoConsultChargeDto,
+    );
   }
 
   @Get()
@@ -23,8 +38,15 @@ export class DriverServicesVideoConsultChargesController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDriverServicesVideoConsultChargeDto: UpdateDriverServicesVideoConsultChargeDto) {
-    return this.driverServicesVideoConsultChargesService.update(+id, updateDriverServicesVideoConsultChargeDto);
+  update(
+    @Param('id') id: string,
+    @Body()
+    updateDriverServicesVideoConsultChargeDto: UpdateDriverServicesVideoConsultChargeDto,
+  ) {
+    return this.driverServicesVideoConsultChargesService.update(
+      +id,
+      updateDriverServicesVideoConsultChargeDto,
+    );
   }
 
   @Delete(':id')

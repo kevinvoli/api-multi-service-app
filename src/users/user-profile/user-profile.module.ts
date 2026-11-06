@@ -9,7 +9,12 @@ import { UserAddress } from '../user-address/entities/user-address.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([RegisterUser, RegisterDriver, Company, UserAddress]),
+    TypeOrmModule.forFeature([
+      RegisterUser,
+      RegisterDriver,
+      Company,
+      UserAddress,
+    ]),
   ],
   controllers: [UserProfileController],
   providers: [UserProfileService],

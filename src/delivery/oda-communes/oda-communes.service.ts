@@ -27,7 +27,10 @@ export class OdaCommunesService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateOdaCommuneDto): Promise<OdaCommunes> {
+  async update(
+    id: number,
+    updateDto: UpdateOdaCommuneDto,
+  ): Promise<OdaCommunes> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

@@ -12,7 +12,9 @@ export class PushnotificationLogService {
     private readonly repository: Repository<PushnotificationLog>,
   ) {}
 
-  async create(createDto: CreatePushnotificationLogDto): Promise<PushnotificationLog> {
+  async create(
+    createDto: CreatePushnotificationLogDto,
+  ): Promise<PushnotificationLog> {
     const entity = this.repository.create(createDto);
     return this.repository.save(entity);
   }
@@ -22,12 +24,17 @@ export class PushnotificationLogService {
   }
 
   async findOne(id: number): Promise<PushnotificationLog> {
-    const entity = await this.repository.findOneBy({ iPushnotificationId: id } as any);
+    const entity = await this.repository.findOneBy({
+      iPushnotificationId: id,
+    } as any);
     if (!entity) throw new NotFoundException(`Record #${id} not found`);
     return entity;
   }
 
-  async update(id: number, updateDto: UpdatePushnotificationLogDto): Promise<PushnotificationLog> {
+  async update(
+    id: number,
+    updateDto: UpdatePushnotificationLogDto,
+  ): Promise<PushnotificationLog> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

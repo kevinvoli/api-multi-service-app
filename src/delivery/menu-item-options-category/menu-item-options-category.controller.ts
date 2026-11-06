@@ -1,15 +1,29 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { MenuItemOptionsCategoryService } from './menu-item-options-category.service';
 import { CreateMenuItemOptionsCategoryDto } from './dto/create-menu-item-options-category.dto';
 import { UpdateMenuItemOptionsCategoryDto } from './dto/update-menu-item-options-category.dto';
 
 @Controller('menu-item-options-category')
 export class MenuItemOptionsCategoryController {
-  constructor(private readonly menuItemOptionsCategoryService: MenuItemOptionsCategoryService) {}
+  constructor(
+    private readonly menuItemOptionsCategoryService: MenuItemOptionsCategoryService,
+  ) {}
 
   @Post()
-  create(@Body() createMenuItemOptionsCategoryDto: CreateMenuItemOptionsCategoryDto) {
-    return this.menuItemOptionsCategoryService.create(createMenuItemOptionsCategoryDto);
+  create(
+    @Body() createMenuItemOptionsCategoryDto: CreateMenuItemOptionsCategoryDto,
+  ) {
+    return this.menuItemOptionsCategoryService.create(
+      createMenuItemOptionsCategoryDto,
+    );
   }
 
   @Get()
@@ -23,8 +37,14 @@ export class MenuItemOptionsCategoryController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMenuItemOptionsCategoryDto: UpdateMenuItemOptionsCategoryDto) {
-    return this.menuItemOptionsCategoryService.update(+id, updateMenuItemOptionsCategoryDto);
+  update(
+    @Param('id') id: string,
+    @Body() updateMenuItemOptionsCategoryDto: UpdateMenuItemOptionsCategoryDto,
+  ) {
+    return this.menuItemOptionsCategoryService.update(
+      +id,
+      updateMenuItemOptionsCategoryDto,
+    );
   }
 
   @Delete(':id')

@@ -18,7 +18,9 @@ describe('UsersController (e2e)', () => {
     app = moduleFixture.createNestApplication();
     await app.init();
 
-    userRepository = moduleFixture.get<Repository<User>>(getRepositoryToken(User));
+    userRepository = moduleFixture.get<Repository<User>>(
+      getRepositoryToken(User),
+    );
 
     // Clean up the database before each test
     await userRepository.query('TRUNCATE TABLE user'); // Assuming 'user' is the table name for User entity

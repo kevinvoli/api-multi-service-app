@@ -38,7 +38,9 @@ describe('BannerImpressionController', () => {
       ],
     }).compile();
 
-    controller = module.get<BannerImpressionController>(BannerImpressionController);
+    controller = module.get<BannerImpressionController>(
+      BannerImpressionController,
+    );
   });
 
   it('should be defined', () => {

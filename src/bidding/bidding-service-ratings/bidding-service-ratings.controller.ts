@@ -1,15 +1,27 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { BiddingServiceRatingsService } from './bidding-service-ratings.service';
 import { CreateBiddingServiceRatingDto } from './dto/create-bidding-service-rating.dto';
 import { UpdateBiddingServiceRatingDto } from './dto/update-bidding-service-rating.dto';
 
 @Controller('bidding-service-ratings')
 export class BiddingServiceRatingsController {
-  constructor(private readonly biddingServiceRatingsService: BiddingServiceRatingsService) {}
+  constructor(
+    private readonly biddingServiceRatingsService: BiddingServiceRatingsService,
+  ) {}
 
   @Post()
   create(@Body() createBiddingServiceRatingDto: CreateBiddingServiceRatingDto) {
-    return this.biddingServiceRatingsService.create(createBiddingServiceRatingDto);
+    return this.biddingServiceRatingsService.create(
+      createBiddingServiceRatingDto,
+    );
   }
 
   @Get()
@@ -23,8 +35,14 @@ export class BiddingServiceRatingsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateBiddingServiceRatingDto: UpdateBiddingServiceRatingDto) {
-    return this.biddingServiceRatingsService.update(+id, updateBiddingServiceRatingDto);
+  update(
+    @Param('id') id: string,
+    @Body() updateBiddingServiceRatingDto: UpdateBiddingServiceRatingDto,
+  ) {
+    return this.biddingServiceRatingsService.update(
+      +id,
+      updateBiddingServiceRatingDto,
+    );
   }
 
   @Delete(':id')

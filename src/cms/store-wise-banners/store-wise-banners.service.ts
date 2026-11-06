@@ -27,7 +27,10 @@ export class StoreWiseBannersService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateStoreWiseBannerDto): Promise<StoreWiseBanners> {
+  async update(
+    id: number,
+    updateDto: UpdateStoreWiseBannerDto,
+  ): Promise<StoreWiseBanners> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

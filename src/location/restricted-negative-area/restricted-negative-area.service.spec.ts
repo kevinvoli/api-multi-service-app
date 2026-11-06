@@ -32,11 +32,16 @@ describe('RestrictedNegativeAreaService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         RestrictedNegativeAreaService,
-        { provide: getRepositoryToken(RestrictedNegativeArea), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(RestrictedNegativeArea),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    service = module.get<RestrictedNegativeAreaService>(RestrictedNegativeAreaService);
+    service = module.get<RestrictedNegativeAreaService>(
+      RestrictedNegativeAreaService,
+    );
   });
 
   it('should be defined', () => {

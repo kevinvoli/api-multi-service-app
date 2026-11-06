@@ -1,62 +1,62 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity("banners", { schema: "amygo1" })
+@Entity('banners', { schema: 'amygo1' })
 export class Banners {
-  @PrimaryGeneratedColumn({ type: "int", name: "iFaqcategoryId" })
+  @PrimaryGeneratedColumn({ type: 'int', name: 'iFaqcategoryId' })
   iFaqcategoryId: number;
 
-  @Column("int", { name: "iServiceId", default: () => "'0'" })
+  @Column('int', { name: 'iServiceId', default: () => "'0'" })
   iServiceId: number;
 
-  @Column("enum", {
-    name: "eStatus",
+  @Column('enum', {
+    name: 'eStatus',
     nullable: true,
-    enum: ["Active", "Inactive"],
+    enum: ['Active', 'Inactive'],
     default: () => "'Active'",
   })
-  eStatus: "Active" | "Inactive" | null;
+  eStatus: 'Active' | 'Inactive' | null;
 
-  @Column("int", { name: "iDisplayOrder" })
+  @Column('int', { name: 'iDisplayOrder' })
   iDisplayOrder: number;
 
-  @Column("varchar", { name: "vTitle", length: 100 })
+  @Column('varchar', { name: 'vTitle', length: 100 })
   vTitle: string;
 
-  @Column("varchar", { name: "vImage", length: 100 })
+  @Column('varchar', { name: 'vImage', length: 100 })
   vImage: string;
 
-  @Column("varchar", { name: "vCode", length: 100 })
+  @Column('varchar', { name: 'vCode', length: 100 })
   vCode: string;
 
-  @Column("int", { name: "iUniqueId" })
+  @Column('int', { name: 'iUniqueId' })
   iUniqueId: number;
 
-  @Column("enum", { name: "eBuyAnyService", enum: ["", "Genie", "Runner"] })
-  eBuyAnyService: "" | "Genie" | "Runner";
+  @Column('enum', { name: 'eBuyAnyService', enum: ['', 'Genie', 'Runner'] })
+  eBuyAnyService: '' | 'Genie' | 'Runner';
 
-  @Column("varchar", {
-    name: "iLocationid",
+  @Column('varchar', {
+    name: 'iLocationid',
     length: 255,
     default: () => "'-1'",
   })
   iLocationid: string;
 
-  @Column("varchar", { name: "vStatusBarColor", length: 10 })
+  @Column('varchar', { name: 'vStatusBarColor', length: 10 })
   vStatusBarColor: string;
 
-  @Column("enum", {
-    name: "eType",
-    enum: ["Ride", "Deliver", "UberX", "DeliverAll", ""],
+  @Column('enum', {
+    name: 'eType',
+    enum: ['Ride', 'Deliver', 'UberX', 'DeliverAll', ''],
   })
-  eType: "Ride" | "Deliver" | "UberX" | "DeliverAll" | "";
+  eType: 'Ride' | 'Deliver' | 'UberX' | 'DeliverAll' | '';
 
-  @Column("enum", {
-    name: "eFor",
-    enum: ["General", "AppHomeScreen", "Promotion"],
+  @Column('enum', {
+    name: 'eFor',
+    enum: ['General', 'AppHomeScreen', 'Promotion'],
     default: () => "'General'",
   })
-  eFor: "General" | "AppHomeScreen" | "Promotion";
+  eFor: 'General' | 'AppHomeScreen' | 'Promotion';
 
-  @Column("int", { name: "iVehicleCategoryId" })
+  @Column('int', { name: 'iVehicleCategoryId' })
   iVehicleCategoryId: number;
 }

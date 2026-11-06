@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { LocationMasterService } from './location-master.service';
 import { CreateLocationMasterDto } from './dto/create-location-master.dto';
 import { UpdateLocationMasterDto } from './dto/update-location-master.dto';
@@ -23,7 +32,10 @@ export class LocationMasterController {
   }
 
   @Patch(':id')
-  update(@Param('id', ParseIntPipe) id: number, @Body() updateLocationMasterDto: UpdateLocationMasterDto) {
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateLocationMasterDto: UpdateLocationMasterDto,
+  ) {
     return this.locationMasterService.update(id, updateLocationMasterDto);
   }
 

@@ -38,7 +38,9 @@ describe('LocationWiseFareController', () => {
       ],
     }).compile();
 
-    controller = module.get<LocationWiseFareController>(LocationWiseFareController);
+    controller = module.get<LocationWiseFareController>(
+      LocationWiseFareController,
+    );
   });
 
   it('should be defined', () => {

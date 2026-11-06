@@ -1,13 +1,13 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm';
 
-@Index("SERVICE_NAME", ["communeName"], { unique: true })
-@Entity("__oda_communes", { schema: "amygo1" })
+@Index('SERVICE_NAME', ['communeName'], { unique: true })
+@Entity('__oda_communes', { schema: 'amygo1' })
 export class OdaCommunes {
-  @PrimaryGeneratedColumn({ type: "int", name: "commune_id" })
+  @PrimaryGeneratedColumn({ type: 'int', name: 'commune_id' })
   communeId: number;
 
-  @Column("varchar", {
-    name: "commune_name",
+  @Column('varchar', {
+    name: 'commune_name',
     nullable: true,
     unique: true,
     comment:
@@ -16,11 +16,11 @@ export class OdaCommunes {
   })
   communeName: string | null;
 
-  @Column("enum", {
-    name: "eStatus",
+  @Column('enum', {
+    name: 'eStatus',
     nullable: true,
-    enum: ["Active", "Inactive"],
+    enum: ['Active', 'Inactive'],
     default: () => "'Active'",
   })
-  eStatus: "Active" | "Inactive" | null;
+  eStatus: 'Active' | 'Inactive' | null;
 }

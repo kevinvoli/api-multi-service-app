@@ -12,7 +12,9 @@ export class BiddingServiceRatingsService {
     private readonly repository: Repository<BiddingServiceRatings>,
   ) {}
 
-  async create(createDto: CreateBiddingServiceRatingDto): Promise<BiddingServiceRatings> {
+  async create(
+    createDto: CreateBiddingServiceRatingDto,
+  ): Promise<BiddingServiceRatings> {
     const entity = this.repository.create(createDto);
     return this.repository.save(entity);
   }
@@ -27,7 +29,10 @@ export class BiddingServiceRatingsService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateBiddingServiceRatingDto): Promise<BiddingServiceRatings> {
+  async update(
+    id: number,
+    updateDto: UpdateBiddingServiceRatingDto,
+  ): Promise<BiddingServiceRatings> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

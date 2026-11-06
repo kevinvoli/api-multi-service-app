@@ -1,11 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { TripsStatusMessagesService } from './trips-status-messages.service';
 import { CreateTripsStatusMessageDto } from './dto/create-trips-status-message.dto';
 import { UpdateTripsStatusMessageDto } from './dto/update-trips-status-message.dto';
 
 @Controller('trips-status-messages')
 export class TripsStatusMessagesController {
-  constructor(private readonly tripsStatusMessagesService: TripsStatusMessagesService) {}
+  constructor(
+    private readonly tripsStatusMessagesService: TripsStatusMessagesService,
+  ) {}
 
   @Post()
   create(@Body() createTripsStatusMessageDto: CreateTripsStatusMessageDto) {
@@ -23,8 +33,14 @@ export class TripsStatusMessagesController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTripsStatusMessageDto: UpdateTripsStatusMessageDto) {
-    return this.tripsStatusMessagesService.update(+id, updateTripsStatusMessageDto);
+  update(
+    @Param('id') id: string,
+    @Body() updateTripsStatusMessageDto: UpdateTripsStatusMessageDto,
+  ) {
+    return this.tripsStatusMessagesService.update(
+      +id,
+      updateTripsStatusMessageDto,
+    );
   }
 
   @Delete(':id')

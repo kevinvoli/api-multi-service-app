@@ -32,11 +32,16 @@ describe('WalletMoneyReferrerEmailService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         WalletMoneyReferrerEmailService,
-        { provide: getRepositoryToken(WalletMoneyReferrerEmail), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(WalletMoneyReferrerEmail),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    service = module.get<WalletMoneyReferrerEmailService>(WalletMoneyReferrerEmailService);
+    service = module.get<WalletMoneyReferrerEmailService>(
+      WalletMoneyReferrerEmailService,
+    );
   });
 
   it('should be defined', () => {

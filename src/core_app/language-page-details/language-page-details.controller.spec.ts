@@ -34,11 +34,16 @@ describe('LanguagePageDetailsController', () => {
       controllers: [LanguagePageDetailsController],
       providers: [
         LanguagePageDetailsService,
-        { provide: getRepositoryToken(LanguagePageDetails), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(LanguagePageDetails),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    controller = module.get<LanguagePageDetailsController>(LanguagePageDetailsController);
+    controller = module.get<LanguagePageDetailsController>(
+      LanguagePageDetailsController,
+    );
   });
 
   it('should be defined', () => {

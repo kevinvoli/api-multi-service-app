@@ -34,11 +34,16 @@ describe('PaymentCustomerInfoController', () => {
       controllers: [PaymentCustomerInfoController],
       providers: [
         PaymentCustomerInfoService,
-        { provide: getRepositoryToken(PaymentCustomerInfo), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(PaymentCustomerInfo),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    controller = module.get<PaymentCustomerInfoController>(PaymentCustomerInfoController);
+    controller = module.get<PaymentCustomerInfoController>(
+      PaymentCustomerInfoController,
+    );
   });
 
   it('should be defined', () => {

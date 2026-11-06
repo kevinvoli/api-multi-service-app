@@ -22,12 +22,17 @@ export class WithdrawRequestsService {
   }
 
   async findOne(id: number): Promise<WithdrawRequests> {
-    const entity = await this.repository.findOneBy({ iWithdrawRequestsId: id } as any);
+    const entity = await this.repository.findOneBy({
+      iWithdrawRequestsId: id,
+    } as any);
     if (!entity) throw new NotFoundException(`Record #${id} not found`);
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateWithdrawRequestDto): Promise<WithdrawRequests> {
+  async update(
+    id: number,
+    updateDto: UpdateWithdrawRequestDto,
+  ): Promise<WithdrawRequests> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

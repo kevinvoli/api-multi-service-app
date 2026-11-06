@@ -1,11 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { AdvertiseBannersService } from './advertise-banners.service';
 import { CreateAdvertiseBannerDto } from './dto/create-advertise-banner.dto';
 import { UpdateAdvertiseBannerDto } from './dto/update-advertise-banner.dto';
 
 @Controller('advertise-banners')
 export class AdvertiseBannersController {
-  constructor(private readonly advertiseBannersService: AdvertiseBannersService) {}
+  constructor(
+    private readonly advertiseBannersService: AdvertiseBannersService,
+  ) {}
 
   @Post()
   create(@Body() createAdvertiseBannerDto: CreateAdvertiseBannerDto) {
@@ -23,7 +33,10 @@ export class AdvertiseBannersController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAdvertiseBannerDto: UpdateAdvertiseBannerDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateAdvertiseBannerDto: UpdateAdvertiseBannerDto,
+  ) {
     return this.advertiseBannersService.update(+id, updateAdvertiseBannerDto);
   }
 

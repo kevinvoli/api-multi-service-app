@@ -1,88 +1,88 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm';
 
-@Index("SERVICE_NAME", ["vService"], { unique: true })
-@Entity("service_categories", { schema: "amygo1" })
+@Index('SERVICE_NAME', ['vService'], { unique: true })
+@Entity('service_categories', { schema: 'amygo1' })
 export class ServiceCategories {
-  @PrimaryGeneratedColumn({ type: "int", name: "iServiceId" })
+  @PrimaryGeneratedColumn({ type: 'int', name: 'iServiceId' })
   iServiceId: number;
 
-  @Column("longtext", {
-    name: "vService",
+  @Column('longtext', {
+    name: 'vService',
     unique: true,
     comment:
       "This will be used for theme setup. Don't change values. This should be unique.",
   })
   vService: string;
 
-  @Column("enum", {
-    name: "eShowTerms",
-    enum: ["Yes", "No"],
+  @Column('enum', {
+    name: 'eShowTerms',
+    enum: ['Yes', 'No'],
     default: () => "'No'",
   })
-  eShowTerms: "Yes" | "No";
+  eShowTerms: 'Yes' | 'No';
 
-  @Column("enum", {
-    name: "eProofUpload",
-    enum: ["Yes", "No"],
+  @Column('enum', {
+    name: 'eProofUpload',
+    enum: ['Yes', 'No'],
     default: () => "'No'",
   })
-  eProofUpload: "Yes" | "No";
+  eProofUpload: 'Yes' | 'No';
 
-  @Column("mediumtext", { name: "vServiceName_EN" })
+  @Column('mediumtext', { name: 'vServiceName_EN' })
   vServiceNameEn: string;
 
-  @Column("mediumtext", { name: "vServiceName_FR" })
+  @Column('mediumtext', { name: 'vServiceName_FR' })
   vServiceNameFr: string;
 
-  @Column("int", { name: "iDisplayOrder" })
+  @Column('int', { name: 'iDisplayOrder' })
   iDisplayOrder: number;
 
-  @Column("mediumtext", {
-    name: "vImage",
+  @Column('mediumtext', {
+    name: 'vImage',
     comment:
       'Image must be in the ratio of "16:9". Minimum resolution is 2880*1620.',
   })
   vImage: string;
 
-  @Column("enum", {
-    name: "eStatus",
-    enum: ["Active", "Inactive"],
+  @Column('enum', {
+    name: 'eStatus',
+    enum: ['Active', 'Inactive'],
     default: () => "'Active'",
   })
-  eStatus: "Active" | "Inactive";
+  eStatus: 'Active' | 'Inactive';
 
-  @Column("enum", {
-    name: "eType",
-    enum: ["separate", "combine"],
+  @Column('enum', {
+    name: 'eType',
+    enum: ['separate', 'combine'],
     default: () => "'separate'",
   })
-  eType: "separate" | "combine";
+  eType: 'separate' | 'combine';
 
-  @Column("enum", {
-    name: "prescription_required",
-    enum: ["Yes", "No"],
+  @Column('enum', {
+    name: 'prescription_required',
+    enum: ['Yes', 'No'],
     default: () => "'No'",
   })
-  prescriptionRequired: "Yes" | "No";
+  prescriptionRequired: 'Yes' | 'No';
 
-  @Column("longtext", {
-    name: "tDescription",
-    comment: "Store language wise data in json format",
+  @Column('longtext', {
+    name: 'tDescription',
+    comment: 'Store language wise data in json format',
   })
   tDescription: string;
 
-  @Column("longtext", {
-    name: "tProofNote",
-    comment: "Store language wise data in json format",
+  @Column('longtext', {
+    name: 'tProofNote',
+    comment: 'Store language wise data in json format',
   })
   tProofNote: string;
 
-  @Column("longtext", { name: "tProofNoteDriver" })
+  @Column('longtext', { name: 'tProofNoteDriver' })
   tProofNoteDriver: string;
 
-  @Column("longtext", { name: "tProofNoteStore" })
+  @Column('longtext', { name: 'tProofNoteStore' })
   tProofNoteStore: string;
 
-  @Column("enum", { name: "eOTPCodeEnable", enum: ["No", "Yes"] })
-  eOtpCodeEnable: "No" | "Yes";
+  @Column('enum', { name: 'eOTPCodeEnable', enum: ['No', 'Yes'] })
+  eOtpCodeEnable: 'No' | 'Yes';
 }

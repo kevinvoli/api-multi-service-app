@@ -22,12 +22,17 @@ export class CancelReasonService {
   }
 
   async findOne(id: number): Promise<CancelReason> {
-    const entity = await this.repository.findOneBy({ iCancelReasonId: id } as any);
+    const entity = await this.repository.findOneBy({
+      iCancelReasonId: id,
+    } as any);
     if (!entity) throw new NotFoundException(`Record #${id} not found`);
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateCancelReasonDto): Promise<CancelReason> {
+  async update(
+    id: number,
+    updateDto: UpdateCancelReasonDto,
+  ): Promise<CancelReason> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

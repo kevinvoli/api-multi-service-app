@@ -1,11 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { HistoriqueCxoGrothService } from './historique-cxo-groth.service';
 import { CreateHistoriqueCxoGrothDto } from './dto/create-historique-cxo-groth.dto';
 import { UpdateHistoriqueCxoGrothDto } from './dto/update-historique-cxo-groth.dto';
 
 @Controller('historique-cxo-groth')
 export class HistoriqueCxoGrothController {
-  constructor(private readonly historiqueCxoGrothService: HistoriqueCxoGrothService) {}
+  constructor(
+    private readonly historiqueCxoGrothService: HistoriqueCxoGrothService,
+  ) {}
 
   @Post()
   create(@Body() createHistoriqueCxoGrothDto: CreateHistoriqueCxoGrothDto) {
@@ -23,8 +33,14 @@ export class HistoriqueCxoGrothController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateHistoriqueCxoGrothDto: UpdateHistoriqueCxoGrothDto) {
-    return this.historiqueCxoGrothService.update(+id, updateHistoriqueCxoGrothDto);
+  update(
+    @Param('id') id: string,
+    @Body() updateHistoriqueCxoGrothDto: UpdateHistoriqueCxoGrothDto,
+  ) {
+    return this.historiqueCxoGrothService.update(
+      +id,
+      updateHistoriqueCxoGrothDto,
+    );
   }
 
   @Delete(':id')

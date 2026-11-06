@@ -27,7 +27,10 @@ export class SeoSectionService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateSeoSectionDto): Promise<SeoSections> {
+  async update(
+    id: number,
+    updateDto: UpdateSeoSectionDto,
+  ): Promise<SeoSections> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

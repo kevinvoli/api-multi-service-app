@@ -34,11 +34,16 @@ describe('TripsRouteLocationsController', () => {
       controllers: [TripsRouteLocationsController],
       providers: [
         TripsRouteLocationsService,
-        { provide: getRepositoryToken(TripsRouteLocations), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(TripsRouteLocations),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    controller = module.get<TripsRouteLocationsController>(TripsRouteLocationsController);
+    controller = module.get<TripsRouteLocationsController>(
+      TripsRouteLocationsController,
+    );
   });
 
   it('should be defined', () => {

@@ -32,11 +32,16 @@ describe('HelpDetailCategoriesService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         HelpDetailCategoriesService,
-        { provide: getRepositoryToken(HelpDetailCategories), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(HelpDetailCategories),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    service = module.get<HelpDetailCategoriesService>(HelpDetailCategoriesService);
+    service = module.get<HelpDetailCategoriesService>(
+      HelpDetailCategoriesService,
+    );
   });
 
   it('should be defined', () => {

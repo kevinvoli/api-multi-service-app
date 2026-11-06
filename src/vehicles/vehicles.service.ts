@@ -27,7 +27,10 @@ export class VehiclesService {
   }
 
   async findOneVehicle(id: number): Promise<Vehicle> {
-    const vehicle = await this.vehicleRepository.findOne({ where: { id }, relations: ['driver'] });
+    const vehicle = await this.vehicleRepository.findOne({
+      where: { id },
+      relations: ['driver'],
+    });
     if (!vehicle) {
       throw new NotFoundException(`Vehicle with ID ${id} not found`);
     }
@@ -58,7 +61,10 @@ export class VehiclesService {
   }
 
   async findOneDriver(id: number): Promise<Driver> {
-    const driver = await this.driverRepository.findOne({ where: { id }, relations: ['user', 'vehicles'] });
+    const driver = await this.driverRepository.findOne({
+      where: { id },
+      relations: ['user', 'vehicles'],
+    });
     if (!driver) {
       throw new NotFoundException(`Driver with ID ${id} not found`);
     }
@@ -74,7 +80,10 @@ export class VehiclesService {
     await this.driverRepository.delete(id);
   }
 
-  async assignVehicleToDriver(vehicleId: number, driverId: number): Promise<Vehicle> {
+  async assignVehicleToDriver(
+    vehicleId: number,
+    driverId: number,
+  ): Promise<Vehicle> {
     const vehicle = await this.findOneVehicle(vehicleId);
     const driver = await this.findOneDriver(driverId);
     vehicle.driver = driver;

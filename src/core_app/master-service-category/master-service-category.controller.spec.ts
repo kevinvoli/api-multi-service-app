@@ -34,11 +34,16 @@ describe('MasterServiceCategoryController', () => {
       controllers: [MasterServiceCategoryController],
       providers: [
         MasterServiceCategoryService,
-        { provide: getRepositoryToken(MasterServiceCategory), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(MasterServiceCategory),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    controller = module.get<MasterServiceCategoryController>(MasterServiceCategoryController);
+    controller = module.get<MasterServiceCategoryController>(
+      MasterServiceCategoryController,
+    );
   });
 
   it('should be defined', () => {

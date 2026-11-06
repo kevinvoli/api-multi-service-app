@@ -12,7 +12,9 @@ export class DriverSubscriptionPlanService {
     private readonly repository: Repository<DriverSubscriptionPlan>,
   ) {}
 
-  async create(createDto: CreateDriverSubscriptionPlanDto): Promise<DriverSubscriptionPlan> {
+  async create(
+    createDto: CreateDriverSubscriptionPlanDto,
+  ): Promise<DriverSubscriptionPlan> {
     const entity = this.repository.create(createDto);
     return this.repository.save(entity);
   }
@@ -22,12 +24,17 @@ export class DriverSubscriptionPlanService {
   }
 
   async findOne(id: number): Promise<DriverSubscriptionPlan> {
-    const entity = await this.repository.findOneBy({ iDriverSubscriptionPlanId: id } as any);
+    const entity = await this.repository.findOneBy({
+      iDriverSubscriptionPlanId: id,
+    } as any);
     if (!entity) throw new NotFoundException(`Record #${id} not found`);
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateDriverSubscriptionPlanDto): Promise<DriverSubscriptionPlan> {
+  async update(
+    id: number,
+    updateDto: UpdateDriverSubscriptionPlanDto,
+  ): Promise<DriverSubscriptionPlan> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

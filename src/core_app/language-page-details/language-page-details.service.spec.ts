@@ -32,11 +32,16 @@ describe('LanguagePageDetailsService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         LanguagePageDetailsService,
-        { provide: getRepositoryToken(LanguagePageDetails), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(LanguagePageDetails),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    service = module.get<LanguagePageDetailsService>(LanguagePageDetailsService);
+    service = module.get<LanguagePageDetailsService>(
+      LanguagePageDetailsService,
+    );
   });
 
   it('should be defined', () => {

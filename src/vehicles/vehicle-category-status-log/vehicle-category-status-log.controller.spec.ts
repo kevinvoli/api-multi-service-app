@@ -34,11 +34,16 @@ describe('VehicleCategoryStatusLogController', () => {
       controllers: [VehicleCategoryStatusLogController],
       providers: [
         VehicleCategoryStatusLogService,
-        { provide: getRepositoryToken(VehicleCategoryStatusLog), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(VehicleCategoryStatusLog),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    controller = module.get<VehicleCategoryStatusLogController>(VehicleCategoryStatusLogController);
+    controller = module.get<VehicleCategoryStatusLogController>(
+      VehicleCategoryStatusLogController,
+    );
   });
 
   it('should be defined', () => {

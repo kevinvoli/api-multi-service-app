@@ -45,7 +45,12 @@ export class RestaurantOrder {
   @Column({ type: 'varchar', name: 'vCouponCode', length: 50, default: '' })
   vCouponCode: string;
 
-  @Column({ type: 'varchar', name: 'ePaymentOption', length: 20, default: 'Cash' })
+  @Column({
+    type: 'varchar',
+    name: 'ePaymentOption',
+    length: 20,
+    default: 'Cash',
+  })
   ePaymentOption: string;
 
   @Column({ type: 'int', name: 'iStatusCode', default: 1 })
@@ -66,7 +71,12 @@ export class RestaurantOrder {
   @Column({ type: 'varchar', name: 'fOfferType', length: 20, default: '' })
   fOfferType: string;
 
-  @Column({ type: 'varchar', name: 'fOfferAppyType', length: 20, default: 'None' })
+  @Column({
+    type: 'varchar',
+    name: 'fOfferAppyType',
+    length: 20,
+    default: 'None',
+  })
   fOfferAppyType: string;
 
   @Column({ type: 'float', name: 'fOfferAmt', precision: 10, default: 0 })
@@ -75,7 +85,12 @@ export class RestaurantOrder {
   @Column({ type: 'int', name: 'iServiceId', default: 1 })
   iServiceId: number;
 
-  @Column({ type: 'varchar', name: 'eCheckUserWallet', length: 5, default: 'No' })
+  @Column({
+    type: 'varchar',
+    name: 'eCheckUserWallet',
+    length: 5,
+    default: 'No',
+  })
   eCheckUserWallet: string;
 
   @Column({ type: 'varchar', name: 'ePayWallet', length: 5, default: 'No' })
@@ -84,7 +99,12 @@ export class RestaurantOrder {
   @Column({ type: 'text', name: 'tUserWalletBalance', nullable: true })
   tUserWalletBalance: string;
 
-  @Column({ type: 'varchar', name: 'eOrderplaced_by', length: 20, default: 'User' })
+  @Column({
+    type: 'varchar',
+    name: 'eOrderplaced_by',
+    length: 20,
+    default: 'User',
+  })
   eOrderplacedBy: string;
 
   @Column({ type: 'int', name: 'iAdminUserId_placedorder', default: 0 })

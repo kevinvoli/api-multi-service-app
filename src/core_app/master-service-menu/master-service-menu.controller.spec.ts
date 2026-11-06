@@ -38,7 +38,9 @@ describe('MasterServiceMenuController', () => {
       ],
     }).compile();
 
-    controller = module.get<MasterServiceMenuController>(MasterServiceMenuController);
+    controller = module.get<MasterServiceMenuController>(
+      MasterServiceMenuController,
+    );
   });
 
   it('should be defined', () => {

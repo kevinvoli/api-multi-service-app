@@ -12,7 +12,9 @@ export class LocationWiseFareService {
     private readonly repository: Repository<LocationWiseFare>,
   ) {}
 
-  async create(createDto: CreateLocationWiseFareDto): Promise<LocationWiseFare> {
+  async create(
+    createDto: CreateLocationWiseFareDto,
+  ): Promise<LocationWiseFare> {
     const entity = this.repository.create(createDto);
     return this.repository.save(entity);
   }
@@ -27,7 +29,10 @@ export class LocationWiseFareService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateLocationWiseFareDto): Promise<LocationWiseFare> {
+  async update(
+    id: number,
+    updateDto: UpdateLocationWiseFareDto,
+  ): Promise<LocationWiseFare> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

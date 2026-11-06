@@ -1,33 +1,33 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity("hotel_banners", { schema: "amygo1" })
+@Entity('hotel_banners', { schema: 'amygo1' })
 export class HotelBanners {
-  @PrimaryGeneratedColumn({ type: "int", name: "iHotelBannerId" })
+  @PrimaryGeneratedColumn({ type: 'int', name: 'iHotelBannerId' })
   iHotelBannerId: number;
 
-  @Column("int", { name: "iHotelId", default: () => "'0'" })
+  @Column('int', { name: 'iHotelId', default: () => "'0'" })
   iHotelId: number;
 
-  @Column("enum", {
-    name: "eStatus",
+  @Column('enum', {
+    name: 'eStatus',
     nullable: true,
-    enum: ["Active", "Inactive"],
+    enum: ['Active', 'Inactive'],
     default: () => "'Active'",
   })
-  eStatus: "Active" | "Inactive" | null;
+  eStatus: 'Active' | 'Inactive' | null;
 
-  @Column("int", { name: "iDisplayOrder" })
+  @Column('int', { name: 'iDisplayOrder' })
   iDisplayOrder: number;
 
-  @Column("varchar", { name: "vTitle", nullable: true, length: 100 })
+  @Column('varchar', { name: 'vTitle', nullable: true, length: 100 })
   vTitle: string | null;
 
-  @Column("varchar", { name: "vImage", length: 100 })
+  @Column('varchar', { name: 'vImage', length: 100 })
   vImage: string;
 
-  @Column("varchar", { name: "vCode", length: 100 })
+  @Column('varchar', { name: 'vCode', length: 100 })
   vCode: string;
 
-  @Column("int", { name: "iUniqueId" })
+  @Column('int', { name: 'iUniqueId' })
   iUniqueId: number;
 }

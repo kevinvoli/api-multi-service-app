@@ -27,7 +27,10 @@ export class MaskingNumbersService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateMaskingNumberDto): Promise<MaskingNumbers> {
+  async update(
+    id: number,
+    updateDto: UpdateMaskingNumberDto,
+  ): Promise<MaskingNumbers> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

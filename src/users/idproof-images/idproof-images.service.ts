@@ -27,7 +27,10 @@ export class IdproofImagesService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateIdproofImageDto): Promise<IdproofImages> {
+  async update(
+    id: number,
+    updateDto: UpdateIdproofImageDto,
+  ): Promise<IdproofImages> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

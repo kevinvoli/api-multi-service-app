@@ -1,11 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { VoiceDirectionFilesService } from './voice-direction-files.service';
 import { CreateVoiceDirectionFileDto } from './dto/create-voice-direction-file.dto';
 import { UpdateVoiceDirectionFileDto } from './dto/update-voice-direction-file.dto';
 
 @Controller('voice-direction-files')
 export class VoiceDirectionFilesController {
-  constructor(private readonly voiceDirectionFilesService: VoiceDirectionFilesService) {}
+  constructor(
+    private readonly voiceDirectionFilesService: VoiceDirectionFilesService,
+  ) {}
 
   @Post()
   create(@Body() createVoiceDirectionFileDto: CreateVoiceDirectionFileDto) {
@@ -23,8 +33,14 @@ export class VoiceDirectionFilesController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateVoiceDirectionFileDto: UpdateVoiceDirectionFileDto) {
-    return this.voiceDirectionFilesService.update(+id, updateVoiceDirectionFileDto);
+  update(
+    @Param('id') id: string,
+    @Body() updateVoiceDirectionFileDto: UpdateVoiceDirectionFileDto,
+  ) {
+    return this.voiceDirectionFilesService.update(
+      +id,
+      updateVoiceDirectionFileDto,
+    );
   }
 
   @Delete(':id')

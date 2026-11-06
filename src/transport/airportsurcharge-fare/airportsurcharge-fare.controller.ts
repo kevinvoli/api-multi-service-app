@@ -1,15 +1,27 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { AirportsurchargeFareService } from './airportsurcharge-fare.service';
 import { CreateAirportsurchargeFareDto } from './dto/create-airportsurcharge-fare.dto';
 import { UpdateAirportsurchargeFareDto } from './dto/update-airportsurcharge-fare.dto';
 
 @Controller('airportsurcharge-fare')
 export class AirportsurchargeFareController {
-  constructor(private readonly airportsurchargeFareService: AirportsurchargeFareService) {}
+  constructor(
+    private readonly airportsurchargeFareService: AirportsurchargeFareService,
+  ) {}
 
   @Post()
   create(@Body() createAirportsurchargeFareDto: CreateAirportsurchargeFareDto) {
-    return this.airportsurchargeFareService.create(createAirportsurchargeFareDto);
+    return this.airportsurchargeFareService.create(
+      createAirportsurchargeFareDto,
+    );
   }
 
   @Get()
@@ -23,8 +35,14 @@ export class AirportsurchargeFareController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAirportsurchargeFareDto: UpdateAirportsurchargeFareDto) {
-    return this.airportsurchargeFareService.update(+id, updateAirportsurchargeFareDto);
+  update(
+    @Param('id') id: string,
+    @Body() updateAirportsurchargeFareDto: UpdateAirportsurchargeFareDto,
+  ) {
+    return this.airportsurchargeFareService.update(
+      +id,
+      updateAirportsurchargeFareDto,
+    );
   }
 
   @Delete(':id')

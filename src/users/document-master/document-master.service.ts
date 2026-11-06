@@ -27,7 +27,10 @@ export class DocumentMasterService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateDocumentMasterDto): Promise<DocumentMaster> {
+  async update(
+    id: number,
+    updateDto: UpdateDocumentMasterDto,
+  ): Promise<DocumentMaster> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

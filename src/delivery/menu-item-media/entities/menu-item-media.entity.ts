@@ -1,13 +1,13 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity("menu_item_media", { schema: "amygo1" })
+@Entity('menu_item_media', { schema: 'amygo1' })
 export class MenuItemMedia {
-  @PrimaryGeneratedColumn({ type: "int", name: "iMediaId" })
+  @PrimaryGeneratedColumn({ type: 'int', name: 'iMediaId' })
   iMediaId: number;
 
-  @Column("int", { name: "iMenuItemId" })
+  @Column('int', { name: 'iMenuItemId' })
   iMenuItemId: number;
 
-  @Column("text", { name: "vImage" })
+  @Column('text', { name: 'vImage' })
   vImage: string;
 }

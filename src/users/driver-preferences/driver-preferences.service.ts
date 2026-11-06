@@ -12,7 +12,9 @@ export class DriverPreferencesService {
     private readonly repository: Repository<DriverPreferences>,
   ) {}
 
-  async create(createDto: CreateDriverPreferenceDto): Promise<DriverPreferences> {
+  async create(
+    createDto: CreateDriverPreferenceDto,
+  ): Promise<DriverPreferences> {
     const entity = this.repository.create(createDto);
     return this.repository.save(entity);
   }
@@ -22,12 +24,17 @@ export class DriverPreferencesService {
   }
 
   async findOne(id: number): Promise<DriverPreferences> {
-    const entity = await this.repository.findOneBy({ iDriverPreferenceId: id } as any);
+    const entity = await this.repository.findOneBy({
+      iDriverPreferenceId: id,
+    } as any);
     if (!entity) throw new NotFoundException(`Record #${id} not found`);
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateDriverPreferenceDto): Promise<DriverPreferences> {
+  async update(
+    id: number,
+    updateDto: UpdateDriverPreferenceDto,
+  ): Promise<DriverPreferences> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

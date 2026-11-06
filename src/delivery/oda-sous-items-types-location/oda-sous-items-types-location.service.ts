@@ -12,7 +12,9 @@ export class OdaSousItemsTypesLocationService {
     private readonly repository: Repository<OdaSousItemsTypesLocation>,
   ) {}
 
-  async create(createDto: CreateOdaSousItemsTypesLocationDto): Promise<OdaSousItemsTypesLocation> {
+  async create(
+    createDto: CreateOdaSousItemsTypesLocationDto,
+  ): Promise<OdaSousItemsTypesLocation> {
     const entity = this.repository.create(createDto);
     return this.repository.save(entity);
   }
@@ -22,12 +24,17 @@ export class OdaSousItemsTypesLocationService {
   }
 
   async findOne(id: number): Promise<OdaSousItemsTypesLocation> {
-    const entity = await this.repository.findOneBy({ sousTypeLocationId: id } as any);
+    const entity = await this.repository.findOneBy({
+      sousTypeLocationId: id,
+    } as any);
     if (!entity) throw new NotFoundException(`Record #${id} not found`);
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateOdaSousItemsTypesLocationDto): Promise<OdaSousItemsTypesLocation> {
+  async update(
+    id: number,
+    updateDto: UpdateOdaSousItemsTypesLocationDto,
+  ): Promise<OdaSousItemsTypesLocation> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

@@ -34,11 +34,16 @@ describe('UserReferrerTransactionController', () => {
       controllers: [UserReferrerTransactionController],
       providers: [
         UserReferrerTransactionService,
-        { provide: getRepositoryToken(UserReferrerTransaction), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(UserReferrerTransaction),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    controller = module.get<UserReferrerTransactionController>(UserReferrerTransactionController);
+    controller = module.get<UserReferrerTransactionController>(
+      UserReferrerTransactionController,
+    );
   });
 
   it('should be defined', () => {

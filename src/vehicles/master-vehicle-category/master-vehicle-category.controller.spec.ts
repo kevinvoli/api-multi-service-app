@@ -34,11 +34,16 @@ describe('MasterVehicleCategoryController', () => {
       controllers: [MasterVehicleCategoryController],
       providers: [
         MasterVehicleCategoryService,
-        { provide: getRepositoryToken(MasterVehicleCategory), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(MasterVehicleCategory),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    controller = module.get<MasterVehicleCategoryController>(MasterVehicleCategoryController);
+    controller = module.get<MasterVehicleCategoryController>(
+      MasterVehicleCategoryController,
+    );
   });
 
   it('should be defined', () => {

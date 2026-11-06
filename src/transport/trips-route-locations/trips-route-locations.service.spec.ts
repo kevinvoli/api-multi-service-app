@@ -32,11 +32,16 @@ describe('TripsRouteLocationsService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         TripsRouteLocationsService,
-        { provide: getRepositoryToken(TripsRouteLocations), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(TripsRouteLocations),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    service = module.get<TripsRouteLocationsService>(TripsRouteLocationsService);
+    service = module.get<TripsRouteLocationsService>(
+      TripsRouteLocationsService,
+    );
   });
 
   it('should be defined', () => {

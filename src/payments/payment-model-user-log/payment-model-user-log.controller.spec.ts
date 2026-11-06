@@ -38,7 +38,9 @@ describe('PaymentModelUserLogController', () => {
       ],
     }).compile();
 
-    controller = module.get<PaymentModelUserLogController>(PaymentModelUserLogController);
+    controller = module.get<PaymentModelUserLogController>(
+      PaymentModelUserLogController,
+    );
   });
 
   it('should be defined', () => {

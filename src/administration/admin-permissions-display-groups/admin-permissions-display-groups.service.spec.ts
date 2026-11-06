@@ -32,11 +32,16 @@ describe('AdminPermissionsDisplayGroupsService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         AdminPermissionsDisplayGroupsService,
-        { provide: getRepositoryToken(AdminPermissionDisplayGroups), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(AdminPermissionDisplayGroups),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    service = module.get<AdminPermissionsDisplayGroupsService>(AdminPermissionsDisplayGroupsService);
+    service = module.get<AdminPermissionsDisplayGroupsService>(
+      AdminPermissionsDisplayGroupsService,
+    );
   });
 
   it('should be defined', () => {

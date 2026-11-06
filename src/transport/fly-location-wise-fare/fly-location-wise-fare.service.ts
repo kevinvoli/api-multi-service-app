@@ -12,7 +12,9 @@ export class FlyLocationWiseFareService {
     private readonly repository: Repository<FlyLocationWiseFare>,
   ) {}
 
-  async create(createDto: CreateFlyLocationWiseFareDto): Promise<FlyLocationWiseFare> {
+  async create(
+    createDto: CreateFlyLocationWiseFareDto,
+  ): Promise<FlyLocationWiseFare> {
     const entity = this.repository.create(createDto);
     return this.repository.save(entity);
   }
@@ -27,7 +29,10 @@ export class FlyLocationWiseFareService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateFlyLocationWiseFareDto): Promise<FlyLocationWiseFare> {
+  async update(
+    id: number,
+    updateDto: UpdateFlyLocationWiseFareDto,
+  ): Promise<FlyLocationWiseFare> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

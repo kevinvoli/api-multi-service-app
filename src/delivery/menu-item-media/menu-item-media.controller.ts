@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { MenuItemMediaService } from './menu-item-media.service';
 import { CreateMenuItemMediaDto } from './dto/create-menu-item-media.dto';
 import { UpdateMenuItemMediaDto } from './dto/update-menu-item-media.dto';
@@ -23,7 +31,10 @@ export class MenuItemMediaController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMenuItemMediaDto: UpdateMenuItemMediaDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateMenuItemMediaDto: UpdateMenuItemMediaDto,
+  ) {
     return this.menuItemMediaService.update(+id, updateMenuItemMediaDto);
   }
 

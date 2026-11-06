@@ -1,11 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { LanguagePageDetailsService } from './language-page-details.service';
 import { CreateLanguagePageDetailDto } from './dto/create-language-page-detail.dto';
 import { UpdateLanguagePageDetailDto } from './dto/update-language-page-detail.dto';
 
 @Controller('language-page-details')
 export class LanguagePageDetailsController {
-  constructor(private readonly languagePageDetailsService: LanguagePageDetailsService) {}
+  constructor(
+    private readonly languagePageDetailsService: LanguagePageDetailsService,
+  ) {}
 
   @Post()
   create(@Body() createLanguagePageDetailDto: CreateLanguagePageDetailDto) {
@@ -23,8 +33,14 @@ export class LanguagePageDetailsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateLanguagePageDetailDto: UpdateLanguagePageDetailDto) {
-    return this.languagePageDetailsService.update(+id, updateLanguagePageDetailDto);
+  update(
+    @Param('id') id: string,
+    @Body() updateLanguagePageDetailDto: UpdateLanguagePageDetailDto,
+  ) {
+    return this.languagePageDetailsService.update(
+      +id,
+      updateLanguagePageDetailDto,
+    );
   }
 
   @Delete(':id')

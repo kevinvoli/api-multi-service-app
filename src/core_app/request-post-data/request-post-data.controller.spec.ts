@@ -38,7 +38,9 @@ describe('RequestPostDataController', () => {
       ],
     }).compile();
 
-    controller = module.get<RequestPostDataController>(RequestPostDataController);
+    controller = module.get<RequestPostDataController>(
+      RequestPostDataController,
+    );
   });
 
   it('should be defined', () => {

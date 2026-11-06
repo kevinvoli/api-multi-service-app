@@ -38,7 +38,9 @@ describe('PassengerRequestsController', () => {
       ],
     }).compile();
 
-    controller = module.get<PassengerRequestsController>(PassengerRequestsController);
+    controller = module.get<PassengerRequestsController>(
+      PassengerRequestsController,
+    );
   });
 
   it('should be defined', () => {

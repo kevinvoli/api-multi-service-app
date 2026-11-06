@@ -32,11 +32,16 @@ describe('DriverBiddingRequestService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         DriverBiddingRequestService,
-        { provide: getRepositoryToken(DriverBiddingRequest), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(DriverBiddingRequest),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    service = module.get<DriverBiddingRequestService>(DriverBiddingRequestService);
+    service = module.get<DriverBiddingRequestService>(
+      DriverBiddingRequestService,
+    );
   });
 
   it('should be defined', () => {

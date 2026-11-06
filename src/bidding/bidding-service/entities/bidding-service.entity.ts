@@ -1,42 +1,42 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity("bidding_service", { schema: "amygo1" })
+@Entity('bidding_service', { schema: 'amygo1' })
 export class BiddingService {
-  @PrimaryGeneratedColumn({ type: "int", name: "iBiddingId" })
+  @PrimaryGeneratedColumn({ type: 'int', name: 'iBiddingId' })
   iBiddingId: number;
 
-  @Column("varchar", { name: "vImage", length: 255 })
+  @Column('varchar', { name: 'vImage', length: 255 })
   vImage: string;
 
-  @Column("text", { name: "vImage1" })
+  @Column('text', { name: 'vImage1' })
   vImage1: string;
 
-  @Column("text", { name: "vTitle" })
+  @Column('text', { name: 'vTitle' })
   vTitle: string;
 
-  @Column("text", { name: "tDescription" })
+  @Column('text', { name: 'tDescription' })
   tDescription: string;
 
-  @Column("int", { name: "iParentId" })
+  @Column('int', { name: 'iParentId' })
   iParentId: number;
 
-  @Column("enum", {
-    name: "eStatus",
-    enum: ["Active", "Inactive", "Deleted"],
+  @Column('enum', {
+    name: 'eStatus',
+    enum: ['Active', 'Inactive', 'Deleted'],
     default: () => "'Active'",
   })
-  eStatus: "Active" | "Inactive" | "Deleted";
+  eStatus: 'Active' | 'Inactive' | 'Deleted';
 
-  @Column("int", { name: "iDisplayOrder" })
+  @Column('int', { name: 'iDisplayOrder' })
   iDisplayOrder: number;
 
-  @Column("enum", {
-    name: "eOther",
-    enum: ["Yes", "No"],
+  @Column('enum', {
+    name: 'eOther',
+    enum: ['Yes', 'No'],
     default: () => "'No'",
   })
-  eOther: "Yes" | "No";
+  eOther: 'Yes' | 'No';
 
-  @Column("decimal", { name: "fCommission", precision: 10, scale: 2 })
+  @Column('decimal', { name: 'fCommission', precision: 10, scale: 2 })
   fCommission: string;
 }

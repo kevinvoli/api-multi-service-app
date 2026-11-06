@@ -22,14 +22,19 @@ export class VisitAdressService {
   }
 
   async findOne(id: number): Promise<VisitAddress> {
-    const visitAddress = await this.visitAddressRepository.findOneBy({ iVisitId: id });
+    const visitAddress = await this.visitAddressRepository.findOneBy({
+      iVisitId: id,
+    });
     if (!visitAddress) {
       throw new NotFoundException(`VisitAddress with ID #${id} not found`);
     }
     return visitAddress;
   }
 
-  async update(id: number, updateDto: UpdateVisitAdressDto): Promise<VisitAddress> {
+  async update(
+    id: number,
+    updateDto: UpdateVisitAdressDto,
+  ): Promise<VisitAddress> {
     const visitAddress = await this.visitAddressRepository.preload({
       iVisitId: id,
       ...updateDto,

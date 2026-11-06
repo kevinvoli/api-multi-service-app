@@ -38,7 +38,9 @@ describe('RelatedCommunesController', () => {
       ],
     }).compile();
 
-    controller = module.get<RelatedCommunesController>(RelatedCommunesController);
+    controller = module.get<RelatedCommunesController>(
+      RelatedCommunesController,
+    );
   });
 
   it('should be defined', () => {

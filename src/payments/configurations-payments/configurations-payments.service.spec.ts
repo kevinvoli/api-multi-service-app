@@ -32,11 +32,16 @@ describe('ConfigurationsPaymentsService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         ConfigurationsPaymentsService,
-        { provide: getRepositoryToken(ConfigurationsPayment), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(ConfigurationsPayment),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    service = module.get<ConfigurationsPaymentsService>(ConfigurationsPaymentsService);
+    service = module.get<ConfigurationsPaymentsService>(
+      ConfigurationsPaymentsService,
+    );
   });
 
   it('should be defined', () => {

@@ -22,12 +22,17 @@ export class LanguageLabel5Service {
   }
 
   async findOne(id: number): Promise<LanguageLabel_5> {
-    const entity = await this.repository.findOneBy({ languageLabelId: id } as any);
+    const entity = await this.repository.findOneBy({
+      languageLabelId: id,
+    } as any);
     if (!entity) throw new NotFoundException(`Record #${id} not found`);
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateLanguageLabel5Dto): Promise<LanguageLabel_5> {
+  async update(
+    id: number,
+    updateDto: UpdateLanguageLabel5Dto,
+  ): Promise<LanguageLabel_5> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

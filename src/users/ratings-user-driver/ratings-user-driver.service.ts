@@ -12,7 +12,9 @@ export class RatingsUserDriverService {
     private readonly repository: Repository<RatingsUserDriver>,
   ) {}
 
-  async create(createDto: CreateRatingsUserDriverDto): Promise<RatingsUserDriver> {
+  async create(
+    createDto: CreateRatingsUserDriverDto,
+  ): Promise<RatingsUserDriver> {
     const entity = this.repository.create(createDto);
     return this.repository.save(entity);
   }
@@ -27,7 +29,10 @@ export class RatingsUserDriverService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateRatingsUserDriverDto): Promise<RatingsUserDriver> {
+  async update(
+    id: number,
+    updateDto: UpdateRatingsUserDriverDto,
+  ): Promise<RatingsUserDriver> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

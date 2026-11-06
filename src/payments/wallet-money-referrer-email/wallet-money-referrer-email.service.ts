@@ -12,7 +12,9 @@ export class WalletMoneyReferrerEmailService {
     private readonly repository: Repository<WalletMoneyReferrerEmail>,
   ) {}
 
-  async create(createDto: CreateWalletMoneyReferrerEmailDto): Promise<WalletMoneyReferrerEmail> {
+  async create(
+    createDto: CreateWalletMoneyReferrerEmailDto,
+  ): Promise<WalletMoneyReferrerEmail> {
     const entity = this.repository.create(createDto);
     return this.repository.save(entity);
   }
@@ -27,7 +29,10 @@ export class WalletMoneyReferrerEmailService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateWalletMoneyReferrerEmailDto): Promise<WalletMoneyReferrerEmail> {
+  async update(
+    id: number,
+    updateDto: UpdateWalletMoneyReferrerEmailDto,
+  ): Promise<WalletMoneyReferrerEmail> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

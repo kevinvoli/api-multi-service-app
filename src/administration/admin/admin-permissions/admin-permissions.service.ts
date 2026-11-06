@@ -27,7 +27,10 @@ export class AdminPermissionsService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateAdminPermissionDto): Promise<AdminPermissions> {
+  async update(
+    id: number,
+    updateDto: UpdateAdminPermissionDto,
+  ): Promise<AdminPermissions> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { StoreFavoritesService } from './store-favorites.service';
 import { CreateStoreFavoriteDto } from './dto/create-store-favorite.dto';
 import { UpdateStoreFavoriteDto } from './dto/update-store-favorite.dto';
@@ -23,7 +31,10 @@ export class StoreFavoritesController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateStoreFavoriteDto: UpdateStoreFavoriteDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateStoreFavoriteDto: UpdateStoreFavoriteDto,
+  ) {
     return this.storeFavoritesService.update(+id, updateStoreFavoriteDto);
   }
 

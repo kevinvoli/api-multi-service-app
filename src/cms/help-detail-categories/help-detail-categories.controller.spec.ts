@@ -34,11 +34,16 @@ describe('HelpDetailCategoriesController', () => {
       controllers: [HelpDetailCategoriesController],
       providers: [
         HelpDetailCategoriesService,
-        { provide: getRepositoryToken(HelpDetailCategories), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(HelpDetailCategories),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    controller = module.get<HelpDetailCategoriesController>(HelpDetailCategoriesController);
+    controller = module.get<HelpDetailCategoriesController>(
+      HelpDetailCategoriesController,
+    );
   });
 
   it('should be defined', () => {

@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { HomeDriverService } from './home-driver.service';
 import { CreateHomeDriverDto } from './dto/create-home-driver.dto';
 import { UpdateHomeDriverDto } from './dto/update-home-driver.dto';
@@ -23,7 +31,10 @@ export class HomeDriverController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateHomeDriverDto: UpdateHomeDriverDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateHomeDriverDto: UpdateHomeDriverDto,
+  ) {
     return this.homeDriverService.update(+id, updateHomeDriverDto);
   }
 

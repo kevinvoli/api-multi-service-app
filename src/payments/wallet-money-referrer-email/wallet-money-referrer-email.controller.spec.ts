@@ -34,11 +34,16 @@ describe('WalletMoneyReferrerEmailController', () => {
       controllers: [WalletMoneyReferrerEmailController],
       providers: [
         WalletMoneyReferrerEmailService,
-        { provide: getRepositoryToken(WalletMoneyReferrerEmail), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(WalletMoneyReferrerEmail),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    controller = module.get<WalletMoneyReferrerEmailController>(WalletMoneyReferrerEmailController);
+    controller = module.get<WalletMoneyReferrerEmailController>(
+      WalletMoneyReferrerEmailController,
+    );
   });
 
   it('should be defined', () => {

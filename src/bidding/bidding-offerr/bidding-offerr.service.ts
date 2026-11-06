@@ -27,7 +27,10 @@ export class BiddingOfferrService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateBiddingOfferrDto): Promise<BiddingOffer> {
+  async update(
+    id: number,
+    updateDto: UpdateBiddingOfferrDto,
+  ): Promise<BiddingOffer> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

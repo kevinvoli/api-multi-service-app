@@ -27,7 +27,10 @@ export class MenuItemOptionsService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateMenuItemOptionDto): Promise<MenuitemOptions> {
+  async update(
+    id: number,
+    updateDto: UpdateMenuItemOptionDto,
+  ): Promise<MenuitemOptions> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

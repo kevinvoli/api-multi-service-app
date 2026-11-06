@@ -34,11 +34,16 @@ describe('CustomDeliveryChargesOrderController', () => {
       controllers: [CustomDeliveryChargesOrderController],
       providers: [
         CustomDeliveryChargesOrderService,
-        { provide: getRepositoryToken(CustomDeliveryChargesOrder), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(CustomDeliveryChargesOrder),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    controller = module.get<CustomDeliveryChargesOrderController>(CustomDeliveryChargesOrderController);
+    controller = module.get<CustomDeliveryChargesOrderController>(
+      CustomDeliveryChargesOrderController,
+    );
   });
 
   it('should be defined', () => {

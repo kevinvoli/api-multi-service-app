@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { BiddingServiceService } from './bidding-service.service';
 import { CreateBiddingServiceDto } from './dto/create-bidding-service.dto';
 import { UpdateBiddingServiceDto } from './dto/update-bidding-service.dto';
@@ -23,7 +31,10 @@ export class BiddingServiceController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateBiddingServiceDto: UpdateBiddingServiceDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateBiddingServiceDto: UpdateBiddingServiceDto,
+  ) {
     return this.biddingServiceService.update(+id, updateBiddingServiceDto);
   }
 

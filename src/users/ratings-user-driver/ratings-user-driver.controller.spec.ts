@@ -38,7 +38,9 @@ describe('RatingsUserDriverController', () => {
       ],
     }).compile();
 
-    controller = module.get<RatingsUserDriverController>(RatingsUserDriverController);
+    controller = module.get<RatingsUserDriverController>(
+      RatingsUserDriverController,
+    );
   });
 
   it('should be defined', () => {

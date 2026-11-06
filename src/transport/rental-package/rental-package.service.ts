@@ -22,12 +22,17 @@ export class RentalPackageService {
   }
 
   async findOne(id: number): Promise<RentalPackage> {
-    const entity = await this.repository.findOneBy({ iRentalPackageId: id } as any);
+    const entity = await this.repository.findOneBy({
+      iRentalPackageId: id,
+    } as any);
     if (!entity) throw new NotFoundException(`Record #${id} not found`);
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateRentalPackageDto): Promise<RentalPackage> {
+  async update(
+    id: number,
+    updateDto: UpdateRentalPackageDto,
+  ): Promise<RentalPackage> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

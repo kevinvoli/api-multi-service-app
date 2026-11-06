@@ -27,7 +27,10 @@ export class RelatedCommunesService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateRelatedCommuneDto): Promise<RelatedCommunes> {
+  async update(
+    id: number,
+    updateDto: UpdateRelatedCommuneDto,
+  ): Promise<RelatedCommunes> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

@@ -38,7 +38,9 @@ describe('HomeContentFoodController', () => {
       ],
     }).compile();
 
-    controller = module.get<HomeContentFoodController>(HomeContentFoodController);
+    controller = module.get<HomeContentFoodController>(
+      HomeContentFoodController,
+    );
   });
 
   it('should be defined', () => {

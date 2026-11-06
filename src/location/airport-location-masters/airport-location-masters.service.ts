@@ -12,7 +12,9 @@ export class AirportLocationMastersService {
     private readonly airportLocationMasterRepository: Repository<AirportLocationMaster>,
   ) {}
 
-  async create(createDto: CreateAirportLocationMasterDto): Promise<AirportLocationMaster> {
+  async create(
+    createDto: CreateAirportLocationMasterDto,
+  ): Promise<AirportLocationMaster> {
     const location = this.airportLocationMasterRepository.create(createDto);
     return await this.airportLocationMasterRepository.save(location);
   }
@@ -22,20 +24,29 @@ export class AirportLocationMastersService {
   }
 
   async findOne(id: number): Promise<AirportLocationMaster> {
-    const location = await this.airportLocationMasterRepository.findOneBy({ iAirportLocationId: id });
+    const location = await this.airportLocationMasterRepository.findOneBy({
+      iAirportLocationId: id,
+    });
     if (!location) {
-      throw new NotFoundException(`AirportLocationMaster with ID #${id} not found`);
+      throw new NotFoundException(
+        `AirportLocationMaster with ID #${id} not found`,
+      );
     }
     return location;
   }
 
-  async update(id: number, updateDto: UpdateAirportLocationMasterDto): Promise<AirportLocationMaster> {
+  async update(
+    id: number,
+    updateDto: UpdateAirportLocationMasterDto,
+  ): Promise<AirportLocationMaster> {
     const location = await this.airportLocationMasterRepository.preload({
       iAirportLocationId: id,
       ...updateDto,
     });
     if (!location) {
-      throw new NotFoundException(`AirportLocationMaster with ID #${id} not found`);
+      throw new NotFoundException(
+        `AirportLocationMaster with ID #${id} not found`,
+      );
     }
     return await this.airportLocationMasterRepository.save(location);
   }

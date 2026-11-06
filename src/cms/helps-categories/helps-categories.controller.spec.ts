@@ -38,7 +38,9 @@ describe('HelpsCategoriesController', () => {
       ],
     }).compile();
 
-    controller = module.get<HelpsCategoriesController>(HelpsCategoriesController);
+    controller = module.get<HelpsCategoriesController>(
+      HelpsCategoriesController,
+    );
   });
 
   it('should be defined', () => {

@@ -12,7 +12,9 @@ export class LanguagePageDetailsService {
     private readonly repository: Repository<LanguagePageDetails>,
   ) {}
 
-  async create(createDto: CreateLanguagePageDetailDto): Promise<LanguagePageDetails> {
+  async create(
+    createDto: CreateLanguagePageDetailDto,
+  ): Promise<LanguagePageDetails> {
     const entity = this.repository.create(createDto);
     return this.repository.save(entity);
   }
@@ -27,7 +29,10 @@ export class LanguagePageDetailsService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateLanguagePageDetailDto): Promise<LanguagePageDetails> {
+  async update(
+    id: number,
+    updateDto: UpdateLanguagePageDetailDto,
+  ): Promise<LanguagePageDetails> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

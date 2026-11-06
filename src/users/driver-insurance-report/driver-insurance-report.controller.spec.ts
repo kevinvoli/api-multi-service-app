@@ -34,11 +34,16 @@ describe('DriverInsuranceReportController', () => {
       controllers: [DriverInsuranceReportController],
       providers: [
         DriverInsuranceReportService,
-        { provide: getRepositoryToken(DriverInsuranceReport), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(DriverInsuranceReport),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    controller = module.get<DriverInsuranceReportController>(DriverInsuranceReportController);
+    controller = module.get<DriverInsuranceReportController>(
+      DriverInsuranceReportController,
+    );
   });
 
   it('should be defined', () => {

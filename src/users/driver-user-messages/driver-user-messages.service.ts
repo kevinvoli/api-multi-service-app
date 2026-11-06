@@ -12,7 +12,9 @@ export class DriverUserMessagesService {
     private readonly repository: Repository<DriverUserMessages>,
   ) {}
 
-  async create(createDto: CreateDriverUserMessageDto): Promise<DriverUserMessages> {
+  async create(
+    createDto: CreateDriverUserMessageDto,
+  ): Promise<DriverUserMessages> {
     const entity = this.repository.create(createDto);
     return this.repository.save(entity);
   }
@@ -27,7 +29,10 @@ export class DriverUserMessagesService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateDriverUserMessageDto): Promise<DriverUserMessages> {
+  async update(
+    id: number,
+    updateDto: UpdateDriverUserMessageDto,
+  ): Promise<DriverUserMessages> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

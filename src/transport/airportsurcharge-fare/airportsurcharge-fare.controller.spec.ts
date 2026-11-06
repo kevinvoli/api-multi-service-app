@@ -34,11 +34,16 @@ describe('AirportsurchargeFareController', () => {
       controllers: [AirportsurchargeFareController],
       providers: [
         AirportsurchargeFareService,
-        { provide: getRepositoryToken(AirportsurchargeFare), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(AirportsurchargeFare),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    controller = module.get<AirportsurchargeFareController>(AirportsurchargeFareController);
+    controller = module.get<AirportsurchargeFareController>(
+      AirportsurchargeFareController,
+    );
   });
 
   it('should be defined', () => {

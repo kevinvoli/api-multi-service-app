@@ -27,7 +27,10 @@ export class AppScreenMasterService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateAppScreenMasterDto): Promise<AppScreenMaster> {
+  async update(
+    id: number,
+    updateDto: UpdateAppScreenMasterDto,
+  ): Promise<AppScreenMaster> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

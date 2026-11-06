@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { IdproofImagesService } from './idproof-images.service';
 import { CreateIdproofImageDto } from './dto/create-idproof-image.dto';
 import { UpdateIdproofImageDto } from './dto/update-idproof-image.dto';
@@ -23,7 +31,10 @@ export class IdproofImagesController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateIdproofImageDto: UpdateIdproofImageDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateIdproofImageDto: UpdateIdproofImageDto,
+  ) {
     return this.idproofImagesService.update(+id, updateIdproofImageDto);
   }
 

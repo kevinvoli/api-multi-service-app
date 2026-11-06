@@ -1,11 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { AllDatabaseDetailsService } from './all-database-details.service';
 import { CreateAllDatabaseDetailDto } from './dto/create-all-database-detail.dto';
 import { UpdateAllDatabaseDetailDto } from './dto/update-all-database-detail.dto';
 
 @Controller('all-database-details')
 export class AllDatabaseDetailsController {
-  constructor(private readonly allDatabaseDetailsService: AllDatabaseDetailsService) {}
+  constructor(
+    private readonly allDatabaseDetailsService: AllDatabaseDetailsService,
+  ) {}
 
   @Post()
   create(@Body() createAllDatabaseDetailDto: CreateAllDatabaseDetailDto) {
@@ -23,8 +33,14 @@ export class AllDatabaseDetailsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAllDatabaseDetailDto: UpdateAllDatabaseDetailDto) {
-    return this.allDatabaseDetailsService.update(+id, updateAllDatabaseDetailDto);
+  update(
+    @Param('id') id: string,
+    @Body() updateAllDatabaseDetailDto: UpdateAllDatabaseDetailDto,
+  ) {
+    return this.allDatabaseDetailsService.update(
+      +id,
+      updateAllDatabaseDetailDto,
+    );
   }
 
   @Delete(':id')

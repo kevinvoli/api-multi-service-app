@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { MasterLngPagesService } from './master-lng-pages.service';
 import { CreateMasterLngPageDto } from './dto/create-master-lng-page.dto';
 import { UpdateMasterLngPageDto } from './dto/update-master-lng-page.dto';
@@ -23,7 +31,10 @@ export class MasterLngPagesController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMasterLngPageDto: UpdateMasterLngPageDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateMasterLngPageDto: UpdateMasterLngPageDto,
+  ) {
     return this.masterLngPagesService.update(+id, updateMasterLngPageDto);
   }
 

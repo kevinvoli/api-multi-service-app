@@ -1,4 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  HttpCode,
+  HttpStatus,
+} from '@nestjs/common';
 import { PaymentsService } from './payments.service';
 import { CreatePaymentDto } from './dto/create-payment.dto';
 import { UpdatePaymentDto } from './dto/update-payment.dto';
@@ -19,7 +29,9 @@ export class PaymentsController {
   // Payment Transaction Endpoints
   @Post('transactions')
   @HttpCode(HttpStatus.CREATED)
-  createPaymentTransaction(@Body() createPaymentDto: CreatePaymentDto): Promise<PaymentTransaction> {
+  createPaymentTransaction(
+    @Body() createPaymentDto: CreatePaymentDto,
+  ): Promise<PaymentTransaction> {
     return this.paymentsService.createPaymentTransaction(createPaymentDto);
   }
 
@@ -29,12 +41,17 @@ export class PaymentsController {
   }
 
   @Get('transactions/:id')
-  findOnePaymentTransaction(@Param('id') id: string): Promise<PaymentTransaction> {
+  findOnePaymentTransaction(
+    @Param('id') id: string,
+  ): Promise<PaymentTransaction> {
     return this.paymentsService.findOnePaymentTransaction(+id);
   }
 
   @Patch('transactions/:id')
-  updatePaymentTransaction(@Param('id') id: string, @Body() updatePaymentDto: UpdatePaymentDto): Promise<PaymentTransaction> {
+  updatePaymentTransaction(
+    @Param('id') id: string,
+    @Body() updatePaymentDto: UpdatePaymentDto,
+  ): Promise<PaymentTransaction> {
     return this.paymentsService.updatePaymentTransaction(+id, updatePaymentDto);
   }
 
@@ -51,12 +68,24 @@ export class PaymentsController {
   }
 
   @Patch('wallets/user/:userId/credit')
-  creditUserWallet(@Param('userId') userId: string, @Body() walletOperationDto: WalletOperationDto): Promise<UserWallet> {
-    return this.paymentsService.creditUserWallet(+userId, walletOperationDto.amount);
+  creditUserWallet(
+    @Param('userId') userId: string,
+    @Body() walletOperationDto: WalletOperationDto,
+  ): Promise<UserWallet> {
+    return this.paymentsService.creditUserWallet(
+      +userId,
+      walletOperationDto.amount,
+    );
   }
 
   @Patch('wallets/user/:userId/debit')
-  debitUserWallet(@Param('userId') userId: string, @Body() walletOperationDto: WalletOperationDto): Promise<UserWallet> {
-    return this.paymentsService.debitUserWallet(+userId, walletOperationDto.amount);
+  debitUserWallet(
+    @Param('userId') userId: string,
+    @Body() walletOperationDto: WalletOperationDto,
+  ): Promise<UserWallet> {
+    return this.paymentsService.debitUserWallet(
+      +userId,
+      walletOperationDto.amount,
+    );
   }
 }

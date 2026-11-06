@@ -34,11 +34,16 @@ describe('TripsStopoverpointLocationController', () => {
       controllers: [TripsStopoverpointLocationController],
       providers: [
         TripsStopoverpointLocationService,
-        { provide: getRepositoryToken(TripsStopoverpointLocation), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(TripsStopoverpointLocation),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    controller = module.get<TripsStopoverpointLocationController>(TripsStopoverpointLocationController);
+    controller = module.get<TripsStopoverpointLocationController>(
+      TripsStopoverpointLocationController,
+    );
   });
 
   it('should be defined', () => {

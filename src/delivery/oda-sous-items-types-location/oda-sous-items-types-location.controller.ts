@@ -1,15 +1,30 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { OdaSousItemsTypesLocationService } from './oda-sous-items-types-location.service';
 import { CreateOdaSousItemsTypesLocationDto } from './dto/create-oda-sous-items-types-location.dto';
 import { UpdateOdaSousItemsTypesLocationDto } from './dto/update-oda-sous-items-types-location.dto';
 
 @Controller('oda-sous-items-types-location')
 export class OdaSousItemsTypesLocationController {
-  constructor(private readonly odaSousItemsTypesLocationService: OdaSousItemsTypesLocationService) {}
+  constructor(
+    private readonly odaSousItemsTypesLocationService: OdaSousItemsTypesLocationService,
+  ) {}
 
   @Post()
-  create(@Body() createOdaSousItemsTypesLocationDto: CreateOdaSousItemsTypesLocationDto) {
-    return this.odaSousItemsTypesLocationService.create(createOdaSousItemsTypesLocationDto);
+  create(
+    @Body()
+    createOdaSousItemsTypesLocationDto: CreateOdaSousItemsTypesLocationDto,
+  ) {
+    return this.odaSousItemsTypesLocationService.create(
+      createOdaSousItemsTypesLocationDto,
+    );
   }
 
   @Get()
@@ -23,8 +38,15 @@ export class OdaSousItemsTypesLocationController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateOdaSousItemsTypesLocationDto: UpdateOdaSousItemsTypesLocationDto) {
-    return this.odaSousItemsTypesLocationService.update(+id, updateOdaSousItemsTypesLocationDto);
+  update(
+    @Param('id') id: string,
+    @Body()
+    updateOdaSousItemsTypesLocationDto: UpdateOdaSousItemsTypesLocationDto,
+  ) {
+    return this.odaSousItemsTypesLocationService.update(
+      +id,
+      updateOdaSousItemsTypesLocationDto,
+    );
   }
 
   @Delete(':id')

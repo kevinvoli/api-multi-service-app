@@ -38,7 +38,9 @@ describe('UserProfileMasterController', () => {
       ],
     }).compile();
 
-    controller = module.get<UserProfileMasterController>(UserProfileMasterController);
+    controller = module.get<UserProfileMasterController>(
+      UserProfileMasterController,
+    );
   });
 
   it('should be defined', () => {

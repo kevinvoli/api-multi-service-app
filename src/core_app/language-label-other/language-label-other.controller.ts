@@ -1,11 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { LanguageLabelOtherService } from './language-label-other.service';
 import { CreateLanguageLabelOtherDto } from './dto/create-language-label-other.dto';
 import { UpdateLanguageLabelOtherDto } from './dto/update-language-label-other.dto';
 
 @Controller('language-label-other')
 export class LanguageLabelOtherController {
-  constructor(private readonly languageLabelOtherService: LanguageLabelOtherService) {}
+  constructor(
+    private readonly languageLabelOtherService: LanguageLabelOtherService,
+  ) {}
 
   @Post()
   create(@Body() createLanguageLabelOtherDto: CreateLanguageLabelOtherDto) {
@@ -23,8 +33,14 @@ export class LanguageLabelOtherController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateLanguageLabelOtherDto: UpdateLanguageLabelOtherDto) {
-    return this.languageLabelOtherService.update(+id, updateLanguageLabelOtherDto);
+  update(
+    @Param('id') id: string,
+    @Body() updateLanguageLabelOtherDto: UpdateLanguageLabelOtherDto,
+  ) {
+    return this.languageLabelOtherService.update(
+      +id,
+      updateLanguageLabelOtherDto,
+    );
   }
 
   @Delete(':id')

@@ -3,7 +3,7 @@ export class AddAddressDto {
   vServiceAddress: string;
   vBuildingNo: string;
   vLandmark: string;
-  vAddressType: string;   // 'Home' | 'Work' | 'Other'
+  vAddressType: string; // 'Home' | 'Work' | 'Other'
   vLatitude: string;
   vLongitude: string;
   vTimeZone?: string;

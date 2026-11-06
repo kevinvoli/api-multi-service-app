@@ -12,7 +12,9 @@ export class OdaLocationsStatusService {
     private readonly repository: Repository<OdaLocationsStatus>,
   ) {}
 
-  async create(createDto: CreateOdaLocationsStatusDto): Promise<OdaLocationsStatus> {
+  async create(
+    createDto: CreateOdaLocationsStatusDto,
+  ): Promise<OdaLocationsStatus> {
     const entity = this.repository.create(createDto);
     return this.repository.save(entity);
   }
@@ -27,7 +29,10 @@ export class OdaLocationsStatusService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateOdaLocationsStatusDto): Promise<OdaLocationsStatus> {
+  async update(
+    id: number,
+    updateDto: UpdateOdaLocationsStatusDto,
+  ): Promise<OdaLocationsStatus> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

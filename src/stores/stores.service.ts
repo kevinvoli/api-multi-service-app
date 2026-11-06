@@ -24,7 +24,10 @@ export class StoresService {
   }
 
   async findOneStore(id: number): Promise<Store> {
-    const store = await this.storeRepository.findOne({ where: { id }, relations: ['category'] });
+    const store = await this.storeRepository.findOne({
+      where: { id },
+      relations: ['category'],
+    });
     if (!store) {
       throw new NotFoundException(`Store with ID ${id} not found`);
     }
@@ -41,7 +44,9 @@ export class StoresService {
   }
 
   // StoreCategory CRUD
-  async createStoreCategory(category: Partial<StoreCategory>): Promise<StoreCategory> {
+  async createStoreCategory(
+    category: Partial<StoreCategory>,
+  ): Promise<StoreCategory> {
     const newCategory = this.storeCategoryRepository.create(category);
     return this.storeCategoryRepository.save(newCategory);
   }
@@ -58,7 +63,10 @@ export class StoresService {
     return category;
   }
 
-  async updateStoreCategory(id: number, category: Partial<StoreCategory>): Promise<StoreCategory> {
+  async updateStoreCategory(
+    id: number,
+    category: Partial<StoreCategory>,
+  ): Promise<StoreCategory> {
     await this.storeCategoryRepository.update(id, category);
     return this.findOneStoreCategory(id);
   }

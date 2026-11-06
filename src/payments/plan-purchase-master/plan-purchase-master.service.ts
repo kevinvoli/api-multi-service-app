@@ -12,7 +12,9 @@ export class PlanPurchaseMasterService {
     private readonly repository: Repository<PlanPurchaseMaster>,
   ) {}
 
-  async create(createDto: CreatePlanPurchaseMasterDto): Promise<PlanPurchaseMaster> {
+  async create(
+    createDto: CreatePlanPurchaseMasterDto,
+  ): Promise<PlanPurchaseMaster> {
     const entity = this.repository.create(createDto);
     return this.repository.save(entity);
   }
@@ -27,7 +29,10 @@ export class PlanPurchaseMasterService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdatePlanPurchaseMasterDto): Promise<PlanPurchaseMaster> {
+  async update(
+    id: number,
+    updateDto: UpdatePlanPurchaseMasterDto,
+  ): Promise<PlanPurchaseMaster> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

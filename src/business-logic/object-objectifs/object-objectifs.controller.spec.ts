@@ -38,7 +38,9 @@ describe('ObjectObjectifsController', () => {
       ],
     }).compile();
 
-    controller = module.get<ObjectObjectifsController>(ObjectObjectifsController);
+    controller = module.get<ObjectObjectifsController>(
+      ObjectObjectifsController,
+    );
   });
 
   it('should be defined', () => {

@@ -38,7 +38,9 @@ describe('AllDatabaseDetailsController', () => {
       ],
     }).compile();
 
-    controller = module.get<AllDatabaseDetailsController>(AllDatabaseDetailsController);
+    controller = module.get<AllDatabaseDetailsController>(
+      AllDatabaseDetailsController,
+    );
   });
 
   it('should be defined', () => {

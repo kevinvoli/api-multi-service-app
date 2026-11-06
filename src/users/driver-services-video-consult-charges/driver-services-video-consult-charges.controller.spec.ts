@@ -34,11 +34,16 @@ describe('DriverServicesVideoConsultChargesController', () => {
       controllers: [DriverServicesVideoConsultChargesController],
       providers: [
         DriverServicesVideoConsultChargesService,
-        { provide: getRepositoryToken(DriverServicesVideoConsultCharges), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(DriverServicesVideoConsultCharges),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    controller = module.get<DriverServicesVideoConsultChargesController>(DriverServicesVideoConsultChargesController);
+    controller = module.get<DriverServicesVideoConsultChargesController>(
+      DriverServicesVideoConsultChargesController,
+    );
   });
 
   it('should be defined', () => {

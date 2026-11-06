@@ -12,7 +12,9 @@ export class AirportsurchargeFareService {
     private readonly repository: Repository<AirportsurchargeFare>,
   ) {}
 
-  async create(createDto: CreateAirportsurchargeFareDto): Promise<AirportsurchargeFare> {
+  async create(
+    createDto: CreateAirportsurchargeFareDto,
+  ): Promise<AirportsurchargeFare> {
     const entity = this.repository.create(createDto);
     return this.repository.save(entity);
   }
@@ -27,7 +29,10 @@ export class AirportsurchargeFareService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateAirportsurchargeFareDto): Promise<AirportsurchargeFare> {
+  async update(
+    id: number,
+    updateDto: UpdateAirportsurchargeFareDto,
+  ): Promise<AirportsurchargeFare> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

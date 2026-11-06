@@ -38,7 +38,9 @@ describe('OrderStatusLogsController', () => {
       ],
     }).compile();
 
-    controller = module.get<OrderStatusLogsController>(OrderStatusLogsController);
+    controller = module.get<OrderStatusLogsController>(
+      OrderStatusLogsController,
+    );
   });
 
   it('should be defined', () => {

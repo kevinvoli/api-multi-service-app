@@ -1,20 +1,20 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity("model", { schema: "amygo1" })
+@Entity('model', { schema: 'amygo1' })
 export class Model {
-  @PrimaryGeneratedColumn({ type: "int", name: "iModelId" })
+  @PrimaryGeneratedColumn({ type: 'int', name: 'iModelId' })
   iModelId: number;
 
-  @Column("int", { name: "iMakeId" })
+  @Column('int', { name: 'iMakeId' })
   iMakeId: number;
 
-  @Column("varchar", { name: "vTitle", length: 100 })
+  @Column('varchar', { name: 'vTitle', length: 100 })
   vTitle: string;
 
-  @Column("enum", {
-    name: "eStatus",
-    enum: ["Active", "Inactive", "Deleted"],
+  @Column('enum', {
+    name: 'eStatus',
+    enum: ['Active', 'Inactive', 'Deleted'],
     default: () => "'Active'",
   })
-  eStatus: "Active" | "Inactive" | "Deleted";
+  eStatus: 'Active' | 'Inactive' | 'Deleted';
 }

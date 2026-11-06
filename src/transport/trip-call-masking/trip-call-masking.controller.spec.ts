@@ -38,7 +38,9 @@ describe('TripCallMaskingController', () => {
       ],
     }).compile();
 
-    controller = module.get<TripCallMaskingController>(TripCallMaskingController);
+    controller = module.get<TripCallMaskingController>(
+      TripCallMaskingController,
+    );
   });
 
   it('should be defined', () => {

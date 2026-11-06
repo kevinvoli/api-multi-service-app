@@ -1,39 +1,39 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity("prescription_images", { schema: "amygo1" })
+@Entity('prescription_images', { schema: 'amygo1' })
 export class PrescriptionImages {
-  @PrimaryGeneratedColumn({ type: "int", name: "iImageId" })
+  @PrimaryGeneratedColumn({ type: 'int', name: 'iImageId' })
   iImageId: number;
 
-  @Column("int", { name: "iUserId" })
+  @Column('int', { name: 'iUserId' })
   iUserId: number;
 
-  @Column("varchar", { name: "duplicate_id", length: 50 })
+  @Column('varchar', { name: 'duplicate_id', length: 50 })
   duplicateId: string;
 
-  @Column("varchar", { name: "vImage", length: 255 })
+  @Column('varchar', { name: 'vImage', length: 255 })
   vImage: string;
 
-  @Column("timestamp", {
-    name: "tAddedDate",
-    default: () => "CURRENT_TIMESTAMP",
+  @Column('timestamp', {
+    name: 'tAddedDate',
+    default: () => 'CURRENT_TIMESTAMP',
   })
   tAddedDate: Date;
 
-  @Column("timestamp", {
-    name: "tModifiedDate",
+  @Column('timestamp', {
+    name: 'tModifiedDate',
     default: () => "'0000-00-00 00:00:00'",
   })
   tModifiedDate: Date;
 
-  @Column("enum", {
-    name: "eStatus",
-    comment: "Active,Inactive",
-    enum: ["Active", "Inactive"],
+  @Column('enum', {
+    name: 'eStatus',
+    comment: 'Active,Inactive',
+    enum: ['Active', 'Inactive'],
     default: () => "'Active'",
   })
-  eStatus: "Active" | "Inactive";
+  eStatus: 'Active' | 'Inactive';
 
-  @Column("int", { name: "order_id" })
+  @Column('int', { name: 'order_id' })
   orderId: number;
 }

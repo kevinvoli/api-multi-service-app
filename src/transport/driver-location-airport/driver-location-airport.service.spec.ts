@@ -32,11 +32,16 @@ describe('DriverLocationAirportService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         DriverLocationAirportService,
-        { provide: getRepositoryToken(DriverLocationAirport), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(DriverLocationAirport),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    service = module.get<DriverLocationAirportService>(DriverLocationAirportService);
+    service = module.get<DriverLocationAirportService>(
+      DriverLocationAirportService,
+    );
   });
 
   it('should be defined', () => {

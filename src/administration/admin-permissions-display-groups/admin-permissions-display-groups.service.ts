@@ -12,7 +12,9 @@ export class AdminPermissionsDisplayGroupsService {
     private readonly repository: Repository<AdminPermissionDisplayGroups>,
   ) {}
 
-  async create(createDto: CreateAdminPermissionsDisplayGroupDto): Promise<AdminPermissionDisplayGroups> {
+  async create(
+    createDto: CreateAdminPermissionsDisplayGroupDto,
+  ): Promise<AdminPermissionDisplayGroups> {
     const entity = this.repository.create(createDto);
     return this.repository.save(entity);
   }
@@ -27,7 +29,10 @@ export class AdminPermissionsDisplayGroupsService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateAdminPermissionsDisplayGroupDto): Promise<AdminPermissionDisplayGroups> {
+  async update(
+    id: number,
+    updateDto: UpdateAdminPermissionsDisplayGroupDto,
+  ): Promise<AdminPermissionDisplayGroups> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

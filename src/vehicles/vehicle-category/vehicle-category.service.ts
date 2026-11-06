@@ -22,12 +22,17 @@ export class VehicleCategoryService {
   }
 
   async findOne(id: number): Promise<VehicleCategory> {
-    const entity = await this.repository.findOneBy({ iVehicleCategoryId: id } as any);
+    const entity = await this.repository.findOneBy({
+      iVehicleCategoryId: id,
+    } as any);
     if (!entity) throw new NotFoundException(`Record #${id} not found`);
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateVehicleCategoryDto): Promise<VehicleCategory> {
+  async update(
+    id: number,
+    updateDto: UpdateVehicleCategoryDto,
+  ): Promise<VehicleCategory> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

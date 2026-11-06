@@ -1,11 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { StoreCategoryTagsService } from './store-category-tags.service';
 import { CreateStoreCategoryTagDto } from './dto/create-store-category-tag.dto';
 import { UpdateStoreCategoryTagDto } from './dto/update-store-category-tag.dto';
 
 @Controller('store-category-tags')
 export class StoreCategoryTagsController {
-  constructor(private readonly storeCategoryTagsService: StoreCategoryTagsService) {}
+  constructor(
+    private readonly storeCategoryTagsService: StoreCategoryTagsService,
+  ) {}
 
   @Post()
   create(@Body() createStoreCategoryTagDto: CreateStoreCategoryTagDto) {
@@ -23,7 +33,10 @@ export class StoreCategoryTagsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateStoreCategoryTagDto: UpdateStoreCategoryTagDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateStoreCategoryTagDto: UpdateStoreCategoryTagDto,
+  ) {
     return this.storeCategoryTagsService.update(+id, updateStoreCategoryTagDto);
   }
 

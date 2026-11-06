@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { HomeScreensService } from './home-screens.service';
 import { CreateHomeScreenDto } from './dto/create-home-screen.dto';
 import { UpdateHomeScreenDto } from './dto/update-home-screen.dto';
@@ -23,7 +31,10 @@ export class HomeScreensController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateHomeScreenDto: UpdateHomeScreenDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateHomeScreenDto: UpdateHomeScreenDto,
+  ) {
     return this.homeScreensService.update(+id, updateHomeScreenDto);
   }
 

@@ -1,15 +1,30 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { OrderDeliveryChargeDetailsService } from './order-delivery-charge-details.service';
 import { CreateOrderDeliveryChargeDetailDto } from './dto/create-order-delivery-charge-detail.dto';
 import { UpdateOrderDeliveryChargeDetailDto } from './dto/update-order-delivery-charge-detail.dto';
 
 @Controller('order-delivery-charge-details')
 export class OrderDeliveryChargeDetailsController {
-  constructor(private readonly orderDeliveryChargeDetailsService: OrderDeliveryChargeDetailsService) {}
+  constructor(
+    private readonly orderDeliveryChargeDetailsService: OrderDeliveryChargeDetailsService,
+  ) {}
 
   @Post()
-  create(@Body() createOrderDeliveryChargeDetailDto: CreateOrderDeliveryChargeDetailDto) {
-    return this.orderDeliveryChargeDetailsService.create(createOrderDeliveryChargeDetailDto);
+  create(
+    @Body()
+    createOrderDeliveryChargeDetailDto: CreateOrderDeliveryChargeDetailDto,
+  ) {
+    return this.orderDeliveryChargeDetailsService.create(
+      createOrderDeliveryChargeDetailDto,
+    );
   }
 
   @Get()
@@ -23,8 +38,15 @@ export class OrderDeliveryChargeDetailsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateOrderDeliveryChargeDetailDto: UpdateOrderDeliveryChargeDetailDto) {
-    return this.orderDeliveryChargeDetailsService.update(+id, updateOrderDeliveryChargeDetailDto);
+  update(
+    @Param('id') id: string,
+    @Body()
+    updateOrderDeliveryChargeDetailDto: UpdateOrderDeliveryChargeDetailDto,
+  ) {
+    return this.orderDeliveryChargeDetailsService.update(
+      +id,
+      updateOrderDeliveryChargeDetailDto,
+    );
   }
 
   @Delete(':id')

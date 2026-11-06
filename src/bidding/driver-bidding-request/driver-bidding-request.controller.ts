@@ -1,15 +1,27 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { DriverBiddingRequestService } from './driver-bidding-request.service';
 import { CreateDriverBiddingRequestDto } from './dto/create-driver-bidding-request.dto';
 import { UpdateDriverBiddingRequestDto } from './dto/update-driver-bidding-request.dto';
 
 @Controller('driver-bidding-request')
 export class DriverBiddingRequestController {
-  constructor(private readonly driverBiddingRequestService: DriverBiddingRequestService) {}
+  constructor(
+    private readonly driverBiddingRequestService: DriverBiddingRequestService,
+  ) {}
 
   @Post()
   create(@Body() createDriverBiddingRequestDto: CreateDriverBiddingRequestDto) {
-    return this.driverBiddingRequestService.create(createDriverBiddingRequestDto);
+    return this.driverBiddingRequestService.create(
+      createDriverBiddingRequestDto,
+    );
   }
 
   @Get()
@@ -23,8 +35,14 @@ export class DriverBiddingRequestController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDriverBiddingRequestDto: UpdateDriverBiddingRequestDto) {
-    return this.driverBiddingRequestService.update(+id, updateDriverBiddingRequestDto);
+  update(
+    @Param('id') id: string,
+    @Body() updateDriverBiddingRequestDto: UpdateDriverBiddingRequestDto,
+  ) {
+    return this.driverBiddingRequestService.update(
+      +id,
+      updateDriverBiddingRequestDto,
+    );
   }
 
   @Delete(':id')

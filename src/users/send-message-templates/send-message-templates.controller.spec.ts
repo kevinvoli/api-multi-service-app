@@ -34,11 +34,16 @@ describe('SendMessageTemplatesController', () => {
       controllers: [SendMessageTemplatesController],
       providers: [
         SendMessageTemplatesService,
-        { provide: getRepositoryToken(SendMessageTemplates), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(SendMessageTemplates),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    controller = module.get<SendMessageTemplatesController>(SendMessageTemplatesController);
+    controller = module.get<SendMessageTemplatesController>(
+      SendMessageTemplatesController,
+    );
   });
 
   it('should be defined', () => {

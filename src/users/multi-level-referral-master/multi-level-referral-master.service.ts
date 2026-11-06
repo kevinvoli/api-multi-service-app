@@ -12,7 +12,9 @@ export class MultiLevelReferralMasterService {
     private readonly repository: Repository<MultiLevelReferralMaster>,
   ) {}
 
-  async create(createDto: CreateMultiLevelReferralMasterDto): Promise<MultiLevelReferralMaster> {
+  async create(
+    createDto: CreateMultiLevelReferralMasterDto,
+  ): Promise<MultiLevelReferralMaster> {
     const entity = this.repository.create(createDto);
     return this.repository.save(entity);
   }
@@ -27,7 +29,10 @@ export class MultiLevelReferralMasterService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateMultiLevelReferralMasterDto): Promise<MultiLevelReferralMaster> {
+  async update(
+    id: number,
+    updateDto: UpdateMultiLevelReferralMasterDto,
+  ): Promise<MultiLevelReferralMaster> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

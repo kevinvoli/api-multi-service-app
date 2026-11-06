@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { OrderDriverLogService } from './order-driver-log.service';
 import { CreateOrderDriverLogDto } from './dto/create-order-driver-log.dto';
 import { UpdateOrderDriverLogDto } from './dto/update-order-driver-log.dto';
@@ -23,7 +31,10 @@ export class OrderDriverLogController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateOrderDriverLogDto: UpdateOrderDriverLogDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateOrderDriverLogDto: UpdateOrderDriverLogDto,
+  ) {
     return this.orderDriverLogService.update(+id, updateOrderDriverLogDto);
   }
 

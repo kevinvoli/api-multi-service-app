@@ -12,7 +12,9 @@ export class PrescriptionImagesService {
     private readonly repository: Repository<PrescriptionImages>,
   ) {}
 
-  async create(createDto: CreatePrescriptionImageDto): Promise<PrescriptionImages> {
+  async create(
+    createDto: CreatePrescriptionImageDto,
+  ): Promise<PrescriptionImages> {
     const entity = this.repository.create(createDto);
     return this.repository.save(entity);
   }
@@ -27,7 +29,10 @@ export class PrescriptionImagesService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdatePrescriptionImageDto): Promise<PrescriptionImages> {
+  async update(
+    id: number,
+    updateDto: UpdatePrescriptionImageDto,
+  ): Promise<PrescriptionImages> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

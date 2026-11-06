@@ -12,7 +12,9 @@ export class HelpDetailCategoriesService {
     private readonly repository: Repository<HelpDetailCategories>,
   ) {}
 
-  async create(createDto: CreateHelpDetailCategoryDto): Promise<HelpDetailCategories> {
+  async create(
+    createDto: CreateHelpDetailCategoryDto,
+  ): Promise<HelpDetailCategories> {
     const entity = this.repository.create(createDto);
     return this.repository.save(entity);
   }
@@ -22,12 +24,17 @@ export class HelpDetailCategoriesService {
   }
 
   async findOne(id: number): Promise<HelpDetailCategories> {
-    const entity = await this.repository.findOneBy({ iHelpDetailCategoryId: id } as any);
+    const entity = await this.repository.findOneBy({
+      iHelpDetailCategoryId: id,
+    } as any);
     if (!entity) throw new NotFoundException(`Record #${id} not found`);
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateHelpDetailCategoryDto): Promise<HelpDetailCategories> {
+  async update(
+    id: number,
+    updateDto: UpdateHelpDetailCategoryDto,
+  ): Promise<HelpDetailCategories> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

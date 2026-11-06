@@ -12,7 +12,9 @@ export class NotificationSoundService {
     private readonly repository: Repository<NotificationSound>,
   ) {}
 
-  async create(createDto: CreateNotificationSoundDto): Promise<NotificationSound> {
+  async create(
+    createDto: CreateNotificationSoundDto,
+  ): Promise<NotificationSound> {
     const entity = this.repository.create(createDto);
     return this.repository.save(entity);
   }
@@ -27,7 +29,10 @@ export class NotificationSoundService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateNotificationSoundDto): Promise<NotificationSound> {
+  async update(
+    id: number,
+    updateDto: UpdateNotificationSoundDto,
+  ): Promise<NotificationSound> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

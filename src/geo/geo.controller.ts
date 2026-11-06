@@ -1,4 +1,14 @@
-import { Controller, Get, Patch, Post, Param, Query, Body, ParseIntPipe, ParseFloatPipe } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Patch,
+  Post,
+  Param,
+  Query,
+  Body,
+  ParseIntPipe,
+  ParseFloatPipe,
+} from '@nestjs/common';
 import { GeoService } from './geo.service';
 
 @Controller('geo')
@@ -47,6 +57,11 @@ export class GeoController {
     @Body('destLat', ParseFloatPipe) destLat: number,
     @Body('destLon', ParseFloatPipe) destLon: number,
   ) {
-    return this.geoService.calculateDistance(originLat, originLon, destLat, destLon);
+    return this.geoService.calculateDistance(
+      originLat,
+      originLon,
+      destLat,
+      destLon,
+    );
   }
 }

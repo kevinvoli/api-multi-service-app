@@ -1,11 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { NotificationSoundService } from './notification-sound.service';
 import { CreateNotificationSoundDto } from './dto/create-notification-sound.dto';
 import { UpdateNotificationSoundDto } from './dto/update-notification-sound.dto';
 
 @Controller('notification-sound')
 export class NotificationSoundController {
-  constructor(private readonly notificationSoundService: NotificationSoundService) {}
+  constructor(
+    private readonly notificationSoundService: NotificationSoundService,
+  ) {}
 
   @Post()
   create(@Body() createNotificationSoundDto: CreateNotificationSoundDto) {
@@ -23,8 +33,14 @@ export class NotificationSoundController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateNotificationSoundDto: UpdateNotificationSoundDto) {
-    return this.notificationSoundService.update(+id, updateNotificationSoundDto);
+  update(
+    @Param('id') id: string,
+    @Body() updateNotificationSoundDto: UpdateNotificationSoundDto,
+  ) {
+    return this.notificationSoundService.update(
+      +id,
+      updateNotificationSoundDto,
+    );
   }
 
   @Delete(':id')

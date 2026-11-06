@@ -81,7 +81,11 @@ describe('AuthService', () => {
       };
       userRepo.createQueryBuilder.mockReturnValue(qbMock);
 
-      const result = await service.login({ login: 'jean@test.com', password: 'password123', userType: 'rider' });
+      const result = await service.login({
+        login: 'jean@test.com',
+        password: 'password123',
+        userType: 'rider',
+      });
 
       expect(result.login_status).toBe(LoginStatus.SUCCESS);
       expect(result.token).toBe('mock-jwt-token');
@@ -94,36 +98,72 @@ describe('AuthService', () => {
         vPassword: md5('correct'),
         eStatus: 'Active',
       };
-      const qbMock = { where: jest.fn().mockReturnThis(), getOne: jest.fn().mockResolvedValue(mockUser) };
+      const qbMock = {
+        where: jest.fn().mockReturnThis(),
+        getOne: jest.fn().mockResolvedValue(mockUser),
+      };
       userRepo.createQueryBuilder.mockReturnValue(qbMock);
 
-      const result = await service.login({ login: 'jean@test.com', password: 'wrong', userType: 'rider' });
+      const result = await service.login({
+        login: 'jean@test.com',
+        password: 'wrong',
+        userType: 'rider',
+      });
       expect(result.login_status).toBe(LoginStatus.INVALID_CREDENTIALS);
     });
 
     it('retourne INVALID_CREDENTIALS si utilisateur introuvable', async () => {
-      const qbMock = { where: jest.fn().mockReturnThis(), getOne: jest.fn().mockResolvedValue(null) };
+      const qbMock = {
+        where: jest.fn().mockReturnThis(),
+        getOne: jest.fn().mockResolvedValue(null),
+      };
       userRepo.createQueryBuilder.mockReturnValue(qbMock);
 
-      const result = await service.login({ login: 'inconnu@test.com', password: 'pass', userType: 'rider' });
+      const result = await service.login({
+        login: 'inconnu@test.com',
+        password: 'pass',
+        userType: 'rider',
+      });
       expect(result.login_status).toBe(LoginStatus.INVALID_CREDENTIALS);
     });
 
     it('retourne DELETED si eStatus=Deleted', async () => {
-      const mockUser = { iUserId: 1, vPassword: md5('pass'), eStatus: 'Deleted' };
-      const qbMock = { where: jest.fn().mockReturnThis(), getOne: jest.fn().mockResolvedValue(mockUser) };
+      const mockUser = {
+        iUserId: 1,
+        vPassword: md5('pass'),
+        eStatus: 'Deleted',
+      };
+      const qbMock = {
+        where: jest.fn().mockReturnThis(),
+        getOne: jest.fn().mockResolvedValue(mockUser),
+      };
       userRepo.createQueryBuilder.mockReturnValue(qbMock);
 
-      const result = await service.login({ login: 'x', password: 'pass', userType: 'rider' });
+      const result = await service.login({
+        login: 'x',
+        password: 'pass',
+        userType: 'rider',
+      });
       expect(result.login_status).toBe(LoginStatus.DELETED);
     });
 
     it('retourne INACTIVE si eStatus=Inactive', async () => {
-      const mockUser = { iUserId: 1, vPassword: md5('pass'), eStatus: 'Inactive' };
-      const qbMock = { where: jest.fn().mockReturnThis(), getOne: jest.fn().mockResolvedValue(mockUser) };
+      const mockUser = {
+        iUserId: 1,
+        vPassword: md5('pass'),
+        eStatus: 'Inactive',
+      };
+      const qbMock = {
+        where: jest.fn().mockReturnThis(),
+        getOne: jest.fn().mockResolvedValue(mockUser),
+      };
       userRepo.createQueryBuilder.mockReturnValue(qbMock);
 
-      const result = await service.login({ login: 'x', password: 'pass', userType: 'rider' });
+      const result = await service.login({
+        login: 'x',
+        password: 'pass',
+        userType: 'rider',
+      });
       expect(result.login_status).toBe(LoginStatus.INACTIVE);
     });
   });
@@ -142,20 +182,38 @@ describe('AuthService', () => {
         vPassword: md5('secret'),
         eStatus: 'active',
       };
-      const qbMock = { where: jest.fn().mockReturnThis(), getOne: jest.fn().mockResolvedValue(mockDriver) };
+      const qbMock = {
+        where: jest.fn().mockReturnThis(),
+        getOne: jest.fn().mockResolvedValue(mockDriver),
+      };
       driverRepo.createQueryBuilder.mockReturnValue(qbMock);
 
-      const result = await service.login({ login: 'ali@test.com', password: 'secret', userType: 'driver' });
+      const result = await service.login({
+        login: 'ali@test.com',
+        password: 'secret',
+        userType: 'driver',
+      });
       expect(result.login_status).toBe(LoginStatus.SUCCESS);
       expect((result as any).user.userType).toBe('driver');
     });
 
     it('retourne INACTIVE si driver suspendu', async () => {
-      const mockDriver = { iDriverId: 10, vPassword: md5('p'), eStatus: 'Suspend' };
-      const qbMock = { where: jest.fn().mockReturnThis(), getOne: jest.fn().mockResolvedValue(mockDriver) };
+      const mockDriver = {
+        iDriverId: 10,
+        vPassword: md5('p'),
+        eStatus: 'Suspend',
+      };
+      const qbMock = {
+        where: jest.fn().mockReturnThis(),
+        getOne: jest.fn().mockResolvedValue(mockDriver),
+      };
       driverRepo.createQueryBuilder.mockReturnValue(qbMock);
 
-      const result = await service.login({ login: 'x', password: 'p', userType: 'driver' });
+      const result = await service.login({
+        login: 'x',
+        password: 'p',
+        userType: 'driver',
+      });
       expect(result.login_status).toBe(LoginStatus.INACTIVE);
     });
   });
@@ -174,10 +232,17 @@ describe('AuthService', () => {
         vPassword: hashed,
         eStatus: 'Active',
       };
-      const qbMock = { where: jest.fn().mockReturnThis(), getOne: jest.fn().mockResolvedValue(mockAdmin) };
+      const qbMock = {
+        where: jest.fn().mockReturnThis(),
+        getOne: jest.fn().mockResolvedValue(mockAdmin),
+      };
       adminRepo.createQueryBuilder.mockReturnValue(qbMock);
 
-      const result = await service.login({ login: 'admin@test.com', password: 'adminpass', userType: 'hotel' });
+      const result = await service.login({
+        login: 'admin@test.com',
+        password: 'adminpass',
+        userType: 'hotel',
+      });
       expect(result.login_status).toBe(LoginStatus.SUCCESS);
       expect((result as any).user.userType).toBe('hotel');
     });
@@ -185,10 +250,17 @@ describe('AuthService', () => {
     it('retourne INVALID_CREDENTIALS si mauvais mot de passe bcrypt', async () => {
       const hashed = await bcrypt.hash('correct', 10);
       const mockAdmin = { iAdminId: 1, vPassword: hashed, eStatus: 'Active' };
-      const qbMock = { where: jest.fn().mockReturnThis(), getOne: jest.fn().mockResolvedValue(mockAdmin) };
+      const qbMock = {
+        where: jest.fn().mockReturnThis(),
+        getOne: jest.fn().mockResolvedValue(mockAdmin),
+      };
       adminRepo.createQueryBuilder.mockReturnValue(qbMock);
 
-      const result = await service.login({ login: 'admin@test.com', password: 'wrong', userType: 'hotel' });
+      const result = await service.login({
+        login: 'admin@test.com',
+        password: 'wrong',
+        userType: 'hotel',
+      });
       expect(result.login_status).toBe(LoginStatus.INVALID_CREDENTIALS);
     });
   });

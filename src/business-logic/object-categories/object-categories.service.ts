@@ -27,7 +27,10 @@ export class ObjectCategoriesService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateObjectCategoryDto): Promise<ObjectCategories> {
+  async update(
+    id: number,
+    updateDto: UpdateObjectCategoryDto,
+  ): Promise<ObjectCategories> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

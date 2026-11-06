@@ -22,12 +22,17 @@ export class TripReasonService {
   }
 
   async findOne(id: number): Promise<TripReason> {
-    const entity = await this.repository.findOneBy({ iTripReasonId: id } as any);
+    const entity = await this.repository.findOneBy({
+      iTripReasonId: id,
+    } as any);
     if (!entity) throw new NotFoundException(`Record #${id} not found`);
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateTripReasonDto): Promise<TripReason> {
+  async update(
+    id: number,
+    updateDto: UpdateTripReasonDto,
+  ): Promise<TripReason> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

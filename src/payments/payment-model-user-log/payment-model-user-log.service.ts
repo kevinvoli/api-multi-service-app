@@ -12,7 +12,9 @@ export class PaymentModelUserLogService {
     private readonly repository: Repository<PaymentModeUserLog>,
   ) {}
 
-  async create(createDto: CreatePaymentModelUserLogDto): Promise<PaymentModeUserLog> {
+  async create(
+    createDto: CreatePaymentModelUserLogDto,
+  ): Promise<PaymentModeUserLog> {
     const entity = this.repository.create(createDto);
     return this.repository.save(entity);
   }
@@ -27,7 +29,10 @@ export class PaymentModelUserLogService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdatePaymentModelUserLogDto): Promise<PaymentModeUserLog> {
+  async update(
+    id: number,
+    updateDto: UpdatePaymentModelUserLogDto,
+  ): Promise<PaymentModeUserLog> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

@@ -12,7 +12,9 @@ export class UserProfileMasterService {
     private readonly repository: Repository<UserProfileMaster>,
   ) {}
 
-  async create(createDto: CreateUserProfileMasterDto): Promise<UserProfileMaster> {
+  async create(
+    createDto: CreateUserProfileMasterDto,
+  ): Promise<UserProfileMaster> {
     const entity = this.repository.create(createDto);
     return this.repository.save(entity);
   }
@@ -22,12 +24,17 @@ export class UserProfileMasterService {
   }
 
   async findOne(id: number): Promise<UserProfileMaster> {
-    const entity = await this.repository.findOneBy({ iUserProfileMasterId: id } as any);
+    const entity = await this.repository.findOneBy({
+      iUserProfileMasterId: id,
+    } as any);
     if (!entity) throw new NotFoundException(`Record #${id} not found`);
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateUserProfileMasterDto): Promise<UserProfileMaster> {
+  async update(
+    id: number,
+    updateDto: UpdateUserProfileMasterDto,
+  ): Promise<UserProfileMaster> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

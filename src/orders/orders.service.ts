@@ -20,7 +20,9 @@ export class OrdersService {
 
   async create(createOrderDto: CreateOrderDto): Promise<Order> {
     // For simplicity, let's assume createOrderDto contains userId and items
-    const user = await this.usersRepository.findOneBy({ id: createOrderDto.userId });
+    const user = await this.usersRepository.findOneBy({
+      id: createOrderDto.userId,
+    });
     if (!user) {
       throw new Error('User not found'); // Or throw a NestJS NotFoundException
     }
@@ -34,13 +36,13 @@ export class OrdersService {
 
     // Assuming createOrderDto.items is an array of { productId: number, quantity: number, price: number }
     if (createOrderDto.items && createOrderDto.items.length > 0) {
-      const orderDetails = createOrderDto.items.map(item =>
+      const orderDetails = createOrderDto.items.map((item) =>
         this.orderDetailsRepository.create({
           order: savedOrder,
           quantity: item.quantity,
           price: item.price,
           // productId: item.productId // if product entity exists
-        })
+        }),
       );
       await this.orderDetailsRepository.save(orderDetails);
     }
@@ -53,14 +55,20 @@ export class OrdersService {
   }
 
   async findOne(id: number): Promise<Order> {
-    const order = await this.ordersRepository.findOne({ where: { id }, relations: ['user', 'orderDetails'] });
+    const order = await this.ordersRepository.findOne({
+      where: { id },
+      relations: ['user', 'orderDetails'],
+    });
     if (!order) throw new NotFoundException(`Order #${id} not found`);
     return order;
   }
 
   async update(id: number, updateOrderDto: UpdateOrderDto): Promise<Order> {
     await this.ordersRepository.update(id, updateOrderDto);
-    const updated = await this.ordersRepository.findOne({ where: { id }, relations: ['user', 'orderDetails'] });
+    const updated = await this.ordersRepository.findOne({
+      where: { id },
+      relations: ['user', 'orderDetails'],
+    });
     if (!updated) throw new NotFoundException(`Order #${id} not found`);
     return updated;
   }

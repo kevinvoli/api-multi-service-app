@@ -12,7 +12,9 @@ export class UserReferrerTransactionService {
     private readonly repository: Repository<UserReferrerTransaction>,
   ) {}
 
-  async create(createDto: CreateUserReferrerTransactionDto): Promise<UserReferrerTransaction> {
+  async create(
+    createDto: CreateUserReferrerTransactionDto,
+  ): Promise<UserReferrerTransaction> {
     const entity = this.repository.create(createDto);
     return this.repository.save(entity);
   }
@@ -22,12 +24,17 @@ export class UserReferrerTransactionService {
   }
 
   async findOne(id: number): Promise<UserReferrerTransaction> {
-    const entity = await this.repository.findOneBy({ iRefTransactionId: id } as any);
+    const entity = await this.repository.findOneBy({
+      iRefTransactionId: id,
+    } as any);
     if (!entity) throw new NotFoundException(`Record #${id} not found`);
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateUserReferrerTransactionDto): Promise<UserReferrerTransaction> {
+  async update(
+    id: number,
+    updateDto: UpdateUserReferrerTransactionDto,
+  ): Promise<UserReferrerTransaction> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

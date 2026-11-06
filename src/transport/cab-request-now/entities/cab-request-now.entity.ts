@@ -1,548 +1,548 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity("cab_request_now", { schema: "amygo1" })
+@Entity('cab_request_now', { schema: 'amygo1' })
 export class CabRequestNow {
-  @PrimaryGeneratedColumn({ type: "int", name: "iCabRequestId" })
+  @PrimaryGeneratedColumn({ type: 'int', name: 'iCabRequestId' })
   iCabRequestId: number;
 
-  @Column("float", {
-    name: "fAirportPickupSurge",
+  @Column('float', {
+    name: 'fAirportPickupSurge',
     precision: 10,
     scale: 2,
     default: () => "'0.00'",
   })
   fAirportPickupSurge: number;
 
-  @Column("float", {
-    name: "fAirportDropoffSurge",
+  @Column('float', {
+    name: 'fAirportDropoffSurge',
     precision: 10,
     scale: 2,
     default: () => "'0.00'",
   })
   fAirportDropoffSurge: number;
 
-  @Column("text", { name: "iCabBookingId" })
+  @Column('text', { name: 'iCabBookingId' })
   iCabBookingId: string;
 
-  @Column("int", { name: "iUserId", comment: "link with register_user table" })
+  @Column('int', { name: 'iUserId', comment: 'link with register_user table' })
   iUserId: number;
 
-  @Column("int", { name: "iDriverId", default: () => "'0'" })
+  @Column('int', { name: 'iDriverId', default: () => "'0'" })
   iDriverId: number;
 
-  @Column("int", { name: "iOrganizationId" })
+  @Column('int', { name: 'iOrganizationId' })
   iOrganizationId: number;
 
-  @Column("int", { name: "iHotelId" })
+  @Column('int', { name: 'iHotelId' })
   iHotelId: number;
 
-  @Column("longtext", { name: "tMsgCode" })
+  @Column('longtext', { name: 'tMsgCode' })
   tMsgCode: string;
 
-  @Column("int", {
-    name: "iTripId",
+  @Column('int', {
+    name: 'iTripId',
     comment: "If status is 'Assign'  trip table have entry of this ride",
     default: () => "'0'",
   })
   iTripId: number;
 
-  @Column("enum", {
-    name: "eStatus",
+  @Column('enum', {
+    name: 'eStatus',
     comment:
-      "Requesting - default; Cancelled- if user want to cancel; Complete - driver accepted the ride",
-    enum: ["Requesting", "Cancelled", "Complete", "Pending"],
+      'Requesting - default; Cancelled- if user want to cancel; Complete - driver accepted the ride',
+    enum: ['Requesting', 'Cancelled', 'Complete', 'Pending'],
     default: () => "'Requesting'",
   })
-  eStatus: "Requesting" | "Cancelled" | "Complete" | "Pending";
+  eStatus: 'Requesting' | 'Cancelled' | 'Complete' | 'Pending';
 
-  @Column("varchar", {
-    name: "vSourceLatitude",
-    comment: "source lat",
+  @Column('varchar', {
+    name: 'vSourceLatitude',
+    comment: 'source lat',
     length: 30,
   })
   vSourceLatitude: string;
 
-  @Column("varchar", {
-    name: "vSourceLongitude",
-    comment: "source long",
+  @Column('varchar', {
+    name: 'vSourceLongitude',
+    comment: 'source long',
     length: 30,
   })
   vSourceLongitude: string;
 
-  @Column("text", { name: "tSourceAddress", comment: "pickup address" })
+  @Column('text', { name: 'tSourceAddress', comment: 'pickup address' })
   tSourceAddress: string;
 
-  @Column("varchar", {
-    name: "vDestLatitude",
-    comment: "destination lat",
+  @Column('varchar', {
+    name: 'vDestLatitude',
+    comment: 'destination lat',
     length: 30,
   })
   vDestLatitude: string;
 
-  @Column("varchar", {
-    name: "vDestLongitude",
-    comment: "destination long",
+  @Column('varchar', {
+    name: 'vDestLongitude',
+    comment: 'destination long',
     length: 30,
   })
   vDestLongitude: string;
 
-  @Column("text", { name: "tDestAddress", comment: "destination address" })
+  @Column('text', { name: 'tDestAddress', comment: 'destination address' })
   tDestAddress: string;
 
-  @Column("enum", {
-    name: "ePayType",
-    comment: "payment type",
-    enum: ["Cash", "Card", "Paypal", "Organization", "Wallet"],
+  @Column('enum', {
+    name: 'ePayType',
+    comment: 'payment type',
+    enum: ['Cash', 'Card', 'Paypal', 'Organization', 'Wallet'],
   })
-  ePayType: "Cash" | "Card" | "Paypal" | "Organization" | "Wallet";
+  ePayType: 'Cash' | 'Card' | 'Paypal' | 'Organization' | 'Wallet';
 
-  @Column("int", {
-    name: "iVehicleTypeId",
-    comment: "linked to vehicle_type table",
+  @Column('int', {
+    name: 'iVehicleTypeId',
+    comment: 'linked to vehicle_type table',
   })
   iVehicleTypeId: number;
 
-  @Column("int", {
-    name: "iRentalPackageId",
-    comment: "link to rental_package table",
+  @Column('int', {
+    name: 'iRentalPackageId',
+    comment: 'link to rental_package table',
   })
   iRentalPackageId: number;
 
-  @Column("float", {
-    name: "fPickUpPrice",
-    comment: "related to surge price",
+  @Column('float', {
+    name: 'fPickUpPrice',
+    comment: 'related to surge price',
     precision: 10,
     scale: 2,
     default: () => "'1.00'",
   })
   fPickUpPrice: number;
 
-  @Column("float", {
-    name: "fNightPrice",
-    comment: "related to surge price",
+  @Column('float', {
+    name: 'fNightPrice',
+    comment: 'related to surge price',
     precision: 10,
     scale: 2,
     default: () => "'1.00'",
   })
   fNightPrice: number;
 
-  @Column("enum", {
-    name: "eType",
-    enum: ["Ride", "Deliver", "UberX", "Multi-Delivery"],
+  @Column('enum', {
+    name: 'eType',
+    enum: ['Ride', 'Deliver', 'UberX', 'Multi-Delivery'],
   })
-  eType: "Ride" | "Deliver" | "UberX" | "Multi-Delivery";
+  eType: 'Ride' | 'Deliver' | 'UberX' | 'Multi-Delivery';
 
-  @Column("int", { name: "iPackageTypeId" })
+  @Column('int', { name: 'iPackageTypeId' })
   iPackageTypeId: number;
 
-  @Column("varchar", { name: "vReceiverName", length: 50 })
+  @Column('varchar', { name: 'vReceiverName', length: 50 })
   vReceiverName: string;
 
-  @Column("varchar", { name: "vReceiverMobile", length: 50 })
+  @Column('varchar', { name: 'vReceiverMobile', length: 50 })
   vReceiverMobile: string;
 
-  @Column("text", { name: "tPickUpIns" })
+  @Column('text', { name: 'tPickUpIns' })
   tPickUpIns: string;
 
-  @Column("text", { name: "tDeliveryIns" })
+  @Column('text', { name: 'tDeliveryIns' })
   tDeliveryIns: string;
 
-  @Column("text", { name: "tPackageDetails" })
+  @Column('text', { name: 'tPackageDetails' })
   tPackageDetails: string;
 
-  @Column("varchar", { name: "vCouponCode", length: 255 })
+  @Column('varchar', { name: 'vCouponCode', length: 255 })
   vCouponCode: string;
 
-  @Column("int", { name: "iQty", default: () => "'1'" })
+  @Column('int', { name: 'iQty', default: () => "'1'" })
   iQty: number;
 
-  @Column("varchar", { name: "vRideCountry", length: 10 })
+  @Column('varchar', { name: 'vRideCountry', length: 10 })
   vRideCountry: string;
 
-  @Column("float", {
-    name: "fTollPrice",
+  @Column('float', {
+    name: 'fTollPrice',
     precision: 10,
     scale: 2,
     default: () => "'0.00'",
   })
   fTollPrice: number;
 
-  @Column("varchar", { name: "vTollPriceCurrencyCode", length: 300 })
+  @Column('varchar', { name: 'vTollPriceCurrencyCode', length: 300 })
   vTollPriceCurrencyCode: string;
 
-  @Column("enum", {
-    name: "eTollSkipped",
-    enum: ["Yes", "No"],
+  @Column('enum', {
+    name: 'eTollSkipped',
+    enum: ['Yes', 'No'],
     default: () => "'No'",
   })
-  eTollSkipped: "Yes" | "No";
+  eTollSkipped: 'Yes' | 'No';
 
-  @Column("enum", {
-    name: "eFemaleDriverRequest",
-    enum: ["Yes", "No"],
+  @Column('enum', {
+    name: 'eFemaleDriverRequest',
+    enum: ['Yes', 'No'],
     default: () => "'No'",
   })
-  eFemaleDriverRequest: "Yes" | "No";
+  eFemaleDriverRequest: 'Yes' | 'No';
 
-  @Column("enum", {
-    name: "eHandiCapAccessibility",
-    enum: ["Yes", "No"],
+  @Column('enum', {
+    name: 'eHandiCapAccessibility',
+    enum: ['Yes', 'No'],
     default: () => "'No'",
   })
-  eHandiCapAccessibility: "Yes" | "No";
+  eHandiCapAccessibility: 'Yes' | 'No';
 
-  @Column("varchar", { name: "vTimeZone", length: 255 })
+  @Column('varchar', { name: 'vTimeZone', length: 255 })
   vTimeZone: string;
 
-  @Column("timestamp", {
-    name: "dAddedDate",
-    comment: "ride now created date",
-    default: () => "CURRENT_TIMESTAMP",
+  @Column('timestamp', {
+    name: 'dAddedDate',
+    comment: 'ride now created date',
+    default: () => 'CURRENT_TIMESTAMP',
   })
   dAddedDate: Date;
 
-  @Column("enum", {
-    name: "eFromCronJob",
-    enum: ["Yes", "No"],
+  @Column('enum', {
+    name: 'eFromCronJob',
+    enum: ['Yes', 'No'],
     default: () => "'No'",
   })
-  eFromCronJob: "Yes" | "No";
+  eFromCronJob: 'Yes' | 'No';
 
-  @Column("int", { name: "iUserAddressId", default: () => "'0'" })
+  @Column('int', { name: 'iUserAddressId', default: () => "'0'" })
   iUserAddressId: number;
 
-  @Column("text", { name: "tUserComment" })
+  @Column('text', { name: 'tUserComment' })
   tUserComment: string;
 
-  @Column("varchar", {
-    name: "iTempTripDeliveryLocationId",
-    comment: "multi-delivery",
+  @Column('varchar', {
+    name: 'iTempTripDeliveryLocationId',
+    comment: 'multi-delivery',
     length: 500,
   })
   iTempTripDeliveryLocationId: string;
 
-  @Column("enum", {
-    name: "ePaymentByReceiver",
-    comment: "multi-delivery",
-    enum: ["Yes", "No"],
+  @Column('enum', {
+    name: 'ePaymentByReceiver',
+    comment: 'multi-delivery',
+    enum: ['Yes', 'No'],
     default: () => "'No'",
   })
-  ePaymentByReceiver: "Yes" | "No";
+  ePaymentByReceiver: 'Yes' | 'No';
 
-  @Column("float", {
-    name: "fDuration",
-    comment: "multi-delivery",
+  @Column('float', {
+    name: 'fDuration',
+    comment: 'multi-delivery',
     precision: 10,
     scale: 2,
     default: () => "'0.00'",
   })
   fDuration: number;
 
-  @Column("float", {
-    name: "fDistance",
-    comment: "multi-delivery",
+  @Column('float', {
+    name: 'fDistance',
+    comment: 'multi-delivery',
     precision: 10,
     scale: 2,
     default: () => "'0.00'",
   })
   fDistance: number;
 
-  @Column("float", {
-    name: "fTripGenerateFare",
-    comment: "multi-delivery",
+  @Column('float', {
+    name: 'fTripGenerateFare',
+    comment: 'multi-delivery',
     precision: 10,
     scale: 2,
     default: () => "'0.00'",
   })
   fTripGenerateFare: number;
 
-  @Column("enum", {
-    name: "eFlatTrip",
-    enum: ["Yes", "No"],
+  @Column('enum', {
+    name: 'eFlatTrip',
+    enum: ['Yes', 'No'],
     default: () => "'No'",
   })
-  eFlatTrip: "Yes" | "No";
+  eFlatTrip: 'Yes' | 'No';
 
-  @Column("float", {
-    name: "fFlatTripPrice",
+  @Column('float', {
+    name: 'fFlatTripPrice',
     precision: 10,
     scale: 2,
     default: () => "'0.00'",
   })
   fFlatTripPrice: number;
 
-  @Column("int", { name: "iAirportLocationId", default: () => "'0'" })
+  @Column('int', { name: 'iAirportLocationId', default: () => "'0'" })
   iAirportLocationId: number;
 
-  @Column("enum", {
-    name: "eAirportLocation",
-    enum: ["Yes", "No"],
+  @Column('enum', {
+    name: 'eAirportLocation',
+    enum: ['Yes', 'No'],
     default: () => "'No'",
   })
-  eAirportLocation: "Yes" | "No";
+  eAirportLocation: 'Yes' | 'No';
 
-  @Column("float", {
-    name: "iFare",
+  @Column('float', {
+    name: 'iFare',
     precision: 10,
     scale: 2,
     default: () => "'0.00'",
   })
   iFare: number;
 
-  @Column("float", {
-    name: "iBaseFare",
+  @Column('float', {
+    name: 'iBaseFare',
     precision: 10,
     scale: 2,
     default: () => "'0.00'",
   })
   iBaseFare: number;
 
-  @Column("float", {
-    name: "fPricePerMin",
+  @Column('float', {
+    name: 'fPricePerMin',
     precision: 10,
     scale: 2,
     default: () => "'0.00'",
   })
   fPricePerMin: number;
 
-  @Column("float", {
-    name: "fPricePerKM",
+  @Column('float', {
+    name: 'fPricePerKM',
     precision: 10,
     scale: 2,
     default: () => "'0.00'",
   })
   fPricePerKm: number;
 
-  @Column("float", {
-    name: "fCommision",
+  @Column('float', {
+    name: 'fCommision',
     precision: 10,
     scale: 2,
     default: () => "'0.00'",
   })
   fCommision: number;
 
-  @Column("float", {
-    name: "fSurgePriceDiff",
+  @Column('float', {
+    name: 'fSurgePriceDiff',
     precision: 10,
     scale: 2,
     default: () => "'0.00'",
   })
   fSurgePriceDiff: number;
 
-  @Column("float", {
-    name: "fDiscount",
+  @Column('float', {
+    name: 'fDiscount',
     precision: 10,
     scale: 2,
     default: () => "'0.00'",
   })
   fDiscount: number;
 
-  @Column("varchar", { name: "vDiscount", length: 20 })
+  @Column('varchar', { name: 'vDiscount', length: 20 })
   vDiscount: string;
 
-  @Column("float", {
-    name: "fMinFareDiff",
+  @Column('float', {
+    name: 'fMinFareDiff',
     precision: 10,
     scale: 2,
     default: () => "'0.00'",
   })
   fMinFareDiff: number;
 
-  @Column("float", {
-    name: "fWalletDebit",
+  @Column('float', {
+    name: 'fWalletDebit',
     precision: 10,
     scale: 2,
     default: () => "'0.00'",
   })
   fWalletDebit: number;
 
-  @Column("float", {
-    name: "fTax1",
+  @Column('float', {
+    name: 'fTax1',
     precision: 10,
     scale: 2,
     default: () => "'0.00'",
   })
   fTax1: number;
 
-  @Column("float", {
-    name: "fTax2",
+  @Column('float', {
+    name: 'fTax2',
     precision: 10,
     scale: 2,
     default: () => "'0.00'",
   })
   fTax2: number;
 
-  @Column("float", {
-    name: "fTax1Percentage",
+  @Column('float', {
+    name: 'fTax1Percentage',
     precision: 10,
     scale: 2,
     default: () => "'0.00'",
   })
   fTax1Percentage: number;
 
-  @Column("float", {
-    name: "fTax2Percentage",
+  @Column('float', {
+    name: 'fTax2Percentage',
     precision: 10,
     scale: 2,
     default: () => "'0.00'",
   })
   fTax2Percentage: number;
 
-  @Column("float", {
-    name: "fOutStandingAmount",
+  @Column('float', {
+    name: 'fOutStandingAmount',
     precision: 10,
     scale: 2,
     default: () => "'0.00'",
   })
   fOutStandingAmount: number;
 
-  @Column("enum", {
-    name: "eBookingFrom",
-    comment: "For Hotel Panel Web",
-    enum: ["Admin", "Hotel", "Kiosk", "Company", "User", ""],
+  @Column('enum', {
+    name: 'eBookingFrom',
+    comment: 'For Hotel Panel Web',
+    enum: ['Admin', 'Hotel', 'Kiosk', 'Company', 'User', ''],
     default: () => "''",
   })
-  eBookingFrom: "Admin" | "Hotel" | "Kiosk" | "Company" | "User" | "";
+  eBookingFrom: 'Admin' | 'Hotel' | 'Kiosk' | 'Company' | 'User' | '';
 
-  @Column("int", { name: "iHotelBookingId", comment: "For Hotel Panel Web" })
+  @Column('int', { name: 'iHotelBookingId', comment: 'For Hotel Panel Web' })
   iHotelBookingId: number;
 
-  @Column("enum", {
-    name: "eWalletDebitAllow",
-    enum: ["Yes", "No"],
+  @Column('enum', {
+    name: 'eWalletDebitAllow',
+    enum: ['Yes', 'No'],
     default: () => "'Yes'",
   })
-  eWalletDebitAllow: "Yes" | "No";
+  eWalletDebitAllow: 'Yes' | 'No';
 
-  @Column("enum", {
-    name: "eSystem",
-    enum: ["General", "DeliverAll"],
+  @Column('enum', {
+    name: 'eSystem',
+    enum: ['General', 'DeliverAll'],
     default: () => "'General'",
   })
-  eSystem: "General" | "DeliverAll";
+  eSystem: 'General' | 'DeliverAll';
 
-  @Column("enum", {
-    name: "ePaymentBy",
-    enum: ["Passenger", "Organization"],
+  @Column('enum', {
+    name: 'ePaymentBy',
+    enum: ['Passenger', 'Organization'],
     default: () => "'Passenger'",
   })
-  ePaymentBy: "Passenger" | "Organization";
+  ePaymentBy: 'Passenger' | 'Organization';
 
-  @Column("varchar", { name: "vProfileEmail", length: 500 })
+  @Column('varchar', { name: 'vProfileEmail', length: 500 })
   vProfileEmail: string;
 
-  @Column("int", { name: "iUserProfileId" })
+  @Column('int', { name: 'iUserProfileId' })
   iUserProfileId: number;
 
-  @Column("int", { name: "iTripReasonId" })
+  @Column('int', { name: 'iTripReasonId' })
   iTripReasonId: number;
 
-  @Column("text", { name: "vReasonTitle" })
+  @Column('text', { name: 'vReasonTitle' })
   vReasonTitle: string;
 
-  @Column("enum", {
-    name: "eTripReason",
-    enum: ["Yes", "No"],
+  @Column('enum', {
+    name: 'eTripReason',
+    enum: ['Yes', 'No'],
     default: () => "'No'",
   })
-  eTripReason: "Yes" | "No";
+  eTripReason: 'Yes' | 'No';
 
-  @Column("enum", {
-    name: "ePoolRide",
-    comment: "Only for Pool Rides ",
-    enum: ["Yes", "No"],
+  @Column('enum', {
+    name: 'ePoolRide',
+    comment: 'Only for Pool Rides ',
+    enum: ['Yes', 'No'],
     default: () => "'No'",
   })
-  ePoolRide: "Yes" | "No";
+  ePoolRide: 'Yes' | 'No';
 
-  @Column("int", { name: "iPersonSize", comment: "Only for Pool Rides " })
+  @Column('int', { name: 'iPersonSize', comment: 'Only for Pool Rides ' })
   iPersonSize: number;
 
-  @Column("enum", {
-    name: "eBookForSomeOneElse",
-    enum: ["Yes", "No"],
+  @Column('enum', {
+    name: 'eBookForSomeOneElse',
+    enum: ['Yes', 'No'],
     default: () => "'No'",
   })
-  eBookForSomeOneElse: "Yes" | "No";
+  eBookForSomeOneElse: 'Yes' | 'No';
 
-  @Column("varchar", { name: "vBookSomeOneName", length: 255 })
+  @Column('varchar', { name: 'vBookSomeOneName', length: 255 })
   vBookSomeOneName: string;
 
-  @Column("varchar", { name: "vBookSomeOneNumber", length: 50 })
+  @Column('varchar', { name: 'vBookSomeOneNumber', length: 50 })
   vBookSomeOneNumber: string;
 
-  @Column("enum", {
-    name: "ePayWallet",
-    enum: ["Yes", "No"],
+  @Column('enum', {
+    name: 'ePayWallet',
+    enum: ['Yes', 'No'],
     default: () => "'No'",
   })
-  ePayWallet: "Yes" | "No";
+  ePayWallet: 'Yes' | 'No';
 
-  @Column("enum", {
-    name: "eServiceLocation",
-    enum: ["Passanger", "Driver"],
+  @Column('enum', {
+    name: 'eServiceLocation',
+    enum: ['Passanger', 'Driver'],
     default: () => "'Passanger'",
   })
-  eServiceLocation: "Passanger" | "Driver";
+  eServiceLocation: 'Passanger' | 'Driver';
 
-  @Column("longtext", { name: "tVehicleTypeData" })
+  @Column('longtext', { name: 'tVehicleTypeData' })
   tVehicleTypeData: string;
 
-  @Column("longtext", { name: "tVehicleTypeFareData" })
+  @Column('longtext', { name: 'tVehicleTypeFareData' })
   tVehicleTypeFareData: string;
 
-  @Column("text", {
-    name: "tTotalDuration",
-    comment: "trip total duration - used as a part of payment flow",
+  @Column('text', {
+    name: 'tTotalDuration',
+    comment: 'trip total duration - used as a part of payment flow',
   })
   tTotalDuration: string;
 
-  @Column("text", {
-    name: "tTotalDistance",
-    comment: "trip total distance - used as a part of payment flow",
+  @Column('text', {
+    name: 'tTotalDistance',
+    comment: 'trip total distance - used as a part of payment flow',
   })
   tTotalDistance: string;
 
-  @Column("text", {
-    name: "tEstimatedCharge",
-    comment: "Estimated Charge - used as a part of payment flow",
+  @Column('text', {
+    name: 'tEstimatedCharge',
+    comment: 'Estimated Charge - used as a part of payment flow',
   })
   tEstimatedCharge: string;
 
-  @Column("mediumtext", {
-    name: "tUserWalletBalance",
-    comment: "Gives value of wallet when request of service",
+  @Column('mediumtext', {
+    name: 'tUserWalletBalance',
+    comment: 'Gives value of wallet when request of service',
   })
   tUserWalletBalance: string;
 
-  @Column("int", { name: "iFromStationId" })
+  @Column('int', { name: 'iFromStationId' })
   iFromStationId: number;
 
-  @Column("int", { name: "iToStationId" })
+  @Column('int', { name: 'iToStationId' })
   iToStationId: number;
 
-  @Column("float", {
-    name: "fRoundingAmount",
+  @Column('float', {
+    name: 'fRoundingAmount',
     precision: 10,
     scale: 2,
     default: () => "'0.00'",
   })
   fRoundingAmount: number;
 
-  @Column("enum", {
-    name: "eRoundingType",
-    enum: ["", "Addition", "Substraction"],
+  @Column('enum', {
+    name: 'eRoundingType',
+    enum: ['', 'Addition', 'Substraction'],
     default: () => "''",
   })
-  eRoundingType: "" | "Addition" | "Substraction";
+  eRoundingType: '' | 'Addition' | 'Substraction';
 
-  @Column("int", { name: "iPaymentInfoId" })
+  @Column('int', { name: 'iPaymentInfoId' })
   iPaymentInfoId: number;
 
-  @Column("enum", {
-    name: "isVideoCall",
-    enum: ["Yes", "No"],
+  @Column('enum', {
+    name: 'isVideoCall',
+    enum: ['Yes', 'No'],
     default: () => "'No'",
   })
-  isVideoCall: "Yes" | "No";
+  isVideoCall: 'Yes' | 'No';
 }

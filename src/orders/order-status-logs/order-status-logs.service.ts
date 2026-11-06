@@ -27,7 +27,10 @@ export class OrderStatusLogsService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateOrderStatusLogDto): Promise<OrderStatusLogs> {
+  async update(
+    id: number,
+    updateDto: UpdateOrderStatusLogDto,
+  ): Promise<OrderStatusLogs> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

@@ -12,7 +12,9 @@ export class TripsRouteLocationsService {
     private readonly repository: Repository<TripsRouteLocations>,
   ) {}
 
-  async create(createDto: CreateTripsRouteLocationDto): Promise<TripsRouteLocations> {
+  async create(
+    createDto: CreateTripsRouteLocationDto,
+  ): Promise<TripsRouteLocations> {
     const entity = this.repository.create(createDto);
     return this.repository.save(entity);
   }
@@ -22,12 +24,17 @@ export class TripsRouteLocationsService {
   }
 
   async findOne(id: number): Promise<TripsRouteLocations> {
-    const entity = await this.repository.findOneBy({ iTripLocationId: id } as any);
+    const entity = await this.repository.findOneBy({
+      iTripLocationId: id,
+    } as any);
     if (!entity) throw new NotFoundException(`Record #${id} not found`);
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateTripsRouteLocationDto): Promise<TripsRouteLocations> {
+  async update(
+    id: number,
+    updateDto: UpdateTripsRouteLocationDto,
+  ): Promise<TripsRouteLocations> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

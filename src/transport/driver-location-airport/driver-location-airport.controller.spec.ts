@@ -34,11 +34,16 @@ describe('DriverLocationAirportController', () => {
       controllers: [DriverLocationAirportController],
       providers: [
         DriverLocationAirportService,
-        { provide: getRepositoryToken(DriverLocationAirport), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(DriverLocationAirport),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    controller = module.get<DriverLocationAirportController>(DriverLocationAirportController);
+    controller = module.get<DriverLocationAirportController>(
+      DriverLocationAirportController,
+    );
   });
 
   it('should be defined', () => {

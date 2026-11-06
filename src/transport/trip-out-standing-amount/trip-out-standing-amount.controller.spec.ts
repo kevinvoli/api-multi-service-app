@@ -34,11 +34,16 @@ describe('TripOutStandingAmountController', () => {
       controllers: [TripOutStandingAmountController],
       providers: [
         TripOutStandingAmountService,
-        { provide: getRepositoryToken(TripOutstandingAmount), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(TripOutstandingAmount),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    controller = module.get<TripOutStandingAmountController>(TripOutStandingAmountController);
+    controller = module.get<TripOutStandingAmountController>(
+      TripOutStandingAmountController,
+    );
   });
 
   it('should be defined', () => {

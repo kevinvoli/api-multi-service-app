@@ -27,7 +27,10 @@ export class AdminLocationsService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateAdminLocationDto): Promise<AdminLocations> {
+  async update(
+    id: number,
+    updateDto: UpdateAdminLocationDto,
+  ): Promise<AdminLocations> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

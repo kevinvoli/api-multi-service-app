@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { GopayOtpLogsService } from './gopay-otp-logs.service';
 import { CreateGopayOtpLogDto } from './dto/create-gopay-otp-log.dto';
 import { UpdateGopayOtpLogDto } from './dto/update-gopay-otp-log.dto';
@@ -23,7 +31,10 @@ export class GopayOtpLogsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateGopayOtpLogDto: UpdateGopayOtpLogDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateGopayOtpLogDto: UpdateGopayOtpLogDto,
+  ) {
     return this.gopayOtpLogsService.update(+id, updateGopayOtpLogDto);
   }
 

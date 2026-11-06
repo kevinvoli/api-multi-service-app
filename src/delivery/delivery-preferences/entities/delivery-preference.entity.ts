@@ -1,47 +1,47 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity("delivery_preferences", { schema: "amygo1" })
+@Entity('delivery_preferences', { schema: 'amygo1' })
 export class DeliveryPreferences {
-  @PrimaryGeneratedColumn({ type: "int", name: "iPreferenceId" })
+  @PrimaryGeneratedColumn({ type: 'int', name: 'iPreferenceId' })
   iPreferenceId: number;
 
-  @Column("text", { name: "tTitle" })
+  @Column('text', { name: 'tTitle' })
   tTitle: string;
 
-  @Column("text", { name: "tDescription" })
+  @Column('text', { name: 'tDescription' })
   tDescription: string;
 
-  @Column("enum", {
-    name: "ePreferenceFor",
-    enum: ["Store", "Provider"],
+  @Column('enum', {
+    name: 'ePreferenceFor',
+    enum: ['Store', 'Provider'],
     default: () => "'Store'",
   })
-  ePreferenceFor: "Store" | "Provider";
+  ePreferenceFor: 'Store' | 'Provider';
 
-  @Column("enum", {
-    name: "eImageUpload",
-    enum: ["Yes", "No"],
+  @Column('enum', {
+    name: 'eImageUpload',
+    enum: ['Yes', 'No'],
     default: () => "'No'",
   })
-  eImageUpload: "Yes" | "No";
+  eImageUpload: 'Yes' | 'No';
 
-  @Column("int", { name: "iDisplayOrder" })
+  @Column('int', { name: 'iDisplayOrder' })
   iDisplayOrder: number;
 
-  @Column("enum", {
-    name: "eContactLess",
-    enum: ["Yes", "No"],
+  @Column('enum', {
+    name: 'eContactLess',
+    enum: ['Yes', 'No'],
     default: () => "'No'",
   })
-  eContactLess: "Yes" | "No";
+  eContactLess: 'Yes' | 'No';
 
-  @Column("enum", {
-    name: "eStatus",
-    enum: ["Active", "Inactive"],
+  @Column('enum', {
+    name: 'eStatus',
+    enum: ['Active', 'Inactive'],
     default: () => "'Active'",
   })
-  eStatus: "Active" | "Inactive";
+  eStatus: 'Active' | 'Inactive';
 
-  @Column("int", { name: "is_deleted", default: () => "'0'" })
+  @Column('int', { name: 'is_deleted', default: () => "'0'" })
   isDeleted: number;
 }

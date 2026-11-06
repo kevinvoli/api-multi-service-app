@@ -38,7 +38,9 @@ describe('TripsStatusMessagesController', () => {
       ],
     }).compile();
 
-    controller = module.get<TripsStatusMessagesController>(TripsStatusMessagesController);
+    controller = module.get<TripsStatusMessagesController>(
+      TripsStatusMessagesController,
+    );
   });
 
   it('should be defined', () => {

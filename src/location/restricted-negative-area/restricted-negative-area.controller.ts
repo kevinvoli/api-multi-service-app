@@ -1,15 +1,30 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { RestrictedNegativeAreaService } from './restricted-negative-area.service';
 import { CreateRestrictedNegativeAreaDto } from './dto/create-restricted-negative-area.dto';
 import { UpdateRestrictedNegativeAreaDto } from './dto/update-restricted-negative-area.dto';
 
 @Controller('restricted-negative-area')
 export class RestrictedNegativeAreaController {
-  constructor(private readonly restrictedNegativeAreaService: RestrictedNegativeAreaService) {}
+  constructor(
+    private readonly restrictedNegativeAreaService: RestrictedNegativeAreaService,
+  ) {}
 
   @Post()
-  create(@Body() createRestrictedNegativeAreaDto: CreateRestrictedNegativeAreaDto) {
-    return this.restrictedNegativeAreaService.create(createRestrictedNegativeAreaDto);
+  create(
+    @Body() createRestrictedNegativeAreaDto: CreateRestrictedNegativeAreaDto,
+  ) {
+    return this.restrictedNegativeAreaService.create(
+      createRestrictedNegativeAreaDto,
+    );
   }
 
   @Get()
@@ -23,8 +38,14 @@ export class RestrictedNegativeAreaController {
   }
 
   @Patch(':id')
-  update(@Param('id', ParseIntPipe) id: number, @Body() updateRestrictedNegativeAreaDto: UpdateRestrictedNegativeAreaDto) {
-    return this.restrictedNegativeAreaService.update(id, updateRestrictedNegativeAreaDto);
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateRestrictedNegativeAreaDto: UpdateRestrictedNegativeAreaDto,
+  ) {
+    return this.restrictedNegativeAreaService.update(
+      id,
+      updateRestrictedNegativeAreaDto,
+    );
   }
 
   @Delete(':id')

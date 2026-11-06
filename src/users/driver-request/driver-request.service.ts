@@ -22,12 +22,17 @@ export class DriverRequestService {
   }
 
   async findOne(id: number): Promise<DriverRequest> {
-    const entity = await this.repository.findOneBy({ iDriverRequestId: id } as any);
+    const entity = await this.repository.findOneBy({
+      iDriverRequestId: id,
+    } as any);
     if (!entity) throw new NotFoundException(`Record #${id} not found`);
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateDriverRequestDto): Promise<DriverRequest> {
+  async update(
+    id: number,
+    updateDto: UpdateDriverRequestDto,
+  ): Promise<DriverRequest> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

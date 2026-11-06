@@ -38,7 +38,9 @@ describe('PaymentTransactionsController', () => {
       ],
     }).compile();
 
-    controller = module.get<PaymentTransactionsController>(PaymentTransactionsController);
+    controller = module.get<PaymentTransactionsController>(
+      PaymentTransactionsController,
+    );
   });
 
   it('should be defined', () => {

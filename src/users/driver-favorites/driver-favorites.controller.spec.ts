@@ -38,7 +38,9 @@ describe('DriverFavoritesController', () => {
       ],
     }).compile();
 
-    controller = module.get<DriverFavoritesController>(DriverFavoritesController);
+    controller = module.get<DriverFavoritesController>(
+      DriverFavoritesController,
+    );
   });
 
   it('should be defined', () => {

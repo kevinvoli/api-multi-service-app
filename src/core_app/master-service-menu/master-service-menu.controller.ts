@@ -1,11 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { MasterServiceMenuService } from './master-service-menu.service';
 import { CreateMasterServiceMenuDto } from './dto/create-master-service-menu.dto';
 import { UpdateMasterServiceMenuDto } from './dto/update-master-service-menu.dto';
 
 @Controller('master-service-menu')
 export class MasterServiceMenuController {
-  constructor(private readonly masterServiceMenuService: MasterServiceMenuService) {}
+  constructor(
+    private readonly masterServiceMenuService: MasterServiceMenuService,
+  ) {}
 
   @Post()
   create(@Body() createMasterServiceMenuDto: CreateMasterServiceMenuDto) {
@@ -23,8 +33,14 @@ export class MasterServiceMenuController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMasterServiceMenuDto: UpdateMasterServiceMenuDto) {
-    return this.masterServiceMenuService.update(+id, updateMasterServiceMenuDto);
+  update(
+    @Param('id') id: string,
+    @Body() updateMasterServiceMenuDto: UpdateMasterServiceMenuDto,
+  ) {
+    return this.masterServiceMenuService.update(
+      +id,
+      updateMasterServiceMenuDto,
+    );
   }
 
   @Delete(':id')

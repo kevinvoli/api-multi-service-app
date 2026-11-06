@@ -32,11 +32,16 @@ describe('MasterVehicleCategoryService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         MasterVehicleCategoryService,
-        { provide: getRepositoryToken(MasterVehicleCategory), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(MasterVehicleCategory),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    service = module.get<MasterVehicleCategoryService>(MasterVehicleCategoryService);
+    service = module.get<MasterVehicleCategoryService>(
+      MasterVehicleCategoryService,
+    );
   });
 
   it('should be defined', () => {

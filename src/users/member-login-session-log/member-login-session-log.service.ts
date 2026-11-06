@@ -12,7 +12,9 @@ export class MemberLoginSessionLogService {
     private readonly repository: Repository<MemberLoginSessionLog>,
   ) {}
 
-  async create(createDto: CreateMemberLoginSessionLogDto): Promise<MemberLoginSessionLog> {
+  async create(
+    createDto: CreateMemberLoginSessionLogDto,
+  ): Promise<MemberLoginSessionLog> {
     const entity = this.repository.create(createDto);
     return this.repository.save(entity);
   }
@@ -22,12 +24,17 @@ export class MemberLoginSessionLogService {
   }
 
   async findOne(id: number): Promise<MemberLoginSessionLog> {
-    const entity = await this.repository.findOneBy({ iSessionLogId: id } as any);
+    const entity = await this.repository.findOneBy({
+      iSessionLogId: id,
+    } as any);
     if (!entity) throw new NotFoundException(`Record #${id} not found`);
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateMemberLoginSessionLogDto): Promise<MemberLoginSessionLog> {
+  async update(
+    id: number,
+    updateDto: UpdateMemberLoginSessionLogDto,
+  ): Promise<MemberLoginSessionLog> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

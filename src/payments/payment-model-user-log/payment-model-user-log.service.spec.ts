@@ -36,7 +36,9 @@ describe('PaymentModelUserLogService', () => {
       ],
     }).compile();
 
-    service = module.get<PaymentModelUserLogService>(PaymentModelUserLogService);
+    service = module.get<PaymentModelUserLogService>(
+      PaymentModelUserLogService,
+    );
   });
 
   it('should be defined', () => {

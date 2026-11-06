@@ -27,7 +27,10 @@ export class HomeDriverService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateHomeDriverDto): Promise<HomeDriver> {
+  async update(
+    id: number,
+    updateDto: UpdateHomeDriverDto,
+  ): Promise<HomeDriver> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

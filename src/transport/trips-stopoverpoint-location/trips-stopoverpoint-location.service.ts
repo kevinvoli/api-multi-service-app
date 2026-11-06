@@ -12,7 +12,9 @@ export class TripsStopoverpointLocationService {
     private readonly repository: Repository<TripsStopoverpointLocation>,
   ) {}
 
-  async create(createDto: CreateTripsStopoverpointLocationDto): Promise<TripsStopoverpointLocation> {
+  async create(
+    createDto: CreateTripsStopoverpointLocationDto,
+  ): Promise<TripsStopoverpointLocation> {
     const entity = this.repository.create(createDto);
     return this.repository.save(entity);
   }
@@ -27,7 +29,10 @@ export class TripsStopoverpointLocationService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateTripsStopoverpointLocationDto): Promise<TripsStopoverpointLocation> {
+  async update(
+    id: number,
+    updateDto: UpdateTripsStopoverpointLocationDto,
+  ): Promise<TripsStopoverpointLocation> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

@@ -27,7 +27,10 @@ export class ConfigurationsService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateConfigurationDto): Promise<Configurations> {
+  async update(
+    id: number,
+    updateDto: UpdateConfigurationDto,
+  ): Promise<Configurations> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

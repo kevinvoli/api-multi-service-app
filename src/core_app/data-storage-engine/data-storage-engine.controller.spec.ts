@@ -38,7 +38,9 @@ describe('DataStorageEngineController', () => {
       ],
     }).compile();
 
-    controller = module.get<DataStorageEngineController>(DataStorageEngineController);
+    controller = module.get<DataStorageEngineController>(
+      DataStorageEngineController,
+    );
   });
 
   it('should be defined', () => {

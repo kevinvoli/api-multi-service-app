@@ -27,7 +27,10 @@ export class AdminGroupsService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateAdminGroupDto): Promise<AdminGroups> {
+  async update(
+    id: number,
+    updateDto: UpdateAdminGroupDto,
+  ): Promise<AdminGroups> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

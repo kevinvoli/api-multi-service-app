@@ -1,11 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { BannerImpressionService } from './banner-impression.service';
 import { CreateBannerImpressionDto } from './dto/create-banner-impression.dto';
 import { UpdateBannerImpressionDto } from './dto/update-banner-impression.dto';
 
 @Controller('banner-impression')
 export class BannerImpressionController {
-  constructor(private readonly bannerImpressionService: BannerImpressionService) {}
+  constructor(
+    private readonly bannerImpressionService: BannerImpressionService,
+  ) {}
 
   @Post()
   create(@Body() createBannerImpressionDto: CreateBannerImpressionDto) {
@@ -23,7 +33,10 @@ export class BannerImpressionController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateBannerImpressionDto: UpdateBannerImpressionDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateBannerImpressionDto: UpdateBannerImpressionDto,
+  ) {
     return this.bannerImpressionService.update(+id, updateBannerImpressionDto);
   }
 

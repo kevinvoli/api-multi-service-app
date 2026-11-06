@@ -12,7 +12,9 @@ export class OrderDeliveryChargeDetailsService {
     private readonly repository: Repository<OrderDeliveryChargeDetails>,
   ) {}
 
-  async create(createDto: CreateOrderDeliveryChargeDetailDto): Promise<OrderDeliveryChargeDetails> {
+  async create(
+    createDto: CreateOrderDeliveryChargeDetailDto,
+  ): Promise<OrderDeliveryChargeDetails> {
     const entity = this.repository.create(createDto);
     return this.repository.save(entity);
   }
@@ -22,12 +24,17 @@ export class OrderDeliveryChargeDetailsService {
   }
 
   async findOne(id: number): Promise<OrderDeliveryChargeDetails> {
-    const entity = await this.repository.findOneBy({ iOrderDeliveryChargeId: id } as any);
+    const entity = await this.repository.findOneBy({
+      iOrderDeliveryChargeId: id,
+    } as any);
     if (!entity) throw new NotFoundException(`Record #${id} not found`);
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateOrderDeliveryChargeDetailDto): Promise<OrderDeliveryChargeDetails> {
+  async update(
+    id: number,
+    updateDto: UpdateOrderDeliveryChargeDetailDto,
+  ): Promise<OrderDeliveryChargeDetails> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

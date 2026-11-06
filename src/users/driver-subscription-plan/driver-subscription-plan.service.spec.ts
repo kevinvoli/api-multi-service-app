@@ -32,11 +32,16 @@ describe('DriverSubscriptionPlanService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         DriverSubscriptionPlanService,
-        { provide: getRepositoryToken(DriverSubscriptionPlan), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(DriverSubscriptionPlan),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    service = module.get<DriverSubscriptionPlanService>(DriverSubscriptionPlanService);
+    service = module.get<DriverSubscriptionPlanService>(
+      DriverSubscriptionPlanService,
+    );
   });
 
   it('should be defined', () => {

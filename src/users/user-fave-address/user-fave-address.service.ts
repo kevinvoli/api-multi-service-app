@@ -22,12 +22,17 @@ export class UserFaveAddressService {
   }
 
   async findOne(id: number): Promise<UserFaveAddress> {
-    const entity = await this.repository.findOneBy({ iUserFavAddressId: id } as any);
+    const entity = await this.repository.findOneBy({
+      iUserFavAddressId: id,
+    } as any);
     if (!entity) throw new NotFoundException(`Record #${id} not found`);
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateUserFaveAddressDto): Promise<UserFaveAddress> {
+  async update(
+    id: number,
+    updateDto: UpdateUserFaveAddressDto,
+  ): Promise<UserFaveAddress> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

@@ -1,11 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { UserProfileMasterService } from './user-profile-master.service';
 import { CreateUserProfileMasterDto } from './dto/create-user-profile-master.dto';
 import { UpdateUserProfileMasterDto } from './dto/update-user-profile-master.dto';
 
 @Controller('user-profile-master')
 export class UserProfileMasterController {
-  constructor(private readonly userProfileMasterService: UserProfileMasterService) {}
+  constructor(
+    private readonly userProfileMasterService: UserProfileMasterService,
+  ) {}
 
   @Post()
   create(@Body() createUserProfileMasterDto: CreateUserProfileMasterDto) {
@@ -23,8 +33,14 @@ export class UserProfileMasterController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserProfileMasterDto: UpdateUserProfileMasterDto) {
-    return this.userProfileMasterService.update(+id, updateUserProfileMasterDto);
+  update(
+    @Param('id') id: string,
+    @Body() updateUserProfileMasterDto: UpdateUserProfileMasterDto,
+  ) {
+    return this.userProfileMasterService.update(
+      +id,
+      updateUserProfileMasterDto,
+    );
   }
 
   @Delete(':id')

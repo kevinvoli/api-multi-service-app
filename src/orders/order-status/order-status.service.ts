@@ -22,12 +22,17 @@ export class OrderStatusService {
   }
 
   async findOne(id: number): Promise<OrderStatus> {
-    const entity = await this.repository.findOneBy({ iOrderStatusId: id } as any);
+    const entity = await this.repository.findOneBy({
+      iOrderStatusId: id,
+    } as any);
     if (!entity) throw new NotFoundException(`Record #${id} not found`);
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateOrderStatusDto): Promise<OrderStatus> {
+  async update(
+    id: number,
+    updateDto: UpdateOrderStatusDto,
+  ): Promise<OrderStatus> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

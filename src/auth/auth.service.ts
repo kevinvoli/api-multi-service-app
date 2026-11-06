@@ -73,8 +73,10 @@ export class AuthService {
       return { login_status: LoginStatus.INVALID_CREDENTIALS };
     }
 
-    if (user.eStatus === 'Deleted') return { login_status: LoginStatus.DELETED };
-    if (user.eStatus === 'Inactive') return { login_status: LoginStatus.INACTIVE };
+    if (user.eStatus === 'Deleted')
+      return { login_status: LoginStatus.DELETED };
+    if (user.eStatus === 'Inactive')
+      return { login_status: LoginStatus.INACTIVE };
 
     await this.logMemberLogin(user.iUserId, 'Passenger');
 
@@ -108,8 +110,10 @@ export class AuthService {
       return { login_status: LoginStatus.INVALID_CREDENTIALS };
     }
 
-    if (driver.eStatus === 'Deleted') return { login_status: LoginStatus.DELETED };
-    if (driver.eStatus === 'inactive' || driver.eStatus === 'Suspend') return { login_status: LoginStatus.INACTIVE };
+    if (driver.eStatus === 'Deleted')
+      return { login_status: LoginStatus.DELETED };
+    if (driver.eStatus === 'inactive' || driver.eStatus === 'Suspend')
+      return { login_status: LoginStatus.INACTIVE };
 
     await this.logMemberLogin(driver.iDriverId, 'Driver');
 
@@ -148,10 +152,16 @@ export class AuthService {
       return { login_status: LoginStatus.INVALID_CREDENTIALS };
     }
 
-    if (company.eStatus === 'Deleted') return { login_status: LoginStatus.DELETED };
-    if (company.eStatus === 'Inactive') return { login_status: LoginStatus.INACTIVE };
+    if (company.eStatus === 'Deleted')
+      return { login_status: LoginStatus.DELETED };
+    if (company.eStatus === 'Inactive')
+      return { login_status: LoginStatus.INACTIVE };
 
-    const token = this.generateToken(company.iCompanyId, company.vEmail, 'company');
+    const token = this.generateToken(
+      company.iCompanyId,
+      company.vEmail,
+      'company',
+    );
     return {
       login_status: LoginStatus.SUCCESS,
       token,
@@ -180,7 +190,8 @@ export class AuthService {
     const isValid = await bcrypt.compare(dto.password, admin.vPassword);
     if (!isValid) return { login_status: LoginStatus.INVALID_CREDENTIALS };
 
-    if (admin.eStatus !== 'Active') return { login_status: LoginStatus.INACTIVE };
+    if (admin.eStatus !== 'Active')
+      return { login_status: LoginStatus.INACTIVE };
 
     const token = this.generateToken(admin.iAdminId, admin.vEmail, 'hotel');
     return {
@@ -199,7 +210,10 @@ export class AuthService {
 
   // ─── Vérification téléphone ──────────────────────────────────────────────────
 
-  async checkPhone(phone: string, userType: 'rider' | 'driver'): Promise<{ exists: boolean }> {
+  async checkPhone(
+    phone: string,
+    userType: 'rider' | 'driver',
+  ): Promise<{ exists: boolean }> {
     if (userType === 'rider') {
       const user = await this.userRepo.findOneBy({ vPhone: phone } as any);
       return { exists: !!user };
@@ -211,7 +225,11 @@ export class AuthService {
 
   // ─── Helpers ─────────────────────────────────────────────────────────────────
 
-  private generateToken(id: number, email: string, userType: 'rider' | 'driver' | 'company' | 'hotel') {
+  private generateToken(
+    id: number,
+    email: string,
+    userType: 'rider' | 'driver' | 'company' | 'hotel',
+  ) {
     return this.jwtService.sign({ sub: id, email, userType });
   }
 

@@ -1,11 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { UserPaymentInfoService } from './user-payment-info.service';
 import { CreateUserPaymentInfoDto } from './dto/create-user-payment-info.dto';
 import { UpdateUserPaymentInfoDto } from './dto/update-user-payment-info.dto';
 
 @Controller('user-payment-info')
 export class UserPaymentInfoController {
-  constructor(private readonly userPaymentInfoService: UserPaymentInfoService) {}
+  constructor(
+    private readonly userPaymentInfoService: UserPaymentInfoService,
+  ) {}
 
   @Post()
   create(@Body() createUserPaymentInfoDto: CreateUserPaymentInfoDto) {
@@ -23,7 +33,10 @@ export class UserPaymentInfoController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserPaymentInfoDto: UpdateUserPaymentInfoDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateUserPaymentInfoDto: UpdateUserPaymentInfoDto,
+  ) {
     return this.userPaymentInfoService.update(+id, updateUserPaymentInfoDto);
   }
 

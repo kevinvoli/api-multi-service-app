@@ -38,7 +38,9 @@ describe('WithdrawRequestsController', () => {
       ],
     }).compile();
 
-    controller = module.get<WithdrawRequestsController>(WithdrawRequestsController);
+    controller = module.get<WithdrawRequestsController>(
+      WithdrawRequestsController,
+    );
   });
 
   it('should be defined', () => {

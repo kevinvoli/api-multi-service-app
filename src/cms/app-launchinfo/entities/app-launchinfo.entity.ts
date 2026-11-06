@@ -1,36 +1,36 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity("app_launch_info", { schema: "amygo1" })
+@Entity('app_launch_info', { schema: 'amygo1' })
 export class AppLaunchInfo {
-  @PrimaryGeneratedColumn({ type: "int", name: "iImageId" })
+  @PrimaryGeneratedColumn({ type: 'int', name: 'iImageId' })
   iImageId: number;
 
-  @Column("text", { name: "tTitle" })
+  @Column('text', { name: 'tTitle' })
   tTitle: string;
 
-  @Column("text", { name: "tSubtitle" })
+  @Column('text', { name: 'tSubtitle' })
   tSubtitle: string;
 
-  @Column("text", { name: "vImage" })
+  @Column('text', { name: 'vImage' })
   vImage: string;
 
-  @Column("enum", {
-    name: "eStatus",
+  @Column('enum', {
+    name: 'eStatus',
     nullable: true,
-    enum: ["Active", "Inactive"],
+    enum: ['Active', 'Inactive'],
     default: () => "'Active'",
   })
-  eStatus: "Active" | "Inactive" | null;
+  eStatus: 'Active' | 'Inactive' | null;
 
-  @Column("int", { name: "iDisplayOrder" })
+  @Column('int', { name: 'iDisplayOrder' })
   iDisplayOrder: number;
 
-  @Column("enum", {
-    name: "eUserType",
-    enum: ["General", "Driver", "Company", "Passenger"],
+  @Column('enum', {
+    name: 'eUserType',
+    enum: ['General', 'Driver', 'Company', 'Passenger'],
   })
-  eUserType: "General" | "Driver" | "Company" | "Passenger";
+  eUserType: 'General' | 'Driver' | 'Company' | 'Passenger';
 
-  @Column("enum", { name: "eForSmartLogin", enum: ["No", "Yes"] })
-  eForSmartLogin: "No" | "Yes";
+  @Column('enum', { name: 'eForSmartLogin', enum: ['No', 'Yes'] })
+  eForSmartLogin: 'No' | 'Yes';
 }

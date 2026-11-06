@@ -1,15 +1,29 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { MasterVehicleCategoryService } from './master-vehicle-category.service';
 import { CreateMasterVehicleCategoryDto } from './dto/create-master-vehicle-category.dto';
 import { UpdateMasterVehicleCategoryDto } from './dto/update-master-vehicle-category.dto';
 
 @Controller('master-vehicle-category')
 export class MasterVehicleCategoryController {
-  constructor(private readonly masterVehicleCategoryService: MasterVehicleCategoryService) {}
+  constructor(
+    private readonly masterVehicleCategoryService: MasterVehicleCategoryService,
+  ) {}
 
   @Post()
-  create(@Body() createMasterVehicleCategoryDto: CreateMasterVehicleCategoryDto) {
-    return this.masterVehicleCategoryService.create(createMasterVehicleCategoryDto);
+  create(
+    @Body() createMasterVehicleCategoryDto: CreateMasterVehicleCategoryDto,
+  ) {
+    return this.masterVehicleCategoryService.create(
+      createMasterVehicleCategoryDto,
+    );
   }
 
   @Get()
@@ -23,8 +37,14 @@ export class MasterVehicleCategoryController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMasterVehicleCategoryDto: UpdateMasterVehicleCategoryDto) {
-    return this.masterVehicleCategoryService.update(+id, updateMasterVehicleCategoryDto);
+  update(
+    @Param('id') id: string,
+    @Body() updateMasterVehicleCategoryDto: UpdateMasterVehicleCategoryDto,
+  ) {
+    return this.masterVehicleCategoryService.update(
+      +id,
+      updateMasterVehicleCategoryDto,
+    );
   }
 
   @Delete(':id')

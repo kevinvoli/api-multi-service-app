@@ -38,7 +38,9 @@ describe('TripDeliveryFieldsController', () => {
       ],
     }).compile();
 
-    controller = module.get<TripDeliveryFieldsController>(TripDeliveryFieldsController);
+    controller = module.get<TripDeliveryFieldsController>(
+      TripDeliveryFieldsController,
+    );
   });
 
   it('should be defined', () => {

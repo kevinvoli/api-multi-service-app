@@ -1,11 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { PaymentModelUserLogService } from './payment-model-user-log.service';
 import { CreatePaymentModelUserLogDto } from './dto/create-payment-model-user-log.dto';
 import { UpdatePaymentModelUserLogDto } from './dto/update-payment-model-user-log.dto';
 
 @Controller('payment-model-user-log')
 export class PaymentModelUserLogController {
-  constructor(private readonly paymentModelUserLogService: PaymentModelUserLogService) {}
+  constructor(
+    private readonly paymentModelUserLogService: PaymentModelUserLogService,
+  ) {}
 
   @Post()
   create(@Body() createPaymentModelUserLogDto: CreatePaymentModelUserLogDto) {
@@ -23,8 +33,14 @@ export class PaymentModelUserLogController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePaymentModelUserLogDto: UpdatePaymentModelUserLogDto) {
-    return this.paymentModelUserLogService.update(+id, updatePaymentModelUserLogDto);
+  update(
+    @Param('id') id: string,
+    @Body() updatePaymentModelUserLogDto: UpdatePaymentModelUserLogDto,
+  ) {
+    return this.paymentModelUserLogService.update(
+      +id,
+      updatePaymentModelUserLogDto,
+    );
   }
 
   @Delete(':id')

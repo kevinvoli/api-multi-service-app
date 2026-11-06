@@ -27,7 +27,10 @@ export class MasterCurrencyService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateMasterCurrencyDto): Promise<MasterCurrency> {
+  async update(
+    id: number,
+    updateDto: UpdateMasterCurrencyDto,
+  ): Promise<MasterCurrency> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

@@ -12,7 +12,9 @@ export class LangConversionProcessService {
     private readonly repository: Repository<LangConversionProcess>,
   ) {}
 
-  async create(createDto: CreateLangConversionProcessDto): Promise<LangConversionProcess> {
+  async create(
+    createDto: CreateLangConversionProcessDto,
+  ): Promise<LangConversionProcess> {
     const entity = this.repository.create(createDto);
     return this.repository.save(entity);
   }
@@ -27,7 +29,10 @@ export class LangConversionProcessService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateLangConversionProcessDto): Promise<LangConversionProcess> {
+  async update(
+    id: number,
+    updateDto: UpdateLangConversionProcessDto,
+  ): Promise<LangConversionProcess> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

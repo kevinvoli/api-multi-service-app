@@ -12,7 +12,9 @@ export class RestrictedNegativeAreaService {
     private readonly repository: Repository<RestrictedNegativeArea>,
   ) {}
 
-  async create(createDto: CreateRestrictedNegativeAreaDto): Promise<RestrictedNegativeArea> {
+  async create(
+    createDto: CreateRestrictedNegativeAreaDto,
+  ): Promise<RestrictedNegativeArea> {
     const area = this.repository.create(createDto);
     return await this.repository.save(area);
   }
@@ -24,18 +26,25 @@ export class RestrictedNegativeAreaService {
   async findOne(id: number): Promise<RestrictedNegativeArea> {
     const area = await this.repository.findOneBy({ iRestrictedNegativeId: id });
     if (!area) {
-      throw new NotFoundException(`RestrictedNegativeArea with ID #${id} not found`);
+      throw new NotFoundException(
+        `RestrictedNegativeArea with ID #${id} not found`,
+      );
     }
     return area;
   }
 
-  async update(id: number, updateDto: UpdateRestrictedNegativeAreaDto): Promise<RestrictedNegativeArea> {
+  async update(
+    id: number,
+    updateDto: UpdateRestrictedNegativeAreaDto,
+  ): Promise<RestrictedNegativeArea> {
     const area = await this.repository.preload({
       iRestrictedNegativeId: id,
       ...updateDto,
     });
     if (!area) {
-      throw new NotFoundException(`RestrictedNegativeArea with ID #${id} not found`);
+      throw new NotFoundException(
+        `RestrictedNegativeArea with ID #${id} not found`,
+      );
     }
     return await this.repository.save(area);
   }

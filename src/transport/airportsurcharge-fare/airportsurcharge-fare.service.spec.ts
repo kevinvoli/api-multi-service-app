@@ -32,11 +32,16 @@ describe('AirportsurchargeFareService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         AirportsurchargeFareService,
-        { provide: getRepositoryToken(AirportsurchargeFare), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(AirportsurchargeFare),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    service = module.get<AirportsurchargeFareService>(AirportsurchargeFareService);
+    service = module.get<AirportsurchargeFareService>(
+      AirportsurchargeFareService,
+    );
   });
 
   it('should be defined', () => {

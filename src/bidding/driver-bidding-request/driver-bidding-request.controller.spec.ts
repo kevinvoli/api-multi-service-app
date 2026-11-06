@@ -34,11 +34,16 @@ describe('DriverBiddingRequestController', () => {
       controllers: [DriverBiddingRequestController],
       providers: [
         DriverBiddingRequestService,
-        { provide: getRepositoryToken(DriverBiddingRequest), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(DriverBiddingRequest),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    controller = module.get<DriverBiddingRequestController>(DriverBiddingRequestController);
+    controller = module.get<DriverBiddingRequestController>(
+      DriverBiddingRequestController,
+    );
   });
 
   it('should be defined', () => {

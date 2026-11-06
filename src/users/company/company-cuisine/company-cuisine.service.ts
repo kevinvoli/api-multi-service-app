@@ -27,7 +27,10 @@ export class CompanyCuisineService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateCompanyCuisineDto): Promise<CompanyCuisine> {
+  async update(
+    id: number,
+    updateDto: UpdateCompanyCuisineDto,
+  ): Promise<CompanyCuisine> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

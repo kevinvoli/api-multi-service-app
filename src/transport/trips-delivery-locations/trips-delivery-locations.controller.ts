@@ -1,15 +1,29 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { TripsDeliveryLocationsService } from './trips-delivery-locations.service';
 import { CreateTripsDeliveryLocationDto } from './dto/create-trips-delivery-location.dto';
 import { UpdateTripsDeliveryLocationDto } from './dto/update-trips-delivery-location.dto';
 
 @Controller('trips-delivery-locations')
 export class TripsDeliveryLocationsController {
-  constructor(private readonly tripsDeliveryLocationsService: TripsDeliveryLocationsService) {}
+  constructor(
+    private readonly tripsDeliveryLocationsService: TripsDeliveryLocationsService,
+  ) {}
 
   @Post()
-  create(@Body() createTripsDeliveryLocationDto: CreateTripsDeliveryLocationDto) {
-    return this.tripsDeliveryLocationsService.create(createTripsDeliveryLocationDto);
+  create(
+    @Body() createTripsDeliveryLocationDto: CreateTripsDeliveryLocationDto,
+  ) {
+    return this.tripsDeliveryLocationsService.create(
+      createTripsDeliveryLocationDto,
+    );
   }
 
   @Get()
@@ -23,8 +37,14 @@ export class TripsDeliveryLocationsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTripsDeliveryLocationDto: UpdateTripsDeliveryLocationDto) {
-    return this.tripsDeliveryLocationsService.update(+id, updateTripsDeliveryLocationDto);
+  update(
+    @Param('id') id: string,
+    @Body() updateTripsDeliveryLocationDto: UpdateTripsDeliveryLocationDto,
+  ) {
+    return this.tripsDeliveryLocationsService.update(
+      +id,
+      updateTripsDeliveryLocationDto,
+    );
   }
 
   @Delete(':id')

@@ -34,11 +34,16 @@ describe('PushnotificationLogController', () => {
       controllers: [PushnotificationLogController],
       providers: [
         PushnotificationLogService,
-        { provide: getRepositoryToken(PushnotificationLog), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(PushnotificationLog),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    controller = module.get<PushnotificationLogController>(PushnotificationLogController);
+    controller = module.get<PushnotificationLogController>(
+      PushnotificationLogController,
+    );
   });
 
   it('should be defined', () => {

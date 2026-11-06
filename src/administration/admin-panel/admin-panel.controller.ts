@@ -1,8 +1,15 @@
 import {
-  Controller, Get, Post, Patch, Delete, Body, Param, Query, ParseIntPipe,
+  Controller,
+  Get,
+  Post,
+  Patch,
+  Delete,
+  Body,
+  Param,
+  Query,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { AdminPanelService } from './admin-panel.service';
-
 
 @Controller('admin')
 export class AdminPanelController {
@@ -155,7 +162,8 @@ export class AdminPanelController {
   /** POST /admin/admins */
   @Post('admins')
   createAdmin(
-    @Body() body: {
+    @Body()
+    body: {
       vFirstName: string;
       vLastName: string;
       vEmail: string;

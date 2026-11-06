@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Query,
+} from '@nestjs/common';
 import { CabBookingService } from './cab-booking.service';
 import { CreateCabBookingDto } from './dto/create-cab-booking.dto';
 import { UpdateCabBookingDto } from './dto/update-cab-booking.dto';
@@ -41,7 +50,10 @@ export class CabBookingController {
 
   /** PATCH /bookings/:id/cancel — Annuler une réservation */
   @Patch(':id/cancel')
-  cancel(@Param('id') id: string, @Body('cancelBy') cancelBy: 'Driver' | 'Rider' | 'Admin') {
+  cancel(
+    @Param('id') id: string,
+    @Body('cancelBy') cancelBy: 'Driver' | 'Rider' | 'Admin',
+  ) {
     return this.cabBookingService.cancel(+id, cancelBy || 'Admin');
   }
 

@@ -1,11 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { RequestPostDataService } from './request-post-data.service';
 import { CreateRequestPostDatumDto } from './dto/create-request-post-datum.dto';
 import { UpdateRequestPostDatumDto } from './dto/update-request-post-datum.dto';
 
 @Controller('request-post-data')
 export class RequestPostDataController {
-  constructor(private readonly requestPostDataService: RequestPostDataService) {}
+  constructor(
+    private readonly requestPostDataService: RequestPostDataService,
+  ) {}
 
   @Post()
   create(@Body() createRequestPostDatumDto: CreateRequestPostDatumDto) {
@@ -23,7 +33,10 @@ export class RequestPostDataController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateRequestPostDatumDto: UpdateRequestPostDatumDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateRequestPostDatumDto: UpdateRequestPostDatumDto,
+  ) {
     return this.requestPostDataService.update(+id, updateRequestPostDatumDto);
   }
 

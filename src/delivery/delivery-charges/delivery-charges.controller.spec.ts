@@ -38,7 +38,9 @@ describe('DeliveryChargesController', () => {
       ],
     }).compile();
 
-    controller = module.get<DeliveryChargesController>(DeliveryChargesController);
+    controller = module.get<DeliveryChargesController>(
+      DeliveryChargesController,
+    );
   });
 
   it('should be defined', () => {

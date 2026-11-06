@@ -34,11 +34,16 @@ describe('MenuItemOptionsCategoryController', () => {
       controllers: [MenuItemOptionsCategoryController],
       providers: [
         MenuItemOptionsCategoryService,
-        { provide: getRepositoryToken(MenuitemOptionsCategory), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(MenuitemOptionsCategory),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    controller = module.get<MenuItemOptionsCategoryController>(MenuItemOptionsCategoryController);
+    controller = module.get<MenuItemOptionsCategoryController>(
+      MenuItemOptionsCategoryController,
+    );
   });
 
   it('should be defined', () => {

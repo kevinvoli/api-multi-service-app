@@ -34,11 +34,16 @@ describe('RestrictedNegativeAreaController', () => {
       controllers: [RestrictedNegativeAreaController],
       providers: [
         RestrictedNegativeAreaService,
-        { provide: getRepositoryToken(RestrictedNegativeArea), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(RestrictedNegativeArea),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    controller = module.get<RestrictedNegativeAreaController>(RestrictedNegativeAreaController);
+    controller = module.get<RestrictedNegativeAreaController>(
+      RestrictedNegativeAreaController,
+    );
   });
 
   it('should be defined', () => {

@@ -12,7 +12,9 @@ export class ContentCubexDetailsService {
     private readonly repository: Repository<ContentCubexDetails>,
   ) {}
 
-  async create(createDto: CreateContentCubexDetailDto): Promise<ContentCubexDetails> {
+  async create(
+    createDto: CreateContentCubexDetailDto,
+  ): Promise<ContentCubexDetails> {
     const entity = this.repository.create(createDto);
     return this.repository.save(entity);
   }
@@ -27,7 +29,10 @@ export class ContentCubexDetailsService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateContentCubexDetailDto): Promise<ContentCubexDetails> {
+  async update(
+    id: number,
+    updateDto: UpdateContentCubexDetailDto,
+  ): Promise<ContentCubexDetails> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

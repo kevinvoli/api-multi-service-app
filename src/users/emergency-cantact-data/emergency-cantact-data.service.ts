@@ -12,7 +12,9 @@ export class EmergencyCantactDataService {
     private readonly repository: Repository<EmergencyContactData>,
   ) {}
 
-  async create(createDto: CreateEmergencyCantactDatumDto): Promise<EmergencyContactData> {
+  async create(
+    createDto: CreateEmergencyCantactDatumDto,
+  ): Promise<EmergencyContactData> {
     const entity = this.repository.create(createDto);
     return this.repository.save(entity);
   }
@@ -22,12 +24,17 @@ export class EmergencyCantactDataService {
   }
 
   async findOne(id: number): Promise<EmergencyContactData> {
-    const entity = await this.repository.findOneBy({ iEmergencyContactId: id } as any);
+    const entity = await this.repository.findOneBy({
+      iEmergencyContactId: id,
+    } as any);
     if (!entity) throw new NotFoundException(`Record #${id} not found`);
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateEmergencyCantactDatumDto): Promise<EmergencyContactData> {
+  async update(
+    id: number,
+    updateDto: UpdateEmergencyCantactDatumDto,
+  ): Promise<EmergencyContactData> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

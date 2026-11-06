@@ -1,4 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  HttpCode,
+  HttpStatus,
+} from '@nestjs/common';
 import { StoresService } from './stores.service';
 import { Store } from './entities/store.entity';
 import { StoreCategory } from './entities/store-category.entity';
@@ -49,7 +59,9 @@ export class StoresController {
   @Post()
   @HttpCode(HttpStatus.CREATED)
   async createStore(@Body() createStoreDto: CreateStoreDto): Promise<Store> {
-    const category = await this.storesService.findOneStoreCategory(createStoreDto.categoryId);
+    const category = await this.storesService.findOneStoreCategory(
+      createStoreDto.categoryId,
+    );
     return this.storesService.createStore({ ...createStoreDto, category });
   }
 
@@ -64,8 +76,13 @@ export class StoresController {
   }
 
   @Patch(':id')
-  async updateStore(@Param('id') id: string, @Body() updateStoreDto: UpdateStoreDto): Promise<Store> {
-    const category = updateStoreDto.categoryId ? await this.storesService.findOneStoreCategory(updateStoreDto.categoryId) : undefined;
+  async updateStore(
+    @Param('id') id: string,
+    @Body() updateStoreDto: UpdateStoreDto,
+  ): Promise<Store> {
+    const category = updateStoreDto.categoryId
+      ? await this.storesService.findOneStoreCategory(updateStoreDto.categoryId)
+      : undefined;
     return this.storesService.updateStore(+id, { ...updateStoreDto, category });
   }
 
@@ -78,7 +95,9 @@ export class StoresController {
   // Store Category Endpoints
   @Post('categories')
   @HttpCode(HttpStatus.CREATED)
-  createStoreCategory(@Body() createStoreCategoryDto: CreateStoreCategoryDto): Promise<StoreCategory> {
+  createStoreCategory(
+    @Body() createStoreCategoryDto: CreateStoreCategoryDto,
+  ): Promise<StoreCategory> {
     return this.storesService.createStoreCategory(createStoreCategoryDto);
   }
 
@@ -93,7 +112,10 @@ export class StoresController {
   }
 
   @Patch('categories/:id')
-  updateStoreCategory(@Param('id') id: string, @Body() updateStoreCategoryDto: UpdateStoreCategoryDto): Promise<StoreCategory> {
+  updateStoreCategory(
+    @Param('id') id: string,
+    @Body() updateStoreCategoryDto: UpdateStoreCategoryDto,
+  ): Promise<StoreCategory> {
     return this.storesService.updateStoreCategory(+id, updateStoreCategoryDto);
   }
 

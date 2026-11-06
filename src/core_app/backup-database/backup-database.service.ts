@@ -27,7 +27,10 @@ export class BackupDatabaseService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateBackupDatabaseDto): Promise<BackupDatabase> {
+  async update(
+    id: number,
+    updateDto: UpdateBackupDatabaseDto,
+  ): Promise<BackupDatabase> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

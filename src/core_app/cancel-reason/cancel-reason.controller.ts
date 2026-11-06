@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { CancelReasonService } from './cancel-reason.service';
 import { CreateCancelReasonDto } from './dto/create-cancel-reason.dto';
 import { UpdateCancelReasonDto } from './dto/update-cancel-reason.dto';
@@ -23,7 +31,10 @@ export class CancelReasonController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCancelReasonDto: UpdateCancelReasonDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateCancelReasonDto: UpdateCancelReasonDto,
+  ) {
     return this.cancelReasonService.update(+id, updateCancelReasonDto);
   }
 

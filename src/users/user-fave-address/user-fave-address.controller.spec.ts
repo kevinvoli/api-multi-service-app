@@ -38,7 +38,9 @@ describe('UserFaveAddressController', () => {
       ],
     }).compile();
 
-    controller = module.get<UserFaveAddressController>(UserFaveAddressController);
+    controller = module.get<UserFaveAddressController>(
+      UserFaveAddressController,
+    );
   });
 
   it('should be defined', () => {

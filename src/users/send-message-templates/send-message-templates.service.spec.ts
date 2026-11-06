@@ -32,11 +32,16 @@ describe('SendMessageTemplatesService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         SendMessageTemplatesService,
-        { provide: getRepositoryToken(SendMessageTemplates), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(SendMessageTemplates),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    service = module.get<SendMessageTemplatesService>(SendMessageTemplatesService);
+    service = module.get<SendMessageTemplatesService>(
+      SendMessageTemplatesService,
+    );
   });
 
   it('should be defined', () => {

@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { IntentionsService } from './intentions.service';
 import { CreateIntentionDto } from './dto/create-intention.dto';
 import { UpdateIntentionDto } from './dto/update-intention.dto';
@@ -23,7 +31,10 @@ export class IntentionsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateIntentionDto: UpdateIntentionDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateIntentionDto: UpdateIntentionDto,
+  ) {
     return this.intentionsService.update(+id, updateIntentionDto);
   }
 

@@ -38,7 +38,9 @@ describe('DriverUserMessagesController', () => {
       ],
     }).compile();
 
-    controller = module.get<DriverUserMessagesController>(DriverUserMessagesController);
+    controller = module.get<DriverUserMessagesController>(
+      DriverUserMessagesController,
+    );
   });
 
   it('should be defined', () => {

@@ -38,7 +38,9 @@ describe('BiddingPostMediaController', () => {
       ],
     }).compile();
 
-    controller = module.get<BiddingPostMediaController>(BiddingPostMediaController);
+    controller = module.get<BiddingPostMediaController>(
+      BiddingPostMediaController,
+    );
   });
 
   it('should be defined', () => {

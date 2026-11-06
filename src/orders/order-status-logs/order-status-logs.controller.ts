@@ -1,11 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { OrderStatusLogsService } from './order-status-logs.service';
 import { CreateOrderStatusLogDto } from './dto/create-order-status-log.dto';
 import { UpdateOrderStatusLogDto } from './dto/update-order-status-log.dto';
 
 @Controller('order-status-logs')
 export class OrderStatusLogsController {
-  constructor(private readonly orderStatusLogsService: OrderStatusLogsService) {}
+  constructor(
+    private readonly orderStatusLogsService: OrderStatusLogsService,
+  ) {}
 
   @Post()
   create(@Body() createOrderStatusLogDto: CreateOrderStatusLogDto) {
@@ -23,7 +33,10 @@ export class OrderStatusLogsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateOrderStatusLogDto: UpdateOrderStatusLogDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateOrderStatusLogDto: UpdateOrderStatusLogDto,
+  ) {
     return this.orderStatusLogsService.update(+id, updateOrderStatusLogDto);
   }
 

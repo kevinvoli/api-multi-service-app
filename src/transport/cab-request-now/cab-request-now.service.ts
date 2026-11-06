@@ -22,12 +22,17 @@ export class CabRequestNowService {
   }
 
   async findOne(id: number): Promise<CabRequestNow> {
-    const entity = await this.repository.findOneBy({ iCabRequestId: id } as any);
+    const entity = await this.repository.findOneBy({
+      iCabRequestId: id,
+    } as any);
     if (!entity) throw new NotFoundException(`Record #${id} not found`);
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateCabRequestNowDto): Promise<CabRequestNow> {
+  async update(
+    id: number,
+    updateDto: UpdateCabRequestNowDto,
+  ): Promise<CabRequestNow> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

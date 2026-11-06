@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { MaskingNumbersService } from './masking-numbers.service';
 import { CreateMaskingNumberDto } from './dto/create-masking-number.dto';
 import { UpdateMaskingNumberDto } from './dto/update-masking-number.dto';
@@ -23,7 +31,10 @@ export class MaskingNumbersController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMaskingNumberDto: UpdateMaskingNumberDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateMaskingNumberDto: UpdateMaskingNumberDto,
+  ) {
     return this.maskingNumbersService.update(+id, updateMaskingNumberDto);
   }
 

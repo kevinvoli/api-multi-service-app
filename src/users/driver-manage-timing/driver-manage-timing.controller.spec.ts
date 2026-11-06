@@ -38,7 +38,9 @@ describe('DriverManageTimingController', () => {
       ],
     }).compile();
 
-    controller = module.get<DriverManageTimingController>(DriverManageTimingController);
+    controller = module.get<DriverManageTimingController>(
+      DriverManageTimingController,
+    );
   });
 
   it('should be defined', () => {

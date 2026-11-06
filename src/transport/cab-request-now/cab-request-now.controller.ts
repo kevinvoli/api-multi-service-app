@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { CabRequestNowService } from './cab-request-now.service';
 import { CreateCabRequestNowDto } from './dto/create-cab-request-now.dto';
 import { UpdateCabRequestNowDto } from './dto/update-cab-request-now.dto';
@@ -23,7 +31,10 @@ export class CabRequestNowController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCabRequestNowDto: UpdateCabRequestNowDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateCabRequestNowDto: UpdateCabRequestNowDto,
+  ) {
     return this.cabRequestNowService.update(+id, updateCabRequestNowDto);
   }
 

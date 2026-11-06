@@ -1,170 +1,170 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity("sms_templates", { schema: "amygo1" })
+@Entity('sms_templates', { schema: 'amygo1' })
 export class SmsTemplates {
-  @PrimaryGeneratedColumn({ type: "int", name: "iSMSId" })
+  @PrimaryGeneratedColumn({ type: 'int', name: 'iSMSId' })
   iSmsId: number;
 
-  @Column("varchar", { name: "vSMS_Code", nullable: true, length: 500 })
+  @Column('varchar', { name: 'vSMS_Code', nullable: true, length: 500 })
   vSmsCode: string | null;
 
-  @Column("enum", {
-    name: "eStatus",
-    enum: ["Active", "Inactive"],
+  @Column('enum', {
+    name: 'eStatus',
+    enum: ['Active', 'Inactive'],
     default: () => "'Active'",
   })
-  eStatus: "Active" | "Inactive";
+  eStatus: 'Active' | 'Inactive';
 
-  @Column("text", { name: "vBody_DN", nullable: true })
+  @Column('text', { name: 'vBody_DN', nullable: true })
   vBodyDn: string | null;
 
-  @Column("text", { name: "vBody_EN", nullable: true })
+  @Column('text', { name: 'vBody_EN', nullable: true })
   vBodyEn: string | null;
 
-  @Column("text", { name: "vBody_DA" })
+  @Column('text', { name: 'vBody_DA' })
   vBodyDa: string;
 
-  @Column("text", { name: "vBody_FR" })
+  @Column('text', { name: 'vBody_FR' })
   vBodyFr: string;
 
-  @Column("text", { name: "vBody_IW" })
+  @Column('text', { name: 'vBody_IW' })
   vBodyIw: string;
 
-  @Column("text", { name: "vBody_HI" })
+  @Column('text', { name: 'vBody_HI' })
   vBodyHi: string;
 
-  @Column("text", { name: "vBody_MY" })
+  @Column('text', { name: 'vBody_MY' })
   vBodyMy: string;
 
-  @Column("text", { name: "vBody_FA" })
+  @Column('text', { name: 'vBody_FA' })
   vBodyFa: string;
 
-  @Column("text", { name: "vBody_RU" })
+  @Column('text', { name: 'vBody_RU' })
   vBodyRu: string;
 
-  @Column("text", { name: "vBody_TR" })
+  @Column('text', { name: 'vBody_TR' })
   vBodyTr: string;
 
-  @Column("text", { name: "vBody_YO" })
+  @Column('text', { name: 'vBody_YO' })
   vBodyYo: string;
 
-  @Column("text", { name: "vBody_KO" })
+  @Column('text', { name: 'vBody_KO' })
   vBodyKo: string;
 
-  @Column("text", { name: "vBody_JA" })
+  @Column('text', { name: 'vBody_JA' })
   vBodyJa: string;
 
-  @Column("text", { name: "vBody_MS" })
+  @Column('text', { name: 'vBody_MS' })
   vBodyMs: string;
 
-  @Column("text", { name: "vBody_KU" })
+  @Column('text', { name: 'vBody_KU' })
   vBodyKu: string;
 
-  @Column("text", { name: "vBody_ZU" })
+  @Column('text', { name: 'vBody_ZU' })
   vBodyZu: string;
 
-  @Column("text", { name: "vBody_ID" })
+  @Column('text', { name: 'vBody_ID' })
   vBodyId: string;
 
-  @Column("text", { name: "vBody_AF" })
+  @Column('text', { name: 'vBody_AF' })
   vBodyAf: string;
 
-  @Column("text", { name: "vBody_EE", nullable: true })
+  @Column('text', { name: 'vBody_EE', nullable: true })
   vBodyEe: string | null;
 
-  @Column("text", { name: "vBody_FI", nullable: true })
+  @Column('text', { name: 'vBody_FI', nullable: true })
   vBodyFi: string | null;
 
-  @Column("text", { name: "vBody_FN", nullable: true })
+  @Column('text', { name: 'vBody_FN', nullable: true })
   vBodyFn: string | null;
 
-  @Column("text", { name: "vBody_DE", nullable: true })
+  @Column('text', { name: 'vBody_DE', nullable: true })
   vBodyDe: string | null;
 
-  @Column("text", { name: "vBody_LV", nullable: true })
+  @Column('text', { name: 'vBody_LV', nullable: true })
   vBodyLv: string | null;
 
-  @Column("text", { name: "vBody_LT", nullable: true })
+  @Column('text', { name: 'vBody_LT', nullable: true })
   vBodyLt: string | null;
 
-  @Column("text", { name: "vBody_NO", nullable: true })
+  @Column('text', { name: 'vBody_NO', nullable: true })
   vBodyNo: string | null;
 
-  @Column("text", { name: "vBody_PO", nullable: true })
+  @Column('text', { name: 'vBody_PO', nullable: true })
   vBodyPo: string | null;
 
-  @Column("text", { name: "vBody_RS", nullable: true })
+  @Column('text', { name: 'vBody_RS', nullable: true })
   vBodyRs: string | null;
 
-  @Column("text", { name: "vBody_ES", nullable: true })
+  @Column('text', { name: 'vBody_ES', nullable: true })
   vBodyEs: string | null;
 
-  @Column("text", { name: "vBody_SW", nullable: true })
+  @Column('text', { name: 'vBody_SW', nullable: true })
   vBodySw: string | null;
 
-  @Column("text", { name: "vBody_IT" })
+  @Column('text', { name: 'vBody_IT' })
   vBodyIt: string;
 
-  @Column("text", { name: "vBody_AR" })
+  @Column('text', { name: 'vBody_AR' })
   vBodyAr: string;
 
-  @Column("text", { name: "vBody_PS" })
+  @Column('text', { name: 'vBody_PS' })
   vBodyPs: string;
 
-  @Column("text", { name: "vBody_NL" })
+  @Column('text', { name: 'vBody_NL' })
   vBodyNl: string;
 
-  @Column("text", { name: "vBody_AZ" })
+  @Column('text', { name: 'vBody_AZ' })
   vBodyAz: string;
 
-  @Column("text", { name: "vBody_BG" })
+  @Column('text', { name: 'vBody_BG' })
   vBodyBg: string;
 
-  @Column("text", { name: "vBody_ZH" })
+  @Column('text', { name: 'vBody_ZH' })
   vBodyZh: string;
 
-  @Column("text", { name: "vBody_HR" })
+  @Column('text', { name: 'vBody_HR' })
   vBodyHr: string;
 
-  @Column("text", { name: "vBody_CS" })
+  @Column('text', { name: 'vBody_CS' })
   vBodyCs: string;
 
-  @Column("text", { name: "vBody_HU" })
+  @Column('text', { name: 'vBody_HU' })
   vBodyHu: string;
 
-  @Column("text", { name: "vBody_TS" })
+  @Column('text', { name: 'vBody_TS' })
   vBodyTs: string;
 
-  @Column("text", { name: "vBody_HW" })
+  @Column('text', { name: 'vBody_HW' })
   vBodyHw: string;
 
-  @Column("text", { name: "vBody_EL" })
+  @Column('text', { name: 'vBody_EL' })
   vBodyEl: string;
 
-  @Column("text", { name: "vBody_TH" })
+  @Column('text', { name: 'vBody_TH' })
   vBodyTh: string;
 
-  @Column("text", { name: "vBody_UR" })
+  @Column('text', { name: 'vBody_UR' })
   vBodyUr: string;
 
-  @Column("varchar", { name: "vBody_PT", length: 255 })
+  @Column('varchar', { name: 'vBody_PT', length: 255 })
   vBodyPt: string;
 
-  @Column("text", { name: "vBody_SI" })
+  @Column('text', { name: 'vBody_SI' })
   vBodySi: string;
 
-  @Column("text", { name: "vBody_TA" })
+  @Column('text', { name: 'vBody_TA' })
   vBodyTa: string;
 
-  @Column("text", { name: "vBody_VI" })
+  @Column('text', { name: 'vBody_VI' })
   vBodyVi: string;
 
-  @Column("text", { name: "vBody_TL" })
+  @Column('text', { name: 'vBody_TL' })
   vBodyTl: string;
 
-  @Column("text", { name: "vBody_KM" })
+  @Column('text', { name: 'vBody_KM' })
   vBodyKm: string;
 
-  @Column("text", { name: "vBody_BN" })
+  @Column('text', { name: 'vBody_BN' })
   vBodyBn: string;
 }

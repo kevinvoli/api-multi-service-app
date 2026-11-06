@@ -27,7 +27,11 @@ function makeRepo(overrides: any = {}) {
     findOne: jest.fn().mockResolvedValue(null),
     findOneBy: jest.fn().mockResolvedValue(null),
     create: jest.fn().mockReturnValue({}),
-    save: jest.fn().mockImplementation((e) => Promise.resolve({ iAdminId: 99, vEmail: 'new@test.com', ...e })),
+    save: jest
+      .fn()
+      .mockImplementation((e) =>
+        Promise.resolve({ iAdminId: 99, vEmail: 'new@test.com', ...e }),
+      ),
     update: jest.fn().mockResolvedValue({ affected: 1 }),
     delete: jest.fn().mockResolvedValue({ affected: 1 }),
     createQueryBuilder: jest.fn().mockReturnValue({
@@ -82,7 +86,10 @@ describe('AdminPanelService', () => {
         { provide: getRepositoryToken(DocumentList), useValue: documentRepo },
         { provide: getRepositoryToken(UserWallet), useValue: walletRepo },
         { provide: getRepositoryToken(Coupon), useValue: couponRepo },
-        { provide: getRepositoryToken(RatingsUserDriver), useValue: makeRepo() },
+        {
+          provide: getRepositoryToken(RatingsUserDriver),
+          useValue: makeRepo(),
+        },
         { provide: getRepositoryToken(Hotel), useValue: makeRepo() },
         { provide: getRepositoryToken(Organization), useValue: makeRepo() },
         { provide: getRepositoryToken(Contactus), useValue: makeRepo() },
@@ -123,7 +130,9 @@ describe('AdminPanelService', () => {
 
   describe('listRiders', () => {
     it('retourne la pagination', async () => {
-      const mockRiders = [{ iUserId: 1, vName: 'Jean', vEmail: 'jean@test.com' }];
+      const mockRiders = [
+        { iUserId: 1, vName: 'Jean', vEmail: 'jean@test.com' },
+      ];
       const qb = {
         select: jest.fn().mockReturnThis(),
         andWhere: jest.fn().mockReturnThis(),
@@ -151,9 +160,11 @@ describe('AdminPanelService', () => {
       expect(result.status).toBe('Inactive');
     });
 
-    it('leve NotFoundException si le rider n\'existe pas', async () => {
+    it("leve NotFoundException si le rider n'existe pas", async () => {
       userRepo.update.mockResolvedValue({ affected: 0 });
-      await expect(service.updateRiderStatus(999, 'Deleted')).rejects.toThrow(NotFoundException);
+      await expect(service.updateRiderStatus(999, 'Deleted')).rejects.toThrow(
+        NotFoundException,
+      );
     });
   });
 
@@ -166,9 +177,11 @@ describe('AdminPanelService', () => {
       expect(result.updated).toBe(true);
     });
 
-    it('leve NotFoundException si le driver n\'existe pas', async () => {
+    it("leve NotFoundException si le driver n'existe pas", async () => {
       driverRepo.update.mockResolvedValue({ affected: 0 });
-      await expect(service.updateDriverStatus(999, 'Suspend')).rejects.toThrow(NotFoundException);
+      await expect(service.updateDriverStatus(999, 'Suspend')).rejects.toThrow(
+        NotFoundException,
+      );
     });
   });
 
@@ -176,7 +189,10 @@ describe('AdminPanelService', () => {
 
   describe('createAdmin', () => {
     it('cree un administrateur avec mot de passe hache (bcrypt)', async () => {
-      adminRepo.save.mockResolvedValue({ iAdminId: 5, vEmail: 'newadmin@test.com' });
+      adminRepo.save.mockResolvedValue({
+        iAdminId: 5,
+        vEmail: 'newadmin@test.com',
+      });
 
       const result = await service.createAdmin({
         vFirstName: 'Super',
@@ -207,7 +223,9 @@ describe('AdminPanelService', () => {
 
     it('leve NotFoundException si commande introuvable', async () => {
       orderRepo.update.mockResolvedValue({ affected: 0 });
-      await expect(service.updateOrderStatus(999, 5)).rejects.toThrow(NotFoundException);
+      await expect(service.updateOrderStatus(999, 5)).rejects.toThrow(
+        NotFoundException,
+      );
     });
   });
 
@@ -215,14 +233,22 @@ describe('AdminPanelService', () => {
 
   describe('getRiderDetail', () => {
     it('retourne le profil complet du rider avec stats de trips', async () => {
-      const mockRider = { iUserId: 1, vName: 'Alice', vEmail: 'alice@x.com', eStatus: 'Active' };
+      const mockRider = {
+        iUserId: 1,
+        vName: 'Alice',
+        vEmail: 'alice@x.com',
+        eStatus: 'Active',
+      };
       const qb = {
         select: jest.fn().mockReturnThis(),
         where: jest.fn().mockReturnThis(),
         getOne: jest.fn().mockResolvedValue(mockRider),
       };
       userRepo.createQueryBuilder.mockReturnValue(qb);
-      tripRepo.count.mockResolvedValueOnce(10).mockResolvedValueOnce(8).mockResolvedValueOnce(1);
+      tripRepo.count
+        .mockResolvedValueOnce(10)
+        .mockResolvedValueOnce(8)
+        .mockResolvedValueOnce(1);
 
       const result = await service.getRiderDetail(1);
       expect(result.iUserId).toBe(1);
@@ -231,9 +257,15 @@ describe('AdminPanelService', () => {
     });
 
     it('leve NotFoundException si rider introuvable', async () => {
-      const qb = { select: jest.fn().mockReturnThis(), where: jest.fn().mockReturnThis(), getOne: jest.fn().mockResolvedValue(null) };
+      const qb = {
+        select: jest.fn().mockReturnThis(),
+        where: jest.fn().mockReturnThis(),
+        getOne: jest.fn().mockResolvedValue(null),
+      };
       userRepo.createQueryBuilder.mockReturnValue(qb);
-      await expect(service.getRiderDetail(999)).rejects.toThrow(NotFoundException);
+      await expect(service.getRiderDetail(999)).rejects.toThrow(
+        NotFoundException,
+      );
     });
   });
 
@@ -248,7 +280,10 @@ describe('AdminPanelService', () => {
         getOne: jest.fn().mockResolvedValue(mockDriver),
       };
       driverRepo.createQueryBuilder.mockReturnValue(driverQb);
-      tripRepo.count.mockResolvedValueOnce(15).mockResolvedValueOnce(12).mockResolvedValueOnce(2);
+      tripRepo.count
+        .mockResolvedValueOnce(15)
+        .mockResolvedValueOnce(12)
+        .mockResolvedValueOnce(2);
       const docQb = {
         where: jest.fn().mockReturnThis(),
         andWhere: jest.fn().mockReturnThis(),
@@ -282,7 +317,12 @@ describe('AdminPanelService', () => {
     });
 
     it('retourne found=false si aucun rider', async () => {
-      const qb = { select: jest.fn().mockReturnThis(), where: jest.fn().mockReturnThis(), andWhere: jest.fn().mockReturnThis(), getOne: jest.fn().mockResolvedValue(null) };
+      const qb = {
+        select: jest.fn().mockReturnThis(),
+        where: jest.fn().mockReturnThis(),
+        andWhere: jest.fn().mockReturnThis(),
+        getOne: jest.fn().mockResolvedValue(null),
+      };
       userRepo.createQueryBuilder.mockReturnValue(qb);
       const result = await service.searchRiderByPhone('0000000000');
       expect(result.found).toBe(false);
@@ -294,7 +334,11 @@ describe('AdminPanelService', () => {
   describe('assignDriverToBooking', () => {
     it('assigne le driver et retourne la reservation mise a jour', async () => {
       cabBookingRepo.update.mockResolvedValue({ affected: 1 });
-      cabBookingRepo.findOneBy.mockResolvedValue({ iCabBookingId: 10, iDriverId: 3, eStatus: 'Assign' });
+      cabBookingRepo.findOneBy.mockResolvedValue({
+        iCabBookingId: 10,
+        iDriverId: 3,
+        eStatus: 'Assign',
+      });
 
       const result = await service.assignDriverToBooking(10, 3);
       expect(result.success).toBe(true);
@@ -303,7 +347,9 @@ describe('AdminPanelService', () => {
 
     it('leve NotFoundException si reservation introuvable', async () => {
       cabBookingRepo.update.mockResolvedValue({ affected: 0 });
-      await expect(service.assignDriverToBooking(999, 1)).rejects.toThrow(NotFoundException);
+      await expect(service.assignDriverToBooking(999, 1)).rejects.toThrow(
+        NotFoundException,
+      );
     });
   });
 
@@ -314,7 +360,9 @@ describe('AdminPanelService', () => {
       const qb = {
         select: jest.fn().mockReturnThis(),
         where: jest.fn().mockReturnThis(),
-        getOne: jest.fn().mockResolvedValue({ iCouponId: 1, vCouponCode: 'PROMO10' }),
+        getOne: jest
+          .fn()
+          .mockResolvedValue({ iCouponId: 1, vCouponCode: 'PROMO10' }),
       };
       couponRepo.createQueryBuilder.mockReturnValue(qb);
       const result = await service.checkCouponCode('PROMO10');
@@ -322,7 +370,11 @@ describe('AdminPanelService', () => {
     });
 
     it('retourne exists=false si le code est inconnu', async () => {
-      const qb = { select: jest.fn().mockReturnThis(), where: jest.fn().mockReturnThis(), getOne: jest.fn().mockResolvedValue(null) };
+      const qb = {
+        select: jest.fn().mockReturnThis(),
+        where: jest.fn().mockReturnThis(),
+        getOne: jest.fn().mockResolvedValue(null),
+      };
       couponRepo.createQueryBuilder.mockReturnValue(qb);
       const result = await service.checkCouponCode('FAUX');
       expect(result.exists).toBe(false);

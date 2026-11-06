@@ -32,11 +32,16 @@ describe('FlyLocationWiseFareService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         FlyLocationWiseFareService,
-        { provide: getRepositoryToken(FlyLocationWiseFare), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(FlyLocationWiseFare),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    service = module.get<FlyLocationWiseFareService>(FlyLocationWiseFareService);
+    service = module.get<FlyLocationWiseFareService>(
+      FlyLocationWiseFareService,
+    );
   });
 
   it('should be defined', () => {

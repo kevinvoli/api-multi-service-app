@@ -32,11 +32,16 @@ describe('OdaCommoditiesLocationService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         OdaCommoditiesLocationService,
-        { provide: getRepositoryToken(OdaCommoditiesLocation), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(OdaCommoditiesLocation),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    service = module.get<OdaCommoditiesLocationService>(OdaCommoditiesLocationService);
+    service = module.get<OdaCommoditiesLocationService>(
+      OdaCommoditiesLocationService,
+    );
   });
 
   it('should be defined', () => {

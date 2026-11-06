@@ -32,11 +32,16 @@ describe('MenuItemOptionsCategoryService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         MenuItemOptionsCategoryService,
-        { provide: getRepositoryToken(MenuitemOptionsCategory), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(MenuitemOptionsCategory),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    service = module.get<MenuItemOptionsCategoryService>(MenuItemOptionsCategoryService);
+    service = module.get<MenuItemOptionsCategoryService>(
+      MenuItemOptionsCategoryService,
+    );
   });
 
   it('should be defined', () => {

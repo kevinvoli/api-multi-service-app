@@ -27,7 +27,10 @@ export class GopayOtpLogsService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateGopayOtpLogDto): Promise<GopayOtpLogs> {
+  async update(
+    id: number,
+    updateDto: UpdateGopayOtpLogDto,
+  ): Promise<GopayOtpLogs> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

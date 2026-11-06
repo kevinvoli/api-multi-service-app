@@ -1,15 +1,27 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { TempTripOrderDetailsService } from './temp-trip-order-details.service';
 import { CreateTempTripOrderDetailDto } from './dto/create-temp-trip-order-detail.dto';
 import { UpdateTempTripOrderDetailDto } from './dto/update-temp-trip-order-detail.dto';
 
 @Controller('temp-trip-order-details')
 export class TempTripOrderDetailsController {
-  constructor(private readonly tempTripOrderDetailsService: TempTripOrderDetailsService) {}
+  constructor(
+    private readonly tempTripOrderDetailsService: TempTripOrderDetailsService,
+  ) {}
 
   @Post()
   create(@Body() createTempTripOrderDetailDto: CreateTempTripOrderDetailDto) {
-    return this.tempTripOrderDetailsService.create(createTempTripOrderDetailDto);
+    return this.tempTripOrderDetailsService.create(
+      createTempTripOrderDetailDto,
+    );
   }
 
   @Get()
@@ -23,8 +35,14 @@ export class TempTripOrderDetailsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTempTripOrderDetailDto: UpdateTempTripOrderDetailDto) {
-    return this.tempTripOrderDetailsService.update(+id, updateTempTripOrderDetailDto);
+  update(
+    @Param('id') id: string,
+    @Body() updateTempTripOrderDetailDto: UpdateTempTripOrderDetailDto,
+  ) {
+    return this.tempTripOrderDetailsService.update(
+      +id,
+      updateTempTripOrderDetailDto,
+    );
   }
 
   @Delete(':id')

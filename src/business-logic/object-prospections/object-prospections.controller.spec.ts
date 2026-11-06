@@ -16,7 +16,9 @@ describe('ObjectProspectionsController', () => {
       ],
     }).compile();
 
-    controller = module.get<ObjectProspectionsController>(ObjectProspectionsController);
+    controller = module.get<ObjectProspectionsController>(
+      ObjectProspectionsController,
+    );
   });
 
   it('should be defined', () => {

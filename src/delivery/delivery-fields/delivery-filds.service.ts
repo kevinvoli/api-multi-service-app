@@ -22,12 +22,17 @@ export class DeliveryFildsService {
   }
 
   async findOne(id: number): Promise<DeliveryFields> {
-    const entity = await this.repository.findOneBy({ iDeliveryFieldId: id } as any);
+    const entity = await this.repository.findOneBy({
+      iDeliveryFieldId: id,
+    } as any);
     if (!entity) throw new NotFoundException(`Record #${id} not found`);
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateDeliveryFildDto): Promise<DeliveryFields> {
+  async update(
+    id: number,
+    updateDto: UpdateDeliveryFildDto,
+  ): Promise<DeliveryFields> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

@@ -29,7 +29,10 @@ export class CountryService {
     return country;
   }
 
-  async update(id: number, updateCountryDto: UpdateCountryDto): Promise<Country> {
+  async update(
+    id: number,
+    updateCountryDto: UpdateCountryDto,
+  ): Promise<Country> {
     const country = await this.countryRepository.preload({
       iCountryId: id,
       ...updateCountryDto,

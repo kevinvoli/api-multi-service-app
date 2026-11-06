@@ -12,7 +12,9 @@ export class CustomDeliveryChargesOrderService {
     private readonly repository: Repository<CustomDeliveryChargesOrder>,
   ) {}
 
-  async create(createDto: CreateCustomDeliveryChargesOrderDto): Promise<CustomDeliveryChargesOrder> {
+  async create(
+    createDto: CreateCustomDeliveryChargesOrderDto,
+  ): Promise<CustomDeliveryChargesOrder> {
     const entity = this.repository.create(createDto);
     return this.repository.save(entity);
   }
@@ -22,12 +24,17 @@ export class CustomDeliveryChargesOrderService {
   }
 
   async findOne(id: number): Promise<CustomDeliveryChargesOrder> {
-    const entity = await this.repository.findOneBy({ iDeliveyChargeId: id } as any);
+    const entity = await this.repository.findOneBy({
+      iDeliveyChargeId: id,
+    } as any);
     if (!entity) throw new NotFoundException(`Record #${id} not found`);
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateCustomDeliveryChargesOrderDto): Promise<CustomDeliveryChargesOrder> {
+  async update(
+    id: number,
+    updateDto: UpdateCustomDeliveryChargesOrderDto,
+  ): Promise<CustomDeliveryChargesOrder> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

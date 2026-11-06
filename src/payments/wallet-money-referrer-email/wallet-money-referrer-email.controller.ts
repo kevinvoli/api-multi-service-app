@@ -1,15 +1,30 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { WalletMoneyReferrerEmailService } from './wallet-money-referrer-email.service';
 import { CreateWalletMoneyReferrerEmailDto } from './dto/create-wallet-money-referrer-email.dto';
 import { UpdateWalletMoneyReferrerEmailDto } from './dto/update-wallet-money-referrer-email.dto';
 
 @Controller('wallet-money-referrer-email')
 export class WalletMoneyReferrerEmailController {
-  constructor(private readonly walletMoneyReferrerEmailService: WalletMoneyReferrerEmailService) {}
+  constructor(
+    private readonly walletMoneyReferrerEmailService: WalletMoneyReferrerEmailService,
+  ) {}
 
   @Post()
-  create(@Body() createWalletMoneyReferrerEmailDto: CreateWalletMoneyReferrerEmailDto) {
-    return this.walletMoneyReferrerEmailService.create(createWalletMoneyReferrerEmailDto);
+  create(
+    @Body()
+    createWalletMoneyReferrerEmailDto: CreateWalletMoneyReferrerEmailDto,
+  ) {
+    return this.walletMoneyReferrerEmailService.create(
+      createWalletMoneyReferrerEmailDto,
+    );
   }
 
   @Get()
@@ -23,8 +38,15 @@ export class WalletMoneyReferrerEmailController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateWalletMoneyReferrerEmailDto: UpdateWalletMoneyReferrerEmailDto) {
-    return this.walletMoneyReferrerEmailService.update(+id, updateWalletMoneyReferrerEmailDto);
+  update(
+    @Param('id') id: string,
+    @Body()
+    updateWalletMoneyReferrerEmailDto: UpdateWalletMoneyReferrerEmailDto,
+  ) {
+    return this.walletMoneyReferrerEmailService.update(
+      +id,
+      updateWalletMoneyReferrerEmailDto,
+    );
   }
 
   @Delete(':id')

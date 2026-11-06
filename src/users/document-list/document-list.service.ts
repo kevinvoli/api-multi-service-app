@@ -27,7 +27,10 @@ export class DocumentListService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateDocumentListDto): Promise<DocumentList> {
+  async update(
+    id: number,
+    updateDto: UpdateDocumentListDto,
+  ): Promise<DocumentList> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

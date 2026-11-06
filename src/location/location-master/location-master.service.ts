@@ -12,8 +12,12 @@ export class LocationMasterService {
     private readonly locationMasterRepository: Repository<LocationMaster>,
   ) {}
 
-  async create(createLocationMasterDto: CreateLocationMasterDto): Promise<LocationMaster> {
-    const locationMaster = this.locationMasterRepository.create(createLocationMasterDto);
+  async create(
+    createLocationMasterDto: CreateLocationMasterDto,
+  ): Promise<LocationMaster> {
+    const locationMaster = this.locationMasterRepository.create(
+      createLocationMasterDto,
+    );
     return await this.locationMasterRepository.save(locationMaster);
   }
 
@@ -22,14 +26,19 @@ export class LocationMasterService {
   }
 
   async findOne(id: number): Promise<LocationMaster> {
-    const locationMaster = await this.locationMasterRepository.findOneBy({ iLocationId: id });
+    const locationMaster = await this.locationMasterRepository.findOneBy({
+      iLocationId: id,
+    });
     if (!locationMaster) {
       throw new NotFoundException(`LocationMaster with ID #${id} not found`);
     }
     return locationMaster;
   }
 
-  async update(id: number, updateLocationMasterDto: UpdateLocationMasterDto): Promise<LocationMaster> {
+  async update(
+    id: number,
+    updateLocationMasterDto: UpdateLocationMasterDto,
+  ): Promise<LocationMaster> {
     const locationMaster = await this.locationMasterRepository.preload({
       iLocationId: id,
       ...updateLocationMasterDto,

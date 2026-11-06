@@ -12,7 +12,9 @@ export class DriverServicesVideoConsultChargesService {
     private readonly repository: Repository<DriverServicesVideoConsultCharges>,
   ) {}
 
-  async create(createDto: CreateDriverServicesVideoConsultChargeDto): Promise<DriverServicesVideoConsultCharges> {
+  async create(
+    createDto: CreateDriverServicesVideoConsultChargeDto,
+  ): Promise<DriverServicesVideoConsultCharges> {
     const entity = this.repository.create(createDto);
     return this.repository.save(entity);
   }
@@ -22,12 +24,17 @@ export class DriverServicesVideoConsultChargesService {
   }
 
   async findOne(id: number): Promise<DriverServicesVideoConsultCharges> {
-    const entity = await this.repository.findOneBy({ iDriverServiceId: id } as any);
+    const entity = await this.repository.findOneBy({
+      iDriverServiceId: id,
+    } as any);
     if (!entity) throw new NotFoundException(`Record #${id} not found`);
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateDriverServicesVideoConsultChargeDto): Promise<DriverServicesVideoConsultCharges> {
+  async update(
+    id: number,
+    updateDto: UpdateDriverServicesVideoConsultChargeDto,
+  ): Promise<DriverServicesVideoConsultCharges> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

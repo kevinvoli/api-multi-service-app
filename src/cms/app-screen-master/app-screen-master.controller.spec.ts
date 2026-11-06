@@ -38,7 +38,9 @@ describe('AppScreenMasterController', () => {
       ],
     }).compile();
 
-    controller = module.get<AppScreenMasterController>(AppScreenMasterController);
+    controller = module.get<AppScreenMasterController>(
+      AppScreenMasterController,
+    );
   });
 
   it('should be defined', () => {

@@ -38,7 +38,9 @@ describe('DriverLogReportController', () => {
       ],
     }).compile();
 
-    controller = module.get<DriverLogReportController>(DriverLogReportController);
+    controller = module.get<DriverLogReportController>(
+      DriverLogReportController,
+    );
   });
 
   it('should be defined', () => {

@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { DriverRewardService } from './driver-reward.service';
 import { CreateDriverRewardDto } from './dto/create-driver-reward.dto';
 import { UpdateDriverRewardDto } from './dto/update-driver-reward.dto';
@@ -23,7 +31,10 @@ export class DriverRewardController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDriverRewardDto: UpdateDriverRewardDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateDriverRewardDto: UpdateDriverRewardDto,
+  ) {
     return this.driverRewardService.update(+id, updateDriverRewardDto);
   }
 

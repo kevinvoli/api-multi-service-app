@@ -12,7 +12,9 @@ export class RequestDataDebugService {
     private readonly repository: Repository<RequestDataDebug>,
   ) {}
 
-  async create(createDto: CreateRequestDataDebugDto): Promise<RequestDataDebug> {
+  async create(
+    createDto: CreateRequestDataDebugDto,
+  ): Promise<RequestDataDebug> {
     const entity = this.repository.create(createDto);
     return this.repository.save(entity);
   }
@@ -27,7 +29,10 @@ export class RequestDataDebugService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateRequestDataDebugDto): Promise<RequestDataDebug> {
+  async update(
+    id: number,
+    updateDto: UpdateRequestDataDebugDto,
+  ): Promise<RequestDataDebug> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

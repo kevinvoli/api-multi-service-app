@@ -1,11 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { ObjectObjectifsService } from './object-objectifs.service';
 import { CreateObjectObjectifDto } from './dto/create-object-objectif.dto';
 import { UpdateObjectObjectifDto } from './dto/update-object-objectif.dto';
 
 @Controller('object-objectifs')
 export class ObjectObjectifsController {
-  constructor(private readonly objectObjectifsService: ObjectObjectifsService) {}
+  constructor(
+    private readonly objectObjectifsService: ObjectObjectifsService,
+  ) {}
 
   @Post()
   create(@Body() createObjectObjectifDto: CreateObjectObjectifDto) {
@@ -23,7 +33,10 @@ export class ObjectObjectifsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateObjectObjectifDto: UpdateObjectObjectifDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateObjectObjectifDto: UpdateObjectObjectifDto,
+  ) {
     return this.objectObjectifsService.update(+id, updateObjectObjectifDto);
   }
 

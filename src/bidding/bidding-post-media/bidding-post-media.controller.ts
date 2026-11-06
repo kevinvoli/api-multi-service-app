@@ -1,11 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { BiddingPostMediaService } from './bidding-post-media.service';
 import { CreateBiddingPostMediaDto } from './dto/create-bidding-post-media.dto';
 import { UpdateBiddingPostMediaDto } from './dto/update-bidding-post-media.dto';
 
 @Controller('bidding-post-media')
 export class BiddingPostMediaController {
-  constructor(private readonly biddingPostMediaService: BiddingPostMediaService) {}
+  constructor(
+    private readonly biddingPostMediaService: BiddingPostMediaService,
+  ) {}
 
   @Post()
   create(@Body() createBiddingPostMediaDto: CreateBiddingPostMediaDto) {
@@ -23,7 +33,10 @@ export class BiddingPostMediaController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateBiddingPostMediaDto: UpdateBiddingPostMediaDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateBiddingPostMediaDto: UpdateBiddingPostMediaDto,
+  ) {
     return this.biddingPostMediaService.update(+id, updateBiddingPostMediaDto);
   }
 

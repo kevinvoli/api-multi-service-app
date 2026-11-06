@@ -34,11 +34,16 @@ describe('OdaLocationsOrdersUnavailabilitiesController', () => {
       controllers: [OdaLocationsOrdersUnavailabilitiesController],
       providers: [
         OdaLocationsOrdersUnavailabilitiesService,
-        { provide: getRepositoryToken(OdaLocationsOrdersUnavailabilities), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(OdaLocationsOrdersUnavailabilities),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    controller = module.get<OdaLocationsOrdersUnavailabilitiesController>(OdaLocationsOrdersUnavailabilitiesController);
+    controller = module.get<OdaLocationsOrdersUnavailabilitiesController>(
+      OdaLocationsOrdersUnavailabilitiesController,
+    );
   });
 
   it('should be defined', () => {

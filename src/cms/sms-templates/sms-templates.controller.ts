@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { SmsTemplatesService } from './sms-templates.service';
 import { CreateSmsTemplateDto } from './dto/create-sms-template.dto';
 import { UpdateSmsTemplateDto } from './dto/update-sms-template.dto';
@@ -23,7 +31,10 @@ export class SmsTemplatesController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateSmsTemplateDto: UpdateSmsTemplateDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateSmsTemplateDto: UpdateSmsTemplateDto,
+  ) {
     return this.smsTemplatesService.update(+id, updateSmsTemplateDto);
   }
 

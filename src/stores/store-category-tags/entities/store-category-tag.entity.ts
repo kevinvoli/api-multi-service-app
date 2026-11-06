@@ -1,14 +1,14 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm';
 
-@Index("id", ["id"], { unique: true })
-@Entity("store_category_tags", { schema: "amygo1" })
+@Index('id', ['id'], { unique: true })
+@Entity('store_category_tags', { schema: 'amygo1' })
 export class StoreCategoryTags {
-  @PrimaryGeneratedColumn({ type: "int", name: "id" })
+  @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
   id: number;
 
-  @Column("int", { name: "iCompanyId" })
+  @Column('int', { name: 'iCompanyId' })
   iCompanyId: number;
 
-  @Column("int", { name: "iCategoryId" })
+  @Column('int', { name: 'iCategoryId' })
   iCategoryId: number;
 }

@@ -1,76 +1,76 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity("send_message_templates", { schema: "amygo1" })
+@Entity('send_message_templates', { schema: 'amygo1' })
 export class SendMessageTemplates {
-  @PrimaryGeneratedColumn({ type: "int", name: "iSendMessageId" })
+  @PrimaryGeneratedColumn({ type: 'int', name: 'iSendMessageId' })
   iSendMessageId: number;
 
-  @Column("longtext", { name: "vEmail_Code" })
+  @Column('longtext', { name: 'vEmail_Code' })
   vEmailCode: string;
 
-  @Column("longtext", { name: "vPurpose" })
+  @Column('longtext', { name: 'vPurpose' })
   vPurpose: string;
 
-  @Column("enum", { name: "eMIME", nullable: true, enum: ["html", "text"] })
-  eMime: "html" | "text" | null;
+  @Column('enum', { name: 'eMIME', nullable: true, enum: ['html', 'text'] })
+  eMime: 'html' | 'text' | null;
 
-  @Column("enum", {
-    name: "vSection",
+  @Column('enum', {
+    name: 'vSection',
     nullable: true,
-    enum: ["Job Seeker", "Artist", "Franchisee", "Employer"],
+    enum: ['Job Seeker', 'Artist', 'Franchisee', 'Employer'],
   })
-  vSection: "Job Seeker" | "Artist" | "Franchisee" | "Employer" | null;
+  vSection: 'Job Seeker' | 'Artist' | 'Franchisee' | 'Employer' | null;
 
-  @Column("enum", {
-    name: "eStatus",
-    enum: ["Active", "Inactive"],
+  @Column('enum', {
+    name: 'eStatus',
+    enum: ['Active', 'Inactive'],
     default: () => "'Active'",
   })
-  eStatus: "Active" | "Inactive";
+  eStatus: 'Active' | 'Inactive';
 
-  @Column("text", { name: "vSubject_EN", nullable: true })
+  @Column('text', { name: 'vSubject_EN', nullable: true })
   vSubjectEn: string | null;
 
-  @Column("text", { name: "vSubject_FR" })
+  @Column('text', { name: 'vSubject_FR' })
   vSubjectFr: string;
 
-  @Column("text", { name: "vBody_EN", nullable: true })
+  @Column('text', { name: 'vBody_EN', nullable: true })
   vBodyEn: string | null;
 
-  @Column("text", { name: "vBody_FR" })
+  @Column('text', { name: 'vBody_FR' })
   vBodyFr: string;
 
-  @Column("enum", {
-    name: "eSystem",
-    enum: ["General", "DeliverAll"],
+  @Column('enum', {
+    name: 'eSystem',
+    enum: ['General', 'DeliverAll'],
     default: () => "'General'",
   })
-  eSystem: "General" | "DeliverAll";
+  eSystem: 'General' | 'DeliverAll';
 
-  @Column("enum", {
-    name: "eFor",
+  @Column('enum', {
+    name: 'eFor',
     enum: [
-      "General",
-      "Ride",
-      "Delivery",
-      "Ride",
-      "Delivery",
-      "UberX",
-      "food",
-      "DeliverAll",
-      "Ride",
-      "Delivery",
-      "UberX",
+      'General',
+      'Ride',
+      'Delivery',
+      'Ride',
+      'Delivery',
+      'UberX',
+      'food',
+      'DeliverAll',
+      'Ride',
+      'Delivery',
+      'UberX',
     ],
     default: () => "'General'",
   })
   eFor:
-    | "General"
-    | "Ride"
-    | "Delivery"
-    | "Ride,Delivery"
-    | "UberX"
-    | "food"
-    | "DeliverAll"
-    | "Ride,Delivery,UberX";
+    | 'General'
+    | 'Ride'
+    | 'Delivery'
+    | 'Ride,Delivery'
+    | 'UberX'
+    | 'food'
+    | 'DeliverAll'
+    | 'Ride,Delivery,UberX';
 }

@@ -34,11 +34,16 @@ describe('AdminGroupPermissionController', () => {
       controllers: [AdminGroupPermissionController],
       providers: [
         AdminGroupPermissionService,
-        { provide: getRepositoryToken(AdminGroupPermission), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(AdminGroupPermission),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    controller = module.get<AdminGroupPermissionController>(AdminGroupPermissionController);
+    controller = module.get<AdminGroupPermissionController>(
+      AdminGroupPermissionController,
+    );
   });
 
   it('should be defined', () => {

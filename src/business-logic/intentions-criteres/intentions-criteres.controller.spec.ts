@@ -38,7 +38,9 @@ describe('IntentionsCriteresController', () => {
       ],
     }).compile();
 
-    controller = module.get<IntentionsCriteresController>(IntentionsCriteresController);
+    controller = module.get<IntentionsCriteresController>(
+      IntentionsCriteresController,
+    );
   });
 
   it('should be defined', () => {

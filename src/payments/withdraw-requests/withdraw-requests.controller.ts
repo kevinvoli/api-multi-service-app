@@ -1,11 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { WithdrawRequestsService } from './withdraw-requests.service';
 import { CreateWithdrawRequestDto } from './dto/create-withdraw-request.dto';
 import { UpdateWithdrawRequestDto } from './dto/update-withdraw-request.dto';
 
 @Controller('withdraw-requests')
 export class WithdrawRequestsController {
-  constructor(private readonly withdrawRequestsService: WithdrawRequestsService) {}
+  constructor(
+    private readonly withdrawRequestsService: WithdrawRequestsService,
+  ) {}
 
   @Post()
   create(@Body() createWithdrawRequestDto: CreateWithdrawRequestDto) {
@@ -23,7 +33,10 @@ export class WithdrawRequestsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateWithdrawRequestDto: UpdateWithdrawRequestDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateWithdrawRequestDto: UpdateWithdrawRequestDto,
+  ) {
     return this.withdrawRequestsService.update(+id, updateWithdrawRequestDto);
   }
 

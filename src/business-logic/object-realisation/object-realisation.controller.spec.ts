@@ -38,7 +38,9 @@ describe('ObjectRealisationController', () => {
       ],
     }).compile();
 
-    controller = module.get<ObjectRealisationController>(ObjectRealisationController);
+    controller = module.get<ObjectRealisationController>(
+      ObjectRealisationController,
+    );
   });
 
   it('should be defined', () => {

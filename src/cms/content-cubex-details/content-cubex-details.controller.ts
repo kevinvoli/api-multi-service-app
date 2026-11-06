@@ -1,11 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { ContentCubexDetailsService } from './content-cubex-details.service';
 import { CreateContentCubexDetailDto } from './dto/create-content-cubex-detail.dto';
 import { UpdateContentCubexDetailDto } from './dto/update-content-cubex-detail.dto';
 
 @Controller('content-cubex-details')
 export class ContentCubexDetailsController {
-  constructor(private readonly contentCubexDetailsService: ContentCubexDetailsService) {}
+  constructor(
+    private readonly contentCubexDetailsService: ContentCubexDetailsService,
+  ) {}
 
   @Post()
   create(@Body() createContentCubexDetailDto: CreateContentCubexDetailDto) {
@@ -23,8 +33,14 @@ export class ContentCubexDetailsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateContentCubexDetailDto: UpdateContentCubexDetailDto) {
-    return this.contentCubexDetailsService.update(+id, updateContentCubexDetailDto);
+  update(
+    @Param('id') id: string,
+    @Body() updateContentCubexDetailDto: UpdateContentCubexDetailDto,
+  ) {
+    return this.contentCubexDetailsService.update(
+      +id,
+      updateContentCubexDetailDto,
+    );
   }
 
   @Delete(':id')

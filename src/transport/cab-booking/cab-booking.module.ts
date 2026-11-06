@@ -7,7 +7,9 @@ import { RegisterUser } from '../../users/register-user/entities/register-user.e
 import { RegisterDriver } from '../../users/register-driver/entities/register-driver.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([CabBooking, RegisterUser, RegisterDriver])],
+  imports: [
+    TypeOrmModule.forFeature([CabBooking, RegisterUser, RegisterDriver]),
+  ],
   controllers: [CabBookingController],
   providers: [CabBookingService],
   exports: [CabBookingService, TypeOrmModule.forFeature([CabBooking])],

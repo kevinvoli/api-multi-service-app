@@ -32,11 +32,16 @@ describe('VehicleCategoryStatusLogService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         VehicleCategoryStatusLogService,
-        { provide: getRepositoryToken(VehicleCategoryStatusLog), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(VehicleCategoryStatusLog),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    service = module.get<VehicleCategoryStatusLogService>(VehicleCategoryStatusLogService);
+    service = module.get<VehicleCategoryStatusLogService>(
+      VehicleCategoryStatusLogService,
+    );
   });
 
   it('should be defined', () => {

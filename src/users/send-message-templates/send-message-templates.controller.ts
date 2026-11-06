@@ -1,15 +1,27 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { SendMessageTemplatesService } from './send-message-templates.service';
 import { CreateSendMessageTemplateDto } from './dto/create-send-message-template.dto';
 import { UpdateSendMessageTemplateDto } from './dto/update-send-message-template.dto';
 
 @Controller('send-message-templates')
 export class SendMessageTemplatesController {
-  constructor(private readonly sendMessageTemplatesService: SendMessageTemplatesService) {}
+  constructor(
+    private readonly sendMessageTemplatesService: SendMessageTemplatesService,
+  ) {}
 
   @Post()
   create(@Body() createSendMessageTemplateDto: CreateSendMessageTemplateDto) {
-    return this.sendMessageTemplatesService.create(createSendMessageTemplateDto);
+    return this.sendMessageTemplatesService.create(
+      createSendMessageTemplateDto,
+    );
   }
 
   @Get()
@@ -23,8 +35,14 @@ export class SendMessageTemplatesController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateSendMessageTemplateDto: UpdateSendMessageTemplateDto) {
-    return this.sendMessageTemplatesService.update(+id, updateSendMessageTemplateDto);
+  update(
+    @Param('id') id: string,
+    @Body() updateSendMessageTemplateDto: UpdateSendMessageTemplateDto,
+  ) {
+    return this.sendMessageTemplatesService.update(
+      +id,
+      updateSendMessageTemplateDto,
+    );
   }
 
   @Delete(':id')

@@ -27,7 +27,10 @@ export class TripMessagesService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateTripMessageDto): Promise<TripMessages> {
+  async update(
+    id: number,
+    updateDto: UpdateTripMessageDto,
+  ): Promise<TripMessages> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

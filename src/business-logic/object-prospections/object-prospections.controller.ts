@@ -1,11 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { ObjectProspectionsService } from './object-prospections.service';
 import { CreateObjectProspectionDto } from './dto/create-object-prospection.dto';
 import { UpdateObjectProspectionDto } from './dto/update-object-prospection.dto';
 
 @Controller('object-prospections')
 export class ObjectProspectionsController {
-  constructor(private readonly objectProspectionsService: ObjectProspectionsService) {}
+  constructor(
+    private readonly objectProspectionsService: ObjectProspectionsService,
+  ) {}
 
   @Post()
   create(@Body() createObjectProspectionDto: CreateObjectProspectionDto) {
@@ -23,8 +33,14 @@ export class ObjectProspectionsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateObjectProspectionDto: UpdateObjectProspectionDto) {
-    return this.objectProspectionsService.update(+id, updateObjectProspectionDto);
+  update(
+    @Param('id') id: string,
+    @Body() updateObjectProspectionDto: UpdateObjectProspectionDto,
+  ) {
+    return this.objectProspectionsService.update(
+      +id,
+      updateObjectProspectionDto,
+    );
   }
 
   @Delete(':id')

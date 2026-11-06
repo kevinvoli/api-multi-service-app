@@ -27,7 +27,10 @@ export class AppLaunchinfoService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateAppLaunchinfoDto): Promise<AppLaunchInfo> {
+  async update(
+    id: number,
+    updateDto: UpdateAppLaunchinfoDto,
+  ): Promise<AppLaunchInfo> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

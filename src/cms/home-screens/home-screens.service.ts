@@ -27,7 +27,10 @@ export class HomeScreensService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateHomeScreenDto): Promise<HomeScreens> {
+  async update(
+    id: number,
+    updateDto: UpdateHomeScreenDto,
+  ): Promise<HomeScreens> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

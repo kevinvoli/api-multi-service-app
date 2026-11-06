@@ -3,7 +3,10 @@ import * as https from 'https';
 import { randomInt } from 'crypto';
 
 // ─── OTP en mémoire (TTL 10 min) ─────────────────────────────────────────────
-interface OtpEntry { code: string; expiresAt: number }
+interface OtpEntry {
+  code: string;
+  expiresAt: number;
+}
 const otpStore = new Map<string, OtpEntry>();
 
 @Injectable()
@@ -49,7 +52,10 @@ export class NotificationsService {
           res.on('end', () => {
             try {
               const parsed = JSON.parse(body);
-              resolve({ success: parsed.success ?? 0, failure: parsed.failure ?? 0 });
+              resolve({
+                success: parsed.success ?? 0,
+                failure: parsed.failure ?? 0,
+              });
             } catch {
               resolve({ success: 0, failure: 1 });
             }
@@ -78,7 +84,11 @@ export class NotificationsService {
       return { sent: false };
     }
 
-    const body = new URLSearchParams({ From: from, To: toPhone, Body: message }).toString();
+    const body = new URLSearchParams({
+      From: from,
+      To: toPhone,
+      Body: message,
+    }).toString();
     const auth = Buffer.from(`${sid}:${token}`).toString('base64');
 
     return new Promise((resolve) => {
@@ -123,7 +133,9 @@ export class NotificationsService {
 
     // Hors production uniquement : sinon un échec Twilio exposerait le code au client
     if (!result.sent) {
-      return process.env.NODE_ENV === 'production' ? { sent: false } : { sent: false, code };
+      return process.env.NODE_ENV === 'production'
+        ? { sent: false }
+        : { sent: false, code };
     }
     return { sent: true };
   }

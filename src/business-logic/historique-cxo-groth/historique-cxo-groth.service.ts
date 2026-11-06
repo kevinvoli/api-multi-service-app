@@ -12,7 +12,9 @@ export class HistoriqueCxoGrothService {
     private readonly repository: Repository<HistoriqueCxoGroth>,
   ) {}
 
-  async create(createDto: CreateHistoriqueCxoGrothDto): Promise<HistoriqueCxoGroth> {
+  async create(
+    createDto: CreateHistoriqueCxoGrothDto,
+  ): Promise<HistoriqueCxoGroth> {
     const entity = this.repository.create(createDto);
     return this.repository.save(entity);
   }
@@ -27,7 +29,10 @@ export class HistoriqueCxoGrothService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateHistoriqueCxoGrothDto): Promise<HistoriqueCxoGroth> {
+  async update(
+    id: number,
+    updateDto: UpdateHistoriqueCxoGrothDto,
+  ): Promise<HistoriqueCxoGroth> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

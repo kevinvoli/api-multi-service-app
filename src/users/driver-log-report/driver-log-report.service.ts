@@ -27,7 +27,10 @@ export class DriverLogReportService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateDriverLogReportDto): Promise<DriverLogReport> {
+  async update(
+    id: number,
+    updateDto: UpdateDriverLogReportDto,
+  ): Promise<DriverLogReport> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

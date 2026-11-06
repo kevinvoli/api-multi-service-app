@@ -1,15 +1,29 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { OdaCommoditiesLocationService } from './oda-commodities-location.service';
 import { CreateOdaCommoditiesLocationDto } from './dto/create-oda-commodities-location.dto';
 import { UpdateOdaCommoditiesLocationDto } from './dto/update-oda-commodities-location.dto';
 
 @Controller('oda-commodities-location')
 export class OdaCommoditiesLocationController {
-  constructor(private readonly odaCommoditiesLocationService: OdaCommoditiesLocationService) {}
+  constructor(
+    private readonly odaCommoditiesLocationService: OdaCommoditiesLocationService,
+  ) {}
 
   @Post()
-  create(@Body() createOdaCommoditiesLocationDto: CreateOdaCommoditiesLocationDto) {
-    return this.odaCommoditiesLocationService.create(createOdaCommoditiesLocationDto);
+  create(
+    @Body() createOdaCommoditiesLocationDto: CreateOdaCommoditiesLocationDto,
+  ) {
+    return this.odaCommoditiesLocationService.create(
+      createOdaCommoditiesLocationDto,
+    );
   }
 
   @Get()
@@ -23,8 +37,14 @@ export class OdaCommoditiesLocationController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateOdaCommoditiesLocationDto: UpdateOdaCommoditiesLocationDto) {
-    return this.odaCommoditiesLocationService.update(+id, updateOdaCommoditiesLocationDto);
+  update(
+    @Param('id') id: string,
+    @Body() updateOdaCommoditiesLocationDto: UpdateOdaCommoditiesLocationDto,
+  ) {
+    return this.odaCommoditiesLocationService.update(
+      +id,
+      updateOdaCommoditiesLocationDto,
+    );
   }
 
   @Delete(':id')

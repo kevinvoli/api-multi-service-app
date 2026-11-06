@@ -32,11 +32,16 @@ describe('UserReferrerTransactionService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         UserReferrerTransactionService,
-        { provide: getRepositoryToken(UserReferrerTransaction), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(UserReferrerTransaction),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    service = module.get<UserReferrerTransactionService>(UserReferrerTransactionService);
+    service = module.get<UserReferrerTransactionService>(
+      UserReferrerTransactionService,
+    );
   });
 
   it('should be defined', () => {

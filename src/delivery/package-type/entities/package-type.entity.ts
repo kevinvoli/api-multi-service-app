@@ -1,26 +1,26 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity("package_type", { schema: "amygo1" })
+@Entity('package_type', { schema: 'amygo1' })
 export class PackageType {
-  @PrimaryGeneratedColumn({ type: "int", name: "iPackageTypeId" })
+  @PrimaryGeneratedColumn({ type: 'int', name: 'iPackageTypeId' })
   iPackageTypeId: number;
 
-  @Column("text", { name: "vName" })
+  @Column('text', { name: 'vName' })
   vName: string;
 
-  @Column("text", { name: "vName_EN" })
+  @Column('text', { name: 'vName_EN' })
   vNameEn: string;
 
-  @Column("text", { name: "vName_FR" })
+  @Column('text', { name: 'vName_FR' })
   vNameFr: string;
 
-  @Column("enum", {
-    name: "eStatus",
-    enum: ["Active", "Inactive", "Deleted"],
+  @Column('enum', {
+    name: 'eStatus',
+    enum: ['Active', 'Inactive', 'Deleted'],
     default: () => "'Active'",
   })
-  eStatus: "Active" | "Inactive" | "Deleted";
+  eStatus: 'Active' | 'Inactive' | 'Deleted';
 
-  @Column("int", { name: "iDeliveryFieldId" })
+  @Column('int', { name: 'iDeliveryFieldId' })
   iDeliveryFieldId: number;
 }

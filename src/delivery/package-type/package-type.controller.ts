@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { PackageTypeService } from './package-type.service';
 import { CreatePackageTypeDto } from './dto/create-package-type.dto';
 import { UpdatePackageTypeDto } from './dto/update-package-type.dto';
@@ -23,7 +31,10 @@ export class PackageTypeController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePackageTypeDto: UpdatePackageTypeDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updatePackageTypeDto: UpdatePackageTypeDto,
+  ) {
     return this.packageTypeService.update(+id, updatePackageTypeDto);
   }
 

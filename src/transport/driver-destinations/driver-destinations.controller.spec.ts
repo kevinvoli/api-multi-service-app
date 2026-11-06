@@ -38,7 +38,9 @@ describe('DriverDestinationsController', () => {
       ],
     }).compile();
 
-    controller = module.get<DriverDestinationsController>(DriverDestinationsController);
+    controller = module.get<DriverDestinationsController>(
+      DriverDestinationsController,
+    );
   });
 
   it('should be defined', () => {

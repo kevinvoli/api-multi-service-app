@@ -12,7 +12,9 @@ export class IntentionsCriteresService {
     private readonly repository: Repository<IntentionsCriteres>,
   ) {}
 
-  async create(createDto: CreateIntentionsCritereDto): Promise<IntentionsCriteres> {
+  async create(
+    createDto: CreateIntentionsCritereDto,
+  ): Promise<IntentionsCriteres> {
     const entity = this.repository.create(createDto);
     return this.repository.save(entity);
   }
@@ -27,7 +29,10 @@ export class IntentionsCriteresService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateIntentionsCritereDto): Promise<IntentionsCriteres> {
+  async update(
+    id: number,
+    updateDto: UpdateIntentionsCritereDto,
+  ): Promise<IntentionsCriteres> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

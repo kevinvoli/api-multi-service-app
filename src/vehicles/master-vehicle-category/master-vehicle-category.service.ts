@@ -12,7 +12,9 @@ export class MasterVehicleCategoryService {
     private readonly repository: Repository<MasterVehicleCategory>,
   ) {}
 
-  async create(createDto: CreateMasterVehicleCategoryDto): Promise<MasterVehicleCategory> {
+  async create(
+    createDto: CreateMasterVehicleCategoryDto,
+  ): Promise<MasterVehicleCategory> {
     const entity = this.repository.create(createDto);
     return this.repository.save(entity);
   }
@@ -22,12 +24,17 @@ export class MasterVehicleCategoryService {
   }
 
   async findOne(id: number): Promise<MasterVehicleCategory> {
-    const entity = await this.repository.findOneBy({ iMasterVehicleCategoryId: id } as any);
+    const entity = await this.repository.findOneBy({
+      iMasterVehicleCategoryId: id,
+    } as any);
     if (!entity) throw new NotFoundException(`Record #${id} not found`);
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateMasterVehicleCategoryDto): Promise<MasterVehicleCategory> {
+  async update(
+    id: number,
+    updateDto: UpdateMasterVehicleCategoryDto,
+  ): Promise<MasterVehicleCategory> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

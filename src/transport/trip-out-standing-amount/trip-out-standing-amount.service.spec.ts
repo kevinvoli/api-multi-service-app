@@ -32,11 +32,16 @@ describe('TripOutStandingAmountService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         TripOutStandingAmountService,
-        { provide: getRepositoryToken(TripOutstandingAmount), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(TripOutstandingAmount),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    service = module.get<TripOutStandingAmountService>(TripOutStandingAmountService);
+    service = module.get<TripOutStandingAmountService>(
+      TripOutStandingAmountService,
+    );
   });
 
   it('should be defined', () => {

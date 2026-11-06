@@ -34,11 +34,16 @@ describe('BiddingServiceRatingsController', () => {
       controllers: [BiddingServiceRatingsController],
       providers: [
         BiddingServiceRatingsService,
-        { provide: getRepositoryToken(BiddingServiceRatings), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(BiddingServiceRatings),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    controller = module.get<BiddingServiceRatingsController>(BiddingServiceRatingsController);
+    controller = module.get<BiddingServiceRatingsController>(
+      BiddingServiceRatingsController,
+    );
   });
 
   it('should be defined', () => {

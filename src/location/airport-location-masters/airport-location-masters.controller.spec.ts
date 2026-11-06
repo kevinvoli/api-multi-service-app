@@ -34,11 +34,16 @@ describe('AirportLocationMastersController', () => {
       controllers: [AirportLocationMastersController],
       providers: [
         AirportLocationMastersService,
-        { provide: getRepositoryToken(AirportLocationMaster), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(AirportLocationMaster),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    controller = module.get<AirportLocationMastersController>(AirportLocationMastersController);
+    controller = module.get<AirportLocationMastersController>(
+      AirportLocationMastersController,
+    );
   });
 
   it('should be defined', () => {

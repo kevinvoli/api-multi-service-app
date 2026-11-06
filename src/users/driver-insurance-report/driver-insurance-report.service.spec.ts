@@ -32,11 +32,16 @@ describe('DriverInsuranceReportService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         DriverInsuranceReportService,
-        { provide: getRepositoryToken(DriverInsuranceReport), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(DriverInsuranceReport),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    service = module.get<DriverInsuranceReportService>(DriverInsuranceReportService);
+    service = module.get<DriverInsuranceReportService>(
+      DriverInsuranceReportService,
+    );
   });
 
   it('should be defined', () => {

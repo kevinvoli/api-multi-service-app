@@ -12,7 +12,9 @@ export class TripOutStandingAmountService {
     private readonly repository: Repository<TripOutstandingAmount>,
   ) {}
 
-  async create(createDto: CreateTripOutStandingAmountDto): Promise<TripOutstandingAmount> {
+  async create(
+    createDto: CreateTripOutStandingAmountDto,
+  ): Promise<TripOutstandingAmount> {
     const entity = this.repository.create(createDto);
     return this.repository.save(entity);
   }
@@ -22,12 +24,17 @@ export class TripOutStandingAmountService {
   }
 
   async findOne(id: number): Promise<TripOutstandingAmount> {
-    const entity = await this.repository.findOneBy({ iTripOutstandId: id } as any);
+    const entity = await this.repository.findOneBy({
+      iTripOutstandId: id,
+    } as any);
     if (!entity) throw new NotFoundException(`Record #${id} not found`);
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateTripOutStandingAmountDto): Promise<TripOutstandingAmount> {
+  async update(
+    id: number,
+    updateDto: UpdateTripOutStandingAmountDto,
+  ): Promise<TripOutstandingAmount> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

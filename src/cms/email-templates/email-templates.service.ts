@@ -27,7 +27,10 @@ export class EmailTemplatesService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateEmailTemplateDto): Promise<EmailTemplates> {
+  async update(
+    id: number,
+    updateDto: UpdateEmailTemplateDto,
+  ): Promise<EmailTemplates> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

@@ -38,7 +38,9 @@ describe('NotificationSoundController', () => {
       ],
     }).compile();
 
-    controller = module.get<NotificationSoundController>(NotificationSoundController);
+    controller = module.get<NotificationSoundController>(
+      NotificationSoundController,
+    );
   });
 
   it('should be defined', () => {

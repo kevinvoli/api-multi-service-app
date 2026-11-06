@@ -38,7 +38,9 @@ describe('PlanPurchaseMasterController', () => {
       ],
     }).compile();
 
-    controller = module.get<PlanPurchaseMasterController>(PlanPurchaseMasterController);
+    controller = module.get<PlanPurchaseMasterController>(
+      PlanPurchaseMasterController,
+    );
   });
 
   it('should be defined', () => {

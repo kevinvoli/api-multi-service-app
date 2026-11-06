@@ -34,11 +34,16 @@ describe('UserEmergencyContactController', () => {
       controllers: [UserEmergencyContactController],
       providers: [
         UserEmergencyContactService,
-        { provide: getRepositoryToken(UserEmergencyContact), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(UserEmergencyContact),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    controller = module.get<UserEmergencyContactController>(UserEmergencyContactController);
+    controller = module.get<UserEmergencyContactController>(
+      UserEmergencyContactController,
+    );
   });
 
   it('should be defined', () => {

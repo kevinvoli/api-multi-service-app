@@ -12,7 +12,9 @@ export class LanguageLabelOtherService {
     private readonly repository: Repository<LanguageLabelOther>,
   ) {}
 
-  async create(createDto: CreateLanguageLabelOtherDto): Promise<LanguageLabelOther> {
+  async create(
+    createDto: CreateLanguageLabelOtherDto,
+  ): Promise<LanguageLabelOther> {
     const entity = this.repository.create(createDto);
     return this.repository.save(entity);
   }
@@ -22,12 +24,17 @@ export class LanguageLabelOtherService {
   }
 
   async findOne(id: number): Promise<LanguageLabelOther> {
-    const entity = await this.repository.findOneBy({ languageLabelId: id } as any);
+    const entity = await this.repository.findOneBy({
+      languageLabelId: id,
+    } as any);
     if (!entity) throw new NotFoundException(`Record #${id} not found`);
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateLanguageLabelOtherDto): Promise<LanguageLabelOther> {
+  async update(
+    id: number,
+    updateDto: UpdateLanguageLabelOtherDto,
+  ): Promise<LanguageLabelOther> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

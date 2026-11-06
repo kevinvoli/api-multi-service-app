@@ -34,11 +34,16 @@ describe('EmergencyCantactDataController', () => {
       controllers: [EmergencyCantactDataController],
       providers: [
         EmergencyCantactDataService,
-        { provide: getRepositoryToken(EmergencyContactData), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(EmergencyContactData),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    controller = module.get<EmergencyCantactDataController>(EmergencyCantactDataController);
+    controller = module.get<EmergencyCantactDataController>(
+      EmergencyCantactDataController,
+    );
   });
 
   it('should be defined', () => {

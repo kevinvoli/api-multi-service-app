@@ -38,7 +38,9 @@ describe('TripOderDetailsController', () => {
       ],
     }).compile();
 
-    controller = module.get<TripOderDetailsController>(TripOderDetailsController);
+    controller = module.get<TripOderDetailsController>(
+      TripOderDetailsController,
+    );
   });
 
   it('should be defined', () => {

@@ -27,7 +27,10 @@ export class SmsTemplatesService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateSmsTemplateDto): Promise<SmsTemplates> {
+  async update(
+    id: number,
+    updateDto: UpdateSmsTemplateDto,
+  ): Promise<SmsTemplates> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

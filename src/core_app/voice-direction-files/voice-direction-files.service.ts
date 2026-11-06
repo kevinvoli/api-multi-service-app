@@ -12,7 +12,9 @@ export class VoiceDirectionFilesService {
     private readonly repository: Repository<VoiceDirectionFiles>,
   ) {}
 
-  async create(createDto: CreateVoiceDirectionFileDto): Promise<VoiceDirectionFiles> {
+  async create(
+    createDto: CreateVoiceDirectionFileDto,
+  ): Promise<VoiceDirectionFiles> {
     const entity = this.repository.create(createDto);
     return this.repository.save(entity);
   }
@@ -22,12 +24,17 @@ export class VoiceDirectionFilesService {
   }
 
   async findOne(id: number): Promise<VoiceDirectionFiles> {
-    const entity = await this.repository.findOneBy({ iVoiceDirectionFileId: id } as any);
+    const entity = await this.repository.findOneBy({
+      iVoiceDirectionFileId: id,
+    } as any);
     if (!entity) throw new NotFoundException(`Record #${id} not found`);
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateVoiceDirectionFileDto): Promise<VoiceDirectionFiles> {
+  async update(
+    id: number,
+    updateDto: UpdateVoiceDirectionFileDto,
+  ): Promise<VoiceDirectionFiles> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

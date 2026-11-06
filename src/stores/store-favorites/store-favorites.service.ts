@@ -22,12 +22,17 @@ export class StoreFavoritesService {
   }
 
   async findOne(id: number): Promise<StoreFavorites> {
-    const entity = await this.repository.findOneBy({ iStoreFavorite: id } as any);
+    const entity = await this.repository.findOneBy({
+      iStoreFavorite: id,
+    } as any);
     if (!entity) throw new NotFoundException(`Record #${id} not found`);
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateStoreFavoriteDto): Promise<StoreFavorites> {
+  async update(
+    id: number,
+    updateDto: UpdateStoreFavoriteDto,
+  ): Promise<StoreFavorites> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

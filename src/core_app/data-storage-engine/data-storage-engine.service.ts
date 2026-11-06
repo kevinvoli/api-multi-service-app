@@ -12,7 +12,9 @@ export class DataStorageEngineService {
     private readonly repository: Repository<DataStorageEngine>,
   ) {}
 
-  async create(createDto: CreateDataStorageEngineDto): Promise<DataStorageEngine> {
+  async create(
+    createDto: CreateDataStorageEngineDto,
+  ): Promise<DataStorageEngine> {
     const entity = this.repository.create(createDto);
     return this.repository.save(entity);
   }
@@ -27,7 +29,10 @@ export class DataStorageEngineService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateDataStorageEngineDto): Promise<DataStorageEngine> {
+  async update(
+    id: number,
+    updateDto: UpdateDataStorageEngineDto,
+  ): Promise<DataStorageEngine> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

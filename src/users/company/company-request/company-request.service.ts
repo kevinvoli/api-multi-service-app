@@ -22,12 +22,17 @@ export class CompanyRequestService {
   }
 
   async findOne(id: number): Promise<CompanyRequest> {
-    const entity = await this.repository.findOneBy({ iCompanyRequestId: id } as any);
+    const entity = await this.repository.findOneBy({
+      iCompanyRequestId: id,
+    } as any);
     if (!entity) throw new NotFoundException(`Record #${id} not found`);
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateCompanyRequestDto): Promise<CompanyRequest> {
+  async update(
+    id: number,
+    updateDto: UpdateCompanyRequestDto,
+  ): Promise<CompanyRequest> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

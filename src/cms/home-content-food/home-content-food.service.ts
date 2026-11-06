@@ -27,7 +27,10 @@ export class HomeContentFoodService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateHomeContentFoodDto): Promise<Homecontentfood> {
+  async update(
+    id: number,
+    updateDto: UpdateHomeContentFoodDto,
+  ): Promise<Homecontentfood> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

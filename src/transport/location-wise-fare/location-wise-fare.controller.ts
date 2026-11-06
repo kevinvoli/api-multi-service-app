@@ -1,11 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { LocationWiseFareService } from './location-wise-fare.service';
 import { CreateLocationWiseFareDto } from './dto/create-location-wise-fare.dto';
 import { UpdateLocationWiseFareDto } from './dto/update-location-wise-fare.dto';
 
 @Controller('location-wise-fare')
 export class LocationWiseFareController {
-  constructor(private readonly locationWiseFareService: LocationWiseFareService) {}
+  constructor(
+    private readonly locationWiseFareService: LocationWiseFareService,
+  ) {}
 
   @Post()
   create(@Body() createLocationWiseFareDto: CreateLocationWiseFareDto) {
@@ -23,7 +33,10 @@ export class LocationWiseFareController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateLocationWiseFareDto: UpdateLocationWiseFareDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateLocationWiseFareDto: UpdateLocationWiseFareDto,
+  ) {
     return this.locationWiseFareService.update(+id, updateLocationWiseFareDto);
   }
 

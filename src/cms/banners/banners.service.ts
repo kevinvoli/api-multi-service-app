@@ -22,7 +22,9 @@ export class BannersService {
   }
 
   async findOne(id: number): Promise<Banners> {
-    const entity = await this.repository.findOneBy({ iFaqcategoryId: id } as any);
+    const entity = await this.repository.findOneBy({
+      iFaqcategoryId: id,
+    } as any);
     if (!entity) throw new NotFoundException(`Record #${id} not found`);
     return entity;
   }

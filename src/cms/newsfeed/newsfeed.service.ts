@@ -22,7 +22,9 @@ export class NewsfeedService {
   }
 
   async findOne(id: number): Promise<Newsletter> {
-    const entity = await this.repository.findOneBy({ iNewsLetterId: id } as any);
+    const entity = await this.repository.findOneBy({
+      iNewsLetterId: id,
+    } as any);
     if (!entity) throw new NotFoundException(`Record #${id} not found`);
     return entity;
   }

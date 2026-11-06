@@ -38,7 +38,9 @@ describe('DriverPreferencesController', () => {
       ],
     }).compile();
 
-    controller = module.get<DriverPreferencesController>(DriverPreferencesController);
+    controller = module.get<DriverPreferencesController>(
+      DriverPreferencesController,
+    );
   });
 
   it('should be defined', () => {

@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { NewsfeedService } from './newsfeed.service';
 import { CreateNewsfeedDto } from './dto/create-newsfeed.dto';
 import { UpdateNewsfeedDto } from './dto/update-newsfeed.dto';
@@ -23,7 +31,10 @@ export class NewsfeedController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateNewsfeedDto: UpdateNewsfeedDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateNewsfeedDto: UpdateNewsfeedDto,
+  ) {
     return this.newsfeedService.update(+id, updateNewsfeedDto);
   }
 

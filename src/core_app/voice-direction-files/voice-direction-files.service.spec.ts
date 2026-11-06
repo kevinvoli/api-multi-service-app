@@ -32,11 +32,16 @@ describe('VoiceDirectionFilesService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         VoiceDirectionFilesService,
-        { provide: getRepositoryToken(VoiceDirectionFiles), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(VoiceDirectionFiles),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    service = module.get<VoiceDirectionFilesService>(VoiceDirectionFilesService);
+    service = module.get<VoiceDirectionFilesService>(
+      VoiceDirectionFilesService,
+    );
   });
 
   it('should be defined', () => {

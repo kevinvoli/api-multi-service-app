@@ -38,7 +38,9 @@ describe('StoreCategoriesController', () => {
       ],
     }).compile();
 
-    controller = module.get<StoreCategoriesController>(StoreCategoriesController);
+    controller = module.get<StoreCategoriesController>(
+      StoreCategoriesController,
+    );
   });
 
   it('should be defined', () => {

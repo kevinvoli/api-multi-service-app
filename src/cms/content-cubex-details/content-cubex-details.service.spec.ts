@@ -32,11 +32,16 @@ describe('ContentCubexDetailsService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         ContentCubexDetailsService,
-        { provide: getRepositoryToken(ContentCubexDetails), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(ContentCubexDetails),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    service = module.get<ContentCubexDetailsService>(ContentCubexDetailsService);
+    service = module.get<ContentCubexDetailsService>(
+      ContentCubexDetailsService,
+    );
   });
 
   it('should be defined', () => {

@@ -12,7 +12,9 @@ export class AllDatabaseDetailsService {
     private readonly repository: Repository<AllDatabaseDetails>,
   ) {}
 
-  async create(createDto: CreateAllDatabaseDetailDto): Promise<AllDatabaseDetails> {
+  async create(
+    createDto: CreateAllDatabaseDetailDto,
+  ): Promise<AllDatabaseDetails> {
     const entity = this.repository.create(createDto);
     return this.repository.save(entity);
   }
@@ -27,7 +29,10 @@ export class AllDatabaseDetailsService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateAllDatabaseDetailDto): Promise<AllDatabaseDetails> {
+  async update(
+    id: number,
+    updateDto: UpdateAllDatabaseDetailDto,
+  ): Promise<AllDatabaseDetails> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

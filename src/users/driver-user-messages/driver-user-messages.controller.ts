@@ -1,11 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { DriverUserMessagesService } from './driver-user-messages.service';
 import { CreateDriverUserMessageDto } from './dto/create-driver-user-message.dto';
 import { UpdateDriverUserMessageDto } from './dto/update-driver-user-message.dto';
 
 @Controller('driver-user-messages')
 export class DriverUserMessagesController {
-  constructor(private readonly driverUserMessagesService: DriverUserMessagesService) {}
+  constructor(
+    private readonly driverUserMessagesService: DriverUserMessagesService,
+  ) {}
 
   @Post()
   create(@Body() createDriverUserMessageDto: CreateDriverUserMessageDto) {
@@ -23,8 +33,14 @@ export class DriverUserMessagesController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDriverUserMessageDto: UpdateDriverUserMessageDto) {
-    return this.driverUserMessagesService.update(+id, updateDriverUserMessageDto);
+  update(
+    @Param('id') id: string,
+    @Body() updateDriverUserMessageDto: UpdateDriverUserMessageDto,
+  ) {
+    return this.driverUserMessagesService.update(
+      +id,
+      updateDriverUserMessageDto,
+    );
   }
 
   @Delete(':id')

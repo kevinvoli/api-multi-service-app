@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { DriverRequestService } from './driver-request.service';
 import { CreateDriverRequestDto } from './dto/create-driver-request.dto';
 import { UpdateDriverRequestDto } from './dto/update-driver-request.dto';
@@ -23,7 +31,10 @@ export class DriverRequestController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDriverRequestDto: UpdateDriverRequestDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateDriverRequestDto: UpdateDriverRequestDto,
+  ) {
     return this.driverRequestService.update(+id, updateDriverRequestDto);
   }
 

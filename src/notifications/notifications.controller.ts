@@ -16,10 +16,7 @@ export class NotificationsController {
 
   /** POST /notifications/sms — Envoyer un SMS via Twilio */
   @Post('sms')
-  sendSms(
-    @Body('phone') phone: string,
-    @Body('message') message: string,
-  ) {
+  sendSms(@Body('phone') phone: string, @Body('message') message: string) {
     return this.notificationsService.sendSms(phone, message);
   }
 
@@ -31,10 +28,7 @@ export class NotificationsController {
 
   /** POST /notifications/otp/verify — Vérifier un OTP (ajax_driver_verification.php type=verify) */
   @Post('otp/verify')
-  verifyOtp(
-    @Body('phone') phone: string,
-    @Body('code') code: string,
-  ) {
+  verifyOtp(@Body('phone') phone: string, @Body('code') code: string) {
     return this.notificationsService.verifyOtp(phone, code);
   }
 }

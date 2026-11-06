@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { LanguageMasterService } from './language-master.service';
 import { CreateLanguageMasterDto } from './dto/create-language-master.dto';
 import { UpdateLanguageMasterDto } from './dto/update-language-master.dto';
@@ -23,7 +31,10 @@ export class LanguageMasterController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateLanguageMasterDto: UpdateLanguageMasterDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateLanguageMasterDto: UpdateLanguageMasterDto,
+  ) {
     return this.languageMasterService.update(+id, updateLanguageMasterDto);
   }
 

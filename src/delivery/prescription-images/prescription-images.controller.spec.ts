@@ -38,7 +38,9 @@ describe('PrescriptionImagesController', () => {
       ],
     }).compile();
 
-    controller = module.get<PrescriptionImagesController>(PrescriptionImagesController);
+    controller = module.get<PrescriptionImagesController>(
+      PrescriptionImagesController,
+    );
   });
 
   it('should be defined', () => {

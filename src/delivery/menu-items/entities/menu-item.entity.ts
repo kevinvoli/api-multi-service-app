@@ -1,141 +1,141 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm';
 
-@Index("iFoodMenuId", ["iFoodMenuId"], {})
-@Index("eFoodType", ["eFoodType"], {})
-@Index("eStatus", ["eStatus"], {})
-@Index("eAvailable", ["eAvailable"], {})
-@Index("eBestSeller", ["eBestSeller"], {})
-@Index("eRecommended", ["eRecommended"], {})
-@Index("iMenuItemId", ["iMenuItemId"], {})
-@Index("store", ["store"], {})
-@Entity("menu_items", { schema: "amygo1" })
+@Index('iFoodMenuId', ['iFoodMenuId'], {})
+@Index('eFoodType', ['eFoodType'], {})
+@Index('eStatus', ['eStatus'], {})
+@Index('eAvailable', ['eAvailable'], {})
+@Index('eBestSeller', ['eBestSeller'], {})
+@Index('eRecommended', ['eRecommended'], {})
+@Index('iMenuItemId', ['iMenuItemId'], {})
+@Index('store', ['store'], {})
+@Entity('menu_items', { schema: 'amygo1' })
 export class MenuItems {
-  @PrimaryGeneratedColumn({ type: "int", name: "iMenuItemId" })
+  @PrimaryGeneratedColumn({ type: 'int', name: 'iMenuItemId' })
   iMenuItemId: number;
 
-  @Column("int", { name: "store", nullable: true })
+  @Column('int', { name: 'store', nullable: true })
   store: number | null;
 
-  @Column("int", { name: "iFoodMenuId", default: () => "'0'" })
+  @Column('int', { name: 'iFoodMenuId', default: () => "'0'" })
   iFoodMenuId: number;
 
-  @Column("varchar", { name: "vItemType_EN", length: 255 })
+  @Column('varchar', { name: 'vItemType_EN', length: 255 })
   vItemTypeEn: string;
 
-  @Column("varchar", { name: "vItemType_FR", length: 255 })
+  @Column('varchar', { name: 'vItemType_FR', length: 255 })
   vItemTypeFr: string;
 
-  @Column("text", { name: "vItemDesc_EN" })
+  @Column('text', { name: 'vItemDesc_EN' })
   vItemDescEn: string;
 
-  @Column("text", { name: "vItemDesc_FR" })
+  @Column('text', { name: 'vItemDesc_FR' })
   vItemDescFr: string;
 
-  @Column("float", { name: "fPrice", precision: 12 })
+  @Column('float', { name: 'fPrice', precision: 12 })
   fPrice: number;
 
-  @Column("enum", { name: "eFoodType", enum: ["Veg", "NonVeg", ""] })
-  eFoodType: "Veg" | "NonVeg" | "";
+  @Column('enum', { name: 'eFoodType', enum: ['Veg', 'NonVeg', ''] })
+  eFoodType: 'Veg' | 'NonVeg' | '';
 
-  @Column("float", {
-    name: "fOfferAmt",
+  @Column('float', {
+    name: 'fOfferAmt',
     precision: 10,
     scale: 2,
     default: () => "'0.00'",
   })
   fOfferAmt: number;
 
-  @Column("varchar", { name: "vImage", length: 255 })
+  @Column('varchar', { name: 'vImage', length: 255 })
   vImage: string;
 
-  @Column("int", { name: "iDisplayOrder" })
+  @Column('int', { name: 'iDisplayOrder' })
   iDisplayOrder: number;
 
-  @Column("enum", {
-    name: "eStatus",
-    enum: ["Active", "Inactive", "Deleted"],
+  @Column('enum', {
+    name: 'eStatus',
+    enum: ['Active', 'Inactive', 'Deleted'],
     default: () => "'Active'",
   })
-  eStatus: "Active" | "Inactive" | "Deleted";
+  eStatus: 'Active' | 'Inactive' | 'Deleted';
 
-  @Column("enum", {
-    name: "eAvailable",
-    enum: ["Yes", "No"],
+  @Column('enum', {
+    name: 'eAvailable',
+    enum: ['Yes', 'No'],
     default: () => "'Yes'",
   })
-  eAvailable: "Yes" | "No";
+  eAvailable: 'Yes' | 'No';
 
-  @Column("enum", {
-    name: "eBestSeller",
-    enum: ["Yes", "No"],
+  @Column('enum', {
+    name: 'eBestSeller',
+    enum: ['Yes', 'No'],
     default: () => "'No'",
   })
-  eBestSeller: "Yes" | "No";
+  eBestSeller: 'Yes' | 'No';
 
-  @Column("enum", {
-    name: "eRecommended",
-    enum: ["Yes", "No"],
+  @Column('enum', {
+    name: 'eRecommended',
+    enum: ['Yes', 'No'],
     default: () => "'No'",
   })
-  eRecommended: "Yes" | "No";
+  eRecommended: 'Yes' | 'No';
 
-  @Column("varchar", { name: "vHighlightName", length: 255 })
+  @Column('varchar', { name: 'vHighlightName', length: 255 })
   vHighlightName: string;
 
-  @Column("enum", {
-    name: "prescription_required",
-    enum: ["Yes", "No"],
+  @Column('enum', {
+    name: 'prescription_required',
+    enum: ['Yes', 'No'],
     default: () => "'No'",
   })
-  prescriptionRequired: "Yes" | "No";
+  prescriptionRequired: 'Yes' | 'No';
 
-  @Column("enum", {
-    name: "eImgDownload",
-    enum: ["Yes", "No"],
+  @Column('enum', {
+    name: 'eImgDownload',
+    enum: ['Yes', 'No'],
     default: () => "'No'",
   })
-  eImgDownload: "Yes" | "No";
+  eImgDownload: 'Yes' | 'No';
 
-  @Column("enum", {
-    name: "eBuyAnyService",
-    enum: ["Yes", "No"],
+  @Column('enum', {
+    name: 'eBuyAnyService',
+    enum: ['Yes', 'No'],
     default: () => "'No'",
   })
-  eBuyAnyService: "Yes" | "No";
+  eBuyAnyService: 'Yes' | 'No';
 
-  @Column("text", { name: "vItemTypeBuyAnyService" })
+  @Column('text', { name: 'vItemTypeBuyAnyService' })
   vItemTypeBuyAnyService: string;
 
-  @Column("varchar", { name: "vSKU", length: 100 })
+  @Column('varchar', { name: 'vSKU', length: 100 })
   vSku: string;
 
-  @Column("int", { name: "ss_location", nullable: true })
+  @Column('int', { name: 'ss_location', nullable: true })
   ssLocation: number | null;
 
-  @Column("int", { name: "area", nullable: true })
+  @Column('int', { name: 'area', nullable: true })
   area: number | null;
 
-  @Column("varchar", { name: "surface", nullable: true, length: 10 })
+  @Column('varchar', { name: 'surface', nullable: true, length: 10 })
   surface: string | null;
 
-  @Column("int", { name: "item_categorie_location", nullable: true })
+  @Column('int', { name: 'item_categorie_location', nullable: true })
   itemCategorieLocation: number | null;
 
-  @Column("int", { name: "item_sous_categorie_location", nullable: true })
+  @Column('int', { name: 'item_sous_categorie_location', nullable: true })
   itemSousCategorieLocation: number | null;
 
-  @Column("varchar", { name: "commodities", nullable: true, length: 255 })
+  @Column('varchar', { name: 'commodities', nullable: true, length: 255 })
   commodities: string | null;
 
-  @Column("int", { name: "commune_id" })
+  @Column('int', { name: 'commune_id' })
   communeId: number;
 
-  @Column("varchar", { name: "lat", nullable: true, length: 255 })
+  @Column('varchar', { name: 'lat', nullable: true, length: 255 })
   lat: string | null;
 
-  @Column("varchar", { name: "lng", nullable: true, length: 255 })
+  @Column('varchar', { name: 'lng', nullable: true, length: 255 })
   lng: string | null;
 
-  @Column("varchar", { name: "adresse", nullable: true, length: 255 })
+  @Column('varchar', { name: 'adresse', nullable: true, length: 255 })
   adresse: string | null;
 }

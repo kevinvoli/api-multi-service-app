@@ -34,11 +34,16 @@ describe('DriverSubscriptionDetailsController', () => {
       controllers: [DriverSubscriptionDetailsController],
       providers: [
         DriverSubscriptionDetailsService,
-        { provide: getRepositoryToken(DriverSubscriptionDetails), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(DriverSubscriptionDetails),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    controller = module.get<DriverSubscriptionDetailsController>(DriverSubscriptionDetailsController);
+    controller = module.get<DriverSubscriptionDetailsController>(
+      DriverSubscriptionDetailsController,
+    );
   });
 
   it('should be defined', () => {

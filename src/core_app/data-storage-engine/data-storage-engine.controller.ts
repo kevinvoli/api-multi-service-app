@@ -1,11 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { DataStorageEngineService } from './data-storage-engine.service';
 import { CreateDataStorageEngineDto } from './dto/create-data-storage-engine.dto';
 import { UpdateDataStorageEngineDto } from './dto/update-data-storage-engine.dto';
 
 @Controller('data-storage-engine')
 export class DataStorageEngineController {
-  constructor(private readonly dataStorageEngineService: DataStorageEngineService) {}
+  constructor(
+    private readonly dataStorageEngineService: DataStorageEngineService,
+  ) {}
 
   @Post()
   create(@Body() createDataStorageEngineDto: CreateDataStorageEngineDto) {
@@ -23,8 +33,14 @@ export class DataStorageEngineController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDataStorageEngineDto: UpdateDataStorageEngineDto) {
-    return this.dataStorageEngineService.update(+id, updateDataStorageEngineDto);
+  update(
+    @Param('id') id: string,
+    @Body() updateDataStorageEngineDto: UpdateDataStorageEngineDto,
+  ) {
+    return this.dataStorageEngineService.update(
+      +id,
+      updateDataStorageEngineDto,
+    );
   }
 
   @Delete(':id')

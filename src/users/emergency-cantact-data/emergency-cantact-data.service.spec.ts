@@ -32,11 +32,16 @@ describe('EmergencyCantactDataService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         EmergencyCantactDataService,
-        { provide: getRepositoryToken(EmergencyContactData), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(EmergencyContactData),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    service = module.get<EmergencyCantactDataService>(EmergencyCantactDataService);
+    service = module.get<EmergencyCantactDataService>(
+      EmergencyCantactDataService,
+    );
   });
 
   it('should be defined', () => {

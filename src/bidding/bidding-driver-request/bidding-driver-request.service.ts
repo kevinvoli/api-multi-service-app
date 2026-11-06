@@ -12,7 +12,9 @@ export class BiddingDriverRequestService {
     private readonly repository: Repository<BiddingDriverRequest>,
   ) {}
 
-  async create(createDto: CreateBiddingDriverRequestDto): Promise<BiddingDriverRequest> {
+  async create(
+    createDto: CreateBiddingDriverRequestDto,
+  ): Promise<BiddingDriverRequest> {
     const entity = this.repository.create(createDto);
     return this.repository.save(entity);
   }
@@ -27,7 +29,10 @@ export class BiddingDriverRequestService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateBiddingDriverRequestDto): Promise<BiddingDriverRequest> {
+  async update(
+    id: number,
+    updateDto: UpdateBiddingDriverRequestDto,
+  ): Promise<BiddingDriverRequest> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

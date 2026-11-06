@@ -12,7 +12,9 @@ export class SendMessageTemplatesService {
     private readonly repository: Repository<SendMessageTemplates>,
   ) {}
 
-  async create(createDto: CreateSendMessageTemplateDto): Promise<SendMessageTemplates> {
+  async create(
+    createDto: CreateSendMessageTemplateDto,
+  ): Promise<SendMessageTemplates> {
     const entity = this.repository.create(createDto);
     return this.repository.save(entity);
   }
@@ -22,12 +24,17 @@ export class SendMessageTemplatesService {
   }
 
   async findOne(id: number): Promise<SendMessageTemplates> {
-    const entity = await this.repository.findOneBy({ iSendMessageId: id } as any);
+    const entity = await this.repository.findOneBy({
+      iSendMessageId: id,
+    } as any);
     if (!entity) throw new NotFoundException(`Record #${id} not found`);
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateSendMessageTemplateDto): Promise<SendMessageTemplates> {
+  async update(
+    id: number,
+    updateDto: UpdateSendMessageTemplateDto,
+  ): Promise<SendMessageTemplates> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

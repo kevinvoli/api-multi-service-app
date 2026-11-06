@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { OdaCommunesService } from './oda-communes.service';
 import { CreateOdaCommuneDto } from './dto/create-oda-commune.dto';
 import { UpdateOdaCommuneDto } from './dto/update-oda-commune.dto';
@@ -23,7 +31,10 @@ export class OdaCommunesController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateOdaCommuneDto: UpdateOdaCommuneDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateOdaCommuneDto: UpdateOdaCommuneDto,
+  ) {
     return this.odaCommunesService.update(+id, updateOdaCommuneDto);
   }
 

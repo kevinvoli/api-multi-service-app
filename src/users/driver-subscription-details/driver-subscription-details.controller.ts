@@ -1,15 +1,30 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { DriverSubscriptionDetailsService } from './driver-subscription-details.service';
 import { CreateDriverSubscriptionDetailDto } from './dto/create-driver-subscription-detail.dto';
 import { UpdateDriverSubscriptionDetailDto } from './dto/update-driver-subscription-detail.dto';
 
 @Controller('driver-subscription-details')
 export class DriverSubscriptionDetailsController {
-  constructor(private readonly driverSubscriptionDetailsService: DriverSubscriptionDetailsService) {}
+  constructor(
+    private readonly driverSubscriptionDetailsService: DriverSubscriptionDetailsService,
+  ) {}
 
   @Post()
-  create(@Body() createDriverSubscriptionDetailDto: CreateDriverSubscriptionDetailDto) {
-    return this.driverSubscriptionDetailsService.create(createDriverSubscriptionDetailDto);
+  create(
+    @Body()
+    createDriverSubscriptionDetailDto: CreateDriverSubscriptionDetailDto,
+  ) {
+    return this.driverSubscriptionDetailsService.create(
+      createDriverSubscriptionDetailDto,
+    );
   }
 
   @Get()
@@ -23,8 +38,15 @@ export class DriverSubscriptionDetailsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDriverSubscriptionDetailDto: UpdateDriverSubscriptionDetailDto) {
-    return this.driverSubscriptionDetailsService.update(+id, updateDriverSubscriptionDetailDto);
+  update(
+    @Param('id') id: string,
+    @Body()
+    updateDriverSubscriptionDetailDto: UpdateDriverSubscriptionDetailDto,
+  ) {
+    return this.driverSubscriptionDetailsService.update(
+      +id,
+      updateDriverSubscriptionDetailDto,
+    );
   }
 
   @Delete(':id')

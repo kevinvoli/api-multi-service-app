@@ -1,15 +1,29 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { DriverInsuranceReportService } from './driver-insurance-report.service';
 import { CreateDriverInsuranceReportDto } from './dto/create-driver-insurance-report.dto';
 import { UpdateDriverInsuranceReportDto } from './dto/update-driver-insurance-report.dto';
 
 @Controller('driver-insurance-report')
 export class DriverInsuranceReportController {
-  constructor(private readonly driverInsuranceReportService: DriverInsuranceReportService) {}
+  constructor(
+    private readonly driverInsuranceReportService: DriverInsuranceReportService,
+  ) {}
 
   @Post()
-  create(@Body() createDriverInsuranceReportDto: CreateDriverInsuranceReportDto) {
-    return this.driverInsuranceReportService.create(createDriverInsuranceReportDto);
+  create(
+    @Body() createDriverInsuranceReportDto: CreateDriverInsuranceReportDto,
+  ) {
+    return this.driverInsuranceReportService.create(
+      createDriverInsuranceReportDto,
+    );
   }
 
   @Get()
@@ -23,8 +37,14 @@ export class DriverInsuranceReportController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDriverInsuranceReportDto: UpdateDriverInsuranceReportDto) {
-    return this.driverInsuranceReportService.update(+id, updateDriverInsuranceReportDto);
+  update(
+    @Param('id') id: string,
+    @Body() updateDriverInsuranceReportDto: UpdateDriverInsuranceReportDto,
+  ) {
+    return this.driverInsuranceReportService.update(
+      +id,
+      updateDriverInsuranceReportDto,
+    );
   }
 
   @Delete(':id')

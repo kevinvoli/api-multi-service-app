@@ -1,57 +1,57 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity("delivery_fields", { schema: "amygo1" })
+@Entity('delivery_fields', { schema: 'amygo1' })
 export class DeliveryFields {
-  @PrimaryGeneratedColumn({ type: "int", name: "iDeliveryFieldId" })
+  @PrimaryGeneratedColumn({ type: 'int', name: 'iDeliveryFieldId' })
   iDeliveryFieldId: number;
 
-  @Column("varchar", { name: "vFieldName", length: 255 })
+  @Column('varchar', { name: 'vFieldName', length: 255 })
   vFieldName: string;
 
-  @Column("text", { name: "vFieldName_EN" })
+  @Column('text', { name: 'vFieldName_EN' })
   vFieldNameEn: string;
 
-  @Column("text", { name: "vFieldName_FR" })
+  @Column('text', { name: 'vFieldName_FR' })
   vFieldNameFr: string;
 
-  @Column("int", { name: "iOrder" })
+  @Column('int', { name: 'iOrder' })
   iOrder: number;
 
-  @Column("enum", {
-    name: "eInputType",
-    enum: ["Text", "Textarea", "Select", "Number"],
+  @Column('enum', {
+    name: 'eInputType',
+    enum: ['Text', 'Textarea', 'Select', 'Number'],
     default: () => "'Text'",
   })
-  eInputType: "Text" | "Textarea" | "Select" | "Number";
+  eInputType: 'Text' | 'Textarea' | 'Select' | 'Number';
 
-  @Column("text", { name: "tDesc" })
+  @Column('text', { name: 'tDesc' })
   tDesc: string;
 
-  @Column("enum", {
-    name: "eAllowFloat",
-    enum: ["Yes", "No"],
+  @Column('enum', {
+    name: 'eAllowFloat',
+    enum: ['Yes', 'No'],
     default: () => "'No'",
   })
-  eAllowFloat: "Yes" | "No";
+  eAllowFloat: 'Yes' | 'No';
 
-  @Column("enum", {
-    name: "eStatus",
-    enum: ["Active", "Inactive"],
+  @Column('enum', {
+    name: 'eStatus',
+    enum: ['Active', 'Inactive'],
     default: () => "'Active'",
   })
-  eStatus: "Active" | "Inactive";
+  eStatus: 'Active' | 'Inactive';
 
-  @Column("enum", {
-    name: "eRequired",
-    enum: ["Yes", "No"],
+  @Column('enum', {
+    name: 'eRequired',
+    enum: ['Yes', 'No'],
     default: () => "'Yes'",
   })
-  eRequired: "Yes" | "No";
+  eRequired: 'Yes' | 'No';
 
-  @Column("enum", {
-    name: "eEditable",
-    enum: ["Yes", "No"],
+  @Column('enum', {
+    name: 'eEditable',
+    enum: ['Yes', 'No'],
     default: () => "'Yes'",
   })
-  eEditable: "Yes" | "No";
+  eEditable: 'Yes' | 'No';
 }

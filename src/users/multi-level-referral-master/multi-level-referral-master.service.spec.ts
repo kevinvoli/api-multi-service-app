@@ -32,11 +32,16 @@ describe('MultiLevelReferralMasterService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         MultiLevelReferralMasterService,
-        { provide: getRepositoryToken(MultiLevelReferralMaster), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(MultiLevelReferralMaster),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    service = module.get<MultiLevelReferralMasterService>(MultiLevelReferralMasterService);
+    service = module.get<MultiLevelReferralMasterService>(
+      MultiLevelReferralMasterService,
+    );
   });
 
   it('should be defined', () => {

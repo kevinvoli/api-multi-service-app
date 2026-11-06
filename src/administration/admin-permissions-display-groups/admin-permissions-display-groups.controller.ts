@@ -1,15 +1,30 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { AdminPermissionsDisplayGroupsService } from './admin-permissions-display-groups.service';
 import { CreateAdminPermissionsDisplayGroupDto } from './dto/create-admin-permissions-display-group.dto';
 import { UpdateAdminPermissionsDisplayGroupDto } from './dto/update-admin-permissions-display-group.dto';
 
 @Controller('admin-permissions-display-groups')
 export class AdminPermissionsDisplayGroupsController {
-  constructor(private readonly adminPermissionsDisplayGroupsService: AdminPermissionsDisplayGroupsService) {}
+  constructor(
+    private readonly adminPermissionsDisplayGroupsService: AdminPermissionsDisplayGroupsService,
+  ) {}
 
   @Post()
-  create(@Body() createAdminPermissionsDisplayGroupDto: CreateAdminPermissionsDisplayGroupDto) {
-    return this.adminPermissionsDisplayGroupsService.create(createAdminPermissionsDisplayGroupDto);
+  create(
+    @Body()
+    createAdminPermissionsDisplayGroupDto: CreateAdminPermissionsDisplayGroupDto,
+  ) {
+    return this.adminPermissionsDisplayGroupsService.create(
+      createAdminPermissionsDisplayGroupDto,
+    );
   }
 
   @Get()
@@ -23,8 +38,15 @@ export class AdminPermissionsDisplayGroupsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAdminPermissionsDisplayGroupDto: UpdateAdminPermissionsDisplayGroupDto) {
-    return this.adminPermissionsDisplayGroupsService.update(+id, updateAdminPermissionsDisplayGroupDto);
+  update(
+    @Param('id') id: string,
+    @Body()
+    updateAdminPermissionsDisplayGroupDto: UpdateAdminPermissionsDisplayGroupDto,
+  ) {
+    return this.adminPermissionsDisplayGroupsService.update(
+      +id,
+      updateAdminPermissionsDisplayGroupDto,
+    );
   }
 
   @Delete(':id')

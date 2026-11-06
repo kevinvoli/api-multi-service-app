@@ -1,11 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { AdminPermissionsService } from './admin-permissions.service';
 import { CreateAdminPermissionDto } from './dto/create-admin-permission.dto';
 import { UpdateAdminPermissionDto } from './dto/update-admin-permission.dto';
 
 @Controller('admin-permissions')
 export class AdminPermissionsController {
-  constructor(private readonly adminPermissionsService: AdminPermissionsService) {}
+  constructor(
+    private readonly adminPermissionsService: AdminPermissionsService,
+  ) {}
 
   @Post()
   create(@Body() createAdminPermissionDto: CreateAdminPermissionDto) {
@@ -23,7 +33,10 @@ export class AdminPermissionsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAdminPermissionDto: UpdateAdminPermissionDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateAdminPermissionDto: UpdateAdminPermissionDto,
+  ) {
     return this.adminPermissionsService.update(+id, updateAdminPermissionDto);
   }
 

@@ -34,11 +34,16 @@ describe('ContentCubexDetailsController', () => {
       controllers: [ContentCubexDetailsController],
       providers: [
         ContentCubexDetailsService,
-        { provide: getRepositoryToken(ContentCubexDetails), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(ContentCubexDetails),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    controller = module.get<ContentCubexDetailsController>(ContentCubexDetailsController);
+    controller = module.get<ContentCubexDetailsController>(
+      ContentCubexDetailsController,
+    );
   });
 
   it('should be defined', () => {

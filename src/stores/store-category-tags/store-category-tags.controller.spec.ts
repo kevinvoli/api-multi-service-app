@@ -38,7 +38,9 @@ describe('StoreCategoryTagsController', () => {
       ],
     }).compile();
 
-    controller = module.get<StoreCategoryTagsController>(StoreCategoryTagsController);
+    controller = module.get<StoreCategoryTagsController>(
+      StoreCategoryTagsController,
+    );
   });
 
   it('should be defined', () => {

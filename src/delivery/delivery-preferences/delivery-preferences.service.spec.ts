@@ -32,11 +32,16 @@ describe('DeliveryPreferencesService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         DeliveryPreferencesService,
-        { provide: getRepositoryToken(DeliveryPreferences), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(DeliveryPreferences),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    service = module.get<DeliveryPreferencesService>(DeliveryPreferencesService);
+    service = module.get<DeliveryPreferencesService>(
+      DeliveryPreferencesService,
+    );
   });
 
   it('should be defined', () => {

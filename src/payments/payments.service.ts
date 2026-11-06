@@ -19,10 +19,16 @@ export class PaymentsService {
   ) {}
 
   // PaymentTransaction CRUD
-  async createPaymentTransaction(createPaymentDto: CreatePaymentDto): Promise<PaymentTransaction> {
-    const user = await this.userRepository.findOneBy({ id: createPaymentDto.userId });
+  async createPaymentTransaction(
+    createPaymentDto: CreatePaymentDto,
+  ): Promise<PaymentTransaction> {
+    const user = await this.userRepository.findOneBy({
+      id: createPaymentDto.userId,
+    });
     if (!user) {
-      throw new NotFoundException(`User with ID ${createPaymentDto.userId} not found`);
+      throw new NotFoundException(
+        `User with ID ${createPaymentDto.userId} not found`,
+      );
     }
 
     const newTransaction = this.paymentTransactionRepository.create({
@@ -37,14 +43,22 @@ export class PaymentsService {
   }
 
   async findOnePaymentTransaction(id: number): Promise<PaymentTransaction> {
-    const transaction = await this.paymentTransactionRepository.findOne({ where: { id }, relations: ['user'] });
+    const transaction = await this.paymentTransactionRepository.findOne({
+      where: { id },
+      relations: ['user'],
+    });
     if (!transaction) {
-      throw new NotFoundException(`Payment Transaction with ID ${id} not found`);
+      throw new NotFoundException(
+        `Payment Transaction with ID ${id} not found`,
+      );
     }
     return transaction;
   }
 
-  async updatePaymentTransaction(id: number, updatePaymentDto: UpdatePaymentDto): Promise<PaymentTransaction> {
+  async updatePaymentTransaction(
+    id: number,
+    updatePaymentDto: UpdatePaymentDto,
+  ): Promise<PaymentTransaction> {
     await this.paymentTransactionRepository.update(id, updatePaymentDto);
     return this.findOnePaymentTransaction(id);
   }

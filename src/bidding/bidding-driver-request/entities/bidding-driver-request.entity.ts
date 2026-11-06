@@ -1,26 +1,26 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity("bidding_driver_request", { schema: "amygo1" })
+@Entity('bidding_driver_request', { schema: 'amygo1' })
 export class BiddingDriverRequest {
-  @PrimaryGeneratedColumn({ type: "int", name: "iRequestId" })
+  @PrimaryGeneratedColumn({ type: 'int', name: 'iRequestId' })
   iRequestId: number;
 
-  @Column("int", { name: "iDriverId" })
+  @Column('int', { name: 'iDriverId' })
   iDriverId: number;
 
-  @Column("enum", {
-    name: "eRequestStatus",
-    enum: ["Pending", "Approve", "Cancel"],
+  @Column('enum', {
+    name: 'eRequestStatus',
+    enum: ['Pending', 'Approve', 'Cancel'],
     default: () => "'Pending'",
   })
-  eRequestStatus: "Pending" | "Approve" | "Cancel";
+  eRequestStatus: 'Pending' | 'Approve' | 'Cancel';
 
-  @Column("timestamp", {
-    name: "tRequestDate",
-    default: () => "CURRENT_TIMESTAMP",
+  @Column('timestamp', {
+    name: 'tRequestDate',
+    default: () => 'CURRENT_TIMESTAMP',
   })
   tRequestDate: Date;
 
-  @Column("int", { name: "iBiddingId" })
+  @Column('int', { name: 'iBiddingId' })
   iBiddingId: number;
 }

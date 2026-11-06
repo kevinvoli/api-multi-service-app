@@ -12,7 +12,9 @@ export class StoreCategoryTagsService {
     private readonly repository: Repository<StoreCategoryTags>,
   ) {}
 
-  async create(createDto: CreateStoreCategoryTagDto): Promise<StoreCategoryTags> {
+  async create(
+    createDto: CreateStoreCategoryTagDto,
+  ): Promise<StoreCategoryTags> {
     const entity = this.repository.create(createDto);
     return this.repository.save(entity);
   }
@@ -27,7 +29,10 @@ export class StoreCategoryTagsService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateStoreCategoryTagDto): Promise<StoreCategoryTags> {
+  async update(
+    id: number,
+    updateDto: UpdateStoreCategoryTagDto,
+  ): Promise<StoreCategoryTags> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

@@ -38,7 +38,9 @@ describe('LanguageLabelOtherController', () => {
       ],
     }).compile();
 
-    controller = module.get<LanguageLabelOtherController>(LanguageLabelOtherController);
+    controller = module.get<LanguageLabelOtherController>(
+      LanguageLabelOtherController,
+    );
   });
 
   it('should be defined', () => {

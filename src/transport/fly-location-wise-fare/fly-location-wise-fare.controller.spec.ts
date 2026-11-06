@@ -34,11 +34,16 @@ describe('FlyLocationWiseFareController', () => {
       controllers: [FlyLocationWiseFareController],
       providers: [
         FlyLocationWiseFareService,
-        { provide: getRepositoryToken(FlyLocationWiseFare), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(FlyLocationWiseFare),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    controller = module.get<FlyLocationWiseFareController>(FlyLocationWiseFareController);
+    controller = module.get<FlyLocationWiseFareController>(
+      FlyLocationWiseFareController,
+    );
   });
 
   it('should be defined', () => {

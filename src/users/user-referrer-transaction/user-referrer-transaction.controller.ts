@@ -1,15 +1,29 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { UserReferrerTransactionService } from './user-referrer-transaction.service';
 import { CreateUserReferrerTransactionDto } from './dto/create-user-referrer-transaction.dto';
 import { UpdateUserReferrerTransactionDto } from './dto/update-user-referrer-transaction.dto';
 
 @Controller('user-referrer-transaction')
 export class UserReferrerTransactionController {
-  constructor(private readonly userReferrerTransactionService: UserReferrerTransactionService) {}
+  constructor(
+    private readonly userReferrerTransactionService: UserReferrerTransactionService,
+  ) {}
 
   @Post()
-  create(@Body() createUserReferrerTransactionDto: CreateUserReferrerTransactionDto) {
-    return this.userReferrerTransactionService.create(createUserReferrerTransactionDto);
+  create(
+    @Body() createUserReferrerTransactionDto: CreateUserReferrerTransactionDto,
+  ) {
+    return this.userReferrerTransactionService.create(
+      createUserReferrerTransactionDto,
+    );
   }
 
   @Get()
@@ -23,8 +37,14 @@ export class UserReferrerTransactionController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserReferrerTransactionDto: UpdateUserReferrerTransactionDto) {
-    return this.userReferrerTransactionService.update(+id, updateUserReferrerTransactionDto);
+  update(
+    @Param('id') id: string,
+    @Body() updateUserReferrerTransactionDto: UpdateUserReferrerTransactionDto,
+  ) {
+    return this.userReferrerTransactionService.update(
+      +id,
+      updateUserReferrerTransactionDto,
+    );
   }
 
   @Delete(':id')

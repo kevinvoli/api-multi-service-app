@@ -27,7 +27,10 @@ export class AdminAlertsService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateAdminAlertDto): Promise<AdminAlerts> {
+  async update(
+    id: number,
+    updateDto: UpdateAdminAlertDto,
+  ): Promise<AdminAlerts> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

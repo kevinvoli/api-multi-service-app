@@ -27,7 +27,10 @@ export class MenuItemMediaService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateMenuItemMediaDto): Promise<MenuItemMedia> {
+  async update(
+    id: number,
+    updateDto: UpdateMenuItemMediaDto,
+  ): Promise<MenuItemMedia> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

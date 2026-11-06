@@ -57,7 +57,7 @@ describe('GeoService', () => {
       );
     });
 
-    it('retourne { updated: false } si le driver n\'existe pas', async () => {
+    it("retourne { updated: false } si le driver n'existe pas", async () => {
       driverRepo.update.mockResolvedValue({ affected: 0 });
       const result = await service.updateDriverPosition(999, '0', '0');
       expect(result.updated).toBe(false);
@@ -69,9 +69,39 @@ describe('GeoService', () => {
   describe('findNearbyDrivers', () => {
     it('retourne les drivers dans le rayon, triés par distance', async () => {
       const drivers = [
-        { iDriverId: 1, vName: 'Ali', vLastName: 'B', vPhone: '0700', vImage: '', vLatitude: '48.860', vLongitude: '2.352', vAvgRating: '4.5', iDriverVehicleId: '1' },
-        { iDriverId: 2, vName: 'Bob', vLastName: 'C', vPhone: '0701', vImage: '', vLatitude: '48.900', vLongitude: '2.352', vAvgRating: '4.0', iDriverVehicleId: '2' },
-        { iDriverId: 3, vName: 'Far', vLastName: 'D', vPhone: '0702', vImage: '', vLatitude: '51.500', vLongitude: '0.000', vAvgRating: '3.0', iDriverVehicleId: '3' }, // trop loin
+        {
+          iDriverId: 1,
+          vName: 'Ali',
+          vLastName: 'B',
+          vPhone: '0700',
+          vImage: '',
+          vLatitude: '48.860',
+          vLongitude: '2.352',
+          vAvgRating: '4.5',
+          iDriverVehicleId: '1',
+        },
+        {
+          iDriverId: 2,
+          vName: 'Bob',
+          vLastName: 'C',
+          vPhone: '0701',
+          vImage: '',
+          vLatitude: '48.900',
+          vLongitude: '2.352',
+          vAvgRating: '4.0',
+          iDriverVehicleId: '2',
+        },
+        {
+          iDriverId: 3,
+          vName: 'Far',
+          vLastName: 'D',
+          vPhone: '0702',
+          vImage: '',
+          vLatitude: '51.500',
+          vLongitude: '0.000',
+          vAvgRating: '3.0',
+          iDriverVehicleId: '3',
+        }, // trop loin
       ];
       const qb = makeQb(null, drivers);
       qb.getMany = jest.fn().mockResolvedValue(drivers);
@@ -98,7 +128,17 @@ describe('GeoService', () => {
 
     it('filtre les drivers avec des coordonnees invalides', async () => {
       const drivers = [
-        { iDriverId: 1, vLatitude: 'invalid', vLongitude: '2.35', vName: 'X', vLastName: 'Y', vPhone: '', vImage: '', vAvgRating: '0', iDriverVehicleId: '1' },
+        {
+          iDriverId: 1,
+          vLatitude: 'invalid',
+          vLongitude: '2.35',
+          vName: 'X',
+          vLastName: 'Y',
+          vPhone: '',
+          vImage: '',
+          vAvgRating: '0',
+          iDriverVehicleId: '1',
+        },
       ];
       const qb = makeQb(null, drivers);
       qb.getMany = jest.fn().mockResolvedValue(drivers);
@@ -119,16 +159,27 @@ describe('GeoService', () => {
         iDriverId: 10,
         iCompanyId: 1,
         iActive: 'Active',
-        tStartLat: '48.85', tStartLong: '2.35',
-        tEndLat: '48.90', tEndLong: '2.40',
-        tSaddress: 'Paris', tDaddress: 'Boulogne',
-        iFare: 15, fDistance: 7, fDuration: 20,
+        tStartLat: '48.85',
+        tStartLong: '2.35',
+        tEndLat: '48.90',
+        tEndLong: '2.40',
+        tSaddress: 'Paris',
+        tDaddress: 'Boulogne',
+        iFare: 15,
+        fDistance: 7,
+        fDuration: 20,
         vTripPaymentMode: 'Cash',
         eType: 'Ride',
         tTripRequestDate: new Date(),
         iDriver: {
-          iDriverId: 10, vName: 'Karim', vLastName: 'A',
-          vPhone: '0700', vImage: '', vLatitude: '48.86', vLongitude: '2.35', vAvgRating: '4.8',
+          iDriverId: 10,
+          vName: 'Karim',
+          vLastName: 'A',
+          vPhone: '0700',
+          vImage: '',
+          vLatitude: '48.86',
+          vLongitude: '2.35',
+          vAvgRating: '4.8',
         },
       };
 
@@ -155,7 +206,9 @@ describe('GeoService', () => {
       };
       tripRepo.createQueryBuilder.mockReturnValue(qb);
 
-      await expect(service.getTripWithDriver(999)).rejects.toThrow(NotFoundException);
+      await expect(service.getTripWithDriver(999)).rejects.toThrow(
+        NotFoundException,
+      );
     });
   });
 
@@ -164,7 +217,12 @@ describe('GeoService', () => {
   describe('calculateDistance', () => {
     it('utilise Haversine en fallback (sans cle Google Maps)', async () => {
       delete process.env.GOOGLE_MAPS_API_KEY;
-      const result = await service.calculateDistance(48.8566, 2.3522, 48.9784, 2.3456);
+      const result = await service.calculateDistance(
+        48.8566,
+        2.3522,
+        48.9784,
+        2.3456,
+      );
       expect(result.source).toBe('haversine');
       expect(result.distanceKm).toBeGreaterThan(0);
       expect(result.estimatedMinutes).toBeGreaterThan(0);
@@ -172,7 +230,12 @@ describe('GeoService', () => {
 
     it('calcule une distance Paris-Boulogne ~13km', async () => {
       delete process.env.GOOGLE_MAPS_API_KEY;
-      const result = await service.calculateDistance(48.8566, 2.3522, 48.8350, 2.2430);
+      const result = await service.calculateDistance(
+        48.8566,
+        2.3522,
+        48.835,
+        2.243,
+      );
       expect(result.distanceKm).toBeGreaterThan(5);
       expect(result.distanceKm).toBeLessThan(20);
     });

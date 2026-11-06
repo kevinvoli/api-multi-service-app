@@ -38,7 +38,9 @@ describe('VehicleCategoryController', () => {
       ],
     }).compile();
 
-    controller = module.get<VehicleCategoryController>(VehicleCategoryController);
+    controller = module.get<VehicleCategoryController>(
+      VehicleCategoryController,
+    );
   });
 
   it('should be defined', () => {

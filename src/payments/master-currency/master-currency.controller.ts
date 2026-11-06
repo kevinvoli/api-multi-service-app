@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { MasterCurrencyService } from './master-currency.service';
 import { CreateMasterCurrencyDto } from './dto/create-master-currency.dto';
 import { UpdateMasterCurrencyDto } from './dto/update-master-currency.dto';
@@ -23,7 +31,10 @@ export class MasterCurrencyController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMasterCurrencyDto: UpdateMasterCurrencyDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateMasterCurrencyDto: UpdateMasterCurrencyDto,
+  ) {
     return this.masterCurrencyService.update(+id, updateMasterCurrencyDto);
   }
 

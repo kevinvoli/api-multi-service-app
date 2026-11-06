@@ -1,11 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { AppScreenMasterService } from './app-screen-master.service';
 import { CreateAppScreenMasterDto } from './dto/create-app-screen-master.dto';
 import { UpdateAppScreenMasterDto } from './dto/update-app-screen-master.dto';
 
 @Controller('app-screen-master')
 export class AppScreenMasterController {
-  constructor(private readonly appScreenMasterService: AppScreenMasterService) {}
+  constructor(
+    private readonly appScreenMasterService: AppScreenMasterService,
+  ) {}
 
   @Post()
   create(@Body() createAppScreenMasterDto: CreateAppScreenMasterDto) {
@@ -23,7 +33,10 @@ export class AppScreenMasterController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAppScreenMasterDto: UpdateAppScreenMasterDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateAppScreenMasterDto: UpdateAppScreenMasterDto,
+  ) {
     return this.appScreenMasterService.update(+id, updateAppScreenMasterDto);
   }
 

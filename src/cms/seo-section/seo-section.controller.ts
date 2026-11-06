@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { SeoSectionService } from './seo-section.service';
 import { CreateSeoSectionDto } from './dto/create-seo-section.dto';
 import { UpdateSeoSectionDto } from './dto/update-seo-section.dto';
@@ -23,7 +31,10 @@ export class SeoSectionController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateSeoSectionDto: UpdateSeoSectionDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateSeoSectionDto: UpdateSeoSectionDto,
+  ) {
     return this.seoSectionService.update(+id, updateSeoSectionDto);
   }
 

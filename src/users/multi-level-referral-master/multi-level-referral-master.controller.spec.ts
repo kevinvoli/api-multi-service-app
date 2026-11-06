@@ -34,11 +34,16 @@ describe('MultiLevelReferralMasterController', () => {
       controllers: [MultiLevelReferralMasterController],
       providers: [
         MultiLevelReferralMasterService,
-        { provide: getRepositoryToken(MultiLevelReferralMaster), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(MultiLevelReferralMaster),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    controller = module.get<MultiLevelReferralMasterController>(MultiLevelReferralMasterController);
+    controller = module.get<MultiLevelReferralMasterController>(
+      MultiLevelReferralMasterController,
+    );
   });
 
   it('should be defined', () => {

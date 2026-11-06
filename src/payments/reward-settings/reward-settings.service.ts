@@ -27,7 +27,10 @@ export class RewardSettingsService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateRewardSettingDto): Promise<RewardSettings> {
+  async update(
+    id: number,
+    updateDto: UpdateRewardSettingDto,
+  ): Promise<RewardSettings> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

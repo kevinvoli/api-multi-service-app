@@ -32,11 +32,16 @@ describe('PushnotificationLogService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         PushnotificationLogService,
-        { provide: getRepositoryToken(PushnotificationLog), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(PushnotificationLog),
+          useValue: mockRepo,
+        },
       ],
     }).compile();
 
-    service = module.get<PushnotificationLogService>(PushnotificationLogService);
+    service = module.get<PushnotificationLogService>(
+      PushnotificationLogService,
+    );
   });
 
   it('should be defined', () => {

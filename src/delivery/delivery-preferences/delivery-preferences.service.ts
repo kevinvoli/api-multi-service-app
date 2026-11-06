@@ -12,7 +12,9 @@ export class DeliveryPreferencesService {
     private readonly repository: Repository<DeliveryPreferences>,
   ) {}
 
-  async create(createDto: CreateDeliveryPreferenceDto): Promise<DeliveryPreferences> {
+  async create(
+    createDto: CreateDeliveryPreferenceDto,
+  ): Promise<DeliveryPreferences> {
     const entity = this.repository.create(createDto);
     return this.repository.save(entity);
   }
@@ -22,12 +24,17 @@ export class DeliveryPreferencesService {
   }
 
   async findOne(id: number): Promise<DeliveryPreferences> {
-    const entity = await this.repository.findOneBy({ iPreferenceId: id } as any);
+    const entity = await this.repository.findOneBy({
+      iPreferenceId: id,
+    } as any);
     if (!entity) throw new NotFoundException(`Record #${id} not found`);
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateDeliveryPreferenceDto): Promise<DeliveryPreferences> {
+  async update(
+    id: number,
+    updateDto: UpdateDeliveryPreferenceDto,
+  ): Promise<DeliveryPreferences> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

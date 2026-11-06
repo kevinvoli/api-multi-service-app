@@ -22,12 +22,17 @@ export class UserPaymentInfoService {
   }
 
   async findOne(id: number): Promise<UserPaymentInfo> {
-    const entity = await this.repository.findOneBy({ iPaymentInfoId: id } as any);
+    const entity = await this.repository.findOneBy({
+      iPaymentInfoId: id,
+    } as any);
     if (!entity) throw new NotFoundException(`Record #${id} not found`);
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateUserPaymentInfoDto): Promise<UserPaymentInfo> {
+  async update(
+    id: number,
+    updateDto: UpdateUserPaymentInfoDto,
+  ): Promise<UserPaymentInfo> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

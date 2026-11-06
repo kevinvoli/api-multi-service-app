@@ -27,7 +27,10 @@ export class FavoriteStoreService {
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateFavoriteStoreDto): Promise<FavoriteStore> {
+  async update(
+    id: number,
+    updateDto: UpdateFavoriteStoreDto,
+  ): Promise<FavoriteStore> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }

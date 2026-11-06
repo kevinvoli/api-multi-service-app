@@ -12,7 +12,9 @@ export class MenuItemOptionsCategoryService {
     private readonly repository: Repository<MenuitemOptionsCategory>,
   ) {}
 
-  async create(createDto: CreateMenuItemOptionsCategoryDto): Promise<MenuitemOptionsCategory> {
+  async create(
+    createDto: CreateMenuItemOptionsCategoryDto,
+  ): Promise<MenuitemOptionsCategory> {
     const entity = this.repository.create(createDto);
     return this.repository.save(entity);
   }
@@ -22,12 +24,17 @@ export class MenuItemOptionsCategoryService {
   }
 
   async findOne(id: number): Promise<MenuitemOptionsCategory> {
-    const entity = await this.repository.findOneBy({ iOptionsCategoryId: id } as any);
+    const entity = await this.repository.findOneBy({
+      iOptionsCategoryId: id,
+    } as any);
     if (!entity) throw new NotFoundException(`Record #${id} not found`);
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateMenuItemOptionsCategoryDto): Promise<MenuitemOptionsCategory> {
+  async update(
+    id: number,
+    updateDto: UpdateMenuItemOptionsCategoryDto,
+  ): Promise<MenuitemOptionsCategory> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }
