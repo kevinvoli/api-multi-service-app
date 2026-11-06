@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { ObjectProspections } from './entities/object-prospection.entity';
 import { CreateObjectProspectionDto } from './dto/create-object-prospection.dto';
 import { UpdateObjectProspectionDto } from './dto/update-object-prospection.dto';
 
 @Injectable()
 export class ObjectProspectionsService {
-  create(createObjectProspectionDto: CreateObjectProspectionDto) {
-    return 'This action adds a new objectProspection';
+  constructor(
+    @InjectRepository(ObjectProspections)
+    private readonly repository: Repository<ObjectProspections>,
+  ) {}
+
+  async create(createDto: CreateObjectProspectionDto): Promise<ObjectProspections> {
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all objectProspections`;
+  async findAll(): Promise<ObjectProspections[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} objectProspection`;
+  async findOne(id: number): Promise<ObjectProspections> {
+    const entity = await this.repository.findOneBy({ id });
+    if (!entity) throw new NotFoundException(`Record #${id} not found`);
+    return entity;
   }
 
-  update(id: number, updateObjectProspectionDto: UpdateObjectProspectionDto) {
-    return `This action updates a #${id} objectProspection`;
+  async update(id: number, updateDto: UpdateObjectProspectionDto): Promise<ObjectProspections> {
+    await this.repository.update(id, updateDto);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} objectProspection`;
+  async remove(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }
