@@ -1,5 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import * as https from 'https';
+import { randomInt } from 'crypto';
 
 // ─── OTP en mémoire (TTL 10 min) ─────────────────────────────────────────────
 interface OtpEntry { code: string; expiresAt: number }
@@ -114,15 +115,15 @@ export class NotificationsService {
   // Remplace : ajax_driver_verification.php (type=send)
 
   async sendOtp(phone: string): Promise<{ sent: boolean; code?: string }> {
-    const code = String(Math.floor(100000 + Math.random() * 900000)); // 6 chiffres
+    const code = String(randomInt(100000, 1000000)); // 6 chiffres
     otpStore.set(phone, { code, expiresAt: Date.now() + 10 * 60 * 1000 }); // TTL 10 min
 
     const message = `Votre code de vérification Amygo : ${code}`;
     const result = await this.sendSms(phone, message);
 
-    // En dev, si Twilio non configuré on retourne le code directement
+    // Hors production uniquement : sinon un échec Twilio exposerait le code au client
     if (!result.sent) {
-      return { sent: false, code };
+      return process.env.NODE_ENV === 'production' ? { sent: false } : { sent: false, code };
     }
     return { sent: true };
   }
