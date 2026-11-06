@@ -1,4 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, OneToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  OneToOne,
+  JoinColumn,
+  OneToMany,
+} from 'typeorm';
 import { User } from '../../users/entities/user.entity';
 import { Vehicle } from './vehicle.entity'; // Import Vehicle for relation
 

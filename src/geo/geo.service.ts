@@ -1,11 +1,17 @@
 import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import * as https from 'https';
 import { RegisterDriver } from '../users/register-driver/entities/register-driver.entity';
 import { Trips } from '../transport/trips/entities/trip.entity';
 
 // ─── Haversine ───────────────────────────────────────────────────────────────
-function haversineKm(lat1: number, lon1: number, lat2: number, lon2: number): number {
+function haversineKm(
+  lat1: number,
+  lon1: number,
+  lat2: number,
+  lon2: number,
+): number {
   const R = 6371;
   const dLat = ((lat2 - lat1) * Math.PI) / 180;
   const dLon = ((lon2 - lon1) * Math.PI) / 180;
@@ -68,7 +74,9 @@ export class GeoService {
     const qb = this.driverRepo
       .createQueryBuilder('d')
       .where('d.eStatus = :status', { status: 'active' })
-      .andWhere('d.vLatitude != :empty AND d.vLongitude != :empty', { empty: '' });
+      .andWhere('d.vLatitude != :empty AND d.vLongitude != :empty', {
+        empty: '',
+      });
 
     if (companyId) {
       qb.andWhere('d.iCompanyId = :companyId', { companyId });
@@ -186,14 +194,24 @@ export class GeoService {
 
     if (googleKey) {
       try {
-        const result = await this._googleDirections(originLat, originLon, destLat, destLon, googleKey);
+        const result = await this._googleDirections(
+          originLat,
+          originLon,
+          destLat,
+          destLon,
+          googleKey,
+        );
         if (result) return result;
       } catch (err) {
-        this.logger.warn('Google Directions fallback to Haversine: ' + err.message);
+        this.logger.warn(
+          'Google Directions fallback to Haversine: ' + err.message,
+        );
       }
     }
 
-    const distanceKm = Math.round(haversineKm(originLat, originLon, destLat, destLon) * 100) / 100;
+    const distanceKm =
+      Math.round(haversineKm(originLat, originLon, destLat, destLon) * 100) /
+      100;
     // Estimation : 30 km/h moyenne en ville
     const estimatedMinutes = Math.round((distanceKm / 30) * 60);
 
@@ -206,27 +224,33 @@ export class GeoService {
     dLat: number,
     dLon: number,
     key: string,
-  ): Promise<{ distanceKm: number; estimatedMinutes: number; source: string } | null> {
+  ): Promise<{
+    distanceKm: number;
+    estimatedMinutes: number;
+    source: string;
+  } | null> {
     return new Promise((resolve) => {
-      const https = require('https');
-      const path =
-        `/maps/api/directions/json?origin=${oLat},${oLon}&destination=${dLat},${dLon}&key=${key}`;
-      const req = https.get({ hostname: 'maps.googleapis.com', path }, (res: any) => {
-        let raw = '';
-        res.on('data', (c: any) => (raw += c));
-        res.on('end', () => {
-          try {
-            const data = JSON.parse(raw);
-            const leg = data?.routes?.[0]?.legs?.[0];
-            if (!leg) return resolve(null);
-            const distanceKm = Math.round((leg.distance.value / 1000) * 100) / 100;
-            const estimatedMinutes = Math.round(leg.duration.value / 60);
-            resolve({ distanceKm, estimatedMinutes, source: 'google' });
-          } catch {
-            resolve(null);
-          }
-        });
-      });
+      const path = `/maps/api/directions/json?origin=${oLat},${oLon}&destination=${dLat},${dLon}&key=${key}`;
+      const req = https.get(
+        { hostname: 'maps.googleapis.com', path },
+        (res: any) => {
+          let raw = '';
+          res.on('data', (c: any) => (raw += c));
+          res.on('end', () => {
+            try {
+              const data = JSON.parse(raw);
+              const leg = data?.routes?.[0]?.legs?.[0];
+              if (!leg) return resolve(null);
+              const distanceKm =
+                Math.round((leg.distance.value / 1000) * 100) / 100;
+              const estimatedMinutes = Math.round(leg.duration.value / 60);
+              resolve({ distanceKm, estimatedMinutes, source: 'google' });
+            } catch {
+              resolve(null);
+            }
+          });
+        },
+      );
       req.on('error', () => resolve(null));
     });
   }

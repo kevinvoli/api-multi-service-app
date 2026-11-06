@@ -1,6 +1,10 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Not, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { CabBooking } from './entities/cab-booking.entity';
 import { CreateCabBookingDto } from './dto/create-cab-booking.dto';
 import { UpdateCabBookingDto } from './dto/update-cab-booking.dto';
@@ -26,7 +30,9 @@ export class CabBookingService {
 
     // Si pas d'userId fourni, chercher ou créer le passager par email
     if (!userId && dto.vEmail) {
-      const existing = await this.userRepo.findOneBy({ vEmail: dto.vEmail } as any);
+      const existing = await this.userRepo.findOneBy({
+        vEmail: dto.vEmail,
+      } as any);
       if (existing) {
         userId = existing.iUserId;
       } else if (dto.vName && dto.vPhone) {
@@ -39,13 +45,15 @@ export class CabBookingService {
           vCountry: dto.vCountry || '',
           eStatus: 'Inactive',
         } as any);
-        const saved = await this.userRepo.save(newUser) as any;
+        const saved = (await this.userRepo.save(newUser)) as any;
         userId = saved.iUserId;
       }
     }
 
     if (!userId || !dto.vSourceAddresss) {
-      throw new BadRequestException('Informations de réservation incomplètes (userId ou adresse source manquante)');
+      throw new BadRequestException(
+        'Informations de réservation incomplètes (userId ou adresse source manquante)',
+      );
     }
 
     const bookingNo = String(Math.floor(Math.random() * 90000000) + 10000000);
@@ -81,9 +89,12 @@ export class CabBookingService {
   // Remplace : ajax_assign_driver_cabbooking.php
 
   async assignDriver(bookingId: number, driverId: number): Promise<CabBooking> {
-    const booking = await this.findOne(bookingId);
-    const driver = await this.driverRepo.findOneBy({ iDriverId: driverId } as any);
-    if (!driver) throw new NotFoundException(`Chauffeur #${driverId} non trouvé`);
+    await this.findOne(bookingId);
+    const driver = await this.driverRepo.findOneBy({
+      iDriverId: driverId,
+    } as any);
+    if (!driver)
+      throw new NotFoundException(`Chauffeur #${driverId} non trouvé`);
 
     await this.repository.update(bookingId, {
       iDriverId: driverId,
@@ -97,7 +108,9 @@ export class CabBookingService {
   // ─── Liste des chauffeurs disponibles par compagnie ───────────────────────────
   // Remplace : ajax_find_driver.php
 
-  async findDriversByCompany(companyId: number): Promise<Partial<RegisterDriver>[]> {
+  async findDriversByCompany(
+    companyId: number,
+  ): Promise<Partial<RegisterDriver>[]> {
     const drivers = await this.driverRepo
       .createQueryBuilder('d')
       .select(['d.iDriverId', 'd.vName', 'd.vLastName', 'd.vEmail', 'd.vPhone'])
@@ -122,29 +135,49 @@ export class CabBookingService {
 
   // ─── Liste des réservations avec filtres ─────────────────────────────────────
 
-  async findAll(filters?: { companyId?: number; status?: string; driverId?: number }): Promise<CabBooking[]> {
-    const qb = this.repository.createQueryBuilder('b').orderBy('b.iCabBookingId', 'DESC');
-    if (filters?.companyId) qb.andWhere('b.iCompanyId = :cid', { cid: filters.companyId });
-    if (filters?.status) qb.andWhere('b.eStatus = :status', { status: filters.status });
-    if (filters?.driverId) qb.andWhere('b.iDriverId = :did', { did: filters.driverId });
+  findAll(filters?: {
+    companyId?: number;
+    status?: string;
+    driverId?: number;
+  }): Promise<CabBooking[]> {
+    const qb = this.repository
+      .createQueryBuilder('b')
+      .orderBy('b.iCabBookingId', 'DESC');
+    if (filters?.companyId)
+      qb.andWhere('b.iCompanyId = :cid', { cid: filters.companyId });
+    if (filters?.status)
+      qb.andWhere('b.eStatus = :status', { status: filters.status });
+    if (filters?.driverId)
+      qb.andWhere('b.iDriverId = :did', { did: filters.driverId });
     return qb.getMany() as any;
   }
 
   async findOne(id: number): Promise<CabBooking> {
-    const entity = await this.repository.findOneBy({ iCabBookingId: id } as any);
+    const entity = await this.repository.findOneBy({
+      iCabBookingId: id,
+    } as any);
     if (!entity) throw new NotFoundException(`Réservation #${id} non trouvée`);
     return entity;
   }
 
-  async update(id: number, updateDto: UpdateCabBookingDto): Promise<CabBooking> {
+  async update(
+    id: number,
+    updateDto: UpdateCabBookingDto,
+  ): Promise<CabBooking> {
     await this.repository.update(id, updateDto as any);
     return this.findOne(id);
   }
 
   // ─── Annuler une réservation ──────────────────────────────────────────────────
 
-  async cancel(id: number, cancelBy: 'Driver' | 'Rider' | 'Admin'): Promise<CabBooking> {
-    await this.repository.update(id, { eStatus: 'Cancel', eCancelBy: cancelBy } as any);
+  async cancel(
+    id: number,
+    cancelBy: 'Driver' | 'Rider' | 'Admin',
+  ): Promise<CabBooking> {
+    await this.repository.update(id, {
+      eStatus: 'Cancel',
+      eCancelBy: cancelBy,
+    } as any);
     return this.findOne(id);
   }
 

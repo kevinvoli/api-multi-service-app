@@ -35,9 +35,14 @@ export class FareService {
     const vehicle = await this.vehicleTypeRepo.findOneBy({
       iVehicleTypeId: dto.vehicleTypeId,
     });
-    if (!vehicle) throw new NotFoundException(`Vehicle type #${dto.vehicleTypeId} not found`);
+    if (!vehicle)
+      throw new NotFoundException(
+        `Vehicle type #${dto.vehicleTypeId} not found`,
+      );
 
-    const bookingDate = dto.bookingDate ? new Date(dto.bookingDate) : new Date();
+    const bookingDate = dto.bookingDate
+      ? new Date(dto.bookingDate)
+      : new Date();
     const distance = Math.round(dto.distanceKm * 100) / 100;
     const duration = Math.round(dto.durationMin * 100) / 100;
 
@@ -54,10 +59,11 @@ export class FareService {
         baseFare = vehicle.fFixedFare;
         break;
 
-      case 'Hourly':
+      case 'Hourly': {
         const hours = duration / 60;
         baseFare = vehicle.fPricePerHour * Math.max(hours, vehicle.fMinHour);
         break;
+      }
 
       case 'Regular':
       default:
@@ -125,7 +131,8 @@ export class FareService {
     if (eType) where.eType = eType;
 
     const vehicles = await this.vehicleTypeRepo.find({ where });
-    const results: Array<{ vehicleType: VehicleType; fare: FareBreakdown }> = [];
+    const results: Array<{ vehicleType: VehicleType; fare: FareBreakdown }> =
+      [];
 
     for (const vehicle of vehicles) {
       const fareResult = await this.estimate({
@@ -153,7 +160,13 @@ export class FareService {
 
     // Surge nuit (priorité sur pickup si les deux actifs)
     if (vehicle.eNightStatus === 'Active') {
-      if (this.isTimeInRange(timeStr, vehicle.tNightStartTime, vehicle.tNightEndTime)) {
+      if (
+        this.isTimeInRange(
+          timeStr,
+          vehicle.tNightStartTime,
+          vehicle.tNightEndTime,
+        )
+      ) {
         return {
           multiplier: vehicle.fNightPrice,
           type: 'Night',
@@ -164,14 +177,45 @@ export class FareService {
 
     // Surge pickup par jour de la semaine
     if (vehicle.ePickStatus === 'Active') {
-      const dayPriceMap: Record<string, { start: string; end: string; price: number }> = {
-        Mon: { start: vehicle.tMonPickStartTime, end: vehicle.tMonPickEndTime, price: vehicle.fMonPickUpPrice },
-        Tue: { start: vehicle.tTuePickStartTime, end: vehicle.tTuePickEndTime, price: vehicle.fTuePickUpPrice },
-        Wed: { start: vehicle.tWedPickStartTime, end: vehicle.tWedPickEndTime, price: vehicle.fWedPickUpPrice },
-        Thu: { start: vehicle.tThuPickStartTime, end: vehicle.tThuPickEndTime, price: vehicle.fThuPickUpPrice },
-        Fri: { start: vehicle.tFriPickStartTime, end: vehicle.tFriPickEndTime, price: vehicle.fFriPickUpPrice },
-        Sat: { start: vehicle.tSatPickStartTime, end: vehicle.tSatPickEndTime, price: vehicle.fSatPickUpPrice },
-        Sun: { start: vehicle.tSunPickStartTime, end: vehicle.tSunPickEndTime, price: vehicle.fSunPickUpPrice },
+      const dayPriceMap: Record<
+        string,
+        { start: string; end: string; price: number }
+      > = {
+        Mon: {
+          start: vehicle.tMonPickStartTime,
+          end: vehicle.tMonPickEndTime,
+          price: vehicle.fMonPickUpPrice,
+        },
+        Tue: {
+          start: vehicle.tTuePickStartTime,
+          end: vehicle.tTuePickEndTime,
+          price: vehicle.fTuePickUpPrice,
+        },
+        Wed: {
+          start: vehicle.tWedPickStartTime,
+          end: vehicle.tWedPickEndTime,
+          price: vehicle.fWedPickUpPrice,
+        },
+        Thu: {
+          start: vehicle.tThuPickStartTime,
+          end: vehicle.tThuPickEndTime,
+          price: vehicle.fThuPickUpPrice,
+        },
+        Fri: {
+          start: vehicle.tFriPickStartTime,
+          end: vehicle.tFriPickEndTime,
+          price: vehicle.fFriPickUpPrice,
+        },
+        Sat: {
+          start: vehicle.tSatPickStartTime,
+          end: vehicle.tSatPickEndTime,
+          price: vehicle.fSatPickUpPrice,
+        },
+        Sun: {
+          start: vehicle.tSunPickStartTime,
+          end: vehicle.tSunPickEndTime,
+          price: vehicle.fSunPickUpPrice,
+        },
       };
 
       const dayData = dayPriceMap[day];
@@ -184,7 +228,13 @@ export class FareService {
       }
 
       // Fallback surge pickup général
-      if (this.isTimeInRange(timeStr, vehicle.tPickStartTime, vehicle.tPickEndTime)) {
+      if (
+        this.isTimeInRange(
+          timeStr,
+          vehicle.tPickStartTime,
+          vehicle.tPickEndTime,
+        )
+      ) {
         return {
           multiplier: vehicle.fPickUpPrice,
           type: 'PickUp',
@@ -207,7 +257,11 @@ export class FareService {
 
   // ─── Application du code promo ───────────────────────────────────────────────
 
-  private async applyPromo(code: string, subtotal: number, userId?: number): Promise<number> {
+  private async applyPromo(
+    code: string,
+    subtotal: number,
+    userId?: number,
+  ): Promise<number> {
     try {
       const coupon = await this.couponRepo
         .createQueryBuilder('c')
@@ -219,8 +273,13 @@ export class FareService {
 
       // Vérifier validité de date (si les champs existent)
       const now = new Date();
-      if ((coupon as any).dStartDate && new Date((coupon as any).dStartDate) > now) return 0;
-      if ((coupon as any).dEndDate && new Date((coupon as any).dEndDate) < now) return 0;
+      if (
+        (coupon as any).dStartDate &&
+        new Date((coupon as any).dStartDate) > now
+      )
+        return 0;
+      if ((coupon as any).dEndDate && new Date((coupon as any).dEndDate) < now)
+        return 0;
 
       // Calculer la remise
       if ((coupon as any).eDiscountType === 'Percentage') {
@@ -238,7 +297,10 @@ export class FareService {
 
   // ─── Construction du détail lisible ─────────────────────────────────────────
 
-  private buildBreakdown(vehicle: VehicleType, data: any): Array<{ label: string; value: string }> {
+  private buildBreakdown(
+    vehicle: VehicleType,
+    data: any,
+  ): Array<{ label: string; value: string }> {
     const lines: Array<{ label: string; value: string }> = [];
     const fmt = (v: number) => v.toFixed(2);
 
@@ -247,17 +309,32 @@ export class FareService {
     } else if (vehicle.eFareType === 'Hourly') {
       lines.push({ label: 'Hourly Fare', value: fmt(data.baseFare) });
     } else {
-      if (data.baseFare > 0) lines.push({ label: 'Base Fare', value: fmt(data.baseFare) });
-      if (data.distanceFare > 0) lines.push({ label: `Distance (${data.distance} km)`, value: fmt(data.distanceFare) });
-      if (data.timeFare > 0) lines.push({ label: `Time (${data.duration} min)`, value: fmt(data.timeFare) });
+      if (data.baseFare > 0)
+        lines.push({ label: 'Base Fare', value: fmt(data.baseFare) });
+      if (data.distanceFare > 0)
+        lines.push({
+          label: `Distance (${data.distance} km)`,
+          value: fmt(data.distanceFare),
+        });
+      if (data.timeFare > 0)
+        lines.push({
+          label: `Time (${data.duration} min)`,
+          value: fmt(data.timeFare),
+        });
     }
 
     if (data.surge.type !== 'None') {
-      lines.push({ label: `Surge (${data.surge.type})`, value: `x${data.surge.multiplier}` });
+      lines.push({
+        label: `Surge (${data.surge.type})`,
+        value: `x${data.surge.multiplier}`,
+      });
     }
 
     if (data.minFareApplied) {
-      lines.push({ label: 'Minimum Fare Applied', value: fmt(vehicle.iMinFare) });
+      lines.push({
+        label: 'Minimum Fare Applied',
+        value: fmt(vehicle.iMinFare),
+      });
     }
 
     lines.push({ label: 'Subtotal', value: fmt(data.subtotal) });

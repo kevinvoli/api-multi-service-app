@@ -1,4 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, OneToOne, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  OneToOne,
+} from 'typeorm';
 import { Order } from '../../orders/entities/order.entity';
 import { Driver } from '../../vehicles/entities/driver.entity';
 import { PaymentTransaction } from '../../payments/entities/payment-transaction.entity'; // Import PaymentTransaction for relation
@@ -27,7 +33,10 @@ export class User {
   @OneToOne(() => Driver, (driver) => driver.user)
   driver: Driver;
 
-  @OneToMany(() => PaymentTransaction, (paymentTransaction) => paymentTransaction.user)
+  @OneToMany(
+    () => PaymentTransaction,
+    (paymentTransaction) => paymentTransaction.user,
+  )
   paymentTransactions: PaymentTransaction[];
 
   @OneToOne(() => UserWallet, (userWallet) => userWallet.user)

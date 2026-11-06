@@ -65,7 +65,11 @@ export class AdminPanelService {
     stores: number;
     organizations: number;
     tripBreakdown: { completed: number; cancelled: number; ongoing: number };
-    orderBreakdown: { completed: number; cancelled: number; processing: number };
+    orderBreakdown: {
+      completed: number;
+      cancelled: number;
+      processing: number;
+    };
     adminEarning: number;
   }> {
     const [
@@ -88,18 +92,31 @@ export class AdminPanelService {
       this.companyRepo.count({ where: { eStatus: 'Active' } as any }),
       this.tripRepo
         .createQueryBuilder('t')
-        .where('t.iActive IN (:...s)', { s: ['Active', 'On Going Trip', 'Arrived'] })
+        .where('t.iActive IN (:...s)', {
+          s: ['Active', 'On Going Trip', 'Arrived'],
+        })
         .getCount(),
       this.orderRepo.count(),
       this.hotelRepo.count({ where: { eStatus: 'Active' } as any }),
       this.orgRepo.count({ where: { eStatus: 'Active' } as any }),
-      this.tripRepo.createQueryBuilder('t').where("t.iActive = 'Finished'").getCount(),
-      this.tripRepo.createQueryBuilder('t').where("t.iActive = 'Canceled'").getCount(),
       this.tripRepo
         .createQueryBuilder('t')
-        .where('t.iActive IN (:...s)', { s: ['Active', 'On Going Trip', 'Arrived'] })
+        .where("t.iActive = 'Finished'")
         .getCount(),
-      this.orderRepo.createQueryBuilder('o').where('o.iStatusCode = :sc', { sc: 5 }).getCount(),
+      this.tripRepo
+        .createQueryBuilder('t')
+        .where("t.iActive = 'Canceled'")
+        .getCount(),
+      this.tripRepo
+        .createQueryBuilder('t')
+        .where('t.iActive IN (:...s)', {
+          s: ['Active', 'On Going Trip', 'Arrived'],
+        })
+        .getCount(),
+      this.orderRepo
+        .createQueryBuilder('o')
+        .where('o.iStatusCode = :sc', { sc: 5 })
+        .getCount(),
       this.orderRepo
         .createQueryBuilder('o')
         .where('o.iStatusCode IN (:...sc)', { sc: [6, 7] })
@@ -125,8 +142,16 @@ export class AdminPanelService {
       restaurantOrders,
       stores,
       organizations,
-      tripBreakdown: { completed: tripCompleted, cancelled: tripCancelled, ongoing: tripOngoing },
-      orderBreakdown: { completed: orderCompleted, cancelled: orderCancelled, processing: orderProcessing },
+      tripBreakdown: {
+        completed: tripCompleted,
+        cancelled: tripCancelled,
+        ongoing: tripOngoing,
+      },
+      orderBreakdown: {
+        completed: orderCompleted,
+        cancelled: orderCancelled,
+        processing: orderProcessing,
+      },
       adminEarning,
     };
   }
@@ -137,7 +162,15 @@ export class AdminPanelService {
   async listRiders(page = 1, limit = 20, search?: string, status?: string) {
     const qb = this.userRepo
       .createQueryBuilder('u')
-      .select(['u.iUserId', 'u.vName', 'u.vLastName', 'u.vEmail', 'u.vPhone', 'u.eStatus', 'u.iCompanyId'])
+      .select([
+        'u.iUserId',
+        'u.vName',
+        'u.vLastName',
+        'u.vEmail',
+        'u.vPhone',
+        'u.eStatus',
+        'u.iCompanyId',
+      ])
       .orderBy('u.iUserId', 'DESC')
       .skip((page - 1) * limit)
       .take(limit);
@@ -155,21 +188,41 @@ export class AdminPanelService {
     return { items, total, page, limit };
   }
 
-  async updateRiderStatus(userId: number, status: 'Active' | 'Inactive' | 'Deleted') {
-    const result = await this.userRepo.update({ iUserId: userId } as any, { eStatus: status } as any);
-    if (!result.affected) throw new NotFoundException(`Rider #${userId} introuvable`);
+  async updateRiderStatus(
+    userId: number,
+    status: 'Active' | 'Inactive' | 'Deleted',
+  ) {
+    const result = await this.userRepo.update(
+      { iUserId: userId } as any,
+      { eStatus: status } as any,
+    );
+    if (!result.affected)
+      throw new NotFoundException(`Rider #${userId} introuvable`);
     return { updated: true, status };
   }
 
   // ─── Gestion Drivers ─────────────────────────────────────────────────────────
   // Liste paginée + approbation/suspension/suppression
 
-  async listDrivers(page = 1, limit = 20, search?: string, status?: string, companyId?: number) {
+  async listDrivers(
+    page = 1,
+    limit = 20,
+    search?: string,
+    status?: string,
+    companyId?: number,
+  ) {
     const qb = this.driverRepo
       .createQueryBuilder('d')
       .select([
-        'd.iDriverId', 'd.vName', 'd.vLastName', 'd.vEmail', 'd.vPhone',
-        'd.eStatus', 'd.iCompanyId', 'd.vAvgRating', 'd.vImage',
+        'd.iDriverId',
+        'd.vName',
+        'd.vLastName',
+        'd.vEmail',
+        'd.vPhone',
+        'd.eStatus',
+        'd.iCompanyId',
+        'd.vAvgRating',
+        'd.vImage',
       ])
       .orderBy('d.iDriverId', 'DESC')
       .skip((page - 1) * limit)
@@ -191,9 +244,16 @@ export class AdminPanelService {
     return { items, total, page, limit };
   }
 
-  async updateDriverStatus(driverId: number, status: 'active' | 'inactive' | 'Deleted' | 'Suspend') {
-    const result = await this.driverRepo.update({ iDriverId: driverId } as any, { eStatus: status } as any);
-    if (!result.affected) throw new NotFoundException(`Driver #${driverId} introuvable`);
+  async updateDriverStatus(
+    driverId: number,
+    status: 'active' | 'inactive' | 'Deleted' | 'Suspend',
+  ) {
+    const result = await this.driverRepo.update(
+      { iDriverId: driverId } as any,
+      { eStatus: status } as any,
+    );
+    if (!result.affected)
+      throw new NotFoundException(`Driver #${driverId} introuvable`);
     return { updated: true, status };
   }
 
@@ -202,13 +262,23 @@ export class AdminPanelService {
   async listCompanies(page = 1, limit = 20, search?: string, status?: string) {
     const qb = this.companyRepo
       .createQueryBuilder('c')
-      .select(['c.iCompanyId', 'c.vCompany', 'c.vName', 'c.vEmail', 'c.vPhone', 'c.eStatus', 'c.eSystem'])
+      .select([
+        'c.iCompanyId',
+        'c.vCompany',
+        'c.vName',
+        'c.vEmail',
+        'c.vPhone',
+        'c.eStatus',
+        'c.eSystem',
+      ])
       .orderBy('c.iCompanyId', 'DESC')
       .skip((page - 1) * limit)
       .take(limit);
 
     if (search) {
-      qb.andWhere('(c.vEmail LIKE :s OR c.vCompany LIKE :s)', { s: `%${search}%` });
+      qb.andWhere('(c.vEmail LIKE :s OR c.vCompany LIKE :s)', {
+        s: `%${search}%`,
+      });
     }
     if (status) {
       qb.andWhere('c.eStatus = :status', { status });
@@ -218,20 +288,38 @@ export class AdminPanelService {
     return { items, total, page, limit };
   }
 
-  async updateCompanyStatus(companyId: number, status: 'Active' | 'Inactive' | 'Deleted') {
-    const result = await this.companyRepo.update({ iCompanyId: companyId } as any, { eStatus: status } as any);
-    if (!result.affected) throw new NotFoundException(`Company #${companyId} introuvable`);
+  async updateCompanyStatus(
+    companyId: number,
+    status: 'Active' | 'Inactive' | 'Deleted',
+  ) {
+    const result = await this.companyRepo.update(
+      { iCompanyId: companyId } as any,
+      { eStatus: status } as any,
+    );
+    if (!result.affected)
+      throw new NotFoundException(`Company #${companyId} introuvable`);
     return { updated: true, status };
   }
 
   // ─── Gestion Commandes Restaurant ────────────────────────────────────────────
 
-  async listOrders(page = 1, limit = 20, companyId?: number, statusCode?: number) {
+  async listOrders(
+    page = 1,
+    limit = 20,
+    companyId?: number,
+    statusCode?: number,
+  ) {
     const qb = this.orderRepo
       .createQueryBuilder('o')
       .select([
-        'o.iOrderId', 'o.iUserId', 'o.iCompanyId', 'o.vOrderNo',
-        'o.iStatusCode', 'o.fFinalTotal', 'o.ePaymentOption', 'o.eTakeAway',
+        'o.iOrderId',
+        'o.iUserId',
+        'o.iCompanyId',
+        'o.vOrderNo',
+        'o.iStatusCode',
+        'o.fFinalTotal',
+        'o.ePaymentOption',
+        'o.eTakeAway',
       ])
       .orderBy('o.iOrderId', 'DESC')
       .skip((page - 1) * limit)
@@ -249,8 +337,12 @@ export class AdminPanelService {
   }
 
   async updateOrderStatus(orderId: number, statusCode: number) {
-    const result = await this.orderRepo.update({ iOrderId: orderId } as any, { iStatusCode: statusCode } as any);
-    if (!result.affected) throw new NotFoundException(`Commande #${orderId} introuvable`);
+    const result = await this.orderRepo.update(
+      { iOrderId: orderId } as any,
+      { iStatusCode: statusCode } as any,
+    );
+    if (!result.affected)
+      throw new NotFoundException(`Commande #${orderId} introuvable`);
     return { updated: true, statusCode };
   }
 
@@ -260,8 +352,15 @@ export class AdminPanelService {
     const qb = this.tripRepo
       .createQueryBuilder('t')
       .select([
-        't.iTripId', 't.iUserId', 't.iDriverId', 't.iCompanyId', 't.iActive',
-        't.iFare', 't.fDistance', 't.eType', 't.tTripRequestDate',
+        't.iTripId',
+        't.iUserId',
+        't.iDriverId',
+        't.iCompanyId',
+        't.iActive',
+        't.iFare',
+        't.fDistance',
+        't.eType',
+        't.tTripRequestDate',
       ])
       .orderBy('t.iTripId', 'DESC')
       .skip((page - 1) * limit)
@@ -282,7 +381,14 @@ export class AdminPanelService {
 
   async listAdmins() {
     return this.adminRepo.find({
-      select: ['iAdminId', 'vFirstName', 'vLastName', 'vEmail', 'iGroupId', 'eStatus'] as any,
+      select: [
+        'iAdminId',
+        'vFirstName',
+        'vLastName',
+        'vEmail',
+        'iGroupId',
+        'eStatus',
+      ] as any,
       where: { eStatus: 'Active' },
       order: { iAdminId: 'ASC' },
     });
@@ -308,9 +414,16 @@ export class AdminPanelService {
     return { iAdminId: (saved as any).iAdminId, vEmail: (saved as any).vEmail };
   }
 
-  async updateAdminStatus(adminId: number, status: 'Active' | 'Inactive' | 'Deleted') {
-    const result = await this.adminRepo.update({ iAdminId: adminId } as any, { eStatus: status } as any);
-    if (!result.affected) throw new NotFoundException(`Admin #${adminId} introuvable`);
+  async updateAdminStatus(
+    adminId: number,
+    status: 'Active' | 'Inactive' | 'Deleted',
+  ) {
+    const result = await this.adminRepo.update(
+      { iAdminId: adminId } as any,
+      { eStatus: status } as any,
+    );
+    if (!result.affected)
+      throw new NotFoundException(`Admin #${adminId} introuvable`);
     return { updated: true, status };
   }
 
@@ -321,10 +434,24 @@ export class AdminPanelService {
     const user = await this.userRepo
       .createQueryBuilder('u')
       .select([
-        'u.iUserId', 'u.vName', 'u.vLastName', 'u.vEmail', 'u.vPhone', 'u.vPhoneCode',
-        'u.vImgName', 'u.eStatus', 'u.eSignUpType', 'u.vAvgRating', 'u.vRefCode',
-        'u.tRegistrationDate', 'u.eEmailVerified', 'u.ePhoneVerified', 'u.eGender',
-        'u.vCountry', 'u.vState', 'u.iCompanyId',
+        'u.iUserId',
+        'u.vName',
+        'u.vLastName',
+        'u.vEmail',
+        'u.vPhone',
+        'u.vPhoneCode',
+        'u.vImgName',
+        'u.eStatus',
+        'u.eSignUpType',
+        'u.vAvgRating',
+        'u.vRefCode',
+        'u.tRegistrationDate',
+        'u.eEmailVerified',
+        'u.ePhoneVerified',
+        'u.eGender',
+        'u.vCountry',
+        'u.vState',
+        'u.iCompanyId',
       ])
       .where('u.iUserId = :id', { id: userId })
       .getOne();
@@ -333,11 +460,22 @@ export class AdminPanelService {
 
     const [totalTrips, completedTrips, cancelledTrips] = await Promise.all([
       this.tripRepo.count({ where: { iUserId: userId } as any }),
-      this.tripRepo.count({ where: { iUserId: userId, iActive: 'Finished' } as any }),
-      this.tripRepo.count({ where: { iUserId: userId, iActive: 'Canceled' } as any }),
+      this.tripRepo.count({
+        where: { iUserId: userId, iActive: 'Finished' } as any,
+      }),
+      this.tripRepo.count({
+        where: { iUserId: userId, iActive: 'Canceled' } as any,
+      }),
     ]);
 
-    return { ...user, trips: { total: totalTrips, completed: completedTrips, cancelled: cancelledTrips } };
+    return {
+      ...user,
+      trips: {
+        total: totalTrips,
+        completed: completedTrips,
+        cancelled: cancelledTrips,
+      },
+    };
   }
 
   // ─── Détail Driver ────────────────────────────────────────────────────────────
@@ -347,10 +485,24 @@ export class AdminPanelService {
     const driver = await this.driverRepo
       .createQueryBuilder('d')
       .select([
-        'd.iDriverId', 'd.vName', 'd.vLastName', 'd.vEmail', 'd.vCode', 'd.vPhone',
-        'd.vImage', 'd.eStatus', 'd.vCaddress', 'd.vZip', 'd.vVat',
-        'd.tRegistrationDate', 'd.vAvgRating', 'd.vAvgSafetyRating',
-        'd.vCountry', 'd.vCity', 'd.vState', 'd.iCompanyId',
+        'd.iDriverId',
+        'd.vName',
+        'd.vLastName',
+        'd.vEmail',
+        'd.vCode',
+        'd.vPhone',
+        'd.vImage',
+        'd.eStatus',
+        'd.vCaddress',
+        'd.vZip',
+        'd.vVat',
+        'd.tRegistrationDate',
+        'd.vAvgRating',
+        'd.vAvgSafetyRating',
+        'd.vCountry',
+        'd.vCity',
+        'd.vState',
+        'd.iCompanyId',
       ])
       .where('d.iDriverId = :id', { id: driverId })
       .getOne();
@@ -359,8 +511,12 @@ export class AdminPanelService {
 
     const [totalTrips, completedTrips, cancelledTrips] = await Promise.all([
       this.tripRepo.count({ where: { iDriverId: driverId } as any }),
-      this.tripRepo.count({ where: { iDriverId: driverId, iActive: 'Finished' } as any }),
-      this.tripRepo.count({ where: { iDriverId: driverId, iActive: 'Canceled' } as any }),
+      this.tripRepo.count({
+        where: { iDriverId: driverId, iActive: 'Finished' } as any,
+      }),
+      this.tripRepo.count({
+        where: { iDriverId: driverId, iActive: 'Canceled' } as any,
+      }),
     ]);
 
     const pendingDocs = await this.documentRepo
@@ -370,7 +526,15 @@ export class AdminPanelService {
       .andWhere('d.reqFile != :empty', { empty: '' })
       .getCount();
 
-    return { ...driver, trips: { total: totalTrips, completed: completedTrips, cancelled: cancelledTrips }, pendingDocsCount: pendingDocs };
+    return {
+      ...driver,
+      trips: {
+        total: totalTrips,
+        completed: completedTrips,
+        cancelled: cancelledTrips,
+      },
+      pendingDocsCount: pendingDocs,
+    };
   }
 
   // ─── Recherche Rider par téléphone ────────────────────────────────────────────
@@ -379,7 +543,14 @@ export class AdminPanelService {
   async searchRiderByPhone(phone: string, phoneCode?: string) {
     const qb = this.userRepo
       .createQueryBuilder('u')
-      .select(['u.iUserId', 'u.vName', 'u.vLastName', 'u.vEmail', 'u.vPhone', 'u.eStatus'])
+      .select([
+        'u.iUserId',
+        'u.vName',
+        'u.vLastName',
+        'u.vEmail',
+        'u.vPhone',
+        'u.eStatus',
+      ])
       .where('u.vPhone = :phone', { phone });
 
     if (phoneCode) qb.andWhere('u.vPhoneCode = :phoneCode', { phoneCode });
@@ -404,39 +575,62 @@ export class AdminPanelService {
   // ─── Assigner chauffeur à une réservation ────────────────────────────────────
   // Remplace : ajax_assign_driver_cabbooking.php
 
-  async assignDriverToBooking(bookingId: number, driverId: number): Promise<{ success: boolean; booking: Partial<CabBooking> }> {
+  async assignDriverToBooking(
+    bookingId: number,
+    driverId: number,
+  ): Promise<{ success: boolean; booking: Partial<CabBooking> }> {
     const result = await this.cabBookingRepo.update(
       { iCabBookingId: bookingId } as any,
       { iDriverId: driverId, eAutoAssign: 'No', eStatus: 'Assign' } as any,
     );
-    if (!result.affected) throw new NotFoundException(`Réservation #${bookingId} introuvable`);
+    if (!result.affected)
+      throw new NotFoundException(`Réservation #${bookingId} introuvable`);
 
-    const booking = await this.cabBookingRepo.findOneBy({ iCabBookingId: bookingId } as any);
+    const booking = await this.cabBookingRepo.findOneBy({
+      iCabBookingId: bookingId,
+    } as any);
     return { success: true, booking: booking as any };
   }
 
   // ─── Approuver documents chauffeur ───────────────────────────────────────────
   // Remplace : ajax_approve_docs.php
 
-  async approveDriverDocs(docIds: number[]): Promise<{ approved: number; message: string }> {
+  async approveDriverDocs(
+    docIds: number[],
+  ): Promise<{ approved: number; message: string }> {
     let approved = 0;
     for (const docId of docIds) {
       const doc = await this.documentRepo.findOneBy({ docId } as any);
       if (doc && doc.reqFile) {
         await this.documentRepo.update(
           { docId } as any,
-          { exDate: doc.reqDate, docFile: doc.reqFile, reqDate: '', reqFile: '' } as any,
+          {
+            exDate: doc.reqDate,
+            docFile: doc.reqFile,
+            reqDate: '',
+            reqFile: '',
+          } as any,
         );
         approved++;
       }
     }
-    return { approved, message: approved > 0 ? 'Documents approuvés avec succès' : 'Aucun document traité' };
+    return {
+      approved,
+      message:
+        approved > 0
+          ? 'Documents approuvés avec succès'
+          : 'Aucun document traité',
+    };
   }
 
   // ─── Stats mensuelles (charts dashboard) ─────────────────────────────────────
   // Remplace : ajax_dashboard.php — Earning_Report + Total_Ride_jobs
 
-  async getDashboardCharts(type: 'earnings' | 'trips', year: number, months = 6) {
+  async getDashboardCharts(
+    type: 'earnings' | 'trips',
+    year: number,
+    months = 6,
+  ) {
     const result: { label: string; value: number; value2?: number }[] = [];
 
     for (let i = months - 1; i >= 0; i--) {
@@ -458,12 +652,16 @@ export class AdminPanelService {
         result.push({ label, value: parseFloat(row?.total ?? '0') });
       } else {
         const [finished, cancelled] = await Promise.all([
-          this.tripRepo.createQueryBuilder('t')
+          this.tripRepo
+            .createQueryBuilder('t')
             .where('t.tTripRequestDate BETWEEN :start AND :end', { start, end })
-            .andWhere("t.iActive = 'Finished'").getCount(),
-          this.tripRepo.createQueryBuilder('t')
+            .andWhere("t.iActive = 'Finished'")
+            .getCount(),
+          this.tripRepo
+            .createQueryBuilder('t')
             .where('t.tTripRequestDate BETWEEN :start AND :end', { start, end })
-            .andWhere("t.iActive = 'Canceled'").getCount(),
+            .andWhere("t.iActive = 'Canceled'")
+            .getCount(),
         ]);
         result.push({ label, value: finished, value2: cancelled });
       }
@@ -475,7 +673,10 @@ export class AdminPanelService {
   // ─── Solde wallet utilisateur ─────────────────────────────────────────────────
   // Remplace : ajax_get_user_balance.php
 
-  async getUserWalletBalance(userId: number, userType: 'Driver' | 'Rider'): Promise<{ balance: number; userType: string }> {
+  async getUserWalletBalance(
+    userId: number,
+    userType: 'Driver' | 'Rider',
+  ): Promise<{ balance: number; userType: string }> {
     const rows = await this.walletRepo
       .createQueryBuilder('w')
       .select([
@@ -484,7 +685,7 @@ export class AdminPanelService {
       ])
       .where('w.iUserId = :userId', { userId })
       .andWhere('w.eUserType = :userType', { userType })
-      .getRawOne() as any;
+      .getRawOne();
 
     const credits = parseFloat(rows?.[Object.keys(rows)[0]] ?? '0');
     const debits = parseFloat(rows?.[Object.keys(rows)[1]] ?? '0');
@@ -502,10 +703,12 @@ export class AdminPanelService {
     eUserType?: string,
     eStatus?: string,
   ) {
-    const qb = this.reviewRepo.createQueryBuilder('r').orderBy('r.tDate', 'DESC');
+    const qb = this.reviewRepo
+      .createQueryBuilder('r')
+      .orderBy('r.tDate', 'DESC');
 
     if (eUserType) qb.andWhere('r.eUserType = :eUserType', { eUserType });
-    if (eStatus)   qb.andWhere('r.eStatus = :eStatus', { eStatus });
+    if (eStatus) qb.andWhere('r.eStatus = :eStatus', { eStatus });
 
     const [items, total] = await qb
       .skip((page - 1) * limit)
@@ -520,17 +723,28 @@ export class AdminPanelService {
       { iRatingId: reviewId } as any,
       { eStatus: 'Deleted' } as any,
     );
-    if (!result.affected) throw new NotFoundException(`Avis #${reviewId} introuvable`);
+    if (!result.affected)
+      throw new NotFoundException(`Avis #${reviewId} introuvable`);
     return { deleted: true };
   }
 
   // ─── Vérifier code coupon (unicité) ──────────────────────────────────────────
   // Remplace : ajax_validate_coupon.php
 
-  async checkCouponCode(code: string): Promise<{ exists: boolean; coupon?: Partial<Coupon> }> {
+  async checkCouponCode(
+    code: string,
+  ): Promise<{ exists: boolean; coupon?: Partial<Coupon> }> {
     const coupon = await this.couponRepo
       .createQueryBuilder('c')
-      .select(['c.iCouponId', 'c.vCouponCode', 'c.eStatus', 'c.fDiscount', 'c.eType', 'c.dActiveDate', 'c.dExpiryDate'])
+      .select([
+        'c.iCouponId',
+        'c.vCouponCode',
+        'c.eStatus',
+        'c.fDiscount',
+        'c.eType',
+        'c.dActiveDate',
+        'c.dExpiryDate',
+      ])
       .where('c.vCouponCode = :code', { code })
       .getOne();
 
@@ -542,7 +756,13 @@ export class AdminPanelService {
   async getLatestRides(limit = 5) {
     return this.cabBookingRepo
       .createQueryBuilder('b')
-      .select(['b.iCabBookingId', 'b.vBookingNo', 'b.vSourceAddresss', 'b.iUserId', 'b.eStatus'])
+      .select([
+        'b.iCabBookingId',
+        'b.vBookingNo',
+        'b.vSourceAddresss',
+        'b.iUserId',
+        'b.eStatus',
+      ])
       .addSelect('b.tBookingDate')
       .orderBy('b.iCabBookingId', 'DESC')
       .take(limit)
@@ -554,7 +774,15 @@ export class AdminPanelService {
   async getLatestOrders(limit = 5) {
     return this.orderRepo
       .createQueryBuilder('o')
-      .select(['o.iOrderId', 'o.vOrderNo', 'o.iUserId', 'o.vUserEmail', 'o.iStatusCode', 'o.tOrderRequestDate', 'o.fFinalTotal'])
+      .select([
+        'o.iOrderId',
+        'o.vOrderNo',
+        'o.iUserId',
+        'o.vUserEmail',
+        'o.iStatusCode',
+        'o.tOrderRequestDate',
+        'o.fFinalTotal',
+      ])
       .orderBy('o.iOrderId', 'DESC')
       .take(limit)
       .getMany();
@@ -565,7 +793,15 @@ export class AdminPanelService {
   async getLatestContacts(limit = 5) {
     return this.contactRepo
       .createQueryBuilder('c')
-      .select(['c.iContactusId', 'c.vFirstname', 'c.vLastname', 'c.vEmail', 'c.vSubject', 'c.tRequestDate', 'c.eUserType'])
+      .select([
+        'c.iContactusId',
+        'c.vFirstname',
+        'c.vLastname',
+        'c.vEmail',
+        'c.vSubject',
+        'c.tRequestDate',
+        'c.eUserType',
+      ])
       .orderBy('c.iContactusId', 'DESC')
       .take(limit)
       .getMany();

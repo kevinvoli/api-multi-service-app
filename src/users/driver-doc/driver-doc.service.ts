@@ -28,7 +28,8 @@ export class DriverDocService {
   }
 
   async update(id: number, updateDto: UpdateDriverDocDto): Promise<DriverDoc> {
-    const { iDriverDocId, ...changes } = updateDto;
+    const changes = { ...updateDto };
+    delete changes.iDriverDocId;
     await this.repository.update({ iDriverDocId: id }, changes);
     return this.findOne(id);
   }

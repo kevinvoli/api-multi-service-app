@@ -18,7 +18,12 @@ import { AddCartItemDto } from './dto/add-cart-item.dto';
 import { CheckoutCartDto } from './dto/checkout-cart.dto';
 
 // ─── Haversine distance (en km) ──────────────────────────────────────────────
-function haversineKm(lat1: number, lon1: number, lat2: number, lon2: number): number {
+function haversineKm(
+  lat1: number,
+  lon1: number,
+  lat2: number,
+  lon2: number,
+): number {
   const R = 6371;
   const dLat = ((lat2 - lat1) * Math.PI) / 180;
   const dLon = ((lon2 - lon1) * Math.PI) / 180;
@@ -64,12 +69,16 @@ export class CartService {
   // ─── Ajouter / mettre à jour un article dans le panier ───────────────────
   // Remplace : add_cart_to_restaurant.php
 
-  async addItem(dto: AddCartItemDto): Promise<{ items: RestaurantCartItem[]; totalQty: number }> {
+  async addItem(
+    dto: AddCartItemDto,
+  ): Promise<{ items: RestaurantCartItem[]; totalQty: number }> {
     const vOptionId = (dto.vOptionId || '').replace(/^,|,$/g, '');
     const vAddonId = (dto.vAddonId || '').replace(/^,|,$/g, '');
 
     // Si le panier contient des articles d'un autre restaurant → vider
-    const existing = await this.cartRepo.find({ where: { iUserId: dto.iUserId } as any });
+    const existing = await this.cartRepo.find({
+      where: { iUserId: dto.iUserId } as any,
+    });
     if (existing.length > 0 && existing[0].iCompanyId !== dto.iCompanyId) {
       await this.cartRepo.delete({ iUserId: dto.iUserId } as any);
     }
@@ -103,7 +112,9 @@ export class CartService {
       await this.cartRepo.save(item);
     }
 
-    const items = await this.cartRepo.find({ where: { iUserId: dto.iUserId } as any });
+    const items = await this.cartRepo.find({
+      where: { iUserId: dto.iUserId } as any,
+    });
     const totalQty = items.reduce((s, i) => s + i.iQty, 0);
     return { items, totalQty };
   }
@@ -123,26 +134,42 @@ export class CartService {
   // ─── Calculer les totaux et afficher le panier ───────────────────────────
   // Remplace : ajax_view_cart_to_restaurant.php + ajax_checkout_cart_to_restaurant.php
 
-  async getCart(userId: number, addressId?: number): Promise<Record<string, any>> {
-    const items = await this.cartRepo.find({ where: { iUserId: userId } as any });
+  async getCart(
+    userId: number,
+    addressId?: number,
+  ): Promise<Record<string, any>> {
+    const items = await this.cartRepo.find({
+      where: { iUserId: userId } as any,
+    });
     if (items.length === 0) {
-      return { items: [], totalQty: 0, fSubTotal: 0, fDeliveryCharge: 0, fPackingCharge: 0, fTax: 0, fNetTotal: 0 };
+      return {
+        items: [],
+        totalQty: 0,
+        fSubTotal: 0,
+        fDeliveryCharge: 0,
+        fPackingCharge: 0,
+        fTax: 0,
+        fNetTotal: 0,
+      };
     }
 
     const companyId = items[0].iCompanyId;
-    const company = await this.companyRepo.findOneBy({ iCompanyId: companyId } as any);
-    if (!company) throw new NotFoundException(`Restaurant #${companyId} introuvable`);
+    const company = await this.companyRepo.findOneBy({
+      iCompanyId: companyId,
+    } as any);
+    if (!company)
+      throw new NotFoundException(`Restaurant #${companyId} introuvable`);
 
     // Récupérer les prix des articles
-    const menuItemIds = [...new Set(items.map(i => i.iMenuItemId))];
+    const menuItemIds = [...new Set(items.map((i) => i.iMenuItemId))];
     const menuItems = await this.menuItemRepo
       .createQueryBuilder('m')
       .whereInIds(menuItemIds)
       .getMany();
-    const menuItemMap = new Map(menuItems.map(m => [m.iMenuItemId, m]));
+    const menuItemMap = new Map(menuItems.map((m) => [m.iMenuItemId, m]));
 
     // Récupérer les prix des options/addons
-    const allOptionAddonIds = items.flatMap(i =>
+    const allOptionAddonIds = items.flatMap((i) =>
       [...(i.vOptionId || '').split(','), ...(i.vAddonId || '').split(',')]
         .filter(Boolean)
         .map(Number),
@@ -153,7 +180,7 @@ export class CartService {
         .createQueryBuilder('o')
         .whereInIds([...new Set(allOptionAddonIds)])
         .getMany();
-      optionMap = new Map(options.map(o => [o.iOptionId, o]));
+      optionMap = new Map(options.map((o) => [o.iOptionId, o]));
     }
 
     let fSubTotal = 0;
@@ -201,7 +228,8 @@ export class CartService {
       if (fOfferAppyType !== 'None') {
         if (fOfferType === 'Percentage') {
           lineDiscount = round2((totalOriginal * fOfferAmt) / 100);
-          if (fMaxOfferAmt > 0 && lineDiscount > fMaxOfferAmt) lineDiscount = fMaxOfferAmt;
+          if (fMaxOfferAmt > 0 && lineDiscount > fMaxOfferAmt)
+            lineDiscount = fMaxOfferAmt;
         } else if (fOfferType === 'Flat') {
           lineDiscount = totalDiscount;
         }
@@ -228,7 +256,11 @@ export class CartService {
     // Frais de livraison
     let fDeliveryCharge = 0;
     if (addressId) {
-      fDeliveryCharge = await this._computeDeliveryCharge(company, addressId, fSubTotal);
+      fDeliveryCharge = await this._computeDeliveryCharge(
+        company,
+        addressId,
+        fSubTotal,
+      );
     }
 
     // Frais d'emballage
@@ -242,7 +274,9 @@ export class CartService {
       fTax = round2((taxBase * taxRate) / 100);
     }
 
-    const fNetTotal = round2(fSubTotal + fPackingCharge + fDeliveryCharge + fTax - fTotalDiscount);
+    const fNetTotal = round2(
+      fSubTotal + fPackingCharge + fDeliveryCharge + fTax - fTotalDiscount,
+    );
 
     return {
       iCompanyId: companyId,
@@ -269,7 +303,13 @@ export class CartService {
     fNetTotal: number,
     fDeliveryCharge: number,
     iCompanyId?: number,
-  ): Promise<{ valid: boolean; message?: string; fDiscount?: number; fNewTotal?: number; fFreeDelivery?: boolean }> {
+  ): Promise<{
+    valid: boolean;
+    message?: string;
+    fDiscount?: number;
+    fNewTotal?: number;
+    fFreeDelivery?: boolean;
+  }> {
     const coupon = await this.couponRepo
       .createQueryBuilder('c')
       .where('c.vCouponCode = :code', { code: couponCode })
@@ -295,12 +335,19 @@ export class CartService {
     }
 
     // Restriction par restaurant
-    if (coupon.eStoreType === 'StoreSpecific' && iCompanyId && coupon.iCompanyId !== iCompanyId) {
-      return { valid: false, message: 'Code promo non valide pour ce restaurant' };
+    if (
+      coupon.eStoreType === 'StoreSpecific' &&
+      iCompanyId &&
+      coupon.iCompanyId !== iCompanyId
+    ) {
+      return {
+        valid: false,
+        message: 'Code promo non valide pour ce restaurant',
+      };
     }
 
     let fDiscount = 0;
-    let fFreeDelivery = coupon.eFreeDelivery === 'Yes';
+    const fFreeDelivery = coupon.eFreeDelivery === 'Yes';
 
     if (coupon.eType === 'percentage') {
       const base = fNetTotal - fDeliveryCharge;
@@ -326,22 +373,29 @@ export class CartService {
   // Remplace : ajax_checkout_order_details.php
 
   async checkout(dto: CheckoutCartDto): Promise<Record<string, any>> {
-    const items = await this.cartRepo.find({ where: { iUserId: dto.iUserId } as any });
+    const items = await this.cartRepo.find({
+      where: { iUserId: dto.iUserId } as any,
+    });
     if (items.length === 0) {
       throw new BadRequestException('Le panier est vide');
     }
 
     const companyId = items[0].iCompanyId;
-    const company = await this.companyRepo.findOneBy({ iCompanyId: companyId } as any);
-    if (!company) throw new NotFoundException(`Restaurant #${companyId} introuvable`);
+    const company = await this.companyRepo.findOneBy({
+      iCompanyId: companyId,
+    } as any);
+    if (!company)
+      throw new NotFoundException(`Restaurant #${companyId} introuvable`);
 
     // Adresse de livraison
-    const address = await this.addressRepo.findOneBy({ iUserAddressId: dto.iUserAddressId } as any);
+    const address = await this.addressRepo.findOneBy({
+      iUserAddressId: dto.iUserAddressId,
+    } as any);
 
     // Calcul des totaux (même logique que getCart)
     const cartData = await this.getCart(dto.iUserId, dto.iUserAddressId);
-    let fSubTotal = cartData.fSubTotal as number;
-    let fTotalDiscount = cartData.fTotalDiscount as number;
+    const fSubTotal = cartData.fSubTotal as number;
+    const fTotalDiscount = cartData.fTotalDiscount as number;
     let fDeliveryCharge = cartData.fDeliveryCharge as number;
     const fPackingCharge = cartData.fPackingCharge as number;
     const fTax = cartData.fTax as number;
@@ -358,7 +412,11 @@ export class CartService {
     let vCouponCode = dto.vCouponCode || '';
     if (vCouponCode) {
       const promoResult = await this.applyPromoCode(
-        dto.iUserId, vCouponCode, fNetTotal, fDeliveryCharge, companyId,
+        dto.iUserId,
+        vCouponCode,
+        fNetTotal,
+        fDeliveryCharge,
+        companyId,
       );
       if (promoResult.valid) {
         fPromoDiscount = promoResult.fDiscount || 0;
@@ -410,18 +468,18 @@ export class CartService {
       eTakeAway: dto.eTakeAway || 'No',
     }) as RestaurantOrder;
 
-    const savedOrder = await this.orderRepo.save(order) as any;
+    const savedOrder = (await this.orderRepo.save(order)) as any;
     const iOrderId = savedOrder.iOrderId;
 
     // ── Insérer les lignes de détail ────────────────────────────────────────
-    const menuItemIds = [...new Set(items.map(i => i.iMenuItemId))];
+    const menuItemIds = [...new Set(items.map((i) => i.iMenuItemId))];
     const menuItems = await this.menuItemRepo
       .createQueryBuilder('m')
       .whereInIds(menuItemIds)
       .getMany();
-    const menuItemMap = new Map(menuItems.map(m => [m.iMenuItemId, m]));
+    const menuItemMap = new Map(menuItems.map((m) => [m.iMenuItemId, m]));
 
-    const allOptionAddonIds = items.flatMap(i =>
+    const allOptionAddonIds = items.flatMap((i) =>
       [...(i.vOptionId || '').split(','), ...(i.vAddonId || '').split(',')]
         .filter(Boolean)
         .map(Number),
@@ -432,7 +490,7 @@ export class CartService {
         .createQueryBuilder('o')
         .whereInIds([...new Set(allOptionAddonIds)])
         .getMany();
-      optionMap = new Map(options.map(o => [o.iOptionId, o]));
+      optionMap = new Map(options.map((o) => [o.iOptionId, o]));
     }
 
     for (const item of items) {
@@ -442,13 +500,25 @@ export class CartService {
       const optionIds = (item.vOptionId || '').split(',').filter(Boolean);
       const addonIds = (item.vAddonId || '').split(',').filter(Boolean);
 
-      const vOptionPrices = optionIds.map(id => optionMap.get(Number(id))?.fPrice ?? 0).join(',');
-      const vAddonPrices = addonIds.map(id => optionMap.get(Number(id))?.fPrice ?? 0).join(',');
+      const vOptionPrices = optionIds
+        .map((id) => optionMap.get(Number(id))?.fPrice ?? 0)
+        .join(',');
+      const vAddonPrices = addonIds
+        .map((id) => optionMap.get(Number(id))?.fPrice ?? 0)
+        .join(',');
 
-      let optionTotal = optionIds.reduce((s, id) => s + (optionMap.get(Number(id))?.fPrice ?? 0), 0);
-      let addonTotal = addonIds.reduce((s, id) => s + (optionMap.get(Number(id))?.fPrice ?? 0), 0);
+      const optionTotal = optionIds.reduce(
+        (s, id) => s + (optionMap.get(Number(id))?.fPrice ?? 0),
+        0,
+      );
+      const addonTotal = addonIds.reduce(
+        (s, id) => s + (optionMap.get(Number(id))?.fPrice ?? 0),
+        0,
+      );
 
-      const fOriginalPrice = round2((menuItem.fPrice + optionTotal + addonTotal) * item.iQty);
+      const fOriginalPrice = round2(
+        (menuItem.fPrice + optionTotal + addonTotal) * item.iQty,
+      );
       const fDiscountPrice = round2(menuItem.fOfferAmt * item.iQty);
       const fPrice = fOriginalPrice;
       const fSubTotalLine = fOriginalPrice;
@@ -471,8 +541,12 @@ export class CartService {
         dDate: now.toISOString().split('T')[0],
         eAvailable: 'Yes',
         tOptionAddonAttribute: '',
-        tOptionIdOrigPrice: optionIds.map(id => optionMap.get(Number(id))?.fPrice ?? 0).join(','),
-        tAddOnIdOrigPrice: addonIds.map(id => optionMap.get(Number(id))?.fPrice ?? 0).join(','),
+        tOptionIdOrigPrice: optionIds
+          .map((id) => optionMap.get(Number(id))?.fPrice ?? 0)
+          .join(','),
+        tAddOnIdOrigPrice: addonIds
+          .map((id) => optionMap.get(Number(id))?.fPrice ?? 0)
+          .join(','),
         tInstruction: item.tInstruction || '',
         eExtraPayment: 'Yes',
       } as any);
@@ -523,7 +597,12 @@ export class CartService {
     const deliveryLat = parseFloat(address.vLatitude) || 0;
     const deliveryLon = parseFloat(address.vLongitude) || 0;
 
-    const distanceKm = haversineKm(restaurantLat, restaurantLon, deliveryLat, deliveryLon);
+    const distanceKm = haversineKm(
+      restaurantLat,
+      restaurantLon,
+      deliveryLat,
+      deliveryLon,
+    );
 
     // Chercher les frais de livraison par distance
     const charges = await this.deliveryChargeRepo
