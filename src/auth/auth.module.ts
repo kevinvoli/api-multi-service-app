@@ -14,9 +14,12 @@ import { MemberLog } from '../users/member-logs/entities/member-log.entity';
 @Module({
   imports: [
     PassportModule.register({ defaultStrategy: 'jwt' }),
-    JwtModule.register({
-      secret: process.env.JWT_SECRET || 'amygo_secret_key',
-      signOptions: { expiresIn: '7d' },
+    // registerAsync : process.env doit être lu après le chargement du .env par ConfigModule
+    JwtModule.registerAsync({
+      useFactory: () => ({
+        secret: process.env.JWT_SECRET || 'amygo_secret_key',
+        signOptions: { expiresIn: '7d' },
+      }),
     }),
     TypeOrmModule.forFeature([
       RegisterUser,
