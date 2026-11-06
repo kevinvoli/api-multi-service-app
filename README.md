@@ -1,99 +1,92 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Amygo — API NestJS
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+API de la migration Amygo (PHP legacy → NestJS). Elle s'appuie sur la base MySQL/MariaDB du legacy (`amygo1`), sans synchronisation automatique du schéma.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Organisation du dépôt `fusion/`
 
-## Description
+| Dossier | Rôle | Versionné |
+|---|---|---|
+| `amygo_sourcecode/` | Application PHP legacy, référence fonctionnelle (lecture seule) | non |
+| `api-multi-service-app/` | Cette API NestJS | git |
+| `admin-panel/` | Panneau d'administration React (Vite) | non |
+| `MIGRATION_*.md`, `plan-XX-*.md` | Plans et suivi de migration | non |
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Dans l'API :
 
-## Project setup
+- `src/<domaine>/` : un dossier par domaine (`users`, `transport`, `payments`, `stores`, `cms`…), chacun avec un `<domaine>.module.ts` qui agrège ses sous-modules ;
+- `src/core_app/core/` : le socle transverse (`database/`, `config/`, `logging/`) ;
+- `migrations/` : les scripts SQL numérotés (`NNN_description.sql`) et leur runner `migrate.js` ;
+- `test/` : les tests e2e.
 
-```bash
-$ npm install
-```
+## Prérequis
 
-## Compile and run the project
+- Node.js 20 ou plus, npm ;
+- MySQL 5.7+ ou MariaDB 10.4+ avec la base `amygo1` (dump legacy).
 
-```bash
-# development
-$ npm run start
+## Environnements
 
-# watch mode
-$ npm run start:dev
+Copier `.env.example` en `.env`. Le fichier `.env` est ignoré par git : aucun secret ne doit être versionné.
 
-# production mode
-$ npm run start:prod
-```
+| Variable | dev | test | prod | Remarque |
+|---|---|---|---|---|
+| `NODE_ENV` | `development` | `test` | `production` | |
+| `PORT` | opt. | opt. | opt. | 3000 par défaut |
+| `DB_URL` ou `DB_HOST` + `DB_USERNAME` + `DB_DATABASE` (+ `DB_PORT`, `DB_PASSWORD`) | requis | requis | requis | vérifié au démarrage |
+| `JWT_SECRET` | opt. | opt. | **requis** | repli sur un secret de dev hors production |
+| `JWT_EXPIRES_IN` | opt. | opt. | opt. | `7d` par défaut |
+| `CORS_ORIGINS` | opt. | opt. | **requis** | liste séparée par des virgules ; `*` si vide |
+| `FIREBASE_SERVER_KEY` | opt. | opt. | requis pour les push | sinon les push sont ignorés |
+| `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN`, `TWILIO_PHONE_NUMBER` | opt. | opt. | requis pour les SMS/OTP | hors production, l'OTP est renvoyé dans la réponse si l'envoi échoue |
+| `GOOGLE_MAPS_API_KEY` | opt. | opt. | opt. | repli Haversine + 30 km/h |
 
-## Run tests
+La validation au démarrage (`src/core_app/core/config/env.validation.ts`) arrête l'application si une variable requise manque. La préproduction suit les règles de la production (`NODE_ENV=production`).
+
+Les tests e2e exigent `NODE_ENV=test` et une base dont le nom contient `test` (garde-fou `test/e2e-guard.ts`), car ils vident des tables.
+
+## Commandes
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+npm install            # dépendances
+npm run start:dev      # développement (watch)
+npm run typecheck      # vérification TypeScript sans build
+npm run lint:check     # lint sans modification
+npm run lint           # lint avec corrections automatiques
+npm run format         # Prettier
+npm test               # tests unitaires (Jest, sans base de données)
+npm run test:e2e       # tests e2e (base de test uniquement)
+npm run build          # build de production dans dist/
+npm run start:prod     # lancement du build
+npm run migrate        # applique les migrations SQL non encore jouées (suivi dans la table _migrations)
 ```
 
-## Deployment
+## Conventions
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+**Modules.** Un sous-module par table ou par fonctionnalité : `x.module.ts`, `x.controller.ts`, `x.service.ts`, `dto/`, `entities/`. Le module importe et exporte `TypeOrmModule.forFeature([...])`. Les fonctionnalités transverses (auth, panier, tarifs, géo, admin) ont leur propre module à la racine de `src/`.
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+**Entités.** Elles reprennent exactement les tables et colonnes du legacy (notation hongroise : `iUserId`, `vName`, `eStatus`, `tDate`…). Aucune modification de schéma en dehors d'un fichier `migrations/NNN_*.sql`, car `synchronize` est désactivé.
 
-```bash
-$ npm install -g mau
-$ mau deploy
-```
+**Nommage.** Fichiers en kebab-case, classes en PascalCase, routes en kebab-case au pluriel (`/driver-docs`, `/admin/riders`). Les valeurs de statut reprennent celles du legacy telles quelles (`Active`/`Inactive` ou `active`/`inactive` selon la table).
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+**DTO et validation.** Un `ValidationPipe` global (`transform: true`) applique les décorateurs `class-validator`. Les nouveaux DTO doivent être décorés. La liste blanche (`whitelist`) n'est pas activée tant que les DTO générés ne sont pas tous décorés : elle supprimerait leurs propriétés. Les DTO de mise à jour utilisent `PartialType`.
 
-## Resources
+**Réponses.**
+- Ressource seule : l'objet.
+- Liste paginée : `{ items, total, page, limit }`, avec les paramètres de requête `page` (à partir de 1) et `limit` (20 par défaut).
+- Filtres : paramètres de requête nommés comme les colonnes (`eStatus`, `eUserType`) ou en clair (`search`, `status`).
 
-Check out a few resources that may come in handy when working with NestJS:
+**Erreurs.** Utiliser les exceptions HTTP de Nest (`NotFoundException`, `BadRequestException`…). Ne jamais inclure de secret, d'URL de connexion ou de données personnelles dans un message d'erreur.
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+**Format.** Prettier (guillemets simples, virgules finales, fins de ligne `auto` pour Windows) et ESLint (`recommendedTypeChecked`).
 
-## Support
+## Observabilité
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+- Chaque requête HTTP est journalisée (`RequestLoggerMiddleware`) : méthode, chemin sans la query string, statut et durée. Le niveau est `warn` pour les 4xx et `error` pour les 5xx.
+- Chaque requête porte un identifiant `X-Request-Id` (repris de l'en-tête entrant ou généré), renvoyé dans la réponse et présent dans le log.
+- Les appels externes (Twilio, FCM, Google Maps) passent par un `Logger` Nest nommé d'après le service.
+- Ne jamais journaliser de mot de passe, de token, de code OTP ni de corps de requête complet.
 
-## Stay in touch
+## Dette connue
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+- Aucune route n'est protégée par un guard : l'authentification et les autorisations sont traitées à l'étape 3 du plan.
+- Environ 300 erreurs de lint `no-unsafe-*` (typage `any`) restent dans `fare`, `cart`, `geo`, `user-profile`, `admin-panel` et leurs specs. Elles seront corrigées avec chaque domaine.
+- Les specs e2e `orders` et `users` sont des squelettes à réécrire (étape 18).
