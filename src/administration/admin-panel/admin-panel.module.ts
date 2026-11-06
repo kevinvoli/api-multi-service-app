@@ -12,6 +12,11 @@ import { CabBooking } from '../../transport/cab-booking/entities/cab-booking.ent
 import { DocumentList } from '../../users/document-list/entities/document-list.entity';
 import { UserWallet } from '../../payments/user-wallet/entities/user-wallet.entity';
 import { Coupon } from '../../payments/coupon/entities/coupon.entity';
+import { RatingsUserDriver } from '../../users/ratings-user-driver/entities/ratings-user-driver.entity';
+import { Hotel } from '../../stores/hotel/entities/hotel.entity';
+import { Organization } from '../../users/company/organization/entities/organization.entity';
+import { Contactus } from '../../cms/contactus/entities/contactus.entity';
+import { AdminAlerts } from '../../administration/admin/admin-alerts/entities/admin-alert.entity';
 
 @Module({
   imports: [
@@ -26,6 +31,11 @@ import { Coupon } from '../../payments/coupon/entities/coupon.entity';
       DocumentList,
       UserWallet,
       Coupon,
+      RatingsUserDriver,
+      Hotel,
+      Organization,
+      Contactus,
+      AdminAlerts,
     ]),
   ],
   controllers: [AdminPanelController],

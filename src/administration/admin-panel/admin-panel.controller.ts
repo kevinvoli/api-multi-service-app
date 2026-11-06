@@ -1,5 +1,5 @@
 import {
-  Controller, Get, Post, Patch, Body, Param, Query, ParseIntPipe,
+  Controller, Get, Post, Patch, Delete, Body, Param, Query, ParseIntPipe,
 } from '@nestjs/common';
 import { AdminPanelService } from './admin-panel.service';
 
@@ -256,5 +256,55 @@ export class AdminPanelController {
   @Get('coupons/check')
   checkCoupon(@Query('code') code: string) {
     return this.adminPanelService.checkCouponCode(code);
+  }
+
+  // ─── Avis & Notes ────────────────────────────────────────────────────────────
+
+  /** GET /admin/reviews?page=&limit=&eUserType=&eStatus= */
+  @Get('reviews')
+  listReviews(
+    @Query('page') page?: string,
+    @Query('limit') limit?: string,
+    @Query('eUserType') eUserType?: string,
+    @Query('eStatus') eStatus?: string,
+  ) {
+    return this.adminPanelService.listReviews(
+      page ? parseInt(page, 10) : 1,
+      limit ? parseInt(limit, 10) : 20,
+      eUserType,
+      eStatus,
+    );
+  }
+
+  /** DELETE /admin/reviews/:id */
+  @Delete('reviews/:id')
+  deleteReview(@Param('id', ParseIntPipe) id: number) {
+    return this.adminPanelService.deleteReview(id);
+  }
+
+  // ─── Dashboard — Données récentes ────────────────────────────────────────────
+
+  /** GET /admin/latest-rides */
+  @Get('latest-rides')
+  getLatestRides() {
+    return this.adminPanelService.getLatestRides();
+  }
+
+  /** GET /admin/latest-orders */
+  @Get('latest-orders')
+  getLatestOrders() {
+    return this.adminPanelService.getLatestOrders();
+  }
+
+  /** GET /admin/latest-contacts */
+  @Get('latest-contacts')
+  getLatestContacts() {
+    return this.adminPanelService.getLatestContacts();
+  }
+
+  /** GET /admin/latest-alerts */
+  @Get('latest-alerts')
+  getLatestAlerts() {
+    return this.adminPanelService.getLatestAlerts();
   }
 }

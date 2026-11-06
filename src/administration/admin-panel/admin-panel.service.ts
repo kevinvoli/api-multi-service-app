@@ -11,6 +11,11 @@ import { CabBooking } from '../../transport/cab-booking/entities/cab-booking.ent
 import { DocumentList } from '../../users/document-list/entities/document-list.entity';
 import { UserWallet } from '../../payments/user-wallet/entities/user-wallet.entity';
 import { Coupon } from '../../payments/coupon/entities/coupon.entity';
+import { RatingsUserDriver } from '../../users/ratings-user-driver/entities/ratings-user-driver.entity';
+import { Hotel } from '../../stores/hotel/entities/hotel.entity';
+import { Organization } from '../../users/company/organization/entities/organization.entity';
+import { Contactus } from '../../cms/contactus/entities/contactus.entity';
+import { AdminAlerts } from '../../administration/admin/admin-alerts/entities/admin-alert.entity';
 import * as bcrypt from 'bcryptjs';
 
 @Injectable()
@@ -36,6 +41,16 @@ export class AdminPanelService {
     private readonly walletRepo: Repository<UserWallet>,
     @InjectRepository(Coupon)
     private readonly couponRepo: Repository<Coupon>,
+    @InjectRepository(RatingsUserDriver)
+    private readonly reviewRepo: Repository<RatingsUserDriver>,
+    @InjectRepository(Hotel)
+    private readonly hotelRepo: Repository<Hotel>,
+    @InjectRepository(Organization)
+    private readonly orgRepo: Repository<Organization>,
+    @InjectRepository(Contactus)
+    private readonly contactRepo: Repository<Contactus>,
+    @InjectRepository(AdminAlerts)
+    private readonly alertRepo: Repository<AdminAlerts>,
   ) {}
 
   // ─── Dashboard ───────────────────────────────────────────────────────────────
@@ -47,8 +62,27 @@ export class AdminPanelService {
     companies: number;
     activeTrips: number;
     restaurantOrders: number;
+    stores: number;
+    organizations: number;
+    tripBreakdown: { completed: number; cancelled: number; ongoing: number };
+    orderBreakdown: { completed: number; cancelled: number; processing: number };
+    adminEarning: number;
   }> {
-    const [riders, drivers, companies, activeTrips, restaurantOrders] = await Promise.all([
+    const [
+      riders,
+      drivers,
+      companies,
+      activeTrips,
+      restaurantOrders,
+      stores,
+      organizations,
+      tripCompleted,
+      tripCancelled,
+      tripOngoing,
+      orderCompleted,
+      orderCancelled,
+      orderProcessing,
+    ] = await Promise.all([
       this.userRepo.count({ where: { eStatus: 'Active' } as any }),
       this.driverRepo.count({ where: { eStatus: 'active' } as any }),
       this.companyRepo.count({ where: { eStatus: 'Active' } as any }),
@@ -57,8 +91,44 @@ export class AdminPanelService {
         .where('t.iActive IN (:...s)', { s: ['Active', 'On Going Trip', 'Arrived'] })
         .getCount(),
       this.orderRepo.count(),
+      this.hotelRepo.count({ where: { eStatus: 'Active' } as any }),
+      this.orgRepo.count({ where: { eStatus: 'Active' } as any }),
+      this.tripRepo.createQueryBuilder('t').where("t.iActive = 'Finished'").getCount(),
+      this.tripRepo.createQueryBuilder('t').where("t.iActive = 'Canceled'").getCount(),
+      this.tripRepo
+        .createQueryBuilder('t')
+        .where('t.iActive IN (:...s)', { s: ['Active', 'On Going Trip', 'Arrived'] })
+        .getCount(),
+      this.orderRepo.createQueryBuilder('o').where('o.iStatusCode = :sc', { sc: 5 }).getCount(),
+      this.orderRepo
+        .createQueryBuilder('o')
+        .where('o.iStatusCode IN (:...sc)', { sc: [6, 7] })
+        .getCount(),
+      this.orderRepo
+        .createQueryBuilder('o')
+        .where('o.iStatusCode IN (:...sc)', { sc: [2, 3, 4] })
+        .getCount(),
     ]);
-    return { riders, drivers, companies, activeTrips, restaurantOrders };
+
+    const earningRow: any = await this.tripRepo
+      .createQueryBuilder('t')
+      .select('SUM(t.iFare)', 'total')
+      .where("t.iActive = 'Finished'")
+      .getRawOne();
+    const adminEarning = parseFloat(earningRow?.total ?? '0');
+
+    return {
+      riders,
+      drivers,
+      companies,
+      activeTrips,
+      restaurantOrders,
+      stores,
+      organizations,
+      tripBreakdown: { completed: tripCompleted, cancelled: tripCancelled, ongoing: tripOngoing },
+      orderBreakdown: { completed: orderCompleted, cancelled: orderCancelled, processing: orderProcessing },
+      adminEarning,
+    };
   }
 
   // ─── Gestion Riders ──────────────────────────────────────────────────────────
@@ -423,6 +493,37 @@ export class AdminPanelService {
     return { balance, userType };
   }
 
+  // ─── Avis & Notes ────────────────────────────────────────────────────────────
+  // Remplace : review.php
+
+  async listReviews(
+    page = 1,
+    limit = 20,
+    eUserType?: string,
+    eStatus?: string,
+  ) {
+    const qb = this.reviewRepo.createQueryBuilder('r').orderBy('r.tDate', 'DESC');
+
+    if (eUserType) qb.andWhere('r.eUserType = :eUserType', { eUserType });
+    if (eStatus)   qb.andWhere('r.eStatus = :eStatus', { eStatus });
+
+    const [items, total] = await qb
+      .skip((page - 1) * limit)
+      .take(limit)
+      .getManyAndCount();
+
+    return { items, total, page, limit };
+  }
+
+  async deleteReview(reviewId: number) {
+    const result = await this.reviewRepo.update(
+      { iRatingId: reviewId } as any,
+      { eStatus: 'Deleted' } as any,
+    );
+    if (!result.affected) throw new NotFoundException(`Avis #${reviewId} introuvable`);
+    return { deleted: true };
+  }
+
   // ─── Vérifier code coupon (unicité) ──────────────────────────────────────────
   // Remplace : ajax_validate_coupon.php
 
@@ -434,5 +535,49 @@ export class AdminPanelService {
       .getOne();
 
     return coupon ? { exists: true, coupon } : { exists: false };
+  }
+
+  // ─── Dernières réservations (cab bookings) ───────────────────────────────────
+
+  async getLatestRides(limit = 5) {
+    return this.cabBookingRepo
+      .createQueryBuilder('b')
+      .select(['b.iCabBookingId', 'b.vBookingNo', 'b.vSourceAddresss', 'b.iUserId', 'b.eStatus'])
+      .addSelect('b.tBookingDate')
+      .orderBy('b.iCabBookingId', 'DESC')
+      .take(limit)
+      .getMany();
+  }
+
+  // ─── Dernières commandes restaurant ──────────────────────────────────────────
+
+  async getLatestOrders(limit = 5) {
+    return this.orderRepo
+      .createQueryBuilder('o')
+      .select(['o.iOrderId', 'o.vOrderNo', 'o.iUserId', 'o.vUserEmail', 'o.iStatusCode', 'o.tOrderRequestDate', 'o.fFinalTotal'])
+      .orderBy('o.iOrderId', 'DESC')
+      .take(limit)
+      .getMany();
+  }
+
+  // ─── Derniers messages contact ────────────────────────────────────────────────
+
+  async getLatestContacts(limit = 5) {
+    return this.contactRepo
+      .createQueryBuilder('c')
+      .select(['c.iContactusId', 'c.vFirstname', 'c.vLastname', 'c.vEmail', 'c.vSubject', 'c.tRequestDate', 'c.eUserType'])
+      .orderBy('c.iContactusId', 'DESC')
+      .take(limit)
+      .getMany();
+  }
+
+  // ─── Dernières alertes SOS/admin ─────────────────────────────────────────────
+
+  async getLatestAlerts(limit = 5) {
+    return this.alertRepo
+      .createQueryBuilder('a')
+      .orderBy('a.iAlertId', 'DESC')
+      .take(limit)
+      .getMany();
   }
 }

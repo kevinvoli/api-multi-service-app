@@ -12,6 +12,11 @@ import { CabBooking } from '../../transport/cab-booking/entities/cab-booking.ent
 import { DocumentList } from '../../users/document-list/entities/document-list.entity';
 import { UserWallet } from '../../payments/user-wallet/entities/user-wallet.entity';
 import { Coupon } from '../../payments/coupon/entities/coupon.entity';
+import { RatingsUserDriver } from '../../users/ratings-user-driver/entities/ratings-user-driver.entity';
+import { Hotel } from '../../stores/hotel/entities/hotel.entity';
+import { Organization } from '../../users/company/organization/entities/organization.entity';
+import { Contactus } from '../../cms/contactus/entities/contactus.entity';
+import { AdminAlerts } from '../admin/admin-alerts/entities/admin-alert.entity';
 
 // ─── Mock factory ─────────────────────────────────────────────────────────────
 
@@ -77,6 +82,11 @@ describe('AdminPanelService', () => {
         { provide: getRepositoryToken(DocumentList), useValue: documentRepo },
         { provide: getRepositoryToken(UserWallet), useValue: walletRepo },
         { provide: getRepositoryToken(Coupon), useValue: couponRepo },
+        { provide: getRepositoryToken(RatingsUserDriver), useValue: makeRepo() },
+        { provide: getRepositoryToken(Hotel), useValue: makeRepo() },
+        { provide: getRepositoryToken(Organization), useValue: makeRepo() },
+        { provide: getRepositoryToken(Contactus), useValue: makeRepo() },
+        { provide: getRepositoryToken(AdminAlerts), useValue: makeRepo() },
       ],
     }).compile();
 
@@ -93,8 +103,10 @@ describe('AdminPanelService', () => {
       orderRepo.count.mockResolvedValue(200);
 
       const qb = {
+        select: jest.fn().mockReturnThis(),
         where: jest.fn().mockReturnThis(),
         getCount: jest.fn().mockResolvedValue(3),
+        getRawOne: jest.fn().mockResolvedValue({ total: '0' }),
       };
       tripRepo.createQueryBuilder.mockReturnValue(qb);
 
