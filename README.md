@@ -32,14 +32,15 @@ Copier `.env.example` en `.env`. Le fichier `.env` est ignoré par git : aucun s
 | `NODE_ENV` | `development` | `test` | `production` | |
 | `PORT` | opt. | opt. | opt. | 3000 par défaut |
 | `DB_URL` ou `DB_HOST` + `DB_USERNAME` + `DB_DATABASE` (+ `DB_PORT`, `DB_PASSWORD`) | requis | requis | requis | vérifié au démarrage |
-| `JWT_SECRET` | opt. | opt. | **requis** | repli sur un secret de dev hors production |
+| `JWT_SECRET` | opt. | opt. | **requis** | 32 caractères minimum hors development/test ; repli sur un secret de dev en development/test uniquement |
 | `JWT_EXPIRES_IN` | opt. | opt. | opt. | `7d` par défaut |
-| `CORS_ORIGINS` | opt. | opt. | **requis** | liste séparée par des virgules ; `*` si vide |
+| `CORS_ORIGINS` | opt. | opt. | **requis** | requis dès que `NODE_ENV` n'est ni `development` ni `test` (y compris absent) ; liste séparée par des virgules ; `*` si vide en development/test |
+| `TRUST_PROXY_HOPS` | opt. | opt. | opt. | nombre de reverse proxys de confiance (entier ≥ 0, `0` par défaut) |
 | `FIREBASE_SERVER_KEY` | opt. | opt. | requis pour les push | sinon les push sont ignorés |
-| `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN`, `TWILIO_PHONE_NUMBER` | opt. | opt. | requis pour les SMS/OTP | hors production, l'OTP est renvoyé dans la réponse si l'envoi échoue |
+| `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN`, `TWILIO_PHONE_NUMBER` | opt. | opt. | requis pour les SMS/OTP | en development/test uniquement, l'OTP est renvoyé dans la réponse si l'envoi échoue ; jamais dans les autres cas (y compris `NODE_ENV` absent) |
 | `GOOGLE_MAPS_API_KEY` | opt. | opt. | opt. | repli Haversine + 30 km/h |
 
-La validation au démarrage (`src/core_app/core/config/env.validation.ts`) arrête l'application si une variable requise manque. La préproduction suit les règles de la production (`NODE_ENV=production`).
+La validation au démarrage (`src/core_app/core/config/env.validation.ts`) arrête l'application si une variable requise manque. Seuls `NODE_ENV=development` et `NODE_ENV=test` assouplissent ces exigences : toute autre valeur, ou l'absence de `NODE_ENV`, est traitée comme la production (la préproduction utilise `NODE_ENV=production`).
 
 Les tests e2e exigent `NODE_ENV=test` et une base dont le nom contient `test` (garde-fou `test/e2e-guard.ts`), car ils vident des tables.
 
@@ -67,7 +68,7 @@ npm run migrate        # applique les migrations SQL non encore jouées (suivi d
 
 **Nommage.** Fichiers en kebab-case, classes en PascalCase, routes en kebab-case au pluriel (`/driver-docs`, `/admin/riders`). Les valeurs de statut reprennent celles du legacy telles quelles (`Active`/`Inactive` ou `active`/`inactive` selon la table).
 
-**DTO et validation.** Un `ValidationPipe` global (`transform: true`) applique les décorateurs `class-validator`. Les nouveaux DTO doivent être décorés. La liste blanche (`whitelist`) n'est pas activée tant que les DTO générés ne sont pas tous décorés : elle supprimerait leurs propriétés. Les DTO de mise à jour utilisent `PartialType`.
+**DTO et validation.** Un `ValidationPipe` global (`transform: true`) applique les décorateurs `class-validator`. Les nouveaux DTO doivent être décorés. La liste blanche (`whitelist`) n'est pas activée globalement tant que les DTO générés ne sont pas tous décorés : elle supprimerait leurs propriétés. Les contrôleurs non-admin (`auth`, `cart`, `fare`, `geo`, `profile`, `bookings`, OTP) l'activent via `@UsePipes(StrictValidationPipe)` : toute propriété d'un de leurs DTO doit être décorée. Les DTO de mise à jour utilisent `PartialType`.
 
 **Réponses.**
 - Ressource seule : l'objet.
@@ -78,6 +79,16 @@ npm run migrate        # applique les migrations SQL non encore jouées (suivi d
 
 **Format.** Prettier (guillemets simples, virgules finales, fins de ligne `auto` pour Windows) et ESLint (`recommendedTypeChecked`).
 
+## Authentification et autorisation
+
+- `JwtAuthGuard` et `RolesGuard` sont globaux (`APP_GUARD`) : toute route exige un jeton Bearer valide et, sans décorateur, est réservée à l'admin (`userType: hotel`). Les contrôleurs CRUD générés sont donc admin par défaut.
+- `@Public()` ouvre une route, `@Roles(...)` l'ouvre à `rider`, `driver` ou `company` (l'admin passe toujours), `@CurrentUser()` injecte l'utilisateur du jeton, `@RateLimit(limite, ttlMs)` limite le débit (login, check-phone, OTP).
+- Contrôle d'appartenance : `assertSelf` / `assertOwner` (`src/auth/ownership.ts`) renvoient 403 si un non-admin vise la donnée d'un autre.
+- `GET /auth/me` renvoie l'utilisateur du jeton.
+- Les codes OTP sont stockés hachés dans la table `otp_codes` (5 essais, expiration 10 min). **Les migrations `migrations/002_create_otp_codes.sql` et `migrations/003_otp_codes_quota_index.sql` doivent être exécutées avant de déployer** (`npm run migrate`).
+- Quotas OTP par téléphone : 3 envois / 15 min et 10 échecs cumulés / 24 h ; au-delà, l'envoi répond 429 et la vérification « Trop de tentatives ».
+- `TRUST_PROXY_HOPS` (défaut 0) = nombre de reverse proxys de confiance, à renseigner derrière un proxy pour que le throttler voie l'IP réelle ; son stockage est en mémoire, par instance (pas partagé entre instances).
+
 ## Observabilité
 
 - Chaque requête HTTP est journalisée (`RequestLoggerMiddleware`) : méthode, chemin sans la query string, statut et durée. Le niveau est `warn` pour les 4xx et `error` pour les 5xx.
@@ -87,6 +98,5 @@ npm run migrate        # applique les migrations SQL non encore jouées (suivi d
 
 ## Dette connue
 
-- Aucune route n'est protégée par un guard : l'authentification et les autorisations sont traitées à l'étape 3 du plan.
 - Environ 300 erreurs de lint `no-unsafe-*` (typage `any`) restent dans `fare`, `cart`, `geo`, `user-profile`, `admin-panel` et leurs specs. Elles seront corrigées avec chaque domaine.
 - Les specs e2e `orders` et `users` sont des squelettes à réécrire (étape 18).
