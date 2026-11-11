@@ -7,8 +7,11 @@ import { Trips } from '../transport/trips/entities/trip.entity';
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
-function makeQb(getOneResult: any = null, getManyResult: any[] = []) {
-  const qb: any = {
+function makeQb(
+  getOneResult: unknown = null,
+  getManyResult: unknown[] = [],
+): Record<string, jest.Mock> {
+  const qb: Record<string, jest.Mock> = {
     where: jest.fn().mockReturnThis(),
     andWhere: jest.fn().mockReturnThis(),
     select: jest.fn().mockReturnThis(),
@@ -21,8 +24,8 @@ function makeQb(getOneResult: any = null, getManyResult: any[] = []) {
 
 describe('GeoService', () => {
   let service: GeoService;
-  let driverRepo: any;
-  let tripRepo: any;
+  let driverRepo: Record<'update' | 'createQueryBuilder', jest.Mock>;
+  let tripRepo: Record<'createQueryBuilder', jest.Mock>;
 
   beforeEach(async () => {
     driverRepo = {
@@ -115,6 +118,58 @@ describe('GeoService', () => {
       expect(result[0].distanceKm).toBeLessThanOrEqual(10);
       // Tri par distance croissante
       expect(result[0].distanceKm).toBeLessThanOrEqual(result[1].distanceKm);
+    });
+
+    it('ne renvoie pas vPhone par défaut', async () => {
+      const drivers = [
+        {
+          iDriverId: 1,
+          vName: 'Ali',
+          vLastName: 'B',
+          vPhone: '0700',
+          vImage: '',
+          vLatitude: '48.860',
+          vLongitude: '2.352',
+          vAvgRating: '4.5',
+          iDriverVehicleId: '1',
+        },
+      ];
+      const qb = makeQb(null, drivers);
+      qb.getMany = jest.fn().mockResolvedValue(drivers);
+      driverRepo.createQueryBuilder.mockReturnValue(qb);
+
+      const result = await service.findNearbyDrivers(48.8566, 2.3522, 10);
+      expect(result).toHaveLength(1);
+      expect(result[0]).not.toHaveProperty('vPhone');
+    });
+
+    it('renvoie vPhone quand includePhone est vrai', async () => {
+      const drivers = [
+        {
+          iDriverId: 1,
+          vName: 'Ali',
+          vLastName: 'B',
+          vPhone: '0700',
+          vImage: '',
+          vLatitude: '48.860',
+          vLongitude: '2.352',
+          vAvgRating: '4.5',
+          iDriverVehicleId: '1',
+        },
+      ];
+      const qb = makeQb(null, drivers);
+      qb.getMany = jest.fn().mockResolvedValue(drivers);
+      driverRepo.createQueryBuilder.mockReturnValue(qb);
+
+      const result = await service.findNearbyDrivers(
+        48.8566,
+        2.3522,
+        10,
+        undefined,
+        undefined,
+        true,
+      );
+      expect(result[0].vPhone).toBe('0700');
     });
 
     it('retourne un tableau vide si aucun driver actif', async () => {

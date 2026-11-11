@@ -23,6 +23,9 @@ function haversineKm(
   return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 }
 
+export const tripNotFoundMessage = (tripId: number): string =>
+  `Trajet #${tripId} introuvable ou terminé`;
+
 @Injectable()
 export class GeoService {
   private readonly logger = new Logger(GeoService.name);
@@ -58,12 +61,13 @@ export class GeoService {
     radiusKm = 5,
     vehicleTypeId?: number,
     companyId?: number,
+    includePhone = false,
   ): Promise<
     {
       iDriverId: number;
       vName: string;
       vLastName: string;
-      vPhone: string;
+      vPhone?: string;
       vImage: string;
       vLatitude: string;
       vLongitude: string;
@@ -111,7 +115,7 @@ export class GeoService {
           iDriverId: d.iDriverId,
           vName: d.vName,
           vLastName: d.vLastName,
-          vPhone: d.vPhone,
+          ...(includePhone ? { vPhone: d.vPhone } : {}),
           vImage: d.vImage,
           vLatitude: d.vLatitude,
           vLongitude: d.vLongitude,
@@ -140,7 +144,7 @@ export class GeoService {
       .getOne();
 
     if (!trip) {
-      throw new NotFoundException(`Trajet #${tripId} introuvable ou terminé`);
+      throw new NotFoundException(tripNotFoundMessage(tripId));
     }
 
     const driver = trip.iDriver ?? null;

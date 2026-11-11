@@ -14,6 +14,7 @@ import { Company } from '../users/company/entities/company.entity';
 import { DeliveryCharges } from '../delivery/delivery-charges/entities/delivery-charge.entity';
 import { Coupon } from '../payments/coupon/entities/coupon.entity';
 import { UserAddress } from '../users/user-address/entities/user-address.entity';
+import { findOwnedRiderAddress } from '../common/utils/owned-address';
 import { AddCartItemDto } from './dto/add-cart-item.dto';
 import { CheckoutCartDto } from './dto/checkout-cart.dto';
 
@@ -138,6 +139,23 @@ export class CartService {
     userId: number,
     addressId?: number,
   ): Promise<Record<string, any>> {
+    let address: UserAddress | null = null;
+    if (addressId !== undefined) {
+      address = await findOwnedRiderAddress(
+        this.addressRepo,
+        userId,
+        addressId,
+      );
+      if (!address)
+        throw new NotFoundException('Adresse de livraison introuvable');
+    }
+    return this.computeCart(userId, address);
+  }
+
+  private async computeCart(
+    userId: number,
+    address: UserAddress | null,
+  ): Promise<Record<string, any>> {
     const items = await this.cartRepo.find({
       where: { iUserId: userId } as any,
     });
@@ -255,10 +273,10 @@ export class CartService {
 
     // Frais de livraison
     let fDeliveryCharge = 0;
-    if (addressId) {
+    if (address) {
       fDeliveryCharge = await this._computeDeliveryCharge(
         company,
-        addressId,
+        address,
         fSubTotal,
       );
     }
@@ -388,12 +406,17 @@ export class CartService {
       throw new NotFoundException(`Restaurant #${companyId} introuvable`);
 
     // Adresse de livraison
-    const address = await this.addressRepo.findOneBy({
-      iUserAddressId: dto.iUserAddressId,
-    } as any);
+    const address = await findOwnedRiderAddress(
+      this.addressRepo,
+      dto.iUserId,
+      dto.iUserAddressId,
+    );
+    if (!address && dto.eTakeAway !== 'Yes') {
+      throw new NotFoundException('Adresse de livraison introuvable');
+    }
 
     // Calcul des totaux (même logique que getCart)
-    const cartData = await this.getCart(dto.iUserId, dto.iUserAddressId);
+    const cartData = await this.computeCart(dto.iUserId, address);
     const fSubTotal = cartData.fSubTotal as number;
     const fTotalDiscount = cartData.fTotalDiscount as number;
     let fDeliveryCharge = cartData.fDeliveryCharge as number;
@@ -438,7 +461,7 @@ export class CartService {
     const order = (this.orderRepo.create as any)({
       iUserId: dto.iUserId,
       iCompanyId: companyId,
-      iUserAddressId: dto.iUserAddressId,
+      iUserAddressId: address?.iUserAddressId ?? 0,
       vOrderNo: generateOrderNo(),
       tOrderRequestDate: now,
       dDeliveryDate: now,
@@ -586,12 +609,9 @@ export class CartService {
 
   private async _computeDeliveryCharge(
     company: Company,
-    iUserAddressId: number,
+    address: UserAddress,
     fSubTotal: number,
   ): Promise<number> {
-    const address = await this.addressRepo.findOneBy({ iUserAddressId } as any);
-    if (!address) return 0;
-
     const restaurantLat = parseFloat(company.vRestuarantLocationLat) || 0;
     const restaurantLon = parseFloat(company.vRestuarantLocationLong) || 0;
     const deliveryLat = parseFloat(address.vLatitude) || 0;

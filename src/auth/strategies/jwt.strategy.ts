@@ -1,29 +1,27 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
-
-export interface JwtPayload {
-  sub: number;
-  email: string;
-  userType: 'rider' | 'driver' | 'company' | 'hotel';
-}
+import { AuthUser, JwtPayload } from '../auth.types';
+import { resolveJwtSecret } from '../jwt-secret';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-  constructor() {
+  constructor(config: ConfigService) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
-      secretOrKey: process.env.JWT_SECRET || 'amygo_secret_key',
+      secretOrKey: resolveJwtSecret(config),
     });
   }
 
-  validate(payload: JwtPayload) {
+  validate(payload: JwtPayload): AuthUser {
     if (!payload.sub) throw new UnauthorizedException();
     return {
       id: payload.sub,
       email: payload.email,
       userType: payload.userType,
+      groupId: payload.groupId,
     };
   }
 }

@@ -1,9 +1,15 @@
 import { Module } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { APP_GUARD } from '@nestjs/core';
 import { JwtModule, JwtSignOptions } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
+import { ThrottlerModule } from '@nestjs/throttler';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { RolesGuard } from './guards/roles.guard';
+import { resolveJwtSecret } from './jwt-secret';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { RegisterUser } from '../users/register-user/entities/register-user.entity';
 import { RegisterDriver } from '../users/register-driver/entities/register-driver.entity';
@@ -14,16 +20,18 @@ import { MemberLog } from '../users/member-logs/entities/member-log.entity';
 @Module({
   imports: [
     PassportModule.register({ defaultStrategy: 'jwt' }),
-    // registerAsync : process.env doit être lu après le chargement du .env par ConfigModule
     JwtModule.registerAsync({
-      useFactory: () => ({
-        secret: process.env.JWT_SECRET || 'amygo_secret_key',
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => ({
+        secret: resolveJwtSecret(config),
         signOptions: {
-          expiresIn: (process.env.JWT_EXPIRES_IN ||
+          expiresIn: (config.get<string>('JWT_EXPIRES_IN') ||
             '7d') as JwtSignOptions['expiresIn'],
         },
       }),
     }),
+    // Aucune limite globale : le ThrottlerGuard n'est appliqué que par @RateLimit() sur les routes publiques sensibles
+    ThrottlerModule.forRoot([{ ttl: 60_000, limit: 60 }]),
     TypeOrmModule.forFeature([
       RegisterUser,
       RegisterDriver,
@@ -33,7 +41,12 @@ import { MemberLog } from '../users/member-logs/entities/member-log.entity';
     ]),
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy],
-  exports: [AuthService, JwtModule, PassportModule],
+  providers: [
+    AuthService,
+    JwtStrategy,
+    { provide: APP_GUARD, useClass: JwtAuthGuard },
+    { provide: APP_GUARD, useClass: RolesGuard },
+  ],
+  exports: [AuthService, JwtModule, PassportModule, ThrottlerModule],
 })
 export class AuthModule {}

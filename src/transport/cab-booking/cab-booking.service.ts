@@ -1,5 +1,7 @@
 import {
   BadRequestException,
+  ConflictException,
+  ForbiddenException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -10,6 +12,20 @@ import { CreateCabBookingDto } from './dto/create-cab-booking.dto';
 import { UpdateCabBookingDto } from './dto/update-cab-booking.dto';
 import { RegisterUser } from '../../users/register-user/entities/register-user.entity';
 import { RegisterDriver } from '../../users/register-driver/entities/register-driver.entity';
+
+const MODIFIABLE_STATUSES: ReadonlyArray<CabBooking['eStatus']> = [
+  'Pending',
+  'Assign',
+];
+
+/** Une réservation n'est modifiable qu'avant la création de la course (iTripId à 0) et dans son statut initial. */
+export function isBookingModifiable(
+  booking: Pick<CabBooking, 'iTripId' | 'eStatus'>,
+): boolean {
+  return (
+    !Number(booking.iTripId) && MODIFIABLE_STATUSES.includes(booking.eStatus)
+  );
+}
 
 @Injectable()
 export class CabBookingService {
@@ -88,13 +104,13 @@ export class CabBookingService {
   // ─── Assigner un chauffeur à une réservation ─────────────────────────────────
   // Remplace : ajax_assign_driver_cabbooking.php
 
-  async assignDriver(bookingId: number, driverId: number): Promise<CabBooking> {
+  async assignDriver(
+    bookingId: number,
+    driverId: number,
+    companyId?: number,
+  ): Promise<CabBooking> {
     await this.findOne(bookingId);
-    const driver = await this.driverRepo.findOneBy({
-      iDriverId: driverId,
-    } as any);
-    if (!driver)
-      throw new NotFoundException(`Chauffeur #${driverId} non trouvé`);
+    await this.findDriver(driverId, companyId);
 
     await this.repository.update(bookingId, {
       iDriverId: driverId,
@@ -103,6 +119,27 @@ export class CabBookingService {
     } as any);
 
     return this.findOne(bookingId);
+  }
+
+  /** Chauffeur actif ; si companyId est fourni, il doit appartenir à cette compagnie. */
+  async findDriver(
+    driverId: number,
+    companyId?: number,
+  ): Promise<RegisterDriver> {
+    const driver = await this.driverRepo.findOneBy({
+      iDriverId: driverId,
+    } as any);
+    if (!driver || driver.eStatus === 'Deleted')
+      throw new NotFoundException(`Chauffeur #${driverId} non trouvé`);
+    if (companyId !== undefined && driver.iCompanyId !== companyId) {
+      throw new ForbiddenException(
+        "Ce chauffeur n'appartient pas à votre compagnie",
+      );
+    }
+    if (driver.eStatus !== 'active') {
+      throw new ConflictException(`Chauffeur #${driverId} non actif`);
+    }
+    return driver;
   }
 
   // ─── Liste des chauffeurs disponibles par compagnie ───────────────────────────
@@ -139,6 +176,7 @@ export class CabBookingService {
     companyId?: number;
     status?: string;
     driverId?: number;
+    userId?: number;
   }): Promise<CabBooking[]> {
     const qb = this.repository
       .createQueryBuilder('b')
@@ -149,6 +187,8 @@ export class CabBookingService {
       qb.andWhere('b.eStatus = :status', { status: filters.status });
     if (filters?.driverId)
       qb.andWhere('b.iDriverId = :did', { did: filters.driverId });
+    if (filters?.userId)
+      qb.andWhere('b.iUserId = :uid', { uid: filters.userId });
     return qb.getMany() as any;
   }
 

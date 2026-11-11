@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as crypto from 'crypto';
 import * as bcrypt from 'bcryptjs';
+import { UserType } from './auth.types';
 import { LoginDto } from './dto/login.dto';
 import { RegisterUser } from '../users/register-user/entities/register-user.entity';
 import { RegisterDriver } from '../users/register-driver/entities/register-driver.entity';
@@ -193,7 +194,12 @@ export class AuthService {
     if (admin.eStatus !== 'Active')
       return { login_status: LoginStatus.INACTIVE };
 
-    const token = this.generateToken(admin.iAdminId, admin.vEmail, 'hotel');
+    const token = this.generateToken(
+      admin.iAdminId,
+      admin.vEmail,
+      'hotel',
+      admin.iGroupId,
+    );
     return {
       login_status: LoginStatus.SUCCESS,
       token,
@@ -228,9 +234,10 @@ export class AuthService {
   private generateToken(
     id: number,
     email: string,
-    userType: 'rider' | 'driver' | 'company' | 'hotel',
+    userType: UserType,
+    groupId?: number,
   ) {
-    return this.jwtService.sign({ sub: id, email, userType });
+    return this.jwtService.sign({ sub: id, email, userType, groupId });
   }
 
   private async logMemberLogin(memberId: number, memberType: string) {

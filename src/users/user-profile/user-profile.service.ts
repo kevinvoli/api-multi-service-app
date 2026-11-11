@@ -11,6 +11,11 @@ import { RegisterUser } from '../register-user/entities/register-user.entity';
 import { RegisterDriver } from '../register-driver/entities/register-driver.entity';
 import { Company } from '../company/entities/company.entity';
 import { UserAddress } from '../user-address/entities/user-address.entity';
+import { findOwnedRiderAddress } from '../../common/utils/owned-address';
+import {
+  SafeAccount,
+  stripSensitiveFields,
+} from '../../common/utils/sensitive-fields';
 import { UpdateProfileDto } from './dto/update-profile.dto';
 import { ChangePasswordDto } from './dto/change-password.dto';
 import { AddAddressDto } from './dto/add-address.dto';
@@ -32,20 +37,23 @@ export class UserProfileService {
     private readonly addressRepo: Repository<UserAddress>,
   ) {}
 
-  async getProfile(userId: number, userType: string): Promise<any> {
+  async getProfile(
+    userId: number,
+    userType: string,
+  ): Promise<SafeAccount<RegisterUser | RegisterDriver | Company>> {
     if (userType === 'rider') {
-      const u = await this.userRepo.findOneBy({ iUserId: userId } as any);
+      const u = await this.userRepo.findOneBy({ iUserId: userId });
       if (!u) throw new NotFoundException();
-      return u;
+      return stripSensitiveFields(u);
     }
     if (userType === 'driver') {
-      const d = await this.driverRepo.findOneBy({ iDriverId: userId } as any);
+      const d = await this.driverRepo.findOneBy({ iDriverId: userId });
       if (!d) throw new NotFoundException();
-      return d;
+      return stripSensitiveFields(d);
     }
-    const c = await this.companyRepo.findOneBy({ iCompanyId: userId } as any);
+    const c = await this.companyRepo.findOneBy({ iCompanyId: userId });
     if (!c) throw new NotFoundException();
-    return c;
+    return stripSensitiveFields(c);
   }
 
   // Remplace : ajax_profile_rider_a.php (action=all)
@@ -205,8 +213,14 @@ export class UserProfileService {
     userId: number,
     addressId: number,
   ): Promise<{ success: boolean }> {
+    const address = await findOwnedRiderAddress(
+      this.addressRepo,
+      userId,
+      addressId,
+    );
+    if (!address) throw new NotFoundException();
     await this.addressRepo.update(
-      { iUserAddressId: addressId, iUserId: userId } as any,
+      { iUserAddressId: addressId } as any,
       { eStatus: 'Deleted' } as any,
     );
     return { success: true };

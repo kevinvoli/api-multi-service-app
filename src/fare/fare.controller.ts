@@ -1,8 +1,16 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, UsePipes } from '@nestjs/common';
 import { FareService } from './fare.service';
-import { EstimateFareDto } from './dto/estimate-fare.dto';
+import {
+  EstimateAllFaresQueryDto,
+  EstimateFareDto,
+} from './dto/estimate-fare.dto';
+import { Roles } from '../auth/decorators/roles.decorator';
+import { ALL_ROLES } from '../auth/auth.types';
+import { StrictValidationPipe } from '../common/pipes/strict-validation.pipe';
 
 @Controller('fare')
+@Roles(...ALL_ROLES)
+@UsePipes(StrictValidationPipe)
 export class FareController {
   constructor(private readonly fareService: FareService) {}
 
@@ -21,17 +29,12 @@ export class FareController {
    * Estimation pour tous les types de véhicules disponibles
    */
   @Get('estimate-all')
-  estimateAll(
-    @Query('distanceKm') distanceKm: string,
-    @Query('durationMin') durationMin: string,
-    @Query('eType') eType?: string,
-    @Query('bookingDate') bookingDate?: string,
-  ) {
+  estimateAll(@Query() query: EstimateAllFaresQueryDto) {
     return this.fareService.estimateAllVehicles(
-      parseFloat(distanceKm),
-      parseFloat(durationMin),
-      eType,
-      bookingDate,
+      query.distanceKm,
+      query.durationMin,
+      query.eType,
+      query.bookingDate,
     );
   }
 }

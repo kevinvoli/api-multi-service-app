@@ -1,17 +1,35 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { InjectRepository } from '@nestjs/typeorm';
 import * as https from 'https';
-import { randomInt } from 'crypto';
+import { createHmac, randomInt, timingSafeEqual } from 'crypto';
+import {
+  IsNull,
+  LessThan,
+  LessThanOrEqual,
+  MoreThan,
+  Repository,
+} from 'typeorm';
+import { resolveJwtSecret } from '../auth/jwt-secret';
+import { isDevOrTestEnv } from '../common/utils/runtime-env';
+import { OtpCode } from './entities/otp-code.entity';
 
-// ─── OTP en mémoire (TTL 10 min) ─────────────────────────────────────────────
-interface OtpEntry {
-  code: string;
-  expiresAt: number;
-}
-const otpStore = new Map<string, OtpEntry>();
+const OTP_TTL_MS = 10 * 60 * 1000;
+const OTP_MAX_ATTEMPTS = 5;
+const OTP_SEND_WINDOW_MS = 15 * 60 * 1000;
+const OTP_MAX_SENDS_PER_WINDOW = 3;
+const OTP_FAILURE_WINDOW_MS = 24 * 60 * 60 * 1000;
+const OTP_MAX_FAILURES_PER_DAY = 10;
 
 @Injectable()
 export class NotificationsService {
   private readonly logger = new Logger(NotificationsService.name);
+
+  constructor(
+    @InjectRepository(OtpCode)
+    private readonly otpRepo: Repository<OtpCode>,
+    private readonly config: ConfigService,
+  ) {}
 
   // ─── FCM Push Notification ──────────────────────────────────────────────
   // Remplace : send_notification() dans app_common_functions_ks.php
@@ -51,7 +69,10 @@ export class NotificationsService {
           res.on('data', (chunk) => (body += chunk));
           res.on('end', () => {
             try {
-              const parsed = JSON.parse(body);
+              const parsed = JSON.parse(body) as {
+                success?: number;
+                failure?: number;
+              };
               resolve({
                 success: parsed.success ?? 0,
                 failure: parsed.failure ?? 0,
@@ -125,17 +146,44 @@ export class NotificationsService {
   // Remplace : ajax_driver_verification.php (type=send)
 
   async sendOtp(phone: string): Promise<{ sent: boolean; code?: string }> {
+    const now = new Date();
+    if (
+      (await this.countRecentFailures(phone, now)) >= OTP_MAX_FAILURES_PER_DAY
+    ) {
+      throw this.tooManyRequests();
+    }
+
     const code = String(randomInt(100000, 1000000)); // 6 chiffres
-    otpStore.set(phone, { code, expiresAt: Date.now() + 10 * 60 * 1000 }); // TTL 10 min
+
+    // Insérer avant de compter : le rang de la ligne (id) départage les requêtes concurrentes sans verrou
+    const insertedId = await this.insertOtp(phone, code, now);
+    const sendsUpToThisOne = await this.otpRepo.count({
+      where: {
+        phone,
+        id: LessThanOrEqual(insertedId),
+        createdAt: MoreThan(new Date(now.getTime() - OTP_SEND_WINDOW_MS)),
+      },
+    });
+    if (sendsUpToThisOne > OTP_MAX_SENDS_PER_WINDOW) {
+      // Supprimée (et non seulement invalidée) : une demande refusée ne doit pas prolonger le blocage
+      await this.otpRepo.delete({ id: insertedId });
+      throw this.tooManyRequests();
+    }
+
+    // Un seul code actif par téléphone : les précédents ne sont plus acceptés
+    await this.otpRepo.update(
+      { phone, usedAt: IsNull(), id: LessThan(insertedId) },
+      { usedAt: now },
+    );
 
     const message = `Votre code de vérification Amygo : ${code}`;
     const result = await this.sendSms(phone, message);
 
-    // Hors production uniquement : sinon un échec Twilio exposerait le code au client
+    // Seulement en development/test : sinon un échec Twilio exposerait le code au client
     if (!result.sent) {
-      return process.env.NODE_ENV === 'production'
-        ? { sent: false }
-        : { sent: false, code };
+      return isDevOrTestEnv(this.config.get<string>('NODE_ENV'))
+        ? { sent: false, code }
+        : { sent: false };
     }
     return { sent: true };
   }
@@ -143,17 +191,93 @@ export class NotificationsService {
   // ─── OTP : vérifier ────────────────────────────────────────────────────
   // Remplace : ajax_driver_verification.php (type=verify)
 
-  verifyOtp(phone: string, code: string): { valid: boolean; reason?: string } {
-    const entry = otpStore.get(phone);
+  async verifyOtp(
+    phone: string,
+    code: string,
+  ): Promise<{ valid: boolean; reason?: string }> {
+    const entry = await this.otpRepo.findOne({
+      where: { phone, usedAt: IsNull() },
+      order: { id: 'DESC' },
+    });
     if (!entry) return { valid: false, reason: 'OTP non trouvé ou expiré' };
-    if (Date.now() > entry.expiresAt) {
-      otpStore.delete(phone);
-      return { valid: false, reason: 'OTP expiré' };
+
+    const now = new Date();
+    if (
+      (await this.countRecentFailures(phone, now)) >= OTP_MAX_FAILURES_PER_DAY
+    ) {
+      return { valid: false, reason: 'Trop de tentatives' };
     }
-    if (entry.code !== code.trim()) {
+
+    // Chaque vérification consomme un essai de façon atomique : des requêtes concurrentes ne peuvent pas dépasser le plafond
+    const attempt = await this.otpRepo
+      .createQueryBuilder()
+      .update(OtpCode)
+      .set({ attempts: () => 'attempts + 1' })
+      .where(
+        'id = :id AND usedAt IS NULL AND attempts < :max AND expiresAt > :now',
+        { id: entry.id, max: OTP_MAX_ATTEMPTS, now },
+      )
+      .execute();
+    if (!attempt.affected) {
+      return entry.expiresAt.getTime() <= now.getTime()
+        ? { valid: false, reason: 'OTP expiré' }
+        : { valid: false, reason: 'Trop de tentatives' };
+    }
+
+    const expected = Buffer.from(entry.codeHash, 'hex');
+    const received = Buffer.from(this.hashCode(phone, code), 'hex');
+    const matches =
+      expected.length === received.length &&
+      timingSafeEqual(expected, received);
+    if (!matches) return { valid: false, reason: 'Code incorrect' };
+
+    // Le -1 annule l'essai compté ci-dessus : un succès ne doit pas peser dans le cumul d'échecs sur 24 h
+    const consumed = await this.otpRepo
+      .createQueryBuilder()
+      .update(OtpCode)
+      .set({ usedAt: now, attempts: () => 'attempts - 1' })
+      .where('id = :id AND usedAt IS NULL', { id: entry.id })
+      .execute();
+    if (!consumed.affected) {
       return { valid: false, reason: 'Code incorrect' };
     }
-    otpStore.delete(phone);
     return { valid: true };
+  }
+
+  private async insertOtp(
+    phone: string,
+    code: string,
+    now: Date,
+  ): Promise<string> {
+    const result = await this.otpRepo.insert({
+      phone,
+      codeHash: this.hashCode(phone, code),
+      expiresAt: new Date(now.getTime() + OTP_TTL_MS),
+      createdAt: now,
+    });
+    return String((result.identifiers[0] as { id: string }).id);
+  }
+
+  private tooManyRequests(): HttpException {
+    return new HttpException(
+      'Trop de demandes de code, réessayez plus tard',
+      HttpStatus.TOO_MANY_REQUESTS,
+    );
+  }
+
+  private async countRecentFailures(phone: string, now: Date): Promise<number> {
+    const failures = await this.otpRepo.sum('attempts', {
+      phone,
+      createdAt: MoreThan(new Date(now.getTime() - OTP_FAILURE_WINDOW_MS)),
+    });
+    return Number(failures ?? 0);
+  }
+
+  // Clé dédiée dérivée du secret JWT : le hash OTP ne partage pas la clé de signature des jetons
+  private hashCode(phone: string, code: string): string {
+    const key = createHmac('sha256', resolveJwtSecret(this.config))
+      .update('otp')
+      .digest();
+    return createHmac('sha256', key).update(`${phone}:${code}`).digest('hex');
   }
 }

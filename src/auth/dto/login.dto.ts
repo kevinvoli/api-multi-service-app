@@ -1,7 +1,25 @@
+import { IsIn, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { UserType } from '../auth.types';
+
 export class LoginDto {
-  login: string; // email ou numéro de téléphone
+  /** email ou numéro de téléphone */
+  @IsString()
+  @IsNotEmpty()
+  login: string;
+
+  @IsString()
+  @IsNotEmpty()
   password: string;
-  userType: 'rider' | 'driver' | 'company' | 'hotel';
+
+  @IsIn(['rider', 'driver', 'company', 'hotel'])
+  userType: UserType;
+
+  @IsOptional()
+  @IsString()
   countryCode?: string;
-  compSystem?: string; // pour company : eSystem (Ride, DeliverAll, etc.)
+
+  /** pour company : eSystem (Ride, DeliverAll, etc.) */
+  @IsOptional()
+  @IsString()
+  compSystem?: string;
 }
